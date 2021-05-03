@@ -13,15 +13,7 @@ public class Ubicacion {
         return latitud;
     }
 
-    public void setLatitud(String latitud) {
-        this.latitud = latitud;
-    }
-
     public String getLongitud() {
         return longitud;
-    }
-
-    public void setLongitud(String longitud) {
-        this.longitud = longitud;
     }
 }

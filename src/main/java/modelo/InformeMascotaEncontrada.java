@@ -27,55 +27,27 @@ public class InformeMascotaEncontrada {
         return codigoQRInformacion;
     }
 
-    public void setCodigoQRInformacion(InformeQR codigoQRInformacion) {
-        this.codigoQRInformacion = codigoQRInformacion;
-    }
-
     public Persona getRescatista() {
         return rescatista;
-    }
-
-    public void setRescatista(Persona rescatista) {
-        this.rescatista = rescatista;
     }
 
     public LocalDate getFechaEncuentroAnimal() {
         return fechaEncuentroAnimal;
     }
 
-    public void setFechaEncuentroAnimal(LocalDate fechaEncuentroAnimal) {
-        this.fechaEncuentroAnimal = fechaEncuentroAnimal;
-    }
-
     public String getDireccion() {
         return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
     }
 
     public List<Foto> getFotosAnimal() {
         return fotosAnimal;
     }
 
-    public void setFotosAnimal(List<Foto> fotosAnimal) {
-        this.fotosAnimal = fotosAnimal;
-    }
-
     public Ubicacion getLugarDeEncuentro() {
         return lugarDeEncuentro;
     }
 
-    public void setLugarDeEncuentro(Ubicacion lugarDeEncuentro) {
-        this.lugarDeEncuentro = lugarDeEncuentro;
-    }
-
     public String getEstadoActualMascota() {
         return estadoActualMascota;
-    }
-
-    public void setEstadoActualMascota(String estadoActualMascota) {
-        this.estadoActualMascota = estadoActualMascota;
     }
 }
