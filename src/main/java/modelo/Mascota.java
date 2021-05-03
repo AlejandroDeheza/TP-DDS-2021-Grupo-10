@@ -1,5 +1,27 @@
 package modelo;
 
+import java.time.LocalDate;
+import java.util.List;
+
 public class Mascota {
-    private String nombre;
+   Animal animal;
+   String nombre;
+   String apodo;
+   LocalDate fechaNacimiento;
+   Sexo sexo;
+   String descripcionFisica;
+   List<Caracteristica> catacteristicas;
+   List<Foto> fotos;
+
+    public Mascota(Animal animal, String nombre, String apodo, LocalDate fechaNacimiento, Sexo sexo, String descripcionFisica, List<Caracteristica> catacteristicas, List<Foto> fotos) {
+        this.animal = animal;
+        this.nombre = nombre;
+        this.apodo = apodo;
+        this.fechaNacimiento = fechaNacimiento;
+        this.sexo = sexo;
+        this.descripcionFisica = descripcionFisica;
+        this.catacteristicas = catacteristicas;
+        this.fotos = fotos;
+    }
+
 }
