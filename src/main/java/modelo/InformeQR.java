@@ -2,7 +2,6 @@ package modelo;
 
 public class InformeQR {
 
-    //TODO reemplazar por la clase DuenioMascota y Mascota  cuando se creen
     private DuenioMascota duenioMascota;
     private Mascota mascota;
 
