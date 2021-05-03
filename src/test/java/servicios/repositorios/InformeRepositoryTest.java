@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InformeRespositoryTest {
+public class InformeRepositoryTest {
 
     InformesRepository informesRepository;
     InformeMascotaEncontrada informe;
@@ -27,19 +27,25 @@ public class InformeRespositoryTest {
         informe = new InformeMascotaEncontrada(informeQR,rescatista,fechaDeHoy,direccion,fotosMascota,ubicacion,estadoActualMascota);
     }
 
-
     @Test
-    public void registrarUnaMascotaPerdidaAgregaInformeAInformesPendientes(){
+    public void agregarPrimerRegistroInforme(){
         Assertions.assertEquals(informesRepository.getInformesPendientes().size(),0);
         informesRepository.agregarInformeMascotaEncontrada(informe);
         Assertions.assertEquals(informesRepository.getInformesPendientes().size(),1);
     }
 
     @Test
-    public void listarMascotasEncontradasEnLosUltimosNDiasDevuelveUnRegistroInsertadoPreviamente(){
-        Assertions.assertEquals(informesRepository.listarMascotasEncontradasEnUltimosNDias(10).size(),0);
+    public void registrarUnaMascotaPerdidaAgregaInformeAInformesPendientes(){
+        Integer cantidadPrevia = informesRepository.getInformesPendientes().size();
         informesRepository.agregarInformeMascotaEncontrada(informe);
-        Assertions.assertEquals(informesRepository.listarMascotasEncontradasEnUltimosNDias(10).size(),1);
+        Assertions.assertEquals(informesRepository.getInformesPendientes().size(),++cantidadPrevia);
+    }
+
+    @Test
+    public void listarMascotasEncontradasEnLosUltimos10DiasDevuelveUnRegistroInsertadoPreviamente(){
+        Integer cantidadPrevia = informesRepository.listarMascotasEncontradasEnUltimosNDias(10).size();
+        informesRepository.agregarInformeMascotaEncontrada(informe);
+        Assertions.assertEquals(informesRepository.listarMascotasEncontradasEnUltimosNDias(10).size(),++cantidadPrevia);
     }
 
 }
