@@ -1,5 +1,7 @@
 package modelo;
 
+import excepciones.InformeMascotaEncontradaInvalidaException;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -18,6 +20,9 @@ public class InformeMascotaEncontrada {
         this.rescatista = rescatista;
         this.fechaEncuentroAnimal = fechaEncuentroAnimal;
         this.direccion = direccion;
+        if(fotosAnimal == null || fotosAnimal.isEmpty()){
+            throw new InformeMascotaEncontradaInvalidaException("Se debe ingresar al menos 1 Foto");
+        }
         this.fotosAnimal = fotosAnimal;
         this.lugarDeEncuentro = lugarDeEncuentro;
         this.estadoActualMascota = estadoActualMascota;
