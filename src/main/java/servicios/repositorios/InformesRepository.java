@@ -37,8 +37,10 @@ public class InformesRepository {
         return informesProcesados;
     }
 
+
     public void agregarInformeMascotaEncontrada(InformeMascotaEncontrada informe) {
         informesPendientes.add(informe);
     }
+
 }
 

@@ -1,18 +1,20 @@
 package servicios.repositorios;
 
 import modelo.*;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class InformeRepositoryTest {
 
-    InformesRepository informesRepository;
     InformeMascotaEncontrada informe;
+    InformesRepository informesRepository;
 
     @BeforeEach
     public void contextLoad() {
@@ -27,25 +29,25 @@ public class InformeRepositoryTest {
         informe = new InformeMascotaEncontrada(informeQR,rescatista,fechaDeHoy,direccion,fotosMascota,ubicacion,estadoActualMascota);
     }
 
-    @Test
-    public void agregarPrimerRegistroInforme(){
-        Assertions.assertEquals(informesRepository.getInformesPendientes().size(),0);
-        informesRepository.agregarInformeMascotaEncontrada(informe);
-        Assertions.assertEquals(informesRepository.getInformesPendientes().size(),1);
+    @AfterEach
+    public void destroyContext() throws NoSuchFieldException, IllegalAccessException{
+        Field instance = InformesRepository.class.getDeclaredField("informesRepository");
+        instance.setAccessible(true);
+        instance.set(null,null);
     }
 
     @Test
-    public void registrarUnaMascotaPerdidaAgregaInformeAInformesPendientes(){
-        Integer cantidadPrevia = informesRepository.getInformesPendientes().size();
+    public void registrarUnaMascotaPerdidaAgregaInformeAInformesPendientes() {
+        Assertions.assertEquals(informesRepository.getInformesPendientes().size(), 0);
         informesRepository.agregarInformeMascotaEncontrada(informe);
-        Assertions.assertEquals(informesRepository.getInformesPendientes().size(),++cantidadPrevia);
+        Assertions.assertEquals(informesRepository.getInformesPendientes().size(), 1);
     }
 
     @Test
     public void listarMascotasEncontradasEnLosUltimos10DiasDevuelveUnRegistroInsertadoPreviamente(){
-        Integer cantidadPrevia = informesRepository.listarMascotasEncontradasEnUltimosNDias(10).size();
+        Assertions.assertEquals(informesRepository.listarMascotasEncontradasEnUltimosNDias(10).size(),0);
         informesRepository.agregarInformeMascotaEncontrada(informe);
-        Assertions.assertEquals(informesRepository.listarMascotasEncontradasEnUltimosNDias(10).size(),++cantidadPrevia);
+        Assertions.assertEquals(informesRepository.listarMascotasEncontradasEnUltimosNDias(10).size(),1);
     }
 
 }
