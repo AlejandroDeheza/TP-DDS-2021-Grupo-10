@@ -7,19 +7,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class InformesRepository {
+public class RepositorioInformes {
 
-    private static InformesRepository informesRepository;
+    private static RepositorioInformes repositorioInformes;
     private List<InformeMascotaEncontrada> informesPendientes = new ArrayList<>();
     private List<InformeMascotaEncontrada> informesProcesados = new ArrayList<>();
 
-    private InformesRepository() {};
+    private RepositorioInformes() {};
 
-    public static InformesRepository getInstance() {
-        if(informesRepository == null) {
-            informesRepository = new InformesRepository();
+    public static RepositorioInformes getInstance() {
+        if(repositorioInformes == null) {
+            repositorioInformes = new RepositorioInformes();
         }
-        return informesRepository;
+        return repositorioInformes;
     }
 
     public List<InformeMascotaEncontrada> listarMascotasEncontradasEnUltimosNDias(Integer diasPreviosABuscar){

@@ -11,14 +11,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InformeRepositoryTest {
+public class RepositorioInformesTest {
 
     InformeMascotaEncontrada informe;
-    InformesRepository informesRepository;
+    RepositorioInformes repositorioInformes;
 
     @BeforeEach
     public void contextLoad() {
-        informesRepository = InformesRepository.getInstance();
+        repositorioInformes = RepositorioInformes.getInstance();
         InformeQR informeQR = new InformeQR(new DuenioMascota(),new Mascota());
         Persona rescatista = new Persona();
         LocalDate fechaDeHoy = LocalDate.now();
@@ -31,23 +31,23 @@ public class InformeRepositoryTest {
 
     @AfterEach
     public void destroyContext() throws NoSuchFieldException, IllegalAccessException{
-        Field instance = InformesRepository.class.getDeclaredField("informesRepository");
+        Field instance = RepositorioInformes.class.getDeclaredField("informesRepository");
         instance.setAccessible(true);
         instance.set(null,null);
     }
 
     @Test
     public void registrarUnaMascotaPerdidaAgregaInformeAInformesPendientes() {
-        Assertions.assertEquals(informesRepository.getInformesPendientes().size(), 0);
-        informesRepository.agregarInformeMascotaEncontrada(informe);
-        Assertions.assertEquals(informesRepository.getInformesPendientes().size(), 1);
+        Assertions.assertEquals(repositorioInformes.getInformesPendientes().size(), 0);
+        repositorioInformes.agregarInformeMascotaEncontrada(informe);
+        Assertions.assertEquals(repositorioInformes.getInformesPendientes().size(), 1);
     }
 
     @Test
     public void listarMascotasEncontradasEnLosUltimos10DiasDevuelveUnRegistroInsertadoPreviamente(){
-        Assertions.assertEquals(informesRepository.listarMascotasEncontradasEnUltimosNDias(10).size(),0);
-        informesRepository.agregarInformeMascotaEncontrada(informe);
-        Assertions.assertEquals(informesRepository.listarMascotasEncontradasEnUltimosNDias(10).size(),1);
+        Assertions.assertEquals(repositorioInformes.listarMascotasEncontradasEnUltimosNDias(10).size(),0);
+        repositorioInformes.agregarInformeMascotaEncontrada(informe);
+        Assertions.assertEquals(repositorioInformes.listarMascotasEncontradasEnUltimosNDias(10).size(),1);
     }
 
 }
