@@ -29,6 +29,11 @@ public class RepositorioInformes {
                 .collect(Collectors.toList());
     }
 
+    public void procesarInforme(InformeMascotaEncontrada informeAProcesar){
+        this.informesPendientes.remove(informeAProcesar);
+        this.informesProcesados.add(informeAProcesar);
+    }
+
     public List<InformeMascotaEncontrada> getInformesPendientes() {
         return informesPendientes;
     }
