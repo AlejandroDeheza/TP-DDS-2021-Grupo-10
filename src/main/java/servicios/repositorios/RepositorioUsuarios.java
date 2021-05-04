@@ -1,9 +1,10 @@
 package servicios.repositorios;
 
-import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import modelo.Usuario;
 
 public class RepositorioUsuarios {
@@ -19,6 +20,10 @@ public class RepositorioUsuarios {
 
 	public void agregarUsuario(Usuario usuario) {
 		listaUsuarios.add(usuario);
+	}
+
+	public Boolean existeUsuario(String username){
+		return listaUsuarios.stream().map(usuario -> usuario.getUsername()).collect(Collectors.toList()).contains(username);
 	}
 
 }
