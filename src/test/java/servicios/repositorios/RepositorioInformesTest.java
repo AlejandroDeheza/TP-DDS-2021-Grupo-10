@@ -18,22 +18,25 @@ public class RepositorioInformesTest {
     RepositorioInformes repositorioInformes;
     List<Foto> fotosMascota;
     Foto foto;
-
+    Mascota beto;
+    DuenioMascota pablo;
+    Persona pabloPersona;
 
     @BeforeEach
     public void contextLoad() {
         repositorioInformes = RepositorioInformes.getInstance();
+        pabloPersona = new Persona("pablo", "Hernandez", TipoDocumento.DNI, "43212098", null, LocalDate.of(1995, 8, 7) );
+        pablo=new DuenioMascota("pepe","P3p3.3210",pabloPersona);
+        beto = new Mascota(Animal.PERRO, "pablo", "jp", LocalDate.of(2018,3, 4), Sexo.MACHO, "mancito", null, null );
 
-        InformeQR informeQR = new InformeQR(
-            new DuenioMascota(null, "dadaasssddddaa", null, null),
-            new Mascota());
-        Persona rescatista = new Persona(
-            null, null, null, null);
+        Persona rescatista = new Persona("jose", "hernandez", TipoDocumento.DNI, "43212098", null, LocalDate.of(1995, 8, 7));
+        InformeQR informeQR = new InformeQR(pablo,beto);
+
+
         LocalDate fechaDeHoy = LocalDate.now();
         String direccion = "Av. Corrientes 576";
         fotosMascota = new ArrayList<>();
         foto = new Foto();
-        fotosMascota.add(foto);
         Ubicacion ubicacion = new Ubicacion("57,44","57,55");
         String estadoActualMascota = "Bien de salud, pero asustado";
         informe = new InformeMascotaEncontrada(informeQR,rescatista,fechaDeHoy,direccion,fotosMascota,ubicacion,estadoActualMascota);
@@ -68,22 +71,11 @@ public class RepositorioInformesTest {
 
     }
 
-    @Test
-    public void procesarInformeAgregaYRemueveElInformeCorrespondiente(){
-        Assertions.assertEquals(repositorioInformes.getInformesProcesados().size(), 0);
-        repositorioInformes.procesarInforme(informe);
-        Assertions.assertEquals(repositorioInformes.getInformesPendientes().size(), 0);
-        Assertions.assertEquals(repositorioInformes.getInformesProcesados().size(), 1);
-    }
-
-
     public InformeMascotaEncontrada crearConstructorSinFoto(){
         repositorioInformes = RepositorioInformes.getInstance();
-        InformeQR informeQR = new InformeQR(
-            new DuenioMascota(null, "dadaasssddddaa", null, null),
-            new Mascota());
-        Persona rescatista = new Persona(
-            null, null, null, null);
+        InformeQR informeQR = new InformeQR(pablo,beto);
+        Persona rescatista = new Persona("jose", "hernandez", TipoDocumento.DNI, "43212098", null, LocalDate.of(1995, 8, 7));
+
         LocalDate fechaDeHoy = LocalDate.now();
         String direccion = "Av. Corrientes 576";
         fotosMascota = new ArrayList<>();

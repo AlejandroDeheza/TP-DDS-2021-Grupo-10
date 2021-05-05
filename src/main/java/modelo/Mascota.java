@@ -23,5 +23,36 @@ public class Mascota {
         this.catacteristicas = catacteristicas;
         this.fotos = fotos;
     }
+    public List<Caracteristica> getCatacteristicas(){
+      return catacteristicas;
+    }
+
+    public Animal getAnimal() {
+      return animal;
+    }
+
+    public String getNombre() {
+      return nombre;
+    }
+
+    public String getApodo() {
+      return apodo;
+    }
+
+    public LocalDate getFechaNacimiento() {
+      return fechaNacimiento;
+    }
+
+    public Sexo getSexo() {
+      return sexo;
+    }
+
+    public String getDescripcionFisica() {
+      return descripcionFisica;
+    }
+
+    public List<Foto> getFotos() {
+      return fotos;
+    }
 
 }
