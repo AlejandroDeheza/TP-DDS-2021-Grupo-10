@@ -12,7 +12,7 @@ public abstract class Usuario {
   private String contrasenia;
   private Persona persona;
   private LocalTime ultimoIntentoDeSesion = LocalTime.now();
-  private Long contadorIntentosDeSecion = Long.valueOf(0);
+  private Long contadorIntentosDeSesion = Long.valueOf(0);
 
   public Usuario(String usuario, String contrasenia, Persona persona) {
     this.validarContrasenia(contrasenia);
@@ -30,35 +30,36 @@ public abstract class Usuario {
 
   public void autenticarUsuario(String contrasenia) {
 
-    //capaz esto se debería implementar en el frontend
-    //No sabemos si tenemos la suficiente infomracion para poder implementar esto
-    if (MINUTES.between(LocalTime.now(), ultimoIntentoDeSesion) < contadorIntentosDeSecion) {
+    // capaz esto se debería implementar en el frontend
+    // No sabemos si tenemos la suficiente infomracion para poder implementar esto
+    if (MINUTES.between(LocalTime.now(), ultimoIntentoDeSesion) < contadorIntentosDeSesion) {
 
-      //Deberiamos tratar esta excepcion para que de alguna manera bloquee un intento de secion en la UI
-      //Y ademas muestre el mensaje de la excepcion
+      // Deberiamos tratar esta excepcion para que de alguna manera bloquee un intento de secion en
+      // la UI
+      // Y ademas muestre el mensaje de la excepcion
       Long tiempoEsperaMaximo = Long.valueOf(60);
-      if(MINUTES.between(LocalTime.now(), ultimoIntentoDeSesion) > tiempoEsperaMaximo) {
+      if (MINUTES.between(LocalTime.now(), ultimoIntentoDeSesion) > tiempoEsperaMaximo) {
         throw new AutenticacionConsecutivaException(
             "Debe esperar " + tiempoEsperaMaximo + " minutos para intentar iniciar secion");
-      }else{
+      } else {
         throw new AutenticacionConsecutivaException(
-            "Debe esperar " + contadorIntentosDeSecion + " minutos para intentar iniciar secion");
+            "Debe esperar " + contadorIntentosDeSesion + " minutos para intentar iniciar secion");
       }
     }
 
-    if (this.contrasenia.equals(contrasenia)) {
+    if (!this.contrasenia.equals(contrasenia)) {
       ultimoIntentoDeSesion = LocalTime.now();
-      this.contadorIntentosDeSecion = Long.valueOf(contadorIntentosDeSecion + 1);
+      this.contadorIntentosDeSesion = Long.valueOf(contadorIntentosDeSesion + 1);
       throw new AutenticacionInvalidaException("La contraseña ingresada es inválida");
     }
 
-    //se ejecuta si todo esta ok
-    this.contadorIntentosDeSecion = Long.valueOf(0);
+    // se ejecuta si todo esta ok
+    this.contadorIntentosDeSesion = Long.valueOf(0);
     concederPermisos();
   }
 
-  private void concederPermisos(){
-    //TODO
+  private void concederPermisos() {
+    // TODO
   }
 
 }
