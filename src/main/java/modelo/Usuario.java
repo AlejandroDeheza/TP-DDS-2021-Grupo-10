@@ -22,10 +22,10 @@ public abstract class Usuario {
   }
 
   private void validarContrasenia(String contrasenia) {
-    Validador validador = new ValidadorContraseniasComunes();
-    validador.validar(contrasenia);
-    Validador validador2 = new ValidadorLargoMinimo();
-    validador2.validar(contrasenia);
+    Validador validadorContraseniasComunes = new ValidadorContraseniasComunes();
+    validadorContraseniasComunes.validar(contrasenia);
+    Validador validadorLargoMinimo = new ValidadorLargoMinimo();
+    validadorLargoMinimo.validar(contrasenia);
   }
 
   public void autenticarUsuario(String contrasenia) {
@@ -34,16 +34,16 @@ public abstract class Usuario {
     // No sabemos si tenemos la suficiente infomracion para poder implementar esto
     if (MINUTES.between(LocalTime.now(), ultimoIntentoDeSesion) < contadorIntentosDeSesion) {
 
-      // Deberiamos tratar esta excepcion para que de alguna manera bloquee un intento de secion en
+      // Deberiamos tratar esta excepcion para que de alguna manera bloquee un intento de sesión en
       // la UI
       // Y ademas muestre el mensaje de la excepcion
       Long tiempoEsperaMaximo = Long.valueOf(60);
       if (MINUTES.between(LocalTime.now(), ultimoIntentoDeSesion) > tiempoEsperaMaximo) {
         throw new AutenticacionConsecutivaException(
-            "Debe esperar " + tiempoEsperaMaximo + " minutos para intentar iniciar secion");
+            "Debe esperar " + tiempoEsperaMaximo + " minutos para intentar iniciar sesion");
       } else {
         throw new AutenticacionConsecutivaException(
-            "Debe esperar " + contadorIntentosDeSesion + " minutos para intentar iniciar secion");
+            "Debe esperar " + contadorIntentosDeSesion + " minutos para intentar iniciar sesion");
       }
     }
 
