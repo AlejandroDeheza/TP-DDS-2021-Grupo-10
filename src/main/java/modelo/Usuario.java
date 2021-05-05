@@ -11,7 +11,7 @@ public abstract class Usuario {
   private String usuario;
   private String contrasenia;
   private Persona persona;
-  private LocalTime ultimoIntentoDeSesion = LocalTime.now();
+  private LocalTime ultimoIntentoDeSesionFallido = LocalTime.now();
   private Long contadorIntentosDeSesion = Long.valueOf(0);
 
   public Usuario(String usuario, String contrasenia, Persona persona) {
@@ -32,13 +32,13 @@ public abstract class Usuario {
 
     // capaz esto se debería implementar en el frontend
     // No sabemos si tenemos la suficiente infomracion para poder implementar esto
-    if (MINUTES.between(LocalTime.now(), ultimoIntentoDeSesion) < contadorIntentosDeSesion) {
+    if (MINUTES.between(LocalTime.now(), ultimoIntentoDeSesionFallido) < contadorIntentosDeSesion) {
 
       // Deberiamos tratar esta excepcion para que de alguna manera bloquee un intento de sesión en
       // la UI
       // Y ademas muestre el mensaje de la excepcion
       Long tiempoEsperaMaximo = Long.valueOf(60);
-      if (MINUTES.between(LocalTime.now(), ultimoIntentoDeSesion) > tiempoEsperaMaximo) {
+      if (MINUTES.between(LocalTime.now(), ultimoIntentoDeSesionFallido) > tiempoEsperaMaximo) {
         throw new AutenticacionConsecutivaException(
             "Debe esperar " + tiempoEsperaMaximo + " minutos para intentar iniciar sesion");
       } else {
@@ -48,7 +48,7 @@ public abstract class Usuario {
     }
 
     if (!this.contrasenia.equals(contrasenia)) {
-      ultimoIntentoDeSesion = LocalTime.now();
+      ultimoIntentoDeSesionFallido = LocalTime.now();
       this.contadorIntentosDeSesion = Long.valueOf(contadorIntentosDeSesion + 1);
       throw new AutenticacionInvalidaException("La contraseña ingresada es inválida");
     }

@@ -6,10 +6,10 @@ public class Persona {
 
   private LocalDate fechaNacimiento;
   private TipoDocumento tipoDocumento;
-  private Integer numeroDocumento;
+  private String numeroDocumento;
   private DatosDeContacto datosDeContacto;
 
-  public Persona(LocalDate fechaNacimiento, TipoDocumento tipoDocumento, Integer numeroDocumento,
+  public Persona(LocalDate fechaNacimiento, TipoDocumento tipoDocumento, String numeroDocumento,
                  DatosDeContacto datosDeContacto){
 
     this.fechaNacimiento = fechaNacimiento;
