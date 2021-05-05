@@ -1,6 +1,6 @@
 package servicios.repositorios;
 import excepciones.CaracteristicasVacioException;
-import excepciones.ValorCaractersiticaIncompatibleException;
+import excepciones.ValorCaracteristicaIncompatibleException;
 import modelo.Caracteristica;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +25,10 @@ public class RepositorioCaracteristicas {
 		listaCaracteristicas.add(caracteristica);
 	}
 
+	public List<Caracteristica> getListaCaracteristicas() {
+		return listaCaracteristicas;
+	}
+
 	public void validarCaracteristicasMascotas(List<Caracteristica> catacteristicas) {
 		catacteristicas.forEach(caracteristica -> {
 			esValorValido(caracteristica);
@@ -45,6 +49,6 @@ public class RepositorioCaracteristicas {
 					.contains(caracteristica.getValoresCaracteristicas().get(0)); //La caractersitica esta en la lista
 
 			if (!contieneCaracteristica)
-				throw new ValorCaractersiticaIncompatibleException("Los valores de la caracteristica no es valida ");
+				throw new ValorCaracteristicaIncompatibleException("Los valores de la caracteristica no es valida ");
 	}
 }

@@ -14,7 +14,7 @@ public class DuenioMascota extends Usuario {
 	}
 
 	public void agregarMascota(Mascota mascota){
-		repositorioCaracteristicas.validarCaracteristicasMascotas(mascota.getCatacteristicas());
+		repositorioCaracteristicas.validarCaracteristicasMascotas(mascota.getCaracteristicas());
 		validarExistenciaMascota(mascota);
 		this.listaMascotas.add(mascota);
 	}

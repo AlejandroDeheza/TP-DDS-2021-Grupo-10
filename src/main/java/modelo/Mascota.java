@@ -10,7 +10,7 @@ public class Mascota {
    LocalDate fechaNacimiento;
    Sexo sexo;
    String descripcionFisica;
-   List<Caracteristica> catacteristicas; // [Caracteristica("ColorPelo",["Negro","Blanco"])...]
+   List<Caracteristica> caracteristicas; // [Caracteristica("ColorPelo",["Negro","Blanco"])...]
                                           //new Caracteristica("ColorPelo",["Negro"])
    List<Foto> fotos;
 
@@ -21,11 +21,11 @@ public class Mascota {
         this.fechaNacimiento = fechaNacimiento;
         this.sexo = sexo;
         this.descripcionFisica = descripcionFisica;
-        this.catacteristicas = catacteristicas;
+        this.caracteristicas = catacteristicas;
         this.fotos=fotos;
     }
-    public List<Caracteristica> getCatacteristicas(){
-      return catacteristicas;
+    public List<Caracteristica> getCaracteristicas(){
+      return caracteristicas;
     }
 
     public Animal getAnimal() {
