@@ -2,10 +2,7 @@ package servicios.repositorios;
 
 import excepciones.InformeMascotaEncontradaInvalidaException;
 import modelo.*;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.lang.reflect.Field;
 import java.time.LocalDate;
@@ -19,17 +16,24 @@ public class RepositorioInformesTest {
     List<Foto> fotosMascota;
     Foto foto;
     Mascota beto;
-    DuenioMascota pablo;
-    Persona pabloPersona;
+    static DuenioMascota pablo;
+    static Persona pabloPersona;
 
+    @BeforeAll
+    public static void crearUsuarios(){
+        pabloPersona = new Persona("pablo", "Hernandez", TipoDocumento.DNI, "43212098", null, LocalDate.of(1995, 8, 7) );
+        pablo=new DuenioMascota("pepe","P3p3.3210",pabloPersona);
+
+    }
     @BeforeEach
     public void contextLoad() {
         repositorioInformes = RepositorioInformes.getInstance();
-        pabloPersona = new Persona("pablo", "Hernandez", TipoDocumento.DNI, "43212098", null, LocalDate.of(1995, 8, 7) );
-        pablo=new DuenioMascota("pepe","P3p3.3210",pabloPersona);
-        beto = new Mascota(Animal.PERRO, "pablo", "jp", LocalDate.of(2018,3, 4), Sexo.MACHO, "mancito", null, null );
-
+        fotosMascota = new ArrayList<>();
+        foto = new Foto();
+        fotosMascota.add(foto);
+        beto = new Mascota(Animal.PERRO, "pablo", "jp", LocalDate.of(2018,3, 4), Sexo.MACHO, "mancito", null, fotosMascota );
         Persona rescatista = new Persona("jose", "hernandez", TipoDocumento.DNI, "43212098", null, LocalDate.of(1995, 8, 7));
+        pablo.agregarMascota(beto);
         InformeQR informeQR = new InformeQR(pablo,beto);
 
 
