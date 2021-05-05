@@ -23,8 +23,12 @@ public class RepositorioInformesTest {
     @BeforeEach
     public void contextLoad() {
         repositorioInformes = RepositorioInformes.getInstance();
-        InformeQR informeQR = new InformeQR(new DuenioMascota(),new Mascota());
-        Persona rescatista = new Persona();
+
+        InformeQR informeQR = new InformeQR(
+            new DuenioMascota(null, "dadaasssddddaa", null, null),
+            new Mascota());
+        Persona rescatista = new Persona(
+            null, null, null, null);
         LocalDate fechaDeHoy = LocalDate.now();
         String direccion = "Av. Corrientes 576";
         fotosMascota = new ArrayList<>();
@@ -64,10 +68,22 @@ public class RepositorioInformesTest {
 
     }
 
+    @Test
+    public void procesarInformeAgregaYRemueveElInformeCorrespondiente(){
+        Assertions.assertEquals(repositorioInformes.getInformesProcesados().size(), 0);
+        repositorioInformes.procesarInforme(informe);
+        Assertions.assertEquals(repositorioInformes.getInformesPendientes().size(), 0);
+        Assertions.assertEquals(repositorioInformes.getInformesProcesados().size(), 1);
+    }
+
+
     public InformeMascotaEncontrada crearConstructorSinFoto(){
         repositorioInformes = RepositorioInformes.getInstance();
-        InformeQR informeQR = new InformeQR(new DuenioMascota(),new Mascota());
-        Persona rescatista = new Persona();
+        InformeQR informeQR = new InformeQR(
+            new DuenioMascota(null, "dadaasssddddaa", null, null),
+            new Mascota());
+        Persona rescatista = new Persona(
+            null, null, null, null);
         LocalDate fechaDeHoy = LocalDate.now();
         String direccion = "Av. Corrientes 576";
         fotosMascota = new ArrayList<>();
