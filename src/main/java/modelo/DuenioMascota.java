@@ -25,7 +25,7 @@ public class DuenioMascota extends Usuario{
 
 	private void validarExistenciaMascota(Mascota mascota) {
 		if(this.listaMascotas.contains(mascota)){
-			throw new DuenioMascotaMascotaRegistradaException("Ya tiene registrada la mascota.")
+			throw new DuenioMascotaMascotaRegistradaException("Ya tiene registrada la mascota");
 		}
 	}
 }

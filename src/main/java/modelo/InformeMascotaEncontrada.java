@@ -3,6 +3,7 @@ package modelo;
 import excepciones.InformeMascotaEncontradaInvalidaException;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class InformeMascotaEncontrada {
@@ -11,7 +12,7 @@ public class InformeMascotaEncontrada {
     private Persona rescatista;
     private LocalDate fechaEncuentroAnimal;
     private String direccion;
-    private List<Foto> fotosAnimal;
+    private List<Foto> fotosAnimal = new ArrayList<>();
     private Ubicacion lugarDeEncuentro;
     private String estadoActualMascota;
 
@@ -23,7 +24,7 @@ public class InformeMascotaEncontrada {
         if(fotosAnimal == null || fotosAnimal.isEmpty()){
             throw new InformeMascotaEncontradaInvalidaException("Se debe ingresar al menos 1 Foto");
         }
-        this.fotosAnimal = fotosAnimal;
+        this.fotosAnimal.addAll(fotosAnimal);
         this.lugarDeEncuentro = lugarDeEncuentro;
         this.estadoActualMascota = estadoActualMascota;
     }
