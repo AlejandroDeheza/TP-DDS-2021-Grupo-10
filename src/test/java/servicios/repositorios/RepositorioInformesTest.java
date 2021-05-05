@@ -16,12 +16,15 @@ public class RepositorioInformesTest {
     List<Foto> fotosMascota;
     Foto foto;
     Mascota beto;
+    DatosDeContacto datosRecatista;
     static DuenioMascota pablo;
+    static DatosDeContacto datosPablo;
     static Persona pabloPersona;
 
     @BeforeAll
     public static void crearUsuarios(){
-        pabloPersona = new Persona("pablo", "Hernandez", TipoDocumento.DNI, "43212098", null, LocalDate.of(1995, 8, 7) );
+        datosPablo = new DatosDeContacto(null, "pablo@mail.com");
+        pabloPersona = new Persona("pablo", "Hernandez", TipoDocumento.DNI, "43212098", datosPablo, LocalDate.of(1995, 8, 7) );
         pablo=new DuenioMascota("pepe","P3p3.3210",pabloPersona);
 
     }
@@ -32,7 +35,8 @@ public class RepositorioInformesTest {
         foto = new Foto();
         fotosMascota.add(foto);
         beto = new Mascota(Animal.PERRO, "pablo", "jp", LocalDate.of(2018,3, 4), Sexo.MACHO, "mancito", null, fotosMascota );
-        Persona rescatista = new Persona("jose", "hernandez", TipoDocumento.DNI, "43212098", null, LocalDate.of(1995, 8, 7));
+        datosRecatista = new DatosDeContacto(null, "jose@mail.com");
+        Persona rescatista = new Persona("jose", "hernandez", TipoDocumento.DNI, "43212098", datosRecatista, LocalDate.of(1995, 8, 7));
         pablo.agregarMascota(beto);
         InformeQR informeQR = new InformeQR(pablo,beto);
 
@@ -77,7 +81,7 @@ public class RepositorioInformesTest {
     public InformeMascotaEncontrada crearConstructorSinFoto(){
         repositorioInformes = RepositorioInformes.getInstance();
         InformeQR informeQR = new InformeQR(pablo,beto);
-        Persona rescatista = new Persona("jose", "hernandez", TipoDocumento.DNI, "43212098", null, LocalDate.of(1995, 8, 7));
+        Persona rescatista = new Persona("jose", "hernandez", TipoDocumento.DNI, "43212098", datosRecatista, LocalDate.of(1995, 8, 7));
 
         LocalDate fechaDeHoy = LocalDate.now();
         String direccion = "Av. Corrientes 576";

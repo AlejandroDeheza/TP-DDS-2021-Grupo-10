@@ -12,11 +12,12 @@ public class MascotaTest {
     private static Mascota beto;
     private static DuenioMascota pablo;
     private static Persona pabloPersona;
-
+    private static DatosDeContacto datosPablo;
 
     @BeforeAll
     public static void contextTest(){
-        pabloPersona = new Persona("pablo", "Hernandez", TipoDocumento.DNI, "43212098", null, LocalDate.of(1995, 8, 7) );
+        datosPablo = new DatosDeContacto(null, "pablo@mail.com");
+        pabloPersona = new Persona("pablo", "Hernandez", TipoDocumento.DNI, "43212098", datosPablo, LocalDate.of(1995, 8, 7) );
         pablo =new DuenioMascota("pepe2","P3p3.3210",pabloPersona);
         beto = new Mascota(Animal.PERRO, "beto", "jp", LocalDate.of(2018,3, 4), Sexo.MACHO, "mancito", null, null );
         pablo.agregarMascota(beto);
