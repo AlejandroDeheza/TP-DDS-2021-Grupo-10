@@ -1,11 +1,18 @@
 package modelo;
 
+import excepciones.AutenticacionConsecutivaException;
+import excepciones.AutenticacionInvalidaException;
+
+import static java.time.temporal.ChronoUnit.MINUTES;
+import java.time.LocalTime;
+
 public abstract class Usuario {
 
   private String usuario;
   private String contrasenia;
   private Persona persona;
-  // private LocalDateTime ultimoIntentoDeSesion = LocalDateTime.now();
+  private LocalTime ultimoIntentoDeSesion = LocalTime.now();
+  private Long contadorIntentosDeSecion = Long.valueOf(0);
 
   public Usuario(String usuario, String contrasenia, Persona persona) {
     this.validarContrasenia(contrasenia);
@@ -15,19 +22,43 @@ public abstract class Usuario {
   }
 
   private void validarContrasenia(String contrasenia) {
-    ValidadorContraseniasComunes validador = new ValidadorContraseniasComunes();
+    Validador validador = new ValidadorContraseniasComunes();
     validador.validar(contrasenia);
+    Validador validador2 = new ValidadorLargoMinimo();
+    validador2.validar(contrasenia);
   }
 
-  /*
-   * public void autenticarUsuario(String contrasenia) { if
-   * (LocalDateTime.now().minusMinutes(ultimoIntentoDeSesion.getMinute()).getMinute() <
-   * Integer.valueOf(30)) {
-   * 
-   * } if (contrasenia != this.contrasenia) { ultimoIntentoDeSesion = LocalDateTime.now(); throw new
-   * AutenticacionInvalidaException("La contraseña ingresada es inválida"); }
-   * 
-   * }
-   */
+  public void autenticarUsuario(String contrasenia) {
+
+    //capaz esto se debería implementar en el frontend
+    //No sabemos si tenemos la suficiente infomracion para poder implementar esto
+    if (MINUTES.between(LocalTime.now(), ultimoIntentoDeSesion) < contadorIntentosDeSecion) {
+
+      //Deberiamos tratar esta excepcion para que de alguna manera bloquee un intento de secion en la UI
+      //Y ademas muestre el mensaje de la excepcion
+      Long tiempoEsperaMaximo = Long.valueOf(60);
+      if(MINUTES.between(LocalTime.now(), ultimoIntentoDeSesion) > tiempoEsperaMaximo) {
+        throw new AutenticacionConsecutivaException(
+            "Debe esperar " + tiempoEsperaMaximo + " minutos para intentar iniciar secion");
+      }else{
+        throw new AutenticacionConsecutivaException(
+            "Debe esperar " + contadorIntentosDeSecion + " minutos para intentar iniciar secion");
+      }
+    }
+
+    if (this.contrasenia.equals(contrasenia)) {
+      ultimoIntentoDeSesion = LocalTime.now();
+      this.contadorIntentosDeSecion = Long.valueOf(contadorIntentosDeSecion + 1);
+      throw new AutenticacionInvalidaException("La contraseña ingresada es inválida");
+    }
+
+    //se ejecuta si todo esta ok
+    this.contadorIntentosDeSecion = Long.valueOf(0);
+    concederPermisos();
+  }
+
+  private void concederPermisos(){
+    //TODO
+  }
 
 }

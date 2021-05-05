@@ -8,7 +8,7 @@ public class ValidadorLargoMinimo implements Validador {
   public void validar(String password) {
     if (password.length() < 8) {
       throw new ContraseniaInvalidaException(
-          "El largo de la contraseña debe estar formada por un mínimo de 8 caracteres");
+          "El largo de la contraseña debe tener como mínimo 8 caracteres");
     }
   }
 }
