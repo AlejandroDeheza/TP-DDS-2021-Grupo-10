@@ -42,7 +42,7 @@ public class UsuarioTest {
 
   @Test
   public void testCrearSinDatoDeContacto() {
-    Assertions.assertThrows(DatosDeContactoIncompletos.class,()->new Persona(null, null, TipoDocumento.DNI, "43212098", new DatosDeContacto(null, null), LocalDate.of(1995, 8, 7) ));
+    Assertions.assertThrows(DatosDeContactoIncompletos.class,()->new Persona(null, null, TipoDocumento.DNI, "43212098", new DatosDeContacto(), LocalDate.of(1995, 8, 7) ));
   }
 
 }

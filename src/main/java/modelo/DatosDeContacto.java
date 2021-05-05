@@ -23,6 +23,9 @@ public class DatosDeContacto {
     }
   }
 
+  public DatosDeContacto() {
+  }
+
   public Boolean hayAlgunDatoDeContacto(){
     return (this.telefono !=null || this.email!=null);
   }
