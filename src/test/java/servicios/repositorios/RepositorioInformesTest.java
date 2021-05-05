@@ -35,8 +35,7 @@ public class RepositorioInformesTest {
 
         LocalDate fechaDeHoy = LocalDate.now();
         String direccion = "Av. Corrientes 576";
-        fotosMascota = new ArrayList<>();
-        foto = new Foto();
+
         Ubicacion ubicacion = new Ubicacion("57,44","57,55");
         String estadoActualMascota = "Bien de salud, pero asustado";
         informe = new InformeMascotaEncontrada(informeQR,rescatista,fechaDeHoy,direccion,fotosMascota,ubicacion,estadoActualMascota);
