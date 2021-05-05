@@ -7,6 +7,7 @@ import org.junit.jupiter.api.*;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class RepositorioInformesTest {
@@ -34,7 +35,10 @@ public class RepositorioInformesTest {
         fotosMascota = new ArrayList<>();
         foto = new Foto();
         fotosMascota.add(foto);
-        beto = new Mascota(Animal.PERRO, "pablo", "jp", LocalDate.of(2018,3, 4), Sexo.MACHO, "mancito", null, fotosMascota );
+        Caracteristica caracteristica= new Caracteristica("Comportamiento", Collections.singletonList("Bueno"));
+        List<Caracteristica> listaCaracteristica=new ArrayList<>();
+        listaCaracteristica.add(caracteristica);
+        beto = new Mascota(Animal.PERRO, "pablo", "jp", LocalDate.of(2018,3, 4), Sexo.MACHO, "mancito", listaCaracteristica, fotosMascota );
         datosRecatista = new DatosDeContacto(null, "jose@mail.com");
         Persona rescatista = new Persona("jose", "hernandez", TipoDocumento.DNI, "43212098", datosRecatista, LocalDate.of(1995, 8, 7));
         pablo.agregarMascota(beto);

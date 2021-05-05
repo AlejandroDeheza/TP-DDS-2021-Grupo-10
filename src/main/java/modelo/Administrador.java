@@ -16,8 +16,9 @@ public class Administrador extends Usuario {
 	public Administrador(String username, String password, Persona persona) {
 		super(username, password, persona);
 	}
-	public void agregarCaracteristica(String nombreCaracteristica){
-		RepositorioCaracteristicas.getInstance().agregarCaracteristica(new NombreCaracteristica(nombreCaracteristica));
+
+	public void agregarCaracteristica(Caracteristica caracteristica){
+		respositorioCaracteristicas.agregarCaracteristica(caracteristica);
 	}
 >>>>>>> 786d5af (Agrego herencia del Administrador)
 }

@@ -1,20 +1,20 @@
 package modelo;
 
 import excepciones.DuenioMascotaMascotaRegistradaException;
+import servicios.repositorios.RepositorioCaracteristicas;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DuenioMascota extends Usuario{
-
-	private List<Mascota> listaMascotas;
-
-	public DuenioMascota(String usuario, String contrasenia, Persona duenioMascota, List<Mascota> listaMascotas){
-		super(usuario, contrasenia, duenioMascota);
-		this.listaMascotas = listaMascotas;
+public class DuenioMascota extends Usuario {
+	List<Mascota> listaMascotas=new ArrayList<>();
+	private RepositorioCaracteristicas repositorioCaracteristicas= RepositorioCaracteristicas.getInstance();
+	public DuenioMascota(String username, String password, Persona persona) {
+		super(username, password, persona);
 	}
 
 	public void agregarMascota(Mascota mascota){
+		repositorioCaracteristicas.validarCaracteristicasMascotas(mascota.getCatacteristicas());
 		validarExistenciaMascota(mascota);
 		this.listaMascotas.add(mascota);
 	}
@@ -28,4 +28,9 @@ public class DuenioMascota extends Usuario{
 			throw new DuenioMascotaMascotaRegistradaException("Ya tiene registrada la mascota");
 		}
 	}
+
+	public List<Mascota> getListaMascotas() {
+		return listaMascotas;
+	}
+
 }

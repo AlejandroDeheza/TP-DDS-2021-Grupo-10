@@ -1,28 +1,16 @@
 package modelo;
 
-import excepciones.CaracteristicaInvalida;
-import servicios.repositorios.RepositorioCaracteristicas;
+import java.util.List;
 
 public class Caracteristica {
-	NombreCaracteristica nombreCaracteristica;
-	private String descripcionCaracteristica;
+	String nombreCaracteristica;
+	List<String> valoresCaracteristicas;
 
-	public Caracteristica(NombreCaracteristica nombreCaracteristica, String descripcionCaracteristica) {
-		validarExistenciaCaracteristica(nombreCaracteristica);
-		this.nombreCaracteristica = nombreCaracteristica;
-		this.descripcionCaracteristica = descripcionCaracteristica;
-	}
-
-	private void validarExistenciaCaracteristica(NombreCaracteristica nombreCaracteristica) {
-			if (RepositorioCaracteristicas.getInstance().existeEnListaCaracteristica(nombreCaracteristica))
-				throw new CaracteristicaInvalida("La caracteristica "+nombreCaracteristica.getNombreCaracterista()+" es invalida");
-	}
-
-	public NombreCaracteristica getNombreCaracteristica() {
+	public String getNombreCaracteristica() {
 		return nombreCaracteristica;
 	}
 
-	public String getDescripcionCaracteristica() {
-		return descripcionCaracteristica;
+	public List<String> getValoresCaracteristicas() {
+		return valoresCaracteristicas;
 	}
 }
