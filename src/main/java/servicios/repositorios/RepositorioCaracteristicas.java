@@ -21,12 +21,6 @@ public class RepositorioCaracteristicas {
 	}
 
 	public void agregarCaracteristica(Caracteristica caracteristica) {
-
-		Boolean validation = (caracteristica.getNombreCaracteristica() instanceof String) && (caracteristica.getValoresCaracteristicas() instanceof List);
-
-		if (!validation) {
-			throw new RuntimeException();
-		}
 		utils.convertoToLower(caracteristica);
 		listaCaracteristicas.add(caracteristica);
 	}
