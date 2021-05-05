@@ -1,18 +1,24 @@
 package modelo;
 
+import excepciones.CaracteristicaInvalida;
+import servicios.repositorios.RepositorioCaracteristicas;
+
 public class Caracteristica {
-	private String nombreCaracteristica;
+	NombreCaracteristica nombreCaracteristica;
 	private String descripcionCaracteristica;
 
-	public Caracteristica(String nombreCaracteristica) {
+	public Caracteristica(NombreCaracteristica nombreCaracteristica, String descripcionCaracteristica) {
+		validarExistenciaCaracteristica(nombreCaracteristica);
 		this.nombreCaracteristica = nombreCaracteristica;
-	}
-
-	public void setDescripcionCaracteristica(String descripcionCaracteristica) {
 		this.descripcionCaracteristica = descripcionCaracteristica;
 	}
 
-	public String getNombreCaracteristica() {
+	private void validarExistenciaCaracteristica(NombreCaracteristica nombreCaracteristica) {
+			if (RepositorioCaracteristicas.getInstance().existeEnListaCaracteristica(nombreCaracteristica))
+				throw new CaracteristicaInvalida("La caracteristica "+nombreCaracteristica.getNombreCaracterista()+" es invalida");
+	}
+
+	public NombreCaracteristica getNombreCaracteristica() {
 		return nombreCaracteristica;
 	}
 
