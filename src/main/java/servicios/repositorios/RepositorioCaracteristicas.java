@@ -5,6 +5,8 @@ import modelo.Caracteristica;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import utils.Util;
+
 
 public class RepositorioCaracteristicas {
 	private static RepositorioCaracteristicas repositorioCaracteristicas;
