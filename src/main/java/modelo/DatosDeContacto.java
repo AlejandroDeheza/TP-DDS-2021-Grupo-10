@@ -22,4 +22,9 @@ public class DatosDeContacto {
           "Debe ingresar como minimo uno de los siguientes campos: <nombre y apellido>, <telefono> o <email>");
     }
   }
+
+  public Boolean hayAlgunDatoDeContacto(){
+    return (this.telefono !=null || this.email!=null);
+  }
+
 }
