@@ -21,7 +21,7 @@ public class UsuarioTest {
   public static void contextLoad() {
     datosPablo = new DatosDeContacto(null, "pablo@mail.com");
     pabloPersona = new Persona("pablo", "Hernandez", TipoDocumento.DNI, "43212098", datosPablo, LocalDate.of(1995, 8, 7) );
-    pablo =new DuenioMascota("pepe2","P3p3.3210",pabloPersona);
+    pablo =new DuenioMascota("pepe3","P3p3.3210",pabloPersona);
     datosDamian = new DatosDeContacto(1143091234, null);
     damianPersona = new Persona("damian", "perez", TipoDocumento.DNI, "49102921", datosDamian, LocalDate.of(2001,4,1) );
     damian = new Administrador("damian", "Awqde1oP", damianPersona);
@@ -29,7 +29,7 @@ public class UsuarioTest {
 
   @Test
   public void testCrearDosUsuariosMismoLogin() {
-    Assertions.assertThrows(LoginInvalidoException.class,()->new DuenioMascota("pepe2","P3p3.3210",pabloPersona));
+    Assertions.assertThrows(LoginInvalidoException.class,()->new DuenioMascota("pepe3","P3p3.3210",pabloPersona));
   }
 
 
