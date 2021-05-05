@@ -27,6 +27,7 @@ public class RepositorioCaracteristicas {
 		if (!validation) {
 			throw new RuntimeException();
 		}
+		utils.convertoToLower(caracteristica);
 		listaCaracteristicas.add(caracteristica);
 	}
 
@@ -37,8 +38,7 @@ public class RepositorioCaracteristicas {
 	}
 
 	private void esValorValido(Caracteristica caracteristica) {
-		//	utils.convertoToLower(caracteristica);
-
+		utils.convertoToLower(caracteristica);
 		List<Caracteristica> listaCaracteristicasFiltered = listaCaracteristicas
 				.stream()
 				.filter(c -> c.getNombreCaracteristica().equals(caracteristica.getNombreCaracteristica())).collect(Collectors.toList());
