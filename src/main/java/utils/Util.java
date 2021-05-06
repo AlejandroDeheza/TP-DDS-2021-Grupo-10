@@ -1,6 +1,6 @@
 package utils;
 
-import modelo.Caracteristica;
+import modelo.mascota.caracteristica.Caracteristica;
 
 public class Util {
 
