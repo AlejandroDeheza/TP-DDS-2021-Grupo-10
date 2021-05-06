@@ -1,8 +1,16 @@
 package modelo;
 
-public class Administrador extends Usuario{
+import servicios.repositorios.RepositorioCaracteristicas;
 
-  public Administrador(String usuario, String contrasenia, Persona persona){
-    super(usuario, contrasenia, persona);
-  }
+
+public class Administrador extends Usuario {
+
+	private RepositorioCaracteristicas respositorioCaracteristicas= RepositorioCaracteristicas.getInstance();
+	public Administrador(String username, String password, Persona persona) {
+		super(username, password, persona);
+	}
+
+	public void agregarCaracteristica(Caracteristica caracteristica){
+		respositorioCaracteristicas.agregarCaracteristica(caracteristica);
+	}
 }

@@ -6,8 +6,8 @@ public class InformeQR {
     private Mascota mascota;
 
     public InformeQR(DuenioMascota duenioMascota, Mascota mascota) {
-   // TODO:  Falta agregar funcionalidad
-     }
+        // TODO:  Falta agregar funcionalidad
+    }
 
     public DuenioMascota getDuenioMascota() {
         return duenioMascota;

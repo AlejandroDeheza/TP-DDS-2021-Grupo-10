@@ -1,23 +1,36 @@
 package modelo;
 
+import excepciones.DuenioMascotaMascotaRegistradaException;
+import servicios.repositorios.RepositorioCaracteristicas;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class DuenioMascota extends Usuario{
+public class DuenioMascota extends Usuario {
+	List<Mascota> listaMascotas=new ArrayList<>();
+	private RepositorioCaracteristicas repositorioCaracteristicas= RepositorioCaracteristicas.getInstance();
+	public DuenioMascota(String username, String password, Persona persona) {
+		super(username, password, persona);
+	}
 
-  private List<Mascota> mascotas;
+	public void agregarMascota(Mascota mascota){
+		repositorioCaracteristicas.validarCaracteristicasMascotas(mascota.getCaracteristicas());
+		validarExistenciaMascota(mascota);
+		this.listaMascotas.add(mascota);
+	}
 
-  public DuenioMascota(String usuario, String contrasenia, Persona duenioMascota, List<Mascota> mascotas){
-    super(usuario, contrasenia, duenioMascota);
-    this.mascotas = mascotas;
-  }
+	public void eliminarMascota(Mascota mascota){
+		this.listaMascotas.remove(mascota);
+	}
 
-  public void agregarMascota(Mascota mascota){
-    if(this.mascotas == null){this.mascotas = new ArrayList<>();}
-    this.mascotas.add(mascota);
-  }
+	private void validarExistenciaMascota(Mascota mascota) {
+		if(this.listaMascotas.contains(mascota)){
+			throw new DuenioMascotaMascotaRegistradaException("Ya tiene registrada la mascota");
+		}
+	}
 
-  public void eliminarMascota(Mascota mascota){
-    this.mascotas.remove(mascota);
-  }
+	public List<Mascota> getListaMascotas() {
+		return listaMascotas;
+	}
+
 }

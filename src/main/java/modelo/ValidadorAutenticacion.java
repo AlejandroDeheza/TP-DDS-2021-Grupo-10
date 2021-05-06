@@ -17,13 +17,8 @@ public class ValidadorAutenticacion {
 
   public void autenticarUsuario(String contraseniaIngresada) {
 
-    // capaz esto se debería implementar en el frontend
-    // No sabemos si tenemos la suficiente infomracion para poder implementar esto
     if (falloLaAutenticacionHacePoco()) {
 
-      // Deberiamos tratar esta excepcion para que de alguna manera bloquee un intento de sesión en
-      // la UI
-      // Y ademas muestre el mensaje de la excepcion
       Long tiempoEsperaMaximo = Long.valueOf(60);
       if (tiempoQueEstaEsperandoUsuario() > tiempoEsperaMaximo) {
         throw new AutenticacionConsecutivaException(
