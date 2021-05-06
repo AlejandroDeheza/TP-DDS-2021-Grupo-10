@@ -40,24 +40,15 @@ public class CaracteristicasTest {
 
 	@Test
 	public void unMascotaTieneCaracteristicaInvalida(){
-		datosPablo = new DatosDeContacto(null, "pablo@mail.com");
-		pabloPersona = new Persona("pablo", "Hernandez", TipoDocumento.DNI, "43212098", datosPablo, LocalDate.of(1995, 8, 7) );
-		pablo =new DuenioMascota("pepe6","P3p3.3210",pabloPersona);
 		Caracteristica caracteristica= new Caracteristica("Dormilon", Collections.singletonList("SI"));
-		List<Caracteristica> listaCaracteristica=new ArrayList<>();
-		listaCaracteristica.add(caracteristica);
-		beto = new Mascota(Animal.PERRO, "beto", "jp", LocalDate.of(2018,3, 4), Sexo.MACHO, "mancito", listaCaracteristica, null );
-
-		Assertions.assertThrows(CaracteristicasVacioException.class,()->pablo.agregarMascota(beto));
-
+		Mascota mascota=crearMascota(caracteristica);
+		Assertions.assertThrows(CaracteristicasVacioException.class,()->duenioMascota.agregarMascota(mascota));
 	}
+
 	@Test
 	@DisplayName("Persona asigna un valor invalido a una caracterstica previamente cargada lanza una exception")
 	public void personaAsignaValorInvalidoACaractersticaGeneraUnaException(){
-		datosPablo = new DatosDeContacto(null, "pablo@mail.com");
-		pabloPersona = new Persona("pablo", "Hernandez", TipoDocumento.DNI, "43212098", datosPablo, LocalDate.of(1995, 8, 7) );
-		pablo =new DuenioMascota("pepe6","P3p3.3210",pabloPersona);
-		Caracteristica caracteristica= new Caracteristica("Castrado", Collections.singletonList("MasOMenos"));
+		Caracteristica caracteristica= new Caracteristica("Castrado", Collections.singletonList("Maso"));
 		List<Caracteristica> listaCaracteristica=new ArrayList<>();
 		listaCaracteristica.add(caracteristica);
 		beto = new Mascota(Animal.PERRO, "beto", "jp", LocalDate.of(2018,3, 4), Sexo.MACHO, "mancito", listaCaracteristica, null );
