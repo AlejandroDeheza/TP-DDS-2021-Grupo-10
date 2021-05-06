@@ -1,8 +1,11 @@
 package modelo;
 
+import excepciones.DatosDeContactoIncompletos;
 import excepciones.DatosDeContactoInvalidosException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
 
 public class DatosDeContactoTest {
 

@@ -27,10 +27,8 @@ public class UsuarioTest {
   }
 
   @Test
-  public void testCrearUsuarioAdministrador(){
-
+  public void sePuedeCrearUnUsuarioAdministrador(){
     Assertions.assertSame(Administrador.class, damian.getClass());
-
   }
 
   @Test

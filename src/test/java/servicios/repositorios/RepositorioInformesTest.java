@@ -15,6 +15,7 @@ public class RepositorioInformesTest {
     InformeMascotaEncontrada informe;
     RepositorioInformes repositorioInformes;
     List<Foto> fotosMascota;
+    DuenioMascota duenioMascota;
     Foto foto;
     Mascota beto;
     DatosDeContacto datosRecatista;
@@ -29,15 +30,14 @@ public class RepositorioInformesTest {
         List<Caracteristica> listaCaracteristica=new ArrayList<>();
         listaCaracteristica.add(caracteristica);
         beto = new Mascota(Animal.PERRO, "pablo", "jp", LocalDate.of(2018,3, 4), Sexo.MACHO, "mancito", listaCaracteristica, fotosMascota );
-        datosRecatista = new DatosDeContacto(null, "jose@mail.com");
-        Persona rescatista = new Persona("jose", "hernandez", TipoDocumento.DNI, "43212098", datosRecatista, LocalDate.of(1995, 8, 7));
-        pablo.agregarMascota(beto);
-        InformeQR informeQR = new InformeQR(pablo,beto);
+        datosRecatista = new DatosDeContacto(null, "pablo@mail.com");
+        Persona rescatista = new Persona("pablo", "Hernandez", TipoDocumento.DNI, "43212098", datosRecatista, LocalDate.of(1995, 8, 7));
+        Persona duenioMascotaPersona = new Persona("Javier", "Fraile", TipoDocumento.DNI, "35353535", datosRecatista, LocalDate.of(1995, 8, 7));
+        duenioMascota= new DuenioMascota("eldueniosabroso", "soylomas", duenioMascotaPersona);
 
-
+        InformeQR informeQR = new InformeQR(duenioMascota, beto);
         LocalDate fechaDeHoy = LocalDate.now();
         String direccion = "Av. Corrientes 576";
-
         Ubicacion ubicacion = new Ubicacion("57,44","57,55");
         String estadoActualMascota = "Bien de salud, pero asustado";
         informe = new InformeMascotaEncontrada(informeQR,rescatista,fechaDeHoy,direccion,fotosMascota,ubicacion,estadoActualMascota);
@@ -74,7 +74,7 @@ public class RepositorioInformesTest {
 
     public InformeMascotaEncontrada crearConstructorSinFoto(){
         repositorioInformes = RepositorioInformes.getInstance();
-        InformeQR informeQR = new InformeQR(pablo,beto);
+        InformeQR informeQR = new InformeQR(duenioMascota,beto);
         Persona rescatista = new Persona("jose", "hernandez", TipoDocumento.DNI, "43212098", datosRecatista, LocalDate.of(1995, 8, 7));
 
         LocalDate fechaDeHoy = LocalDate.now();
