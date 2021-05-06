@@ -18,17 +18,7 @@ public class RepositorioInformesTest {
     Foto foto;
     Mascota beto;
     DatosDeContacto datosRecatista;
-    static DuenioMascota pablo;
-    static DatosDeContacto datosPablo;
-    static Persona pabloPersona;
 
-    @BeforeAll
-    public static void crearUsuarios(){
-        datosPablo = new DatosDeContacto(null, "pablo@mail.com");
-        pabloPersona = new Persona("pablo", "Hernandez", TipoDocumento.DNI, "43212098", datosPablo, LocalDate.of(1995, 8, 7) );
-        pablo=new DuenioMascota("pepe","P3p3.3210",pabloPersona);
-
-    }
     @BeforeEach
     public void contextLoad() {
         repositorioInformes = RepositorioInformes.getInstance();

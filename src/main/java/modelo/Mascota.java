@@ -10,8 +10,7 @@ public class Mascota {
    LocalDate fechaNacimiento;
    Sexo sexo;
    String descripcionFisica;
-   List<Caracteristica> caracteristicas; // [Caracteristica("ColorPelo",["Negro","Blanco"])...]
-                                          //new Caracteristica("ColorPelo",["Negro"])
+   List<Caracteristica> caracteristicas;
    List<Foto> fotos;
 
     public Mascota(Animal animal, String nombre, String apodo, LocalDate fechaNacimiento, Sexo sexo, String descripcionFisica, List<Caracteristica> catacteristicas, List<Foto> fotos) {

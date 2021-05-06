@@ -1,7 +1,6 @@
 package modelo;
 
 import excepciones.DatosDeContactoIncompletos;
-import excepciones.LoginInvalidoException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -28,12 +27,6 @@ public class UsuarioTest {
   }
 
   @Test
-  public void testCrearDosUsuariosMismoLogin() {
-    Assertions.assertThrows(LoginInvalidoException.class,()->new DuenioMascota("pepe3","P3p3.3210",pabloPersona));
-  }
-
-
-  @Test
   public void testCrearUsuarioAdministrador(){
 
     Assertions.assertSame(Administrador.class, damian.getClass());
@@ -41,8 +34,8 @@ public class UsuarioTest {
   }
 
   @Test
-  public void testCrearSinDatoDeContacto() {
-    Assertions.assertThrows(DatosDeContactoIncompletos.class,()->new Persona(null, null, TipoDocumento.DNI, "43212098", new DatosDeContacto(), LocalDate.of(1995, 8, 7) ));
+  public void crearSinDatoDeContacto() {
+    Assertions.assertThrows(DatosDeContactoIncompletos.class,()->new Persona(null, null, TipoDocumento.DNI, "43212098", new DatosDeContacto(null,null), LocalDate.of(1995, 8, 7) ));
   }
 
 }
