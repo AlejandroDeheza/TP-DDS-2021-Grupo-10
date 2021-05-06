@@ -1,6 +1,7 @@
 package modelo;
 
 import excepciones.CaracteristicasVacioException;
+import excepciones.ValorCaracteristicaIncompatibleException;
 import org.junit.jupiter.api.*;
 import servicios.repositorios.RepositorioCaracteristicas;
 
@@ -50,5 +51,17 @@ public class CaracteristicasTest {
 		Assertions.assertThrows(CaracteristicasVacioException.class,()->pablo.agregarMascota(beto));
 
 	}
+	@Test
+	@DisplayName("Persona asigna un valor invalido a una caracterstica previamente cargada lanza una exception")
+	public void personaAsignaValorInvalidoACaractersticaGeneraUnaException(){
+		datosPablo = new DatosDeContacto(null, "pablo@mail.com");
+		pabloPersona = new Persona("pablo", "Hernandez", TipoDocumento.DNI, "43212098", datosPablo, LocalDate.of(1995, 8, 7) );
+		pablo =new DuenioMascota("pepe6","P3p3.3210",pabloPersona);
+		Caracteristica caracteristica= new Caracteristica("Castrado", Collections.singletonList("MasOMenos"));
+		List<Caracteristica> listaCaracteristica=new ArrayList<>();
+		listaCaracteristica.add(caracteristica);
+		beto = new Mascota(Animal.PERRO, "beto", "jp", LocalDate.of(2018,3, 4), Sexo.MACHO, "mancito", listaCaracteristica, null );
 
+		Assertions.assertThrows(ValorCaracteristicaIncompatibleException.class,()->pablo.agregarMascota(beto));
+	}
 }
