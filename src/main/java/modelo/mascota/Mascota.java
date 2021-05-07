@@ -23,7 +23,7 @@ public class Mascota {
         this.sexo = sexo;
         this.descripcionFisica = descripcionFisica;
         this.caracteristicas = catacteristicas;
-        this.fotos=fotos;
+        this.fotos = fotos;
     }
     public List<Caracteristica> getCaracteristicas(){
       return caracteristicas;

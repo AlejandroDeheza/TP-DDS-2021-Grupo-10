@@ -1,25 +1,40 @@
 package servicios.validacionUsuario.impl;
 
-import java.io.*;
-
 import excepciones.ArchivoException;
 import excepciones.ContraseniaInvalidaException;
-import servicios.validacionUsuario.Validador;
 
-public class ValidadorContraseniasComunes implements Validador {
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+
+public class ValidadorContrasenia implements ValidadorContrasenias {
 
   private BufferedReader archivoContrasenias;
 
   @Override
-  public void validar(String contrasenia) {
+  public void correrValidaciones(String contrasenia){
+    validarLargoMinimo(contrasenia);
+    validarContraseniasComunes(contrasenia);
+  }
+
+  private void validarLargoMinimo(String password) {
+    if (password.length() < 8) {
+      throw new ContraseniaInvalidaException(
+          "El largo de la contraseña debe tener como mínimo 8 caracteres");
+    }
+  }
+
+
+  private void validarContraseniasComunes(String contrasenia) {
     try {
       this.archivoContrasenias = new BufferedReader(new InputStreamReader(
-          new FileInputStream("src/main/resources/10k-most-common.txt"), "UTF-8"));
+          new FileInputStream("src/main/resources/10k-most-common.txt"), StandardCharsets.UTF_8));
 
-      for (int i = 1; i <= 10000; i++) {
-        if (this.archivoContrasenias.readLine().contentEquals(contrasenia)) {
+      String unaLinea = this.archivoContrasenias.readLine();
+      while (unaLinea != null) {
+        if (unaLinea.contentEquals(contrasenia)) {
           throw new ContraseniaInvalidaException("Es una de las 10.000 contraseñas mas usadas");
         }
+        unaLinea = this.archivoContrasenias.readLine();
       }
     } catch (FileNotFoundException e) {
       throw new ArchivoException(
@@ -39,5 +54,4 @@ public class ValidadorContraseniasComunes implements Validador {
       }
     }
   }
-
 }

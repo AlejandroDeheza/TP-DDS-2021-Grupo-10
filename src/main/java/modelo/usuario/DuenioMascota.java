@@ -9,14 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DuenioMascota extends Usuario {
-	List<Mascota> listaMascotas=new ArrayList<>();
-	private RepositorioCaracteristicas repositorioCaracteristicas= RepositorioCaracteristicas.getInstance();
+
+	List<Mascota> listaMascotas = new ArrayList<>();
+
 	public DuenioMascota(String username, String password, Persona persona) {
 		super(username, password, persona);
 	}
 
 	public void agregarMascota(Mascota mascota){
-		repositorioCaracteristicas.validarCaracteristicasMascotas(mascota.getCaracteristicas());
+		RepositorioCaracteristicas.getInstance().validarCaracteristicasMascotas(mascota.getCaracteristicas());
 		validarExistenciaMascota(mascota);
 		this.listaMascotas.add(mascota);
 	}

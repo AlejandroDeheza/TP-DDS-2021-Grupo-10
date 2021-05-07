@@ -47,7 +47,7 @@ public class DummyData {
 
     public static List<Foto> getDummyFotosMascota() {
         List<Foto> fotosMascota = new ArrayList<>();
-        Foto foto = new Foto();
+        Foto foto = new Foto(null, null);
         fotosMascota.add(foto);
         return fotosMascota;
     }

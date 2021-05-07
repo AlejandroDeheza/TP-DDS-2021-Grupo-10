@@ -9,6 +9,7 @@ import utils.Util;
 
 
 public class RepositorioCaracteristicas {
+
 	private static RepositorioCaracteristicas repositorioCaracteristicas;
 	private List<Caracteristica> listaCaracteristicas = new ArrayList<>();
 	private Util utils = new Util();
@@ -21,7 +22,7 @@ public class RepositorioCaracteristicas {
 	}
 
 	public void agregarCaracteristica(Caracteristica caracteristica) {
-		utils.convertoToLower(caracteristica);
+		utils.convertToLower(caracteristica);
 		listaCaracteristicas.add(caracteristica);
 	}
 
@@ -36,7 +37,7 @@ public class RepositorioCaracteristicas {
 	}
 
 	private void esValorValido(Caracteristica caracteristica) {
-		utils.convertoToLower(caracteristica);
+		utils.convertToLower(caracteristica);
 		List<Caracteristica> listaCaracteristicasFiltered = listaCaracteristicas
 				.stream()
 				.filter(c -> c.getNombreCaracteristica().equals(caracteristica.getNombreCaracteristica())).collect(Collectors.toList());

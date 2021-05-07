@@ -2,16 +2,7 @@
 
 ## Diagrama de clases
 
-
-
-## Explicacion
-
-
-
-## Pseudocodigo
-
-
-
+[Diagrama](https://lucid.app/documents/view/372f27ea-7637-4845-92ed-b14d86ed43ea)
 
 # Validar el proyecto de forma exahustiva
 

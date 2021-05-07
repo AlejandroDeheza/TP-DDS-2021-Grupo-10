@@ -4,11 +4,11 @@ import excepciones.DatosDeContactoIncompletosException;
 import modelo.persona.DatosDeContacto;
 import modelo.persona.Persona;
 import modelo.persona.TipoDocumento;
-import modelo.usuario.Administrador;
-import modelo.usuario.DuenioMascota;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import utils.DummyData;
 
 import java.time.LocalDate;
 
@@ -29,6 +29,19 @@ public class UsuarioTest {
     datosDamian = new DatosDeContacto("1143091234", null);
     damianPersona = new Persona("damian", "perez", TipoDocumento.DNI, "49102921", datosDamian, LocalDate.of(2001,4,1) );
     damian = new Administrador("damian", "Awqde1oP", damianPersona);
+  }
+
+  @Test
+  @DisplayName("se puede crear un usuario valido")
+  public void sePuedeCrearUnUsuarioValido(){
+    Assertions.assertDoesNotThrow(() -> DummyData.getDummyDuenioMascota());
+  }
+
+  @Test
+  @DisplayName("un usuario dummy se puede autenticar correctamente")
+  public void unUsuarioDummySePuedeAutenticarCorrectamente(){
+    DuenioMascota duenioMascota = DummyData.getDummyDuenioMascota();
+    Assertions.assertDoesNotThrow(() -> duenioMascota.autenticarUsuario("Password1234"));
   }
 
   @Test
