@@ -9,7 +9,7 @@ public class ValidadorAutenticacion {
 
   private String contraseniaCorrecta;
   private LocalTime ultimoIntentoDeSesionFallido = LocalTime.now();
-  private Long contadorIntentosDeSesionFallidos = Long.valueOf(0);
+  private Long contadorIntentosDeSesionFallidos = 0L;
 
   public ValidadorAutenticacion(String contraseniaCorrecta){
     this.contraseniaCorrecta = contraseniaCorrecta;
@@ -19,7 +19,7 @@ public class ValidadorAutenticacion {
 
     if (falloLaAutenticacionHacePoco()) {
 
-      Long tiempoEsperaMaximo = Long.valueOf(60);
+      long tiempoEsperaMaximo = 60L;
       if (tiempoQueEstaEsperandoUsuario() > tiempoEsperaMaximo) {
         throw new AutenticacionConsecutivaException(
             "Debe esperar " + tiempoEsperaMaximo + " minutos para intentar iniciar sesion");
@@ -31,12 +31,12 @@ public class ValidadorAutenticacion {
 
     if (laContraseniaEsIncorrecta(contraseniaIngresada)) {
       ultimoIntentoDeSesionFallido = LocalTime.now();
-      this.contadorIntentosDeSesionFallidos = Long.valueOf(contadorIntentosDeSesionFallidos + 1);
+      this.contadorIntentosDeSesionFallidos = contadorIntentosDeSesionFallidos + 1;
       throw new AutenticacionInvalidaException("La contraseña ingresada es incorrecta");
     }
 
     // se ejecuta si todo esta ok
-    this.contadorIntentosDeSesionFallidos = Long.valueOf(0);
+    this.contadorIntentosDeSesionFallidos = 0L;
     concederPermisos();
   }
 

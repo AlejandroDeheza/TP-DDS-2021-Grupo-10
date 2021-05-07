@@ -13,7 +13,7 @@ public class Voluntario extends Usuario {
   }
 
   public List<InformeMascotaEncontrada> obtenerInformesMascotasEncontradasDeUltimos10Dias(){
-    return RepositorioInformes.getInstance().listarMascotasEncontradasEnUltimosNDias(Integer.valueOf(10));
+    return RepositorioInformes.getInstance().listarMascotasEncontradasEnUltimosNDias(10);
   }
 
   public void confirmarAvisoAlDuenio(InformeMascotaEncontrada informeAProcesar){

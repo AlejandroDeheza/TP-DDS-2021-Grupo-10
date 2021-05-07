@@ -35,7 +35,7 @@ public class RepositorioInformesTest {
     public void contextLoad() {
         repositorioInformes = RepositorioInformes.getInstance();
         fotosMascota = new ArrayList<>();
-        foto = new Foto();
+        foto = new Foto(null, null);
         fotosMascota.add(foto);
         Caracteristica caracteristica= new Caracteristica("Comportamiento", Collections.singletonList("Bueno"));
         List<Caracteristica> listaCaracteristica=new ArrayList<>();

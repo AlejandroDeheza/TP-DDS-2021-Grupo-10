@@ -3,6 +3,7 @@ package modelo.mascota.caracteristica;
 import java.util.List;
 
 public class Caracteristica {
+
 	String nombreCaracteristica;
 	List<String> valoresCaracteristicas;
 

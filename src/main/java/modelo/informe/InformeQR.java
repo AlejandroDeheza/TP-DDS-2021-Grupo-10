@@ -9,7 +9,8 @@ public class InformeQR {
     private Mascota mascota;
 
     public InformeQR(DuenioMascota duenioMascota, Mascota mascota) {
-        // TODO:  Falta agregar funcionalidad
+        this.duenioMascota = duenioMascota;
+        this.mascota = mascota;
     }
 
     public DuenioMascota getDuenioMascota() {

@@ -2,7 +2,7 @@ package modelo.usuario;
 
 import modelo.persona.Persona;
 import servicios.validacionUsuario.impl.ValidadorAutenticacion;
-import servicios.validacionUsuario.impl.ValidadorContrasenias;
+import servicios.validacionUsuario.impl.ValidadorContrasenia;
 
 public abstract class Usuario {
 
@@ -12,15 +12,25 @@ public abstract class Usuario {
   private ValidadorAutenticacion validadorAutenticacion;
 
   public Usuario(String usuario, String contrasenia, Persona persona) {
-    new ValidadorContrasenias().validarContrasenia(contrasenia);
+    new ValidadorContrasenia().correrValidaciones(contrasenia);
     this.usuario = usuario;
     this.contrasenia = contrasenia;
     this.persona = persona;
-    validadorAutenticacion = new ValidadorAutenticacion(contrasenia);
   }
 
   public void autenticarUsuario(String contraseniaIngresada){
+    if(this.validadorAutenticacion == null)
+      this.validadorAutenticacion = new ValidadorAutenticacion(this.contrasenia);
+
     validadorAutenticacion.autenticarUsuario(contraseniaIngresada);
+  }
+
+  public String getUsuario() {
+    return usuario;
+  }
+
+  public Persona getPersona() {
+    return persona;
   }
 
 }
