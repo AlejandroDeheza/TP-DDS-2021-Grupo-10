@@ -4,10 +4,6 @@
 
 [Diagrama](https://lucid.app/lucidchart/invitations/accept/inv_4c8076c6-f097-4415-9ee2-bedfc32bf15f?viewport_loc=-1413%2C-2440%2C4779%2C2300%2C0_0)
 
-## Explicacion
-
-
-
 
 # Validar el proyecto de forma exahustiva
 
