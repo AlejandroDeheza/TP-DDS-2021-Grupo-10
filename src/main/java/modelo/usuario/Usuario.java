@@ -12,7 +12,7 @@ public abstract class Usuario {
   private ValidadorAutenticacion validadorAutenticacion;
 
   public Usuario(String usuario, String contrasenia, Persona persona) {
-    new ValidadorContrasenias().validar(contrasenia);
+    new ValidadorContrasenias().validarContrasenia(contrasenia);
     this.usuario = usuario;
     this.contrasenia = contrasenia;
     this.persona = persona;

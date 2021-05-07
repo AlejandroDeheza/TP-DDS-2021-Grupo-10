@@ -5,11 +5,12 @@ import excepciones.ContraseniaInvalidaException;
 
 import java.io.*;
 
-public class ValidadorContrasenias {
+public class ValidadorContrasenias implements Validador {
 
   private BufferedReader archivoContrasenias;
 
-  public void validar(String contrasenia){
+  @Override
+  public void validarContrasenia(String contrasenia){
     validarLargoMinimo(contrasenia);
     validarContrasiasComunes(contrasenia);
 
