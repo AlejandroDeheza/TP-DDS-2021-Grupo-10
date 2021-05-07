@@ -1,21 +1,54 @@
 package servicios.validacionUsuario.impl;
 
-import servicios.validacionUsuario.Validador;
+import excepciones.ArchivoException;
+import excepciones.ContraseniaInvalidaException;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
 
 public class ValidadorContrasenias {
 
-  private List<Validador> validadores;
-
-  public ValidadorContrasenias(){
-    this.validadores = new ArrayList<>();
-    this.validadores.add(new ValidadorContraseniasComunes());
-    this.validadores.add(new ValidadorLargoMinimo());
-  }
+  private BufferedReader archivoContrasenias;
 
   public void validar(String contrasenia){
-    this.validadores.forEach(validador -> validador.validar(contrasenia));
+    validarLargoMinimo(contrasenia);
+    validarContrasiasComunes(contrasenia);
+
+  }
+
+  private void validarLargoMinimo(String password) {
+    if (password.length() < 8) {
+      throw new ContraseniaInvalidaException(
+          "El largo de la contraseña debe tener como mínimo 8 caracteres");
+    }
+  }
+
+
+  private void validarContrasiasComunes(String contrasenia) {
+    try {
+      this.archivoContrasenias = new BufferedReader(new InputStreamReader(
+          new FileInputStream("src/main/resources/10k-most-common.txt"), "UTF8"));
+
+      for (int i = 1; i <= 10000; i++) {
+        if (this.archivoContrasenias.readLine().contentEquals(contrasenia)) {
+          throw new ContraseniaInvalidaException("Es una de las 10.000 contraseñas mas usadas");
+        }
+      }
+    } catch (FileNotFoundException e) {
+      throw new ArchivoException(
+          "Algo salio mal al usar validar() en clase ValidadorContraseniasComunes", e);
+    } catch (IOException e) {
+      throw new ArchivoException(
+          "Algo salio mal al usar validar() en clase ValidadorContraseniasComunes", e);
+    } finally {
+      try {
+        if (this.archivoContrasenias != null) {
+          this.archivoContrasenias.close();
+        }
+      } catch (Exception e) {
+        throw new ArchivoException(
+            "Algo salio mal al cerrar archivo en validar() en clase ValidadorContraseniasComunes",
+            e);
+      }
+    }
   }
 }
