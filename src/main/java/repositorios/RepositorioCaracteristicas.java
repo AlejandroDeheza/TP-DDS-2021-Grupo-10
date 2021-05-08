@@ -5,12 +5,12 @@ import excepciones.ValorCaracteristicaIncompatibleException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import modelo.mascota.caracteristica.CaracteristicaConValores;
+import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 
 public class RepositorioCaracteristicas {
 
 	private static RepositorioCaracteristicas repositorioCaracteristicas;
-	private List<CaracteristicaConValores> listaCaracteristicas = new ArrayList<>();
+	private List<CaracteristicaConValoresPosibles> listaCaracteristicas = new ArrayList<>();
 
 	private RepositorioCaracteristicas(){}
 
@@ -21,17 +21,17 @@ public class RepositorioCaracteristicas {
 		return repositorioCaracteristicas;
 	}
 
-	public void agregarCaracteristica(CaracteristicaConValores caracteristica) {
+	public void agregarCaracteristica(CaracteristicaConValoresPosibles caracteristica) {
 		listaCaracteristicas.add(caracteristica);
 	}
 
-	public List<CaracteristicaConValores> getListaCaracteristicas() {
+	public List<CaracteristicaConValoresPosibles> getCaracteristicas() {
 		return listaCaracteristicas;
 	}
 
 	public void validarCaracteristica(String nombreCaracteristica, String valorCaracteristica) {
 
-		List<CaracteristicaConValores> listaCaracteristicasFiltered = listaCaracteristicas
+		List<CaracteristicaConValoresPosibles> listaCaracteristicasFiltered = listaCaracteristicas
 				.stream()
 				.filter(c -> c.getNombreCaracteristica().equals(nombreCaracteristica))
 				.collect(Collectors.toList());

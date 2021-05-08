@@ -2,12 +2,12 @@ package modelo.mascota.caracteristica;
 
 import java.util.List;
 
-public class CaracteristicaConValores {
+public class CaracteristicaConValoresPosibles {
 
   String nombreCaracteristica;
   List<String> valoresCaracteristicas;
 
-  public CaracteristicaConValores(String nombreCaracteristica, List<String> valoresCaracteristicas) {
+  public CaracteristicaConValoresPosibles(String nombreCaracteristica, List<String> valoresCaracteristicas) {
     this.nombreCaracteristica = nombreCaracteristica;
     this.valoresCaracteristicas = valoresCaracteristicas;
   }

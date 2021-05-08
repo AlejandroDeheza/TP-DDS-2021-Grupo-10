@@ -5,7 +5,7 @@ import modelo.mascota.Foto;
 import modelo.mascota.Mascota;
 import modelo.mascota.Sexo;
 import modelo.mascota.caracteristica.Caracteristica;
-import modelo.mascota.caracteristica.CaracteristicaConValores;
+import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 import modelo.persona.DatosDeContacto;
 import modelo.persona.Persona;
 import modelo.persona.TipoDocumento;
@@ -47,8 +47,8 @@ public class DummyData {
         return new Administrador("Admin", "Password1234", getDummyPersona());
     }
 
-    public static CaracteristicaConValores getDummyCaracteristicaParaAdmin() {
-        return new CaracteristicaConValores("Comportamiento", Arrays.asList("Bueno", "Malo"));
+    public static CaracteristicaConValoresPosibles getDummyCaracteristicaParaAdmin() {
+        return new CaracteristicaConValoresPosibles("Comportamiento", Arrays.asList("Bueno", "Malo"));
     }
 
     public static List<Caracteristica> getDummyListaCaracteristicasParaMascota() {

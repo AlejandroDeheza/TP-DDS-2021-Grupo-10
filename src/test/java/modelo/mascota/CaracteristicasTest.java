@@ -3,7 +3,7 @@ package modelo.mascota;
 import excepciones.CaracteristicasInvalidaException;
 import excepciones.ValorCaracteristicaIncompatibleException;
 import modelo.mascota.caracteristica.Caracteristica;
-import modelo.mascota.caracteristica.CaracteristicaConValores;
+import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 import modelo.usuario.Administrador;
 import org.junit.jupiter.api.*;
 import repositorios.RepositorioCaracteristicas;
@@ -12,7 +12,7 @@ import utils.DummyData;
 public class CaracteristicasTest {
 
 	Administrador admin = DummyData.getDummyAdministrador();
-	CaracteristicaConValores caracteristica = DummyData.getDummyCaracteristicaParaAdmin();
+	CaracteristicaConValoresPosibles caracteristica = DummyData.getDummyCaracteristicaParaAdmin();
 
 	@BeforeEach
 	public void contextLoad() {
@@ -23,7 +23,7 @@ public class CaracteristicasTest {
 	@DisplayName("un administrador puede ingresar una caracterstica nueva")
 	public void administradorCaracteristicaTest(){
 		Assertions.assertTrue(RepositorioCaracteristicas.getInstance()
-				.getListaCaracteristicas().contains(caracteristica));
+				.getCaracteristicas().contains(caracteristica));
 	}
 
 	@Test
