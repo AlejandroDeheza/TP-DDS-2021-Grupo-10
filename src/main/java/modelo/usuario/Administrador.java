@@ -1,9 +1,8 @@
 package modelo.usuario;
 
-import modelo.mascota.caracteristica.Caracteristica;
+import modelo.mascota.caracteristica.CaracteristicaConValores;
 import modelo.persona.Persona;
 import repositorios.RepositorioCaracteristicas;
-
 
 public class Administrador extends Usuario {
 
@@ -11,7 +10,7 @@ public class Administrador extends Usuario {
 		super(username, password, persona);
 	}
 
-	public void agregarCaracteristica(Caracteristica caracteristica){
+	public void agregarCaracteristica(CaracteristicaConValores caracteristica){
 		RepositorioCaracteristicas.getInstance().agregarCaracteristica(caracteristica);
 	}
 }

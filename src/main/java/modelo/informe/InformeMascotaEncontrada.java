@@ -3,14 +3,15 @@ package modelo.informe;
 import excepciones.InformeMascotaEncontradaInvalidaException;
 import modelo.mascota.Foto;
 import modelo.persona.Persona;
-
+import modelo.usuario.DuenioMascota;
+import repositorios.RepositorioInformes;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class InformeMascotaEncontrada {
 
-    private InformeQR codigoQRInformacion;
+    private DuenioMascota duenioMascota;
     private Persona rescatista;
     private LocalDate fechaEncuentroAnimal;
     private String direccion;
@@ -18,20 +19,24 @@ public class InformeMascotaEncontrada {
     private Ubicacion lugarDeEncuentro;
     private String estadoActualMascota;
 
-    public InformeMascotaEncontrada(InformeQR codigoQRInformacion, Persona rescatista, LocalDate fechaEncuentroAnimal, String direccion, List<Foto> fotosAnimal, Ubicacion lugarDeEncuentro, String estadoActualMascota) {
-        this.codigoQRInformacion = codigoQRInformacion;
-        this.rescatista = rescatista;
-        this.fechaEncuentroAnimal = fechaEncuentroAnimal;
-        this.direccion = direccion;
+    public InformeMascotaEncontrada(DuenioMascota duenioMascota, Persona rescatista, LocalDate fechaEncuentroAnimal, String direccion, List<Foto> fotosAnimal, Ubicacion lugarDeEncuentro, String estadoActualMascota) {
+
         if(fotosAnimal == null || fotosAnimal.isEmpty()){
             throw new InformeMascotaEncontradaInvalidaException("Se debe ingresar al menos 1 Foto");
         }
+        this.duenioMascota = duenioMascota;
+        this.rescatista = rescatista;
+        this.fechaEncuentroAnimal = fechaEncuentroAnimal;
+        this.direccion = direccion;
         this.fotosAnimal.addAll(fotosAnimal);
         this.lugarDeEncuentro = lugarDeEncuentro;
         this.estadoActualMascota = estadoActualMascota;
+
+        RepositorioInformes.getInstance().
+        agregarInformeMascotaEncontrada(this);
     }
 
-    public InformeQR getCodigoQRInformacion() { return codigoQRInformacion; }
+    public DuenioMascota getDuenioMascota() { return duenioMascota; }
 
     public Persona getRescatista() {
         return rescatista;

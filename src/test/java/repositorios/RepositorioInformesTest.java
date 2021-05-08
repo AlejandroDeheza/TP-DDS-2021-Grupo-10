@@ -2,56 +2,35 @@ package repositorios;
 
 import excepciones.InformeMascotaEncontradaInvalidaException;
 import modelo.informe.InformeMascotaEncontrada;
-import modelo.informe.InformeQR;
 import modelo.informe.Ubicacion;
-import modelo.mascota.Animal;
 import modelo.mascota.Foto;
-import modelo.mascota.Mascota;
-import modelo.mascota.Sexo;
-import modelo.mascota.caracteristica.Caracteristica;
-import modelo.persona.DatosDeContacto;
 import modelo.persona.Persona;
-import modelo.persona.TipoDocumento;
+import modelo.usuario.Administrador;
 import modelo.usuario.DuenioMascota;
 import org.junit.jupiter.api.*;
-
+import utils.DummyData;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class RepositorioInformesTest {
 
-    InformeMascotaEncontrada informe;
     RepositorioInformes repositorioInformes;
-    List<Foto> fotosMascota;
-    DuenioMascota duenioMascota;
-    Foto foto;
-    Mascota beto;
-    DatosDeContacto datosRecatista;
+
+    DuenioMascota duenioMascota = DummyData.getDummyDuenioMascota();
+    Persona rescatista = DummyData.getDummyPersona();
+    LocalDate fechaDeHoy = LocalDate.now();
+    String direccion = "Av. Corrientes 576";
+    List<Foto> fotosMascota = DummyData.getDummyFotosMascota();
+    Ubicacion ubicacion = new Ubicacion("57,44","57,55");
+    String estadoActualMascota = "Bien de salud, pero asustado";
 
     @BeforeEach
     public void contextLoad() {
         repositorioInformes = RepositorioInformes.getInstance();
-        fotosMascota = new ArrayList<>();
-        foto = new Foto(null, null);
-        fotosMascota.add(foto);
-        Caracteristica caracteristica= new Caracteristica("Comportamiento", Collections.singletonList("Bueno"));
-        List<Caracteristica> listaCaracteristica=new ArrayList<>();
-        listaCaracteristica.add(caracteristica);
-        beto = new Mascota(Animal.PERRO, "pablo", "jp", LocalDate.of(2018,3, 4), Sexo.MACHO, "mancito", listaCaracteristica, fotosMascota );
-        datosRecatista = new DatosDeContacto(null, "pablo@mail.com");
-        Persona rescatista = new Persona("pablo", "Hernandez", TipoDocumento.DNI, "43212098", datosRecatista, LocalDate.of(1995, 8, 7));
-        Persona duenioMascotaPersona = new Persona("Javier", "Fraile", TipoDocumento.DNI, "35353535", datosRecatista, LocalDate.of(1995, 8, 7));
-        duenioMascota= new DuenioMascota("eldueniosabroso", "soylomas", duenioMascotaPersona);
-
-        InformeQR informeQR = new InformeQR(duenioMascota, beto);
-        LocalDate fechaDeHoy = LocalDate.now();
-        String direccion = "Av. Corrientes 576";
-        Ubicacion ubicacion = new Ubicacion("57,44","57,55");
-        String estadoActualMascota = "Bien de salud, pero asustado";
-        informe = new InformeMascotaEncontrada(informeQR,rescatista,fechaDeHoy,direccion,fotosMascota,ubicacion,estadoActualMascota);
+        Administrador admin = DummyData.getDummyAdministrador();
+        admin.agregarCaracteristica(DummyData.getDummyCaracteristicaParaAdmin());
     }
 
     @AfterEach
@@ -62,39 +41,36 @@ public class RepositorioInformesTest {
     }
 
     @Test
-    public void registrarUnaMascotaPerdidaAgregaInformeAInformesPendientes() {
+    @DisplayName("generar un InformeMascotaPerdida agrega un informe a InformesPendientes")
+    public void InformesPendientesTest() {
         Assertions.assertEquals(repositorioInformes.getInformesPendientes().size(), 0);
-        repositorioInformes.agregarInformeMascotaEncontrada(informe);
+        new InformeMascotaEncontrada(
+                duenioMascota, rescatista, fechaDeHoy, direccion, fotosMascota, ubicacion, estadoActualMascota);
         Assertions.assertEquals(repositorioInformes.getInformesPendientes().size(), 1);
     }
 
     @Test
-    public void listarMascotasEncontradasEnLosUltimos10DiasDevuelveUnRegistroInsertadoPreviamente(){
-        Assertions.assertEquals(repositorioInformes.listarMascotasEncontradasEnUltimosNDias(10).size(),0);
-        repositorioInformes.agregarInformeMascotaEncontrada(informe);
-        Assertions.assertEquals(repositorioInformes.listarMascotasEncontradasEnUltimosNDias(10).size(),1);
+    @DisplayName("listarMascotasEncontradasEnLosUltimos10Dias() devuelve un registro insertado previamente")
+    public void listarMascotasEncontradasEnLosUltimos10DiasTest(){
+        Assertions.assertEquals(
+            repositorioInformes.listarMascotasEncontradasEnUltimosNDias(10).size(),0);
+        new InformeMascotaEncontrada(
+                duenioMascota, rescatista, fechaDeHoy, direccion, fotosMascota, ubicacion, estadoActualMascota);
+        Assertions.assertEquals(
+            repositorioInformes.listarMascotasEncontradasEnUltimosNDias(10).size(),1);
     }
 
     @Test
-    public void registrarInformeMascotaEncontradaSinFoto(){
-        Assertions.assertThrows(InformeMascotaEncontradaInvalidaException.class,() -> {
-            repositorioInformes.agregarInformeMascotaEncontrada(crearConstructorSinFoto());
-        });
-
+    @DisplayName("un InformeMascotaEncontrada sin fotos genera InformeMascotaEncontradaInvalidaException")
+    public void InformeMascotaEncontradaInvalidaExceptionTest(){
+        Assertions.assertThrows(
+            InformeMascotaEncontradaInvalidaException.class,() -> generarInformeMascotaEncontradaSinFoto());
     }
 
-    public InformeMascotaEncontrada crearConstructorSinFoto(){
-        repositorioInformes = RepositorioInformes.getInstance();
-        InformeQR informeQR = new InformeQR(duenioMascota,beto);
-        Persona rescatista = new Persona("jose", "hernandez", TipoDocumento.DNI, "43212098", datosRecatista, LocalDate.of(1995, 8, 7));
-
-        LocalDate fechaDeHoy = LocalDate.now();
-        String direccion = "Av. Corrientes 576";
+    public void generarInformeMascotaEncontradaSinFoto(){
         fotosMascota = new ArrayList<>();
-        Ubicacion ubicacion = new Ubicacion("57,44","57,55");
-        String estadoActualMascota = "Bien de salud, pero asustado";
-        informe = new InformeMascotaEncontrada(informeQR,rescatista,fechaDeHoy,direccion,fotosMascota,ubicacion,estadoActualMascota);
-        return informe;
+        new InformeMascotaEncontrada(
+            duenioMascota,rescatista,fechaDeHoy,direccion,fotosMascota,ubicacion,estadoActualMascota);
     }
 
 }

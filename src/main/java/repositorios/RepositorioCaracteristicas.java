@@ -1,18 +1,18 @@
 package repositorios;
-import excepciones.CaracteristicasVacioException;
+
+import excepciones.CaracteristicasInvalidaException;
 import excepciones.ValorCaracteristicaIncompatibleException;
-import modelo.mascota.caracteristica.Caracteristica;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import utils.Util;
-
+import modelo.mascota.caracteristica.CaracteristicaConValores;
 
 public class RepositorioCaracteristicas {
 
 	private static RepositorioCaracteristicas repositorioCaracteristicas;
-	private List<Caracteristica> listaCaracteristicas = new ArrayList<>();
-	private Util utils = new Util();
+	private List<CaracteristicaConValores> listaCaracteristicas = new ArrayList<>();
+
+	private RepositorioCaracteristicas(){}
 
 	public static RepositorioCaracteristicas getInstance() {
 		if (repositorioCaracteristicas == null) {
@@ -21,35 +21,31 @@ public class RepositorioCaracteristicas {
 		return repositorioCaracteristicas;
 	}
 
-	public void agregarCaracteristica(Caracteristica caracteristica) {
-		utils.convertToLower(caracteristica);
+	public void agregarCaracteristica(CaracteristicaConValores caracteristica) {
 		listaCaracteristicas.add(caracteristica);
 	}
 
-	public List<Caracteristica> getListaCaracteristicas() {
+	public List<CaracteristicaConValores> getListaCaracteristicas() {
 		return listaCaracteristicas;
 	}
 
-	public void validarCaracteristicasMascotas(List<Caracteristica> catacteristicas) {
-		catacteristicas.forEach(caracteristica -> {
-			esValorValido(caracteristica);
-		});
-	}
+	public void validarCaracteristica(String nombreCaracteristica, String valorCaracteristica) {
 
-	private void esValorValido(Caracteristica caracteristica) {
-		utils.convertToLower(caracteristica);
-		List<Caracteristica> listaCaracteristicasFiltered = listaCaracteristicas
+		List<CaracteristicaConValores> listaCaracteristicasFiltered = listaCaracteristicas
 				.stream()
-				.filter(c -> c.getNombreCaracteristica().equals(caracteristica.getNombreCaracteristica())).collect(Collectors.toList());
+				.filter(c -> c.getNombreCaracteristica().equals(nombreCaracteristica))
+				.collect(Collectors.toList());
 
 		if (listaCaracteristicasFiltered.isEmpty())
-			throw new CaracteristicasVacioException("La caracteristica no coincide con la agregada");
+			throw new CaracteristicasInvalidaException("El tipo de caracteristica ingresada no es valida");
+
 		Boolean contieneCaracteristica = listaCaracteristicasFiltered
 					.get(0)
 					.getValoresCaracteristicas()
-					.contains(caracteristica.getValoresCaracteristicas().get(0)); //La caractersitica esta en la lista
+					.contains(valorCaracteristica); //La caractersitica esta en la lista
 
 			if (!contieneCaracteristica)
-				throw new ValorCaracteristicaIncompatibleException("Los valores de la caracteristica no es valida ");
+				throw new ValorCaracteristicaIncompatibleException(
+						"El valor de la caracteristica ingresada no es valida ");
 	}
 }

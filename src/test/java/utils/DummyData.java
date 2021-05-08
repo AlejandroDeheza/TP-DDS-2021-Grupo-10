@@ -1,21 +1,19 @@
 package utils;
 
-import modelo.informe.InformeMascotaEncontrada;
-import modelo.informe.InformeQR;
-import modelo.informe.Ubicacion;
 import modelo.mascota.Animal;
 import modelo.mascota.Foto;
 import modelo.mascota.Mascota;
 import modelo.mascota.Sexo;
 import modelo.mascota.caracteristica.Caracteristica;
+import modelo.mascota.caracteristica.CaracteristicaConValores;
 import modelo.persona.DatosDeContacto;
 import modelo.persona.Persona;
 import modelo.persona.TipoDocumento;
+import modelo.usuario.Administrador;
 import modelo.usuario.DuenioMascota;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 public class DummyData {
@@ -25,24 +23,39 @@ public class DummyData {
     }
 
     public static Persona getDummyPersona() {
-        return new Persona("PersonaNombre", "PersonaApellido", TipoDocumento.DNI, "11111111",getDummyDatosDeContacto(), LocalDate.of(1995, 8, 7));
+        return new Persona("PersonaNombre", "PersonaApellido", TipoDocumento.DNI,
+            "11111111", getDummyDatosDeContacto(),
+            LocalDate.of(1995, 8, 7));
+    }
+
+    public static Persona getDummyPersonaSinDatosDeContacto() {
+        return new Persona("PersonaNombre", "PersonaApellido", TipoDocumento.DNI,
+            "11111111", null,
+            LocalDate.of(1995, 8, 7));
+    }
+
+    public static Persona getDummyPersonaSinDatosDeContactoNiNombreNiApellido() {
+        return new Persona(null, null, TipoDocumento.DNI, "11111111",
+            new DatosDeContacto(null, null), LocalDate.of(1995, 8, 7));
     }
 
     public static DuenioMascota getDummyDuenioMascota() {
         return new DuenioMascota("DuenioMascota", "Password1234", getDummyPersona());
     }
 
-    public static InformeMascotaEncontrada getDummyInformeMascotaEncontrada() {
-        InformeQR informeQR = new InformeQR(getDummyDuenioMascota(), getDummyMascota());
-        LocalDate fechaDeHoy = LocalDate.now();
-        String direccion = "Av. Corrientes 576";
-        Ubicacion ubicacion = new Ubicacion("57,44","57,55");
-        String estadoActualMascota = "Bien de salud, pero asustado";
-        return new InformeMascotaEncontrada(informeQR,getDummyPersona(),fechaDeHoy,direccion,getDummyFotosMascota(),ubicacion,estadoActualMascota);
+    public static Administrador getDummyAdministrador() {
+        return new Administrador("Admin", "Password1234", getDummyPersona());
     }
 
-    public static Mascota getDummyMascota() {
-        return new Mascota(Animal.PERRO, "Perro", "PerroApodo",LocalDate.of(2018, 3, 4), Sexo.MACHO, "Descripcion Dummy", getDummyListaCaracteristicas(), getDummyFotosMascota());
+    public static CaracteristicaConValores getDummyCaracteristicaParaAdmin() {
+        return new CaracteristicaConValores("Comportamiento", Arrays.asList("Bueno", "Malo"));
+    }
+
+    public static List<Caracteristica> getDummyListaCaracteristicasParaMascota() {
+        Caracteristica caracteristica = new Caracteristica("Comportamiento", "Bueno");
+        List<Caracteristica> listaCaracteristica = new ArrayList<>();
+        listaCaracteristica.add(caracteristica);
+        return listaCaracteristica;
     }
 
     public static List<Foto> getDummyFotosMascota() {
@@ -52,11 +65,10 @@ public class DummyData {
         return fotosMascota;
     }
 
-    public static List<Caracteristica> getDummyListaCaracteristicas() {
-        Caracteristica caracteristica = new Caracteristica("Comportamiento", Collections.singletonList("Bueno"));
-        List<Caracteristica> listaCaracteristica = new ArrayList<>();
-        listaCaracteristica.add(caracteristica);
-        return listaCaracteristica;
+    public static Mascota getDummyMascota() {
+        return new Mascota(Animal.PERRO, "Perro", "PerroApodo",
+            LocalDate.of(2018, 3, 4), Sexo.MACHO, "Descripcion Dummy",
+            getDummyListaCaracteristicasParaMascota(), getDummyFotosMascota());
     }
 
 }

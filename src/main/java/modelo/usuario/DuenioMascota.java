@@ -3,8 +3,6 @@ package modelo.usuario;
 import excepciones.DuenioMascotaMascotaRegistradaException;
 import modelo.mascota.Mascota;
 import modelo.persona.Persona;
-import repositorios.RepositorioCaracteristicas;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +15,6 @@ public class DuenioMascota extends Usuario {
 	}
 
 	public void agregarMascota(Mascota mascota){
-		RepositorioCaracteristicas.getInstance().validarCaracteristicasMascotas(mascota.getCaracteristicas());
 		validarExistenciaMascota(mascota);
 		this.listaMascotas.add(mascota);
 	}
@@ -27,13 +24,8 @@ public class DuenioMascota extends Usuario {
 	}
 
 	private void validarExistenciaMascota(Mascota mascota) {
-		if(this.listaMascotas.contains(mascota)){
+		if(this.listaMascotas.contains(mascota))
 			throw new DuenioMascotaMascotaRegistradaException("Ya tiene registrada la mascota");
-		}
-	}
-
-	public List<Mascota> getListaMascotas() {
-		return listaMascotas;
 	}
 
 }

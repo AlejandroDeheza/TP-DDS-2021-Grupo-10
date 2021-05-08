@@ -10,7 +10,7 @@ public class DatosDeContacto {
   }
 
   public Boolean hayAlgunDatoDeContacto(){
-    return (this.telefono !=null || this.email!=null);
+    return (this.telefono != null || this.email != null);
   }
 
 }

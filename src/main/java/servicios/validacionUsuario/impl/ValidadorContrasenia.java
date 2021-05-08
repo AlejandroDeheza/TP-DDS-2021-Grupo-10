@@ -2,13 +2,15 @@ package servicios.validacionUsuario.impl;
 
 import excepciones.ArchivoException;
 import excepciones.ContraseniaInvalidaException;
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ValidadorContrasenia implements ValidadorContrasenias {
 
   private BufferedReader archivoContrasenias;
+  private List<String> contraseniasComunes = new ArrayList<>();
 
   @Override
   public void correrValidaciones(String contrasenia){
@@ -23,25 +25,28 @@ public class ValidadorContrasenia implements ValidadorContrasenias {
     }
   }
 
+  private void validarContraseniasComunes(String contrasenia){
+    this.obtenerContraseniasComunes();
+    if (contraseniasComunes.contains(contrasenia))
+      throw new ContraseniaInvalidaException("Es una de las 10.000 contraseñas mas usadas");
+  }
 
-  private void validarContraseniasComunes(String contrasenia) {
+  private void obtenerContraseniasComunes() {
     try {
       this.archivoContrasenias = new BufferedReader(new InputStreamReader(
           new FileInputStream("src/main/resources/10k-most-common.txt"), StandardCharsets.UTF_8));
 
       String unaLinea = this.archivoContrasenias.readLine();
       while (unaLinea != null) {
-        if (unaLinea.contentEquals(contrasenia)) {
-          throw new ContraseniaInvalidaException("Es una de las 10.000 contraseñas mas usadas");
-        }
+        contraseniasComunes.add(unaLinea);
         unaLinea = this.archivoContrasenias.readLine();
       }
     } catch (FileNotFoundException e) {
       throw new ArchivoException(
-          "Algo salio mal al usar validar() en clase ValidadorContraseniasComunes", e);
+          "Algo salio mal al usar obtenerContraseniasComunes() en clase ValidadorContraseniasComunes", e);
     } catch (IOException e) {
       throw new ArchivoException(
-          "Algo salio mal al usar validar() en clase ValidadorContraseniasComunes", e);
+          "Algo salio mal al usar obtenerContraseniasComunes() en clase ValidadorContraseniasComunes", e);
     } finally {
       try {
         if (this.archivoContrasenias != null) {
@@ -49,7 +54,8 @@ public class ValidadorContrasenia implements ValidadorContrasenias {
         }
       } catch (Exception e) {
         throw new ArchivoException(
-            "Algo salio mal al cerrar archivo en validar() en clase ValidadorContraseniasComunes",
+            "Algo salio mal al cerrar archivo en obtenerContraseniasComunes()" +
+                " en clase ValidadorContraseniasComunes",
             e);
       }
     }
