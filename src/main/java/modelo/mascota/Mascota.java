@@ -15,7 +15,8 @@ public class Mascota {
   List<Caracteristica> caracteristicas;
   List<Foto> fotos;
 
-  public Mascota(Animal animal, String nombre, String apodo, LocalDate fechaNacimiento, Sexo sexo, String descripcionFisica, List<Caracteristica> catacteristicas, List<Foto> fotos) {
+  public Mascota(Animal animal, String nombre, String apodo, LocalDate fechaNacimiento, Sexo sexo,
+                 String descripcionFisica, List<Caracteristica> catacteristicas, List<Foto> fotos) {
     this.animal = animal;
     this.nombre = nombre;
     this.apodo = apodo;

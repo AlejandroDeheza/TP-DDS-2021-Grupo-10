@@ -13,22 +13,25 @@ public class InformeMascotaEncontrada {
 
     private DuenioMascota duenioMascota;
     private Persona rescatista;
-    private LocalDate fechaEncuentroAnimal;
+    private LocalDate fechaEncuentro;
     private String direccion;
-    private List<Foto> fotosAnimal = new ArrayList<>();
+    private List<Foto> fotosMascota = new ArrayList<>();
     private Ubicacion lugarDeEncuentro;
     private String estadoActualMascota;
 
-    public InformeMascotaEncontrada(DuenioMascota duenioMascota, Persona rescatista, LocalDate fechaEncuentroAnimal, String direccion, List<Foto> fotosAnimal, Ubicacion lugarDeEncuentro, String estadoActualMascota) {
+    public InformeMascotaEncontrada(DuenioMascota duenioMascota, Persona rescatista, LocalDate fechaEncuentro,
+                                    String direccion, List<Foto> fotosMascota, Ubicacion lugarDeEncuentro,
+                                    String estadoActualMascota) {
 
-        if(fotosAnimal == null || fotosAnimal.isEmpty()){
-            throw new InformeMascotaEncontradaInvalidaException("Se debe ingresar al menos 1 Foto");
-        }
+        if(fotosMascota == null || fotosMascota.isEmpty())
+            throw new InformeMascotaEncontradaInvalidaException(
+                "Se debe ingresar al menos 1 Foto de la mascota encontrada");
+
         this.duenioMascota = duenioMascota;
         this.rescatista = rescatista;
-        this.fechaEncuentroAnimal = fechaEncuentroAnimal;
+        this.fechaEncuentro = fechaEncuentro;
         this.direccion = direccion;
-        this.fotosAnimal.addAll(fotosAnimal);
+        this.fotosMascota.addAll(fotosMascota);
         this.lugarDeEncuentro = lugarDeEncuentro;
         this.estadoActualMascota = estadoActualMascota;
 
@@ -42,16 +45,16 @@ public class InformeMascotaEncontrada {
         return rescatista;
     }
 
-    public LocalDate getFechaEncuentroAnimal() {
-        return fechaEncuentroAnimal;
+    public LocalDate getFechaEncuentro() {
+        return fechaEncuentro;
     }
 
     public String getDireccion() {
         return direccion;
     }
 
-    public List<Foto> getFotosAnimal() {
-        return fotosAnimal;
+    public List<Foto> getFotosMascota() {
+        return fotosMascota;
     }
 
     public Ubicacion getLugarDeEncuentro() {

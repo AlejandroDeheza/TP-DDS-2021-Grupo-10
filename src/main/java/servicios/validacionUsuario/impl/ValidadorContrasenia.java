@@ -33,14 +33,8 @@ public class ValidadorContrasenia implements ValidadorContrasenias {
 
   private void obtenerContraseniasComunes() {
     try {
-      this.archivoContrasenias = new BufferedReader(new InputStreamReader(
-          new FileInputStream("src/main/resources/10k-most-common.txt"), StandardCharsets.UTF_8));
-
-      String unaLinea = this.archivoContrasenias.readLine();
-      while (unaLinea != null) {
-        contraseniasComunes.add(unaLinea);
-        unaLinea = this.archivoContrasenias.readLine();
-      }
+      abrirArchivo();
+      leerArchivo();
     } catch (FileNotFoundException e) {
       throw new ArchivoException(
           "Algo salio mal al usar obtenerContraseniasComunes() en clase ValidadorContraseniasComunes", e);
@@ -48,16 +42,31 @@ public class ValidadorContrasenia implements ValidadorContrasenias {
       throw new ArchivoException(
           "Algo salio mal al usar obtenerContraseniasComunes() en clase ValidadorContraseniasComunes", e);
     } finally {
-      try {
-        if (this.archivoContrasenias != null) {
-          this.archivoContrasenias.close();
-        }
-      } catch (Exception e) {
-        throw new ArchivoException(
-            "Algo salio mal al cerrar archivo en obtenerContraseniasComunes()" +
-                " en clase ValidadorContraseniasComunes",
-            e);
-      }
+      cerrarArchivo();
     }
   }
+
+  private void abrirArchivo() throws FileNotFoundException {
+    this.archivoContrasenias = new BufferedReader(new InputStreamReader(
+        new FileInputStream("src/main/resources/10k-most-common.txt"), StandardCharsets.UTF_8));
+  }
+
+  private void leerArchivo() throws IOException {
+    String unaLinea = this.archivoContrasenias.readLine();
+    while (unaLinea != null) {
+      contraseniasComunes.add(unaLinea);
+      unaLinea = this.archivoContrasenias.readLine();
+    }
+  }
+
+  private void cerrarArchivo() {
+    try {
+      if (this.archivoContrasenias != null)
+        this.archivoContrasenias.close();
+
+    } catch (Exception e) {
+      throw new ArchivoException("Algo salio mal en cerrarArchivo() en clase ValidadorContraseniasComunes", e);
+    }
+  }
+
 }
