@@ -37,10 +37,10 @@ public class ValidadorContrasenia implements ValidadorContrasenias {
       leerArchivo();
     } catch (FileNotFoundException e) {
       throw new ArchivoException(
-          "Algo salio mal al usar obtenerContraseniasComunes() en clase ValidadorContraseniasComunes", e);
+          "Algo salio mal en abrirArchivo() en clase ValidadorContraseniasComunes", e);
     } catch (IOException e) {
       throw new ArchivoException(
-          "Algo salio mal al usar obtenerContraseniasComunes() en clase ValidadorContraseniasComunes", e);
+          "Algo salio mal en leerArchivo() en clase ValidadorContraseniasComunes", e);
     } finally {
       cerrarArchivo();
     }
