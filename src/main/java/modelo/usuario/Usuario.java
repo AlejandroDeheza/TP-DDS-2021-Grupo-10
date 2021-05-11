@@ -16,12 +16,10 @@ public abstract class Usuario {
     this.usuario = usuario;
     this.contrasenia = contrasenia;
     this.persona = persona;
+    this.validadorAutenticacion = new ValidadorAutenticacion(this.contrasenia);
   }
 
   public void autenticarUsuario(String contraseniaIngresada){
-    if(this.validadorAutenticacion == null)
-      this.validadorAutenticacion = new ValidadorAutenticacion(this.contrasenia);
-
     validadorAutenticacion.autenticarUsuario(contraseniaIngresada);
   }
 

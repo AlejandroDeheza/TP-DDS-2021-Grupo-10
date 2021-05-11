@@ -20,8 +20,7 @@ public class ValidadorContrasenia implements ValidadorContrasenias {
 
   private void validarLargoMinimo(String password) {
     if (password.length() < 8) {
-      throw new ContraseniaInvalidaException(
-          "El largo de la contraseña debe tener como mínimo 8 caracteres");
+      throw new ContraseniaInvalidaException("El largo de la contraseña debe tener como mínimo 8 caracteres");
     }
   }
 
@@ -35,12 +34,13 @@ public class ValidadorContrasenia implements ValidadorContrasenias {
     try {
       abrirArchivo();
       leerArchivo();
+
     } catch (FileNotFoundException e) {
-      throw new ArchivoException(
-          "Algo salio mal en abrirArchivo() en clase ValidadorContraseniasComunes", e);
+      throw new ArchivoException("Algo salio mal en abrirArchivo() en clase ValidadorContraseniasComunes", e);
+
     } catch (IOException e) {
-      throw new ArchivoException(
-          "Algo salio mal en leerArchivo() en clase ValidadorContraseniasComunes", e);
+      throw new ArchivoException("Algo salio mal en leerArchivo() en clase ValidadorContraseniasComunes", e);
+
     } finally {
       cerrarArchivo();
     }

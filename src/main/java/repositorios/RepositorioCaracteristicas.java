@@ -44,8 +44,7 @@ public class RepositorioCaracteristicas {
 					.getValoresCaracteristicas()
 					.contains(valorCaracteristica); //La caractersitica esta en la lista
 
-			if (!contieneCaracteristica)
-				throw new ValorCaracteristicaIncompatibleException(
-						"El valor de la caracteristica ingresada no es valida ");
+		if (!contieneCaracteristica)
+			throw new ValorCaracteristicaIncompatibleException("El valor de la caracteristica ingresada no es valida ");
 	}
 }
