@@ -1,9 +1,11 @@
 package repositorios;
 
+import excepciones.DuenioMascotaMascotaRegistradaException;
 import excepciones.InformeMascotaEncontradaInvalidaException;
 import modelo.informe.InformeMascotaEncontrada;
 import modelo.informe.Ubicacion;
 import modelo.mascota.Foto;
+import modelo.mascota.Mascota;
 import modelo.persona.Persona;
 import modelo.usuario.Administrador;
 import modelo.usuario.DuenioMascota;
@@ -74,6 +76,18 @@ public class RepositorioInformesTest {
         fotosMascota = new ArrayList<>();
         new InformeMascotaEncontrada(
             duenioMascota,rescatista,fechaDeHoy,direccion,fotosMascota,ubicacion,estadoActualMascota);
+    }
+
+    //test de duenio mascota, esta aca para no repetir codigo
+    @Test
+    @DisplayName("si un DuenioMascota intenta registrar a la misma mascota 2 veces, se genera " +
+        "DuenioMascotaMascotaRegistradaException")
+    public void DuenioMascotaMascotaRegistradaExceptionTest() {
+        DuenioMascota duenioMascota = DummyData.getDummyDuenioMascota();
+        Mascota mascota1 = DummyData.getDummyMascota();
+        duenioMascota.agregarMascota(mascota1);
+        Assertions.assertThrows(DuenioMascotaMascotaRegistradaException.class,
+            () -> duenioMascota.agregarMascota(mascota1));
     }
 
 }
