@@ -11,7 +11,8 @@ import utils.DummyData;
 public class DuenioMascotaTest {
 
   @Test
-  @DisplayName("Un duenio de mascota no puede registrar a la misma mascota 2 veces")
+  @DisplayName("si un DuenioMascota intenta registrar a la misma mascota 2 veces, se genera " +
+      "DuenioMascotaMascotaRegistradaException")
   public void DuenioMascotaMascotaRegistradaExceptionTest() {
     Administrador admin = DummyData.getDummyAdministrador();
     CaracteristicaConValoresPosibles caracteristica = DummyData.getDummyCaracteristicaParaAdmin();

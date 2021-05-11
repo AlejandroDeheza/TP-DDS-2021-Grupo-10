@@ -10,13 +10,13 @@ import java.time.LocalDate;
 public class PersonaTest {
 
 	@Test
-	@DisplayName("una Persona valida no genera problemas")
+	@DisplayName("si se crea una Persona valida, no se generan problemas")
 	public void personaValidaTest() {
-		Assertions.assertDoesNotThrow(() -> DummyData.getDummyPersona());
+		Assertions.assertDoesNotThrow(DummyData::getDummyPersona);
 	}
 
 	@Test
-	@DisplayName("otra Persona valida no genera problemas")
+	@DisplayName("si se crea otra Persona valida, sin telefono ni mail, no se generan problemas")
 	public void personaValidaTest2(){
 		Assertions.assertDoesNotThrow(
 				() -> new Persona(
@@ -26,16 +26,17 @@ public class PersonaTest {
 	}
 
 	@Test
-	@DisplayName("una Persona sin DatosDeContacto genera NullPointerException")
+	@DisplayName("si se crea una Persona sin referencia a DatosDeContacto, se genera NullPointerException")
 	public void personaSinDatosDeContactoTest() {
-		Assertions.assertThrows(NullPointerException.class, () -> DummyData.getDummyPersonaSinDatosDeContacto());
+		Assertions.assertThrows(NullPointerException.class, DummyData::getDummyPersonaSinDatosDeContacto);
 	}
 
 	@Test
-	@DisplayName("una Persona sin DatosDeContacto ni nombre y apellido genera DatosDeContactoIncompletosException")
+	@DisplayName("si se crea una Persona sin telefono, ni mail, ni nombre y apellido, se genera " +
+			"DatosDeContactoIncompletosException")
 	public void DatosDeContactoIncompletosExceptionTest() {
 		Assertions.assertThrows(DatosDeContactoIncompletosException.class,
-				() -> DummyData.getDummyPersonaSinDatosDeContactoNiNombreNiApellido());
+				DummyData::getDummyPersonaSinDatosDeContactoNiNombreNiApellido);
 	}
 
 }

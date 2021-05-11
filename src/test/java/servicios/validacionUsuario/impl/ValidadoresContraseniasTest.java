@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 public class ValidadoresContraseniasTest {
 
   @Test
-  @DisplayName("una contrasenia valida no genera excepciones")
+  @DisplayName("si se crea un usuario, y se registra una contrasenia valida, no se generan problemas")
   public void contraseniaValidaTest() {
     Assertions
         .assertDoesNotThrow(() -> new Administrador(
@@ -18,14 +18,15 @@ public class ValidadoresContraseniasTest {
   }
 
   @Test
-  @DisplayName("una contrasenia comun genera ContraseniaInvalidaException")
+  @DisplayName("si se crea un usuario, y se registra una contrasenia comun, se genera ContraseniaInvalidaException")
   public void ContraseniaInvalidaExceptionTest() {
     Assertions.assertThrows(ContraseniaInvalidaException.class,
         () -> new Administrador(null, "password", null));
   }
 
   @Test
-  @DisplayName("una contrasenia con menos de 8 caracteres genera ContraseniaInvalidaException")
+  @DisplayName("si se crea un usuario, y se registra una contrasenia con menos de 8 caracteres, se genera " +
+      "ContraseniaInvalidaException")
   public void ContraseniaInvalidaExceptionTest2() {
     Assertions.assertThrows(ContraseniaInvalidaException.class,
         () -> new Administrador(null, "*?)(/%#", null));

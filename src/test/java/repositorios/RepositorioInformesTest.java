@@ -41,7 +41,8 @@ public class RepositorioInformesTest {
     }
 
     @Test
-    @DisplayName("generar un InformeMascotaPerdida agrega un informe a InformesPendientes")
+    @DisplayName("si se crea un InformeMascotaPerdida, se agrega un informe a InformesPendientes " +
+        "en RepositorioInformes ")
     public void InformesPendientesTest() {
         Assertions.assertEquals(repositorioInformes.getInformesPendientes().size(), 0);
         new InformeMascotaEncontrada(
@@ -50,7 +51,8 @@ public class RepositorioInformesTest {
     }
 
     @Test
-    @DisplayName("listarMascotasEncontradasEnLosUltimos10Dias() devuelve un registro insertado previamente")
+    @DisplayName("si se utiliza listarMascotasEncontradasEnLosUltimos10Dias(), este devuelve " +
+        "un registro insertado previamente")
     public void listarMascotasEncontradasEnLosUltimos10DiasTest(){
         Assertions.assertEquals(
             repositorioInformes.listarMascotasEncontradasEnUltimosNDias(10).size(),0);
@@ -61,10 +63,11 @@ public class RepositorioInformesTest {
     }
 
     @Test
-    @DisplayName("un InformeMascotaEncontrada sin fotos genera InformeMascotaEncontradaInvalidaException")
+    @DisplayName("si se genera un InformeMascotaEncontrada sin fotos, se genera " +
+        "InformeMascotaEncontradaInvalidaException")
     public void InformeMascotaEncontradaInvalidaExceptionTest(){
         Assertions.assertThrows(
-            InformeMascotaEncontradaInvalidaException.class,() -> generarInformeMascotaEncontradaSinFoto());
+            InformeMascotaEncontradaInvalidaException.class, this::generarInformeMascotaEncontradaSinFoto);
     }
 
     public void generarInformeMascotaEncontradaSinFoto(){

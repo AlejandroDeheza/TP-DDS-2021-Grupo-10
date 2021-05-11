@@ -11,19 +11,19 @@ public class UsuarioTest {
   DuenioMascota duenioMascota = DummyData.getDummyDuenioMascota();
 
   @Test
-  @DisplayName("se puede crear un usuario valido")
+  @DisplayName("si se crea un usuario valido, no se genera ningun problema")
   public void usuarioValidoTest(){
-    Assertions.assertDoesNotThrow(() -> DummyData.getDummyDuenioMascota());
+    Assertions.assertDoesNotThrow(DummyData::getDummyDuenioMascota);
   }
 
   @Test
-  @DisplayName("un usuario dummy se puede autenticar correctamente")
+  @DisplayName("si un usuario dummy se autentica correctamente, no se genera ningun problema")
   public void autenticacionCorrectaTest(){
     Assertions.assertDoesNotThrow(() -> duenioMascota.autenticarUsuario("Password1234"));
   }
 
   @Test
-  @DisplayName("si un usuario dummy se autentica mal genera AutenticacionInvalidaException")
+  @DisplayName("si un usuario dummy se autentica mal, se genera AutenticacionInvalidaException")
   public void autenticacionInvalidaExceptionTest(){
     Assertions.assertThrows(AutenticacionInvalidaException.class,
         () -> duenioMascota.autenticarUsuario("Password12"));
