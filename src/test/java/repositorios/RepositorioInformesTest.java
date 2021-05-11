@@ -10,6 +10,7 @@ import modelo.persona.Persona;
 import modelo.usuario.Administrador;
 import modelo.usuario.DuenioMascota;
 import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 import utils.DummyData;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
@@ -46,30 +47,27 @@ public class RepositorioInformesTest {
     @DisplayName("si se crea un InformeMascotaPerdida, se agrega un informe a InformesPendientes " +
         "en RepositorioInformes ")
     public void InformesPendientesTest() {
-        Assertions.assertEquals(repositorioInformes.getInformesPendientes().size(), 0);
+        assertEquals(repositorioInformes.getInformesPendientes().size(), 0);
         new InformeMascotaEncontrada(
                 duenioMascota, rescatista, fechaDeHoy, direccion, fotosMascota, ubicacion, estadoActualMascota);
-        Assertions.assertEquals(repositorioInformes.getInformesPendientes().size(), 1);
+        assertEquals(repositorioInformes.getInformesPendientes().size(), 1);
     }
 
     @Test
     @DisplayName("si se utiliza listarMascotasEncontradasEnLosUltimos10Dias(), este devuelve " +
         "un registro insertado previamente")
     public void listarMascotasEncontradasEnLosUltimos10DiasTest(){
-        Assertions.assertEquals(
-            repositorioInformes.listarMascotasEncontradasEnUltimosNDias(10).size(),0);
+        assertEquals(repositorioInformes.listarMascotasEncontradasEnUltimosNDias(10).size(),0);
         new InformeMascotaEncontrada(
                 duenioMascota, rescatista, fechaDeHoy, direccion, fotosMascota, ubicacion, estadoActualMascota);
-        Assertions.assertEquals(
-            repositorioInformes.listarMascotasEncontradasEnUltimosNDias(10).size(),1);
+        assertEquals(repositorioInformes.listarMascotasEncontradasEnUltimosNDias(10).size(),1);
     }
 
     @Test
     @DisplayName("si se genera un InformeMascotaEncontrada sin fotos, se genera " +
         "InformeMascotaEncontradaInvalidaException")
     public void InformeMascotaEncontradaInvalidaExceptionTest(){
-        Assertions.assertThrows(
-            InformeMascotaEncontradaInvalidaException.class, this::generarInformeMascotaEncontradaSinFoto);
+        assertThrows(InformeMascotaEncontradaInvalidaException.class, this::generarInformeMascotaEncontradaSinFoto);
     }
 
     public void generarInformeMascotaEncontradaSinFoto(){
@@ -86,8 +84,7 @@ public class RepositorioInformesTest {
         DuenioMascota duenioMascota = DummyData.getDummyDuenioMascota();
         Mascota mascota1 = DummyData.getDummyMascota();
         duenioMascota.agregarMascota(mascota1);
-        Assertions.assertThrows(DuenioMascotaMascotaRegistradaException.class,
-            () -> duenioMascota.agregarMascota(mascota1));
+        assertThrows(DuenioMascotaMascotaRegistradaException.class, () -> duenioMascota.agregarMascota(mascota1));
     }
 
 }
