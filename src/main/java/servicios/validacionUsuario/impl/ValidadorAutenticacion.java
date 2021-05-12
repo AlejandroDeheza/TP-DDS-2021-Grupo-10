@@ -2,7 +2,9 @@ package servicios.validacionUsuario.impl;
 
 import excepciones.AutenticacionConsecutivaException;
 import excepciones.AutenticacionInvalidaException;
+
 import java.time.LocalTime;
+
 import static java.time.temporal.ChronoUnit.MINUTES;
 
 public class ValidadorAutenticacion {
@@ -11,7 +13,7 @@ public class ValidadorAutenticacion {
   private LocalTime ultimoIntentoDeSesionFallido = LocalTime.now();
   private Long contadorIntentosDeSesionFallidos = 0L;
 
-  public ValidadorAutenticacion(String contraseniaCorrecta){
+  public ValidadorAutenticacion(String contraseniaCorrecta) {
     this.contraseniaCorrecta = contraseniaCorrecta;
   }
 
@@ -41,15 +43,15 @@ public class ValidadorAutenticacion {
   }
 
   // el tiempo de espera aumenta si la cantidad de sesiones fallidas aumenta
-  private boolean falloLaAutenticacionHacePoco(){
+  private boolean falloLaAutenticacionHacePoco() {
     return MINUTES.between(LocalTime.now(), this.ultimoIntentoDeSesionFallido) < contadorIntentosDeSesionFallidos;
   }
 
-  private Long tiempoQueEstaEsperandoUsuario(){
+  private Long tiempoQueEstaEsperandoUsuario() {
     return MINUTES.between(LocalTime.now(), ultimoIntentoDeSesionFallido);
   }
 
-  private boolean laContraseniaEsIncorrecta(String contraseniaIngresada){
+  private boolean laContraseniaEsIncorrecta(String contraseniaIngresada) {
     return !this.contraseniaCorrecta.equals(contraseniaIngresada);
   }
 

@@ -19,7 +19,7 @@ public abstract class Usuario {
     this.validadorAutenticacion = new ValidadorAutenticacion(this.contrasenia);
   }
 
-  public void autenticarUsuario(String contraseniaIngresada){
+  public void autenticarUsuario(String contraseniaIngresada) {
     validadorAutenticacion.autenticarUsuario(contraseniaIngresada);
   }
 

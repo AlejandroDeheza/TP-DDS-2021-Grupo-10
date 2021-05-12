@@ -1,5 +1,5 @@
 package servicios.validacionUsuario.impl;
 
 public interface ValidadorContrasenias {
-	void correrValidaciones(String contrasenia);
+  void correrValidaciones(String contrasenia);
 }

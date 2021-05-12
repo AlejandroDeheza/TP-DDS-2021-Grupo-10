@@ -4,21 +4,21 @@ import repositorios.RepositorioCaracteristicas;
 
 public class Caracteristica {
 
-	private String nombreCaracteristica;
-	private String valorCaracteristica;
+  private String nombreCaracteristica;
+  private String valorCaracteristica;
 
-	public Caracteristica(String nombreCaracteristica, String valorCaracteristica, RepositorioCaracteristicas repo) {
-		repo.validarCaracteristica(nombreCaracteristica, valorCaracteristica);
-		this.nombreCaracteristica = nombreCaracteristica;
-		this.valorCaracteristica = valorCaracteristica;
-	}
+  public Caracteristica(String nombreCaracteristica, String valorCaracteristica, RepositorioCaracteristicas repo) {
+    repo.validarCaracteristica(nombreCaracteristica, valorCaracteristica);
+    this.nombreCaracteristica = nombreCaracteristica;
+    this.valorCaracteristica = valorCaracteristica;
+  }
 
-	public String getNombreCaracteristica() {
-		return nombreCaracteristica;
-	}
+  public String getNombreCaracteristica() {
+    return nombreCaracteristica;
+  }
 
-	public String getValorCaracteristica() {
-		return valorCaracteristica;
-	}
+  public String getValorCaracteristica() {
+    return valorCaracteristica;
+  }
 
 }

@@ -1,6 +1,7 @@
 package modelo.persona;
 
 import excepciones.DatosDeContactoIncompletosException;
+
 import java.util.Objects;
 import java.time.LocalDate;
 
@@ -25,7 +26,7 @@ public class Persona {
     this.fechaNacimiento = fechaNacimiento;
   }
 
-  private void validarQueTengaDatosContacto(String nombre, String apellido, DatosDeContacto datosDeContacto){
+  private void validarQueTengaDatosContacto(String nombre, String apellido, DatosDeContacto datosDeContacto) {
     Boolean noTieneNingunDatoDeContacto = !datosDeContacto.hayAlgunDatoDeContacto();
     Boolean noTieneNombreYApellido = nombre == null && apellido == null;
 

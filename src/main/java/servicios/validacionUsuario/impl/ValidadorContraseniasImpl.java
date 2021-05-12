@@ -2,6 +2,7 @@ package servicios.validacionUsuario.impl;
 
 import excepciones.ArchivoException;
 import excepciones.ContraseniaInvalidaException;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class ValidadorContraseniasImpl implements ValidadorContrasenias {
   private List<String> contraseniasComunes = new ArrayList<>();
 
   @Override
-  public void correrValidaciones(String contrasenia){
+  public void correrValidaciones(String contrasenia) {
     validarLargoMinimo(contrasenia);
     validarContraseniasComunes(contrasenia);
   }
@@ -24,7 +25,7 @@ public class ValidadorContraseniasImpl implements ValidadorContrasenias {
     }
   }
 
-  private void validarContraseniasComunes(String contrasenia){
+  private void validarContraseniasComunes(String contrasenia) {
     this.obtenerContraseniasComunes();
     if (contraseniasComunes.contains(contrasenia))
       throw new ContraseniaInvalidaException("Es una de las 10.000 contraseñas mas usadas");

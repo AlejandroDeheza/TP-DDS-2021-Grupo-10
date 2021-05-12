@@ -1,6 +1,7 @@
 package modelo.mascota;
 
 import modelo.mascota.caracteristica.Caracteristica;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -28,34 +29,34 @@ public class Mascota {
   }
 
   public Animal getAnimal() {
-      return animal;
-    }
+    return animal;
+  }
 
   public String getNombre() {
-      return nombre;
-    }
+    return nombre;
+  }
 
   public String getApodo() {
-      return apodo;
-    }
+    return apodo;
+  }
 
   public LocalDate getFechaNacimiento() {
-      return fechaNacimiento;
-    }
+    return fechaNacimiento;
+  }
 
   public Sexo getSexo() {
-      return sexo;
-    }
+    return sexo;
+  }
 
   public String getDescripcionFisica() {
-      return descripcionFisica;
-    }
+    return descripcionFisica;
+  }
 
   public List<Foto> getFotos() {
-      return fotos;
-    }
+    return fotos;
+  }
 
-  public List<Caracteristica> getCaracteristicas(){
+  public List<Caracteristica> getCaracteristicas() {
     return caracteristicas;
   }
 
