@@ -15,13 +15,13 @@ public class ValidadorAutenticacionTest {
 
   @Test
   @DisplayName("si un usuario dummy se autentica correctamente, no se genera ningun problema")
-  public void autenticacionCorrectaTest(){
+  public void autenticacionCorrectaTest() {
     assertDoesNotThrow(() -> duenioMascota.autenticarUsuario("Password1234"));
   }
 
   @Test
   @DisplayName("si un usuario dummy se autentica mal, se genera AutenticacionInvalidaException")
-  public void autenticacionInvalidaExceptionTest(){
+  public void autenticacionInvalidaExceptionTest() {
     assertThrows(AutenticacionInvalidaException.class,
         () -> duenioMascota.autenticarUsuario("Password12"));
   }
