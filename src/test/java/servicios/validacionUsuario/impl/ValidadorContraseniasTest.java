@@ -4,21 +4,23 @@ import excepciones.ContraseniaInvalidaException;
 import modelo.usuario.Administrador;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ValidadoresContraseniasTest {
+public class ValidadorContraseniasTest {
 
   @Test
   @DisplayName("si se crea un usuario, y se registra una contrasenia valida, no se generan problemas")
   public void contraseniaValidaTest() {
-    assertDoesNotThrow(() -> new Administrador(null, "flashbacksDeSistemasOperativos", null));
+    assertDoesNotThrow(() -> new Administrador(
+        null, "flashbacksDeSistemasOperativos", null, null));
   }
 
   @Test
   @DisplayName("si se crea un usuario, y se registra una contrasenia comun, se genera ContraseniaInvalidaException")
   public void ContraseniaInvalidaExceptionTest() {
     assertThrows(ContraseniaInvalidaException.class,
-        () -> new Administrador(null, "password", null));
+        () -> new Administrador(null, "password", null, null));
   }
 
   @Test
@@ -26,7 +28,7 @@ public class ValidadoresContraseniasTest {
       "ContraseniaInvalidaException")
   public void ContraseniaInvalidaExceptionTest2() {
     assertThrows(ContraseniaInvalidaException.class,
-        () -> new Administrador(null, "*?)(/%#", null));
+        () -> new Administrador(null, "*?)(/%#", null, null));
   }
 
 }

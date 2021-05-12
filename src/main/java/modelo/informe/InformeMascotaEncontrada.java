@@ -21,12 +21,9 @@ public class InformeMascotaEncontrada {
 
     public InformeMascotaEncontrada(DuenioMascota duenioMascota, Persona rescatista, LocalDate fechaEncuentro,
                                     String direccion, List<Foto> fotosMascota, Ubicacion lugarDeEncuentro,
-                                    String estadoActualMascota) {
+                                    String estadoActualMascota, RepositorioInformes repo) {
 
-        if(fotosMascota == null || fotosMascota.isEmpty())
-            throw new InformeMascotaEncontradaInvalidaException(
-                "Se debe ingresar al menos 1 Foto de la mascota encontrada");
-
+        this.validarInforme(fotosMascota);
         this.duenioMascota = duenioMascota;
         this.rescatista = rescatista;
         this.fechaEncuentro = fechaEncuentro;
@@ -34,9 +31,13 @@ public class InformeMascotaEncontrada {
         this.fotosMascota.addAll(fotosMascota);
         this.lugarDeEncuentro = lugarDeEncuentro;
         this.estadoActualMascota = estadoActualMascota;
+        repo.agregarInformeMascotaEncontrada(this);
+    }
 
-        RepositorioInformes.getInstance().
-        agregarInformeMascotaEncontrada(this);
+    private void validarInforme(List<Foto> fotosMascota) {
+        if(fotosMascota == null || fotosMascota.isEmpty())
+            throw new InformeMascotaEncontradaInvalidaException(
+                "Se debe ingresar al menos 1 Foto de la mascota encontrada");
     }
 
     public DuenioMascota getDuenioMascota() { return duenioMascota; }

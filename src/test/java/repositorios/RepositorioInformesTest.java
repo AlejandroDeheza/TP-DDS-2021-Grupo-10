@@ -1,18 +1,16 @@
 package repositorios;
 
-import excepciones.DuenioMascotaMascotaRegistradaException;
 import excepciones.InformeMascotaEncontradaInvalidaException;
 import modelo.informe.InformeMascotaEncontrada;
 import modelo.informe.Ubicacion;
 import modelo.mascota.Foto;
-import modelo.mascota.Mascota;
 import modelo.persona.Persona;
 import modelo.usuario.Administrador;
 import modelo.usuario.DuenioMascota;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
+
 import utils.DummyData;
-import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +18,7 @@ import java.util.List;
 public class RepositorioInformesTest {
 
     RepositorioInformes repositorioInformes;
+    RepositorioCaracteristicas repositorioCaracteristicas;
 
     DuenioMascota duenioMascota = DummyData.getDummyDuenioMascota();
     Persona rescatista = DummyData.getDummyPersona();
@@ -31,16 +30,10 @@ public class RepositorioInformesTest {
 
     @BeforeEach
     public void contextLoad() {
-        repositorioInformes = RepositorioInformes.getInstance();
-        Administrador admin = DummyData.getDummyAdministrador();
+        repositorioInformes = new RepositorioInformes();
+        repositorioCaracteristicas = new RepositorioCaracteristicas();
+        Administrador admin = DummyData.getDummyAdministrador(repositorioCaracteristicas);
         admin.agregarCaracteristica(DummyData.getDummyCaracteristicaParaAdmin());
-    }
-
-    @AfterEach
-    public void destroyContext() throws NoSuchFieldException, IllegalAccessException{
-        Field instance = RepositorioInformes.class.getDeclaredField("repositorioInformes");
-        instance.setAccessible(true);
-        instance.set(null,null);
     }
 
     @Test
@@ -49,7 +42,8 @@ public class RepositorioInformesTest {
     public void InformesPendientesTest() {
         assertEquals(repositorioInformes.getInformesPendientes().size(), 0);
         new InformeMascotaEncontrada(
-                duenioMascota, rescatista, fechaDeHoy, direccion, fotosMascota, ubicacion, estadoActualMascota);
+                duenioMascota, rescatista, fechaDeHoy, direccion, fotosMascota, ubicacion, estadoActualMascota,
+            repositorioInformes);
         assertEquals(repositorioInformes.getInformesPendientes().size(), 1);
     }
 
@@ -59,7 +53,8 @@ public class RepositorioInformesTest {
     public void listarMascotasEncontradasEnLosUltimos10DiasTest(){
         assertEquals(repositorioInformes.listarMascotasEncontradasEnUltimosNDias(10).size(),0);
         new InformeMascotaEncontrada(
-                duenioMascota, rescatista, fechaDeHoy, direccion, fotosMascota, ubicacion, estadoActualMascota);
+                duenioMascota, rescatista, fechaDeHoy, direccion, fotosMascota, ubicacion, estadoActualMascota,
+            repositorioInformes);
         assertEquals(repositorioInformes.listarMascotasEncontradasEnUltimosNDias(10).size(),1);
     }
 
@@ -73,18 +68,8 @@ public class RepositorioInformesTest {
     public void generarInformeMascotaEncontradaSinFoto(){
         fotosMascota = new ArrayList<>();
         new InformeMascotaEncontrada(
-            duenioMascota,rescatista,fechaDeHoy,direccion,fotosMascota,ubicacion,estadoActualMascota);
-    }
-
-    //test de duenio mascota, esta aca para no repetir codigo
-    @Test
-    @DisplayName("si un DuenioMascota intenta registrar a la misma mascota 2 veces, se genera " +
-        "DuenioMascotaMascotaRegistradaException")
-    public void DuenioMascotaMascotaRegistradaExceptionTest() {
-        DuenioMascota duenioMascota = DummyData.getDummyDuenioMascota();
-        Mascota mascota1 = DummyData.getDummyMascota();
-        duenioMascota.agregarMascota(mascota1);
-        assertThrows(DuenioMascotaMascotaRegistradaException.class, () -> duenioMascota.agregarMascota(mascota1));
+            duenioMascota, rescatista, fechaDeHoy, direccion, fotosMascota, ubicacion, estadoActualMascota,
+            repositorioInformes);
     }
 
 }

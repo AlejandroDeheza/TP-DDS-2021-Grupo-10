@@ -11,6 +11,8 @@ import modelo.persona.Persona;
 import modelo.persona.TipoDocumento;
 import modelo.usuario.Administrador;
 import modelo.usuario.DuenioMascota;
+import repositorios.RepositorioCaracteristicas;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,16 +45,17 @@ public class DummyData {
         return new DuenioMascota("DuenioMascota", "Password1234", getDummyPersona());
     }
 
-    public static Administrador getDummyAdministrador() {
-        return new Administrador("Admin", "Password1234", getDummyPersona());
+    public static Administrador getDummyAdministrador(RepositorioCaracteristicas repo) {
+        return new Administrador("Admin", "Password1234", getDummyPersona(), repo);
     }
 
     public static CaracteristicaConValoresPosibles getDummyCaracteristicaParaAdmin() {
         return new CaracteristicaConValoresPosibles("Comportamiento", Arrays.asList("Bueno", "Malo"));
     }
 
-    public static List<Caracteristica> getDummyListaCaracteristicasParaMascota() {
-        Caracteristica caracteristica = new Caracteristica("Comportamiento", "Bueno");
+    public static List<Caracteristica> getDummyListaCaracteristicasParaMascota(RepositorioCaracteristicas repo) {
+        Caracteristica caracteristica = new Caracteristica(
+            "Comportamiento", "Bueno", repo);
         List<Caracteristica> listaCaracteristica = new ArrayList<>();
         listaCaracteristica.add(caracteristica);
         return listaCaracteristica;
@@ -65,10 +68,10 @@ public class DummyData {
         return fotosMascota;
     }
 
-    public static Mascota getDummyMascota() {
+    public static Mascota getDummyMascota(RepositorioCaracteristicas repo) {
         return new Mascota(Animal.PERRO, "Perro", "PerroApodo",
             LocalDate.of(2018, 3, 4), Sexo.MACHO, "Descripcion Dummy",
-            getDummyListaCaracteristicasParaMascota(), getDummyFotosMascota());
+            getDummyListaCaracteristicasParaMascota(repo), getDummyFotosMascota());
     }
 
 }

@@ -12,8 +12,10 @@ public class RepositorioCaracteristicas {
 	private static RepositorioCaracteristicas repositorioCaracteristicas;
 	private List<CaracteristicaConValoresPosibles> listaCaracteristicas = new ArrayList<>();
 
-	private RepositorioCaracteristicas(){}
+	//usamos el constructor solo para tests
+	public RepositorioCaracteristicas() {}
 
+	//usamos el getInstance en el codigo de produccion
 	public static RepositorioCaracteristicas getInstance() {
 		if (repositorioCaracteristicas == null) {
 			repositorioCaracteristicas = new RepositorioCaracteristicas();

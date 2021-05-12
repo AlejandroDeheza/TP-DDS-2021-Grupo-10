@@ -12,8 +12,10 @@ public class RepositorioInformes {
     private List<InformeMascotaEncontrada> informesPendientes = new ArrayList<>();
     private List<InformeMascotaEncontrada> informesProcesados = new ArrayList<>();
 
-    private RepositorioInformes() {};
+    //usamos el constructor solo para tests
+    public RepositorioInformes() {}
 
+    //usamos el getInstance en el codigo de produccion
     public static RepositorioInformes getInstance() {
         if(repositorioInformes == null) {
             repositorioInformes = new RepositorioInformes();

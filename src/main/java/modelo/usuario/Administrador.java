@@ -6,11 +6,14 @@ import repositorios.RepositorioCaracteristicas;
 
 public class Administrador extends Usuario {
 
-	public Administrador(String username, String password, Persona persona) {
+	private RepositorioCaracteristicas repo;
+
+	public Administrador(String username, String password, Persona persona, RepositorioCaracteristicas repo) {
 		super(username, password, persona);
+		this.repo = repo;
 	}
 
 	public void agregarCaracteristica(CaracteristicaConValoresPosibles caracteristica){
-		RepositorioCaracteristicas.getInstance().agregarCaracteristica(caracteristica);
+		repo.agregarCaracteristica(caracteristica);
 	}
 }
