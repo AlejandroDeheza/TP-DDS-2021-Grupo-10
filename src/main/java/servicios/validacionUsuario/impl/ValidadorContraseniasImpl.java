@@ -7,7 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ValidadorContrasenia implements ValidadorContrasenias {
+public class ValidadorContraseniasImpl implements ValidadorContrasenias {
 
   private BufferedReader archivoContrasenias;
   private List<String> contraseniasComunes = new ArrayList<>();

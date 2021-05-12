@@ -2,7 +2,7 @@ package modelo.usuario;
 
 import modelo.persona.Persona;
 import servicios.validacionUsuario.impl.ValidadorAutenticacion;
-import servicios.validacionUsuario.impl.ValidadorContrasenia;
+import servicios.validacionUsuario.impl.ValidadorContraseniasImpl;
 
 public abstract class Usuario {
 
@@ -12,7 +12,7 @@ public abstract class Usuario {
   private ValidadorAutenticacion validadorAutenticacion;
 
   public Usuario(String usuario, String contrasenia, Persona persona) {
-    new ValidadorContrasenia().correrValidaciones(contrasenia);
+    new ValidadorContraseniasImpl().correrValidaciones(contrasenia);
     this.usuario = usuario;
     this.contrasenia = contrasenia;
     this.persona = persona;
