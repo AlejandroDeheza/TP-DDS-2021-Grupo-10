@@ -8,7 +8,7 @@ import java.util.List;
 
 public class DuenioMascota extends Usuario {
 
-	List<Mascota> listaMascotas = new ArrayList<>();
+	private List<Mascota> listaMascotas = new ArrayList<>();
 
 	public DuenioMascota(String username, String password, Persona persona) {
 		super(username, password, persona);

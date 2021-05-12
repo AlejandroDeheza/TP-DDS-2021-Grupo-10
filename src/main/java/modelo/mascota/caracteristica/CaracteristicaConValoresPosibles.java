@@ -4,8 +4,8 @@ import java.util.List;
 
 public class CaracteristicaConValoresPosibles {
 
-  String nombreCaracteristica;
-  List<String> valoresCaracteristicas;
+  private String nombreCaracteristica;
+  private List<String> valoresCaracteristicas;
 
   public CaracteristicaConValoresPosibles(String nombreCaracteristica, List<String> valoresCaracteristicas) {
     this.nombreCaracteristica = nombreCaracteristica;

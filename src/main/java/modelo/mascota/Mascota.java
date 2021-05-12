@@ -6,14 +6,14 @@ import java.util.List;
 
 public class Mascota {
 
-  Animal animal;
-  String nombre;
-  String apodo;
-  LocalDate fechaNacimiento;
-  Sexo sexo;
-  String descripcionFisica;
-  List<Caracteristica> caracteristicas;
-  List<Foto> fotos;
+  private Animal animal;
+  private String nombre;
+  private String apodo;
+  private LocalDate fechaNacimiento;
+  private Sexo sexo;
+  private String descripcionFisica;
+  private List<Caracteristica> caracteristicas;
+  private List<Foto> fotos;
 
   public Mascota(Animal animal, String nombre, String apodo, LocalDate fechaNacimiento, Sexo sexo,
                  String descripcionFisica, List<Caracteristica> catacteristicas, List<Foto> fotos) {

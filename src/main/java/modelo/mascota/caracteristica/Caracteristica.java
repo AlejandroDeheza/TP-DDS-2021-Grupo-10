@@ -4,8 +4,8 @@ import repositorios.RepositorioCaracteristicas;
 
 public class Caracteristica {
 
-	String nombreCaracteristica;
-	String valorCaracteristica;
+	private String nombreCaracteristica;
+	private String valorCaracteristica;
 
 	public Caracteristica(String nombreCaracteristica, String valorCaracteristica, RepositorioCaracteristicas repo) {
 		repo.validarCaracteristica(nombreCaracteristica, valorCaracteristica);

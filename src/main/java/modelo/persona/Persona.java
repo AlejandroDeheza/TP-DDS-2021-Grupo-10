@@ -15,10 +15,8 @@ public class Persona {
 
   public Persona(String nombre, String apellido, TipoDocumento tipoDocumento, String numeroDeDocumento,
                  DatosDeContacto datosDeContacto, LocalDate fechaNacimiento) {
-    this.validarQueTengaDatosContacto(
-        nombre, apellido, Objects.requireNonNull(
-            datosDeContacto,"Falta referencia a instancia de DatosDeContacto")
-    );
+    this.validarQueTengaDatosContacto(nombre, apellido, Objects.requireNonNull(datosDeContacto,
+        "Falta referencia a instancia de DatosDeContacto"));
     this.nombre = nombre;
     this.apellido = apellido;
     this.tipoDocumento = tipoDocumento;

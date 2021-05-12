@@ -10,7 +10,7 @@ import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 public class RepositorioCaracteristicas {
 
 	private static RepositorioCaracteristicas repositorioCaracteristicas;
-	private List<CaracteristicaConValoresPosibles> listaCaracteristicas = new ArrayList<>();
+	private List<CaracteristicaConValoresPosibles> caracteristicas = new ArrayList<>();
 
 	//usamos el constructor solo para tests
 	public RepositorioCaracteristicas() {}
@@ -24,16 +24,16 @@ public class RepositorioCaracteristicas {
 	}
 
 	public void agregarCaracteristica(CaracteristicaConValoresPosibles caracteristica) {
-		listaCaracteristicas.add(caracteristica);
+		caracteristicas.add(caracteristica);
 	}
 
 	public List<CaracteristicaConValoresPosibles> getCaracteristicas() {
-		return listaCaracteristicas;
+		return caracteristicas;
 	}
 
 	public void validarCaracteristica(String nombreCaracteristica, String valorCaracteristica) {
 
-		List<CaracteristicaConValoresPosibles> listaCaracteristicasFiltered = listaCaracteristicas
+		List<CaracteristicaConValoresPosibles> listaCaracteristicasFiltered = caracteristicas
 				.stream()
 				.filter(c -> c.getNombreCaracteristica().equals(nombreCaracteristica))
 				.collect(Collectors.toList());

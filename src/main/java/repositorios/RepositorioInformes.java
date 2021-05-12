@@ -23,6 +23,10 @@ public class RepositorioInformes {
         return repositorioInformes;
     }
 
+    public void agregarInformeMascotaEncontrada(InformeMascotaEncontrada informe) {
+        informesPendientes.add(informe);
+    }
+
     public List<InformeMascotaEncontrada> listarMascotasEncontradasEnUltimosNDias(Integer diasPreviosABuscar){
         LocalDate fechaFiltro = LocalDate.now().minusDays(diasPreviosABuscar);
         return informesPendientes.stream()
@@ -41,10 +45,6 @@ public class RepositorioInformes {
 
     public List<InformeMascotaEncontrada> getInformesProcesados() {
         return informesProcesados;
-    }
-
-    public void agregarInformeMascotaEncontrada(InformeMascotaEncontrada informe) {
-        informesPendientes.add(informe);
     }
 
 }
