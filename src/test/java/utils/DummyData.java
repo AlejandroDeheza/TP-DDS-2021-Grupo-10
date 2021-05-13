@@ -9,8 +9,8 @@ import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 import modelo.persona.DatosDeContacto;
 import modelo.persona.Persona;
 import modelo.persona.TipoDocumento;
-import modelo.usuario.Administrador;
-import modelo.usuario.DuenioMascota;
+import modelo.usuario.TipoUsuario;
+import modelo.usuario.Usuario;
 import repositorios.RepositorioCaracteristicas;
 
 import java.time.LocalDate;
@@ -39,12 +39,12 @@ public class DummyData {
         new DatosDeContacto(null, null), LocalDate.of(1995, 8, 7));
   }
 
-  public static DuenioMascota getDummyDuenioMascota() {
-    return new DuenioMascota("DuenioMascota", "Password1234", getDummyPersona());
+  public static Usuario getDummyUsuario() {
+    return new Usuario("DuenioMascota", "Password1234", TipoUsuario.NORMAL, getDummyPersona());
   }
 
-  public static Administrador getDummyAdministrador(RepositorioCaracteristicas repo) {
-    return new Administrador("Admin", "Password1234", getDummyPersona(), repo);
+  public static Usuario getDummyUsuarioAdministrador() {
+    return new Usuario("Admin", "Password1234", TipoUsuario.ADMIN, getDummyPersona());
   }
 
   public static CaracteristicaConValoresPosibles getDummyCaracteristicaParaAdmin() {

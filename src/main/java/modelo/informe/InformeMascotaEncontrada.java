@@ -3,7 +3,7 @@ package modelo.informe;
 import excepciones.InformeMascotaEncontradaInvalidaException;
 import modelo.mascota.Foto;
 import modelo.persona.Persona;
-import modelo.usuario.DuenioMascota;
+import modelo.usuario.Usuario;
 import repositorios.RepositorioInformes;
 
 import java.time.LocalDate;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class InformeMascotaEncontrada {
 
-  private DuenioMascota duenioMascota;
+  private Usuario duenioMascota;
   private Persona rescatista;
   private LocalDate fechaEncuentro;
   private String direccion;
@@ -20,7 +20,7 @@ public class InformeMascotaEncontrada {
   private Ubicacion lugarDeEncuentro;
   private String estadoActualMascota;
 
-  public InformeMascotaEncontrada(DuenioMascota duenioMascota, Persona rescatista, LocalDate fechaEncuentro,
+  public InformeMascotaEncontrada(Usuario duenioMascota, Persona rescatista, LocalDate fechaEncuentro,
                                   String direccion, List<Foto> fotosMascota, Ubicacion lugarDeEncuentro,
                                   String estadoActualMascota, RepositorioInformes repo) {
 
@@ -40,7 +40,7 @@ public class InformeMascotaEncontrada {
       throw new InformeMascotaEncontradaInvalidaException("Se debe ingresar al menos 1 Foto de la mascota encontrada");
   }
 
-  public DuenioMascota getDuenioMascota() {
+  public Usuario getDuenioMascota() {
     return duenioMascota;
   }
 

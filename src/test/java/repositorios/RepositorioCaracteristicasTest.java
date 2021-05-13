@@ -4,7 +4,6 @@ import excepciones.CaracteristicasInvalidaException;
 import excepciones.ValorCaracteristicaIncompatibleException;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
-import modelo.usuario.Administrador;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,10 +19,9 @@ public class RepositorioCaracteristicasTest {
 
   @BeforeEach
   public void contextLoad() {
-    repositorioCaracteristicas = new RepositorioCaracteristicas();
-    Administrador admin = DummyData.getDummyAdministrador(repositorioCaracteristicas);
     caracteristica = DummyData.getDummyCaracteristicaParaAdmin();
-    admin.agregarCaracteristica(caracteristica);
+    repositorioCaracteristicas = new RepositorioCaracteristicas();
+    repositorioCaracteristicas.agregarCaracteristica(caracteristica);
   }
 
   @Test
