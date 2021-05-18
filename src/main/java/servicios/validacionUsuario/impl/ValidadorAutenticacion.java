@@ -18,9 +18,14 @@ public class ValidadorAutenticacion {
   }
 
   public void autenticarUsuario(String contraseniaIngresada) {
+    validarCantidadDeIntentosFallidosDeAutenticacion();
+    validarQueContraseniaIngresadaSeaCorrecta(contraseniaIngresada);
+    this.contadorIntentosDeSesionFallidos = 0L;
+    concederPermisos();
+  }
 
+  private void validarCantidadDeIntentosFallidosDeAutenticacion() {
     if (falloLaAutenticacionHacePoco()) {
-
       long tiempoEsperaMaximo = 60L;
       if (tiempoQueEstaEsperandoUsuario() > tiempoEsperaMaximo) {
         throw new AutenticacionConsecutivaException(
@@ -30,16 +35,14 @@ public class ValidadorAutenticacion {
             "Debe esperar " + contadorIntentosDeSesionFallidos + " minutos para intentar iniciar sesion");
       }
     }
+  }
 
+  private void validarQueContraseniaIngresadaSeaCorrecta(String contraseniaIngresada) {
     if (laContraseniaEsIncorrecta(contraseniaIngresada)) {
       ultimoIntentoDeSesionFallido = LocalTime.now();
       this.contadorIntentosDeSesionFallidos = contadorIntentosDeSesionFallidos + 1;
       throw new AutenticacionInvalidaException("La contraseña ingresada es incorrecta");
     }
-
-    // se ejecuta si todo esta ok
-    this.contadorIntentosDeSesionFallidos = 0L;
-    concederPermisos();
   }
 
   // el tiempo de espera aumenta si la cantidad de sesiones fallidas aumenta
