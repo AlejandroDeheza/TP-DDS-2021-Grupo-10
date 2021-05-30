@@ -1,30 +1,24 @@
 package modelo.mascota.caracteristica;
 
-import java.util.List;
+import repositorios.RepositorioCaracteristicas;
 
 public class Caracteristica {
 
-	String nombreCaracteristica;
-	List<String> valoresCaracteristicas;
+  private String nombreCaracteristica;
+  private String valorCaracteristica;
 
-	public String getNombreCaracteristica() {
-		return nombreCaracteristica;
-	}
+  public Caracteristica(String nombreCaracteristica, String valorCaracteristica, RepositorioCaracteristicas repo) {
+    repo.validarCaracteristica(nombreCaracteristica, valorCaracteristica);
+    this.nombreCaracteristica = nombreCaracteristica;
+    this.valorCaracteristica = valorCaracteristica;
+  }
 
-	public List<String> getValoresCaracteristicas() {
-		return valoresCaracteristicas;
-	}
+  public String getNombreCaracteristica() {
+    return nombreCaracteristica;
+  }
 
-	public Caracteristica(String nombreCaracteristica, List<String> valoresCaracteristicas) {
-		this.nombreCaracteristica = nombreCaracteristica;
-		this.valoresCaracteristicas = valoresCaracteristicas;
-	}
+  public String getValorCaracteristica() {
+    return valorCaracteristica;
+  }
 
-	public void setNombreCaracteristica(String nombreCaracteristica) {
-		this.nombreCaracteristica = nombreCaracteristica;
-	}
-
-	public void setValoresCaracteristicas(List<String> valoresCaracteristicas) {
-		this.valoresCaracteristicas = valoresCaracteristicas;
-	}
 }

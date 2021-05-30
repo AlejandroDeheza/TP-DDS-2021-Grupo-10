@@ -3,6 +3,8 @@ package modelo.informe;
 import excepciones.InformeMascotaEncontradaInvalidaException;
 import modelo.mascota.Foto;
 import modelo.persona.Persona;
+import modelo.usuario.Usuario;
+import repositorios.RepositorioInformes;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -10,50 +12,59 @@ import java.util.List;
 
 public class InformeMascotaEncontrada {
 
-    private InformeQR codigoQRInformacion;
-    private Persona rescatista;
-    private LocalDate fechaEncuentroAnimal;
-    private String direccion;
-    private List<Foto> fotosAnimal = new ArrayList<>();
-    private Ubicacion lugarDeEncuentro;
-    private String estadoActualMascota;
+  private Usuario duenioMascota;
+  private Persona rescatista;
+  private LocalDate fechaEncuentro;
+  private String direccion;
+  private List<Foto> fotosMascota = new ArrayList<>();
+  private Ubicacion lugarDeEncuentro;
+  private String estadoActualMascota;
 
-    public InformeMascotaEncontrada(InformeQR codigoQRInformacion, Persona rescatista, LocalDate fechaEncuentroAnimal, String direccion, List<Foto> fotosAnimal, Ubicacion lugarDeEncuentro, String estadoActualMascota) {
-        this.codigoQRInformacion = codigoQRInformacion;
-        this.rescatista = rescatista;
-        this.fechaEncuentroAnimal = fechaEncuentroAnimal;
-        this.direccion = direccion;
-        if(fotosAnimal == null || fotosAnimal.isEmpty()){
-            throw new InformeMascotaEncontradaInvalidaException("Se debe ingresar al menos 1 Foto");
-        }
-        this.fotosAnimal.addAll(fotosAnimal);
-        this.lugarDeEncuentro = lugarDeEncuentro;
-        this.estadoActualMascota = estadoActualMascota;
-    }
+  public InformeMascotaEncontrada(Usuario duenioMascota, Persona rescatista, LocalDate fechaEncuentro,
+                                  String direccion, List<Foto> fotosMascota, Ubicacion lugarDeEncuentro,
+                                  String estadoActualMascota, RepositorioInformes repo) {
 
-    public InformeQR getCodigoQRInformacion() { return codigoQRInformacion; }
+    this.validarInforme(fotosMascota);
+    this.duenioMascota = duenioMascota;
+    this.rescatista = rescatista;
+    this.fechaEncuentro = fechaEncuentro;
+    this.direccion = direccion;
+    this.fotosMascota.addAll(fotosMascota);
+    this.lugarDeEncuentro = lugarDeEncuentro;
+    this.estadoActualMascota = estadoActualMascota;
+    repo.agregarInformeMascotaEncontrada(this);
+  }
 
-    public Persona getRescatista() {
-        return rescatista;
-    }
+  private void validarInforme(List<Foto> fotosMascota) {
+    if (fotosMascota == null || fotosMascota.isEmpty())
+      throw new InformeMascotaEncontradaInvalidaException("Se debe ingresar al menos 1 Foto de la mascota encontrada");
+  }
 
-    public LocalDate getFechaEncuentroAnimal() {
-        return fechaEncuentroAnimal;
-    }
+  public Usuario getDuenioMascota() {
+    return duenioMascota;
+  }
 
-    public String getDireccion() {
-        return direccion;
-    }
+  public Persona getRescatista() {
+    return rescatista;
+  }
 
-    public List<Foto> getFotosAnimal() {
-        return fotosAnimal;
-    }
+  public LocalDate getFechaEncuentro() {
+    return fechaEncuentro;
+  }
 
-    public Ubicacion getLugarDeEncuentro() {
-        return lugarDeEncuentro;
-    }
+  public String getDireccion() {
+    return direccion;
+  }
 
-    public String getEstadoActualMascota() {
-        return estadoActualMascota;
-    }
+  public List<Foto> getFotosMascota() {
+    return fotosMascota;
+  }
+
+  public Ubicacion getLugarDeEncuentro() {
+    return lugarDeEncuentro;
+  }
+
+  public String getEstadoActualMascota() {
+    return estadoActualMascota;
+  }
 }

@@ -30,6 +30,8 @@ target/**
 .idea/**
 /target/
 /bin/
+*.ipr
+*.iws
 
 # Eclipse
 .classpath

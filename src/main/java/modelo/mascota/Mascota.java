@@ -6,55 +6,58 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class Mascota {
-   Animal animal;
-   String nombre;
-   String apodo;
-   LocalDate fechaNacimiento;
-   Sexo sexo;
-   String descripcionFisica;
-   List<Caracteristica> caracteristicas;
-   List<Foto> fotos;
 
-    public Mascota(Animal animal, String nombre, String apodo, LocalDate fechaNacimiento, Sexo sexo, String descripcionFisica, List<Caracteristica> catacteristicas, List<Foto> fotos) {
-        this.animal = animal;
-        this.nombre = nombre;
-        this.apodo = apodo;
-        this.fechaNacimiento = fechaNacimiento;
-        this.sexo = sexo;
-        this.descripcionFisica = descripcionFisica;
-        this.caracteristicas = catacteristicas;
-        this.fotos = fotos;
-    }
-    public List<Caracteristica> getCaracteristicas(){
-      return caracteristicas;
-    }
+  private Animal animal;
+  private String nombre;
+  private String apodo;
+  private LocalDate fechaNacimiento;
+  private Sexo sexo;
+  private String descripcionFisica;
+  private List<Caracteristica> caracteristicas;
+  private List<Foto> fotos;
 
-    public Animal getAnimal() {
-      return animal;
-    }
+  public Mascota(Animal animal, String nombre, String apodo, LocalDate fechaNacimiento, Sexo sexo,
+                 String descripcionFisica, List<Caracteristica> catacteristicas, List<Foto> fotos) {
+    this.animal = animal;
+    this.nombre = nombre;
+    this.apodo = apodo;
+    this.fechaNacimiento = fechaNacimiento;
+    this.sexo = sexo;
+    this.descripcionFisica = descripcionFisica;
+    this.caracteristicas = catacteristicas;
+    this.fotos = fotos;
+  }
 
-    public String getNombre() {
-      return nombre;
-    }
+  public Animal getAnimal() {
+    return animal;
+  }
 
-    public String getApodo() {
-      return apodo;
-    }
+  public String getNombre() {
+    return nombre;
+  }
 
-    public LocalDate getFechaNacimiento() {
-      return fechaNacimiento;
-    }
+  public String getApodo() {
+    return apodo;
+  }
 
-    public Sexo getSexo() {
-      return sexo;
-    }
+  public LocalDate getFechaNacimiento() {
+    return fechaNacimiento;
+  }
 
-    public String getDescripcionFisica() {
-      return descripcionFisica;
-    }
+  public Sexo getSexo() {
+    return sexo;
+  }
 
-    public List<Foto> getFotos() {
-      return fotos;
-    }
+  public String getDescripcionFisica() {
+    return descripcionFisica;
+  }
+
+  public List<Foto> getFotos() {
+    return fotos;
+  }
+
+  public List<Caracteristica> getCaracteristicas() {
+    return caracteristicas;
+  }
 
 }

@@ -9,42 +9,45 @@ import java.util.stream.Collectors;
 
 public class RepositorioInformes {
 
-    private static RepositorioInformes repositorioInformes;
-    private List<InformeMascotaEncontrada> informesPendientes = new ArrayList<>();
-    private List<InformeMascotaEncontrada> informesProcesados = new ArrayList<>();
+  private static RepositorioInformes repositorioInformes;
+  private List<InformeMascotaEncontrada> informesPendientes = new ArrayList<>();
+  private List<InformeMascotaEncontrada> informesProcesados = new ArrayList<>();
 
-    private RepositorioInformes() {};
+  //usamos el constructor solo para tests
+  public RepositorioInformes() {
+  }
 
-    public static RepositorioInformes getInstance() {
-        if(repositorioInformes == null) {
-            repositorioInformes = new RepositorioInformes();
-        }
-        return repositorioInformes;
+  //usamos el getInstance en el codigo de produccion
+  public static RepositorioInformes getInstance() {
+    if (repositorioInformes == null) {
+      repositorioInformes = new RepositorioInformes();
     }
+    return repositorioInformes;
+  }
 
-    public List<InformeMascotaEncontrada> listarMascotasEncontradasEnUltimosNDias(Integer diasPreviosABuscar){
-        LocalDate fechaFiltro = LocalDate.now().minusDays(diasPreviosABuscar);
-        return informesPendientes.stream()
-                .filter(informe -> informe.getFechaEncuentroAnimal().isAfter(fechaFiltro))
-                .collect(Collectors.toList());
-    }
+  public void agregarInformeMascotaEncontrada(InformeMascotaEncontrada informe) {
+    informesPendientes.add(informe);
+  }
 
-    public void procesarInforme(InformeMascotaEncontrada informeAProcesar){
-        this.informesPendientes.remove(informeAProcesar);
-        this.informesProcesados.add(informeAProcesar);
-    }
+  public List<InformeMascotaEncontrada> listarMascotasEncontradasEnUltimosNDias(Integer diasPreviosABuscar) {
+    LocalDate fechaFiltro = LocalDate.now().minusDays(diasPreviosABuscar);
+    return informesPendientes.stream()
+        .filter(informe -> informe.getFechaEncuentro().isAfter(fechaFiltro))
+        .collect(Collectors.toList());
+  }
 
-    public List<InformeMascotaEncontrada> getInformesPendientes() {
-        return informesPendientes;
-    }
+  public void procesarInforme(InformeMascotaEncontrada informeAProcesar) {
+    this.informesPendientes.remove(informeAProcesar);
+    this.informesProcesados.add(informeAProcesar);
+  }
 
-    public List<InformeMascotaEncontrada> getInformesProcesados() {
-        return informesProcesados;
-    }
+  public List<InformeMascotaEncontrada> getInformesPendientes() {
+    return informesPendientes;
+  }
 
-    public void agregarInformeMascotaEncontrada(InformeMascotaEncontrada informe) {
-        informesPendientes.add(informe);
-    }
+  public List<InformeMascotaEncontrada> getInformesProcesados() {
+    return informesProcesados;
+  }
 
 }
 
