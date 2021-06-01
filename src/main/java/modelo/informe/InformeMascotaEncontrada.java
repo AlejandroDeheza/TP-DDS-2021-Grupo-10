@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InformeMascotaEncontrada {
+public abstract class  InformeMascotaEncontrada {
 
   private Usuario duenioMascota;
   private Persona rescatista;
@@ -19,12 +19,11 @@ public class InformeMascotaEncontrada {
   private List<Foto> fotosMascota = new ArrayList<>();
   private Ubicacion lugarDeEncuentro;
   private String estadoActualMascota;
+  private RepositorioInformes repositorioInformes;
 
   public InformeMascotaEncontrada(Usuario duenioMascota, Persona rescatista, LocalDate fechaEncuentro,
                                   String direccion, List<Foto> fotosMascota, Ubicacion lugarDeEncuentro,
-                                  String estadoActualMascota, RepositorioInformes repo) {
-
-    this.validarInforme(fotosMascota);
+                                  String estadoActualMascota, RepositorioInformes repositorioInformes) {
     this.duenioMascota = duenioMascota;
     this.rescatista = rescatista;
     this.fechaEncuentro = fechaEncuentro;
@@ -32,10 +31,20 @@ public class InformeMascotaEncontrada {
     this.fotosMascota.addAll(fotosMascota);
     this.lugarDeEncuentro = lugarDeEncuentro;
     this.estadoActualMascota = estadoActualMascota;
-    repo.agregarInformeMascotaEncontrada(this);
+    this.repositorioInformes = repositorioInformes;
   }
 
-  private void validarInforme(List<Foto> fotosMascota) {
+  public void procesarInforme(){
+    validarListaFotos();
+    repositorioInformes.agregarInformeMascotaEncontrada(this);
+  }
+
+  private void validarListaFotos() {
+    if (fotosMascota == null || fotosMascota.isEmpty())
+      throw new InformeMascotaEncontradaInvalidaException("Se debe ingresar al menos 1 Foto de la mascota encontrada");
+  }
+
+  private void agregarInformePendiente() {
     if (fotosMascota == null || fotosMascota.isEmpty())
       throw new InformeMascotaEncontradaInvalidaException("Se debe ingresar al menos 1 Foto de la mascota encontrada");
   }

@@ -1,7 +1,7 @@
 package repositorios;
 
-import excepciones.InformeMascotaEncontradaInvalidaException;
-import modelo.informe.InformeMascotaEncontrada;
+import modelo.informe.InformeMascotaConDuenio;
+import modelo.informe.InformeMascotaConDuenioTest;
 import modelo.informe.Ubicacion;
 import modelo.mascota.Foto;
 import modelo.persona.Persona;
@@ -28,17 +28,25 @@ public class RepositorioInformesTest {
   List<Foto> fotosMascotaVacio = new ArrayList<>();
   Ubicacion ubicacion = new Ubicacion("57,44", "57,55");
   String estadoActualMascota = "Bien de salud, pero asustado";
+  InformeMascotaConDuenio informe;
 
   @BeforeEach
   public void contextLoad() {
     repositorioInformes = new RepositorioInformes();
+    informe = generarInformeMascotaEncontrada(fotosMascota);
+  }
+
+  @AfterEach
+  public void destroyContext() {
+    repositorioInformes = null;
+    informe = null;
   }
 
   @Test
   @DisplayName("si se crea un InformeMascotaPerdida, se agrega un informe a InformesPendientes en RepositorioInformes ")
   public void InformesPendientesTest() {
     assertEquals(repositorioInformes.getInformesPendientes().size(), 0);
-    generarInformeMascotaEncontrada(fotosMascota);
+    informe.procesarInforme();
     assertEquals(repositorioInformes.getInformesPendientes().size(), 1);
   }
 
@@ -47,20 +55,12 @@ public class RepositorioInformesTest {
       "un registro insertado previamente")
   public void listarMascotasEncontradasEnLosUltimos10DiasTest() {
     assertEquals(repositorioInformes.listarMascotasEncontradasEnUltimosNDias(10).size(), 0);
-    generarInformeMascotaEncontrada(fotosMascota);
+    informe.procesarInforme();
     assertEquals(repositorioInformes.listarMascotasEncontradasEnUltimosNDias(10).size(), 1);
   }
 
-  @Test
-  @DisplayName("si se genera un InformeMascotaEncontrada sin fotos, se genera " +
-      "InformeMascotaEncontradaInvalidaException")
-  public void InformeMascotaEncontradaInvalidaExceptionTest() {
-    assertThrows(InformeMascotaEncontradaInvalidaException.class,
-        () -> generarInformeMascotaEncontrada(fotosMascotaVacio));
-  }
-
-  private void generarInformeMascotaEncontrada(List<Foto> fotosMascota) {
-    new InformeMascotaEncontrada(
+  private InformeMascotaConDuenio generarInformeMascotaEncontrada(List<Foto> fotosMascota) {
+    return new InformeMascotaConDuenio(
         duenioMascota, rescatista, fechaDeHoy, direccion, fotosMascota, ubicacion, estadoActualMascota,
         repositorioInformes);
   }
