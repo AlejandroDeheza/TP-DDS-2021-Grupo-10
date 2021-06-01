@@ -22,6 +22,6 @@ public class InformeMascotaSinDuenio extends InformeMascotaEncontrada {
 
     private void generarPublicacion(){
 
-    };
+    }
 
 }
