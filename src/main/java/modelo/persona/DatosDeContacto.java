@@ -9,6 +9,10 @@ public class DatosDeContacto {
     this.email = email;
   }
 
+  public String getEmail() {
+    return email;
+  }
+
   public Boolean hayAlgunDatoDeContacto() {
     return (this.telefono != null || this.email != null);
   }
