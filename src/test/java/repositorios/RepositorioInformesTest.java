@@ -22,6 +22,7 @@ public class RepositorioInformesTest {
 
   Usuario duenioMascota = DummyData.getDummyUsuario();
   Persona rescatista = DummyData.getDummyPersona();
+  Usuario voluntario = DummyData.getDummyUsuarioVoluntario();
   LocalDate fechaDeHoy = LocalDate.now();
   String direccion = "Av. Corrientes 576";
   List<Foto> fotosMascota = DummyData.getDummyFotosMascota();
@@ -46,7 +47,7 @@ public class RepositorioInformesTest {
   @DisplayName("si se crea un InformeMascotaPerdida, se agrega un informe a InformesPendientes en RepositorioInformes ")
   public void InformesPendientesTest() {
     assertEquals(repositorioInformes.getInformesPendientes().size(), 0);
-    informe.procesarInforme();
+    informe.procesarInforme(voluntario);
     assertEquals(repositorioInformes.getInformesPendientes().size(), 1);
   }
 
@@ -55,7 +56,7 @@ public class RepositorioInformesTest {
       "un registro insertado previamente")
   public void listarMascotasEncontradasEnLosUltimos10DiasTest() {
     assertEquals(repositorioInformes.listarMascotasEncontradasEnUltimosNDias(10).size(), 0);
-    informe.procesarInforme();
+    informe.procesarInforme(voluntario);
     assertEquals(repositorioInformes.listarMascotasEncontradasEnUltimosNDias(10).size(), 1);
   }
 

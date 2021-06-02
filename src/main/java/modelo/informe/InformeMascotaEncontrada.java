@@ -1,8 +1,10 @@
 package modelo.informe;
 
 import excepciones.InformeMascotaEncontradaInvalidaException;
+import excepciones.RolDistintoAVoluntarioNoPuedeProcesarInformeException;
 import modelo.mascota.Foto;
 import modelo.persona.Persona;
+import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioInformes;
 
@@ -32,11 +34,16 @@ public abstract class  InformeMascotaEncontrada {
     this.repositorioInformes = repositorioInformes;
   }
 
-  public void procesarInforme(){
+  public void procesarInforme(Usuario usuario){
     validarListaFotos();
+    validarRolUsuario(usuario.getTipo());
     repositorioInformes.agregarInformeMascotaEncontrada(this);
   }
 
+  private void validarRolUsuario(TipoUsuario tipo){
+    if(!tipo.equals(TipoUsuario.VOLUNTARIO))
+      throw new RolDistintoAVoluntarioNoPuedeProcesarInformeException();
+  }
   private void validarListaFotos() {
     if (fotosMascota == null || fotosMascota.isEmpty())
       throw new InformeMascotaEncontradaInvalidaException("Se debe ingresar al menos 1 Foto de la mascota encontrada");

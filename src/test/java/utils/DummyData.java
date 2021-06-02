@@ -11,6 +11,7 @@ import modelo.persona.DatosDeContacto;
 import modelo.persona.Persona;
 import modelo.persona.PersonaBuilder;
 import modelo.persona.TipoDocumento;
+import modelo.publicacion.Publicacion;
 import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioCaracteristicas;
@@ -79,6 +80,14 @@ public class DummyData {
         .conDescripcionFisica("El firulais mismo")
         .conCaracteristicas(getDummyListaCaracteristicasParaMascota(repo))
         .conFotos(getDummyFotosMascota()).build();
+  }
+
+  public static Usuario getDummyUsuarioVoluntario(){
+    return new Usuario("Admin", "Password1234", TipoUsuario.VOLUNTARIO, getDummyPersona());
+  }
+
+  public static Publicacion getDummyPublicacion(){
+    return new Publicacion(getDummyDatosDeContacto(),getDummyFotosMascota());
   }
 
 }

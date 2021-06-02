@@ -3,14 +3,15 @@ package modelo.informe;
 import modelo.mascota.Foto;
 import modelo.mascota.Mascota;
 import modelo.persona.Persona;
+import modelo.publicacion.Publicacion;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioInformes;
+import repositorios.RepositorioPublicaciones;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public class InformeMascotaSinDuenio extends InformeMascotaEncontrada {
-
 
     private Mascota mascota;
 
@@ -27,15 +28,15 @@ public class InformeMascotaSinDuenio extends InformeMascotaEncontrada {
         this.mascota = mascota;
     }
 
-
     @Override
-    public void procesarInforme() {
-        super.procesarInforme();
-        generarPublicacion();
+    public void procesarInforme(Usuario usuario) {
+        super.procesarInforme(usuario);
+        RepositorioPublicaciones.getInstance().agregarPublicacion(new Publicacion(getRescatista().getDatosDeContacto(),this.getFotosMascota()));
     }
 
-    private void generarPublicacion(){
-
+    private Hogar getHogaresTransitorios(){
+        Hogar hogar = null;
+        return  hogar;
     }
 
 }

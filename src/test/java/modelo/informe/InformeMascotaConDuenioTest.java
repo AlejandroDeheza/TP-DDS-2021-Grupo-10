@@ -24,6 +24,7 @@ public class InformeMascotaConDuenioTest {
 
     Usuario duenioMascota = DummyData.getDummyUsuario();
     Persona rescatista = DummyData.getDummyPersona();
+    Usuario voluntario = DummyData.getDummyUsuarioVoluntario();
     LocalDate fechaDeHoy = LocalDate.now();
     String direccion = "Av. Corrientes 576";
     List<Foto> fotosMascota = DummyData.getDummyFotosMascota();
@@ -59,8 +60,7 @@ public class InformeMascotaConDuenioTest {
     @DisplayName("si se genera un InformeMascotaEncontrada sin fotos, se genera " +
             "InformeMascotaEncontradaInvalidaException")
     public void InformeMascotaEncontradaInvalidaExceptionTest() {
-        assertThrows(InformeMascotaEncontradaInvalidaException.class,
-                () -> informeSinFoto.procesarInforme());
+        assertThrows(InformeMascotaEncontradaInvalidaException.class, () -> informeSinFoto.procesarInforme());
     }
 
     @Test
@@ -69,7 +69,6 @@ public class InformeMascotaConDuenioTest {
         informeConFoto.procesarInforme();
         String subjectEmail = this.getSubjectEmail();
         assertEquals("rescatepatitasdds21@gmail.com", subjectEmail);
-
     }
 
     private InformeMascotaConDuenio generarInformeMascotaEncontrada(List<Foto> fotosMascota) {
