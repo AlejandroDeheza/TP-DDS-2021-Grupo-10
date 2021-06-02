@@ -26,7 +26,8 @@ public class InformeMascotaConDuenioBuilder extends InformeMascotaBuilder {
     if (this.duenioMascota == null || this.rescatista == null || this.fechaEncuentro == null
         || this.direccion == null || this.fotosMascota == null || this.lugarDeEncuentro == null
         || this.estadoActualMascota == null || this.repositorioInformes == null) {
-      throw new InformeMascotaConDuenioInvalidaException("");
+      throw new InformeMascotaConDuenioInvalidaException(
+          "Los campos de InformeMascotaConDuenioBuilder son inválidos");
     }
   }
 
