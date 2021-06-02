@@ -14,8 +14,9 @@ public class InformeMascotaSinDuenio extends InformeMascotaEncontrada {
 
     private Mascota mascota;
 
-    public InformeMascotaSinDuenio(Persona rescatista, LocalDate fechaEncuentro, String direccion, List<Foto> fotosMascota, Ubicacion lugarDeEncuentro, String estadoActualMascota, RepositorioInformes repo) {
+    public InformeMascotaSinDuenio(Persona rescatista, LocalDate fechaEncuentro, String direccion, List<Foto> fotosMascota, Ubicacion lugarDeEncuentro, String estadoActualMascota, RepositorioInformes repo, Mascota mascota) {
         super(rescatista, fechaEncuentro, direccion, fotosMascota, lugarDeEncuentro, estadoActualMascota, repo);
+        this.mascota = mascota;
     }
 
     public Mascota getMascota() {
