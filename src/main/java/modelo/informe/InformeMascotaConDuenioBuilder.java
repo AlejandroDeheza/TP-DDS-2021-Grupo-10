@@ -1,8 +1,9 @@
 package modelo.informe;
 
+import excepciones.InformeMascotaConDuenioInvalidaException;
 import modelo.usuario.Usuario;
 
-public class InformeMascotaConDuenioBuilder extends InformeMascotaBuilder{
+public class InformeMascotaConDuenioBuilder extends InformeMascotaBuilder {
 
   protected Usuario duenioMascota;
 
@@ -11,10 +12,22 @@ public class InformeMascotaConDuenioBuilder extends InformeMascotaBuilder{
     return this;
   }
 
-  public static InformeMascotaConDuenioBuilder crearBuilder(){ return new InformeMascotaConDuenioBuilder(); }
+  public static InformeMascotaConDuenioBuilder crearBuilder() {
+    return new InformeMascotaConDuenioBuilder();
+  }
 
-  public InformeMascotaConDuenio build(){
-    return new InformeMascotaConDuenio(duenioMascota, rescatista, fechaEncuentro, direccion, fotosMascota, lugarDeEncuentro, estadoActualMascota, repositorioInformes);
+  public InformeMascotaConDuenio build() {
+    this.validarCampos();
+    return new InformeMascotaConDuenio(duenioMascota, rescatista, fechaEncuentro, direccion,
+        fotosMascota, lugarDeEncuentro, estadoActualMascota, repositorioInformes);
+  }
+
+  private void validarCampos() { // TODO: Null check smells
+    if (this.duenioMascota == null || this.rescatista == null || this.fechaEncuentro == null
+        || this.direccion == null || this.fotosMascota == null || this.lugarDeEncuentro == null
+        || this.estadoActualMascota == null || this.repositorioInformes == null) {
+      throw new InformeMascotaConDuenioInvalidaException("");
+    }
   }
 
 }
