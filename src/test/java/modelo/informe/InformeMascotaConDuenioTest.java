@@ -4,6 +4,7 @@ import excepciones.InformeMascotaEncontradaInvalidaException;
 import modelo.mascota.Foto;
 import modelo.persona.Persona;
 import modelo.usuario.Usuario;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,6 +35,20 @@ public class InformeMascotaConDuenioTest {
         repositorioInformes = new RepositorioInformes();
         informe = generarInformeMascotaEncontradaBuilder(fotosMascotaVacio);
     }
+
+    @Test
+    @DisplayName("Chequeo igualdad entre Constructor y Builder")
+    public void InformeMascotaEncontradaBuilderConstructorTest(){
+        InformeMascotaConDuenio informeAux = generarInformeMascotaEncontrada(fotosMascotaVacio);
+        Assertions.assertEquals(informe.getDuenioMascota(), informeAux.getDuenioMascota());
+        Assertions.assertEquals(informe.getDireccion(), informeAux.getDireccion());
+        Assertions.assertEquals(informe.getEstadoActualMascota(), informeAux.getEstadoActualMascota());
+        Assertions.assertEquals(informe.getFotosMascota(), informeAux.getFotosMascota());
+        Assertions.assertEquals(informe.getFechaEncuentro(), informeAux.getFechaEncuentro());
+        Assertions.assertEquals(informe.getLugarDeEncuentro(), informeAux.getLugarDeEncuentro());
+        Assertions.assertEquals(informe.getRescatista(), informeAux.getRescatista());
+    }
+
 
     @Test
     @DisplayName("si se genera un InformeMascotaEncontrada sin fotos, se genera " +
