@@ -2,7 +2,6 @@ package modelo.informe;
 
 import modelo.mascota.Foto;
 import modelo.persona.Persona;
-import modelo.usuario.Usuario;
 import repositorios.RepositorioInformes;
 
 import java.time.LocalDate;

@@ -1,9 +1,9 @@
 package modelo.persona;
 
 import excepciones.DatosDeContactoIncompletosException;
-
 import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import utils.DummyData;
@@ -11,6 +11,31 @@ import utils.DummyData;
 import java.time.LocalDate;
 
 public class PersonaTest {
+
+  private String nombre = "Emi";
+  private String apellido = "Mazzaglia";
+  private TipoDocumento tipoDocumento = TipoDocumento.DNI;
+  private String numeroDeDocumento = "35353535";
+  private DatosDeContacto datosDeContacto = new DatosDeContacto(null, null);
+  private LocalDate fechaNacimiento = LocalDate.now();
+  private Persona persona;
+
+  @BeforeEach
+  public void contextLoad() {
+    persona = generarPersonaBuilder();
+  }
+
+  @Test
+  @DisplayName("Chequeo igualdad entre Constructor y Builder")
+  public void PersonaBuilderConstructorTest() {
+    Persona personaAux = this.generarPersona();
+    Assertions.assertEquals(persona.getNombre(), personaAux.getNombre());
+    Assertions.assertEquals(persona.getApellido(), personaAux.getApellido());
+    Assertions.assertEquals(persona.getTipoDocumento(), personaAux.getTipoDocumento());
+    Assertions.assertEquals(persona.getNumeroDeDocumento(), personaAux.getNumeroDeDocumento());
+    Assertions.assertEquals(persona.getDatosDeContacto(), personaAux.getDatosDeContacto());
+    Assertions.assertEquals(persona.getFechaNacimiento(), personaAux.getFechaNacimiento());
+  }
 
   @Test
   @DisplayName("si se crea una Persona valida, no se generan problemas")
@@ -21,10 +46,7 @@ public class PersonaTest {
   @Test
   @DisplayName("si se crea otra Persona valida, sin telefono ni mail, no se generan problemas")
   public void personaValidaTest2() {
-    assertDoesNotThrow(
-        () -> new Persona("Emi", "Mazzaglia", TipoDocumento.DNI, "35353535",
-            new DatosDeContacto(null, null), LocalDate.now())
-    );
+    assertDoesNotThrow(() -> this.generarPersonaBuilder());
   }
 
   @Test
@@ -34,11 +56,24 @@ public class PersonaTest {
   }
 
   @Test
-  @DisplayName("si se crea una Persona sin telefono, ni mail, ni nombre y apellido, se genera " +
-      "DatosDeContactoIncompletosException")
+  @DisplayName("si se crea una Persona sin telefono, ni mail, ni nombre y apellido, se genera "
+      + "DatosDeContactoIncompletosException")
   public void DatosDeContactoIncompletosExceptionTest() {
     assertThrows(DatosDeContactoIncompletosException.class,
         DummyData::getDummyPersonaSinDatosDeContactoNiNombreNiApellido);
+  }
+
+  private Persona generarPersonaBuilder() {
+    PersonaBuilder builder = PersonaBuilder.crearBuilder();
+    builder.conNombre(nombre).conApellido(apellido).conTipoDocumento(tipoDocumento)
+        .conNumeroDeDocumento(numeroDeDocumento).conDatosDeContacto(datosDeContacto)
+        .conFechaNacimiento(fechaNacimiento);
+    return builder.build();
+  }
+
+  private Persona generarPersona() {
+    return new Persona(this.nombre, this.apellido, this.tipoDocumento, this.numeroDeDocumento,
+        this.datosDeContacto, this.fechaNacimiento);
   }
 
 }
