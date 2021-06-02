@@ -3,6 +3,7 @@ package utils;
 import modelo.mascota.Animal;
 import modelo.mascota.Foto;
 import modelo.mascota.Mascota;
+import modelo.mascota.MascotaBuilder;
 import modelo.mascota.Sexo;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
@@ -72,10 +73,12 @@ public class DummyData {
     return fotosMascota;
   }
 
-  // TODO: Implementar MascotaBuilder
   public static Mascota getDummyMascota(RepositorioCaracteristicas repo) {
-    return new Mascota(Animal.PERRO, "Perro", "PerroApodo", LocalDate.of(2018, 3, 4), Sexo.MACHO,
-        "Descripcion Dummy", getDummyListaCaracteristicasParaMascota(repo), getDummyFotosMascota());
+    return MascotaBuilder.crearBuilder().conAnimal(Animal.PERRO).conNombre("Negrito")
+        .conApodo("PerroApodo").conFechaNacimiento(LocalDate.of(2018, 3, 4)).conSexo(Sexo.MACHO)
+        .conDescripcionFisica("El firulais mismo")
+        .conCaracteristicas(getDummyListaCaracteristicasParaMascota(repo))
+        .conFotos(getDummyFotosMascota()).build();
   }
 
 }
