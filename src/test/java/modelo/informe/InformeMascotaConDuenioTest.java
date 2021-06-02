@@ -32,7 +32,7 @@ public class InformeMascotaConDuenioTest {
     @BeforeEach
     public void contextLoad() {
         repositorioInformes = new RepositorioInformes();
-        informe = generarInformeMascotaEncontrada(fotosMascotaVacio);
+        informe = generarInformeMascotaEncontradaBuilder(fotosMascotaVacio);
     }
 
     @Test
@@ -47,6 +47,19 @@ public class InformeMascotaConDuenioTest {
         return new InformeMascotaConDuenio(
                 duenioMascota, rescatista, fechaDeHoy, direccion, fotosMascota, ubicacion, estadoActualMascota,
                 repositorioInformes);
+    }
+
+    private InformeMascotaConDuenio generarInformeMascotaEncontradaBuilder(List<Foto> fotosMascota){
+        InformeMascotaConDuenioBuilder builder = InformeMascotaConDuenioBuilder.crearBuilder();
+        builder.conDuenioMascota(duenioMascota)
+            .conRescatista(rescatista)
+            .conFechaEncuentro(fechaDeHoy)
+            .conDireccion(direccion)
+            .conFotosMascota(fotosMascota)
+            .conLugarDeEncuentro(ubicacion)
+            .conEstadoActualMascota(estadoActualMascota)
+            .conRepositorioInformes(repositorioInformes);
+        return builder.build();
     }
 
 }
