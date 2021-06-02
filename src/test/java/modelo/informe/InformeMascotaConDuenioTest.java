@@ -27,26 +27,28 @@ public class InformeMascotaConDuenioTest {
     List<Foto> fotosMascotaVacio = new ArrayList<>();
     Ubicacion ubicacion = new Ubicacion("57,44", "57,55");
     String estadoActualMascota = "Bien de salud, pero asustado";
-    InformeMascotaConDuenio informe;
+    InformeMascotaConDuenio informeConFoto;
+    InformeMascotaConDuenio informeSinFoto;
     RepositorioInformes repositorioInformes;
 
     @BeforeEach
     public void contextLoad() {
         repositorioInformes = new RepositorioInformes();
-        informe = generarInformeMascotaEncontradaBuilder(fotosMascotaVacio);
+        informeSinFoto = generarInformeMascotaEncontradaBuilder(fotosMascotaVacio);
+        informeConFoto = generarInformeMascotaEncontradaBuilder(fotosMascota);
     }
 
     @Test
     @DisplayName("Chequeo igualdad entre Constructor y Builder")
     public void InformeMascotaEncontradaBuilderConstructorTest(){
         InformeMascotaConDuenio informeAux = generarInformeMascotaEncontrada(fotosMascotaVacio);
-        Assertions.assertEquals(informe.getDuenioMascota(), informeAux.getDuenioMascota());
-        Assertions.assertEquals(informe.getDireccion(), informeAux.getDireccion());
-        Assertions.assertEquals(informe.getEstadoActualMascota(), informeAux.getEstadoActualMascota());
-        Assertions.assertEquals(informe.getFotosMascota(), informeAux.getFotosMascota());
-        Assertions.assertEquals(informe.getFechaEncuentro(), informeAux.getFechaEncuentro());
-        Assertions.assertEquals(informe.getLugarDeEncuentro(), informeAux.getLugarDeEncuentro());
-        Assertions.assertEquals(informe.getRescatista(), informeAux.getRescatista());
+        Assertions.assertEquals(informeSinFoto.getDuenioMascota(), informeAux.getDuenioMascota());
+        Assertions.assertEquals(informeSinFoto.getDireccion(), informeAux.getDireccion());
+        Assertions.assertEquals(informeSinFoto.getEstadoActualMascota(), informeAux.getEstadoActualMascota());
+        Assertions.assertEquals(informeSinFoto.getFotosMascota(), informeAux.getFotosMascota());
+        Assertions.assertEquals(informeSinFoto.getFechaEncuentro(), informeAux.getFechaEncuentro());
+        Assertions.assertEquals(informeSinFoto.getLugarDeEncuentro(), informeAux.getLugarDeEncuentro());
+        Assertions.assertEquals(informeSinFoto.getRescatista(), informeAux.getRescatista());
     }
 
 
@@ -55,7 +57,14 @@ public class InformeMascotaConDuenioTest {
             "InformeMascotaEncontradaInvalidaException")
     public void InformeMascotaEncontradaInvalidaExceptionTest() {
         assertThrows(InformeMascotaEncontradaInvalidaException.class,
-                () -> informe.procesarInforme());
+                () -> informeSinFoto.procesarInforme());
+    }
+
+    @Test
+    @DisplayName("Se debe notificar al duenio cuando la mascota tiene chapita")
+    public void MascotaConDuenioNotificarTest(){
+        informeConFoto.procesarInforme();
+
     }
 
     private InformeMascotaConDuenio generarInformeMascotaEncontrada(List<Foto> fotosMascota) {
