@@ -1,8 +1,11 @@
 package client;
 
-import com.sun.jersey.api.client.ClientResponse;
+import client.response.HogaresResponse;
+import modelo.hogares.Hogar;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 public class ObtenerHogaresClientTest {
 
@@ -11,15 +14,8 @@ public class ObtenerHogaresClientTest {
     public static final int HTTP_BAD_REQUEST = 400;
 
     @Test
-    public void cuandoConsultoHogaresConOffsetValidoDevuelve200() {
-        ClientResponse response = hogaresClient.obtenerHogares("1");
-        Assertions.assertEquals(response.getStatus(), HTTP_OK);
-    }
-
-    @Test
     public void cuandoConsultoHogaresConOffsetMayorA4Devuelve400() {
-        ClientResponse response = hogaresClient.obtenerHogares("5");
-        Assertions.assertEquals(response.getStatus(), HTTP_BAD_REQUEST);
+        List<Hogar> hogaresPosibles = hogaresClient.obtenerTodosLosHogares();
     }
 
 }

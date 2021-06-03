@@ -2,6 +2,7 @@ package modelo.informe;
 
 import excepciones.InformeMascotaEncontradaInvalidaException;
 import modelo.mascota.Foto;
+import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.Persona;
 import modelo.usuario.Usuario;
 import org.junit.jupiter.api.Assertions;
@@ -26,11 +27,10 @@ public class InformeMascotaConDuenioTest {
     Persona rescatista = DummyData.getDummyPersona();
     Usuario voluntario = DummyData.getDummyUsuarioVoluntario();
     LocalDate fechaDeHoy = LocalDate.now();
-    String direccion = "Av. Corrientes 576";
     List<Foto> fotosMascota = DummyData.getDummyFotosMascota();
     List<Foto> fotosMascotaVacio = new ArrayList<>();
-    Ubicacion ubicacion = new Ubicacion("57,44", "57,55");
-    String estadoActualMascota = "Bien de salud, pero asustado";
+    Ubicacion ubicacion = new Ubicacion(57.44, 57.55);
+    Caracteristica estadoActualMascota = new Caracteristica("Estado actual","Bien de salud, pero asustado");
     InformeMascotaConDuenio informeConFoto;
     InformeMascotaConDuenio informeSinFoto;
     RepositorioInformes repositorioInformes;
@@ -73,7 +73,7 @@ public class InformeMascotaConDuenioTest {
 
     private InformeMascotaConDuenio generarInformeMascotaEncontrada(List<Foto> fotosMascota) {
         return new InformeMascotaConDuenio(
-                duenioMascota, rescatista, fechaDeHoy, direccion, fotosMascota, ubicacion, estadoActualMascota,
+                duenioMascota, rescatista, fechaDeHoy, ubicacion, fotosMascota, ubicacion, estadoActualMascota,
                 repositorioInformes);
     }
 
@@ -82,7 +82,7 @@ public class InformeMascotaConDuenioTest {
         builder.conDuenioMascota(duenioMascota)
                 .conRescatista(rescatista)
                 .conFechaEncuentro(fechaDeHoy)
-                .conDireccion(direccion)
+                .conDireccion(ubicacion)
                 .conFotosMascota(fotosMascota)
                 .conLugarDeEncuentro(ubicacion)
                 .conEstadoActualMascota(estadoActualMascota)

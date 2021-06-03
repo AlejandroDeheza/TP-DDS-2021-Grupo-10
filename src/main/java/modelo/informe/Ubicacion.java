@@ -1,19 +1,36 @@
 package modelo.informe;
 
 public class Ubicacion {
-  private String latitud;
-  private String longitud;
+  private Double latitud;
+  private Double longitud;
+  private String direccion;
 
-  public Ubicacion(String latitud, String longitud) {
+  public Ubicacion(Double latitud, Double longitud) {
     this.latitud = latitud;
     this.longitud = longitud;
   }
 
-  public String getLatitud() {
+  public Double getLatitud() {
     return latitud;
   }
 
-  public String getLongitud() {
+  public Double getLongitud() {
     return longitud;
+  }
+
+  public void setLatitud(Double latitud) {
+    this.latitud = latitud;
+  }
+
+  public void setLongitud(Double longitud) {
+    this.longitud = longitud;
+  }
+
+  public String getDireccion() {
+    return direccion;
+  }
+
+  public void setDireccion(String direccion) {
+    this.direccion = direccion;
   }
 }

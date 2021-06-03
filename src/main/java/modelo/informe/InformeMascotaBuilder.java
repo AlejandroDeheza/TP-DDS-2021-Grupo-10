@@ -1,6 +1,7 @@
 package modelo.informe;
 
 import modelo.mascota.Foto;
+import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.Persona;
 import repositorios.RepositorioInformes;
 
@@ -11,10 +12,10 @@ import java.util.List;
 public abstract class InformeMascotaBuilder {
   protected Persona rescatista;
   protected LocalDate fechaEncuentro;
-  protected String direccion;
+  protected Ubicacion direccion;
   protected List<Foto> fotosMascota = new ArrayList<>();
   protected Ubicacion lugarDeEncuentro;
-  protected String estadoActualMascota;
+  protected Caracteristica estadoActualMascota;
   protected RepositorioInformes repositorioInformes;
 
   protected InformeMascotaBuilder() {
@@ -30,7 +31,7 @@ public abstract class InformeMascotaBuilder {
     return this;
   }
 
-  public InformeMascotaBuilder conDireccion(String direccion) {
+  public InformeMascotaBuilder conDireccion(Ubicacion direccion) {
     this.direccion = direccion;
     return this;
   }
@@ -45,7 +46,7 @@ public abstract class InformeMascotaBuilder {
     return this;
   }
 
-  public InformeMascotaBuilder conEstadoActualMascota(String estadoActualMascota) {
+  public InformeMascotaBuilder conEstadoActualMascota(Caracteristica estadoActualMascota) {
     this.estadoActualMascota = estadoActualMascota;
     return this;
   }
