@@ -1,6 +1,7 @@
 package modelo.hogares;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 import modelo.informe.Ubicacion;
 import modelo.mascota.Animal;
 import modelo.mascota.Mascota;
@@ -9,7 +10,7 @@ import modelo.mascota.caracteristica.Caracteristica;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+@Data
 public class Hogar {
     @JsonProperty("id")
     private String id;
@@ -37,78 +38,6 @@ public class Hogar {
 
     @JsonProperty("caracteristicas")
     private List<String> caracteristicas;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public Ubicacion getUbicacion() {
-        return ubicacion;
-    }
-
-    public void setUbicacion(Ubicacion ubicacion) {
-        this.ubicacion = ubicacion;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public Admision getAdmisiones() {
-        return admisiones;
-    }
-
-    public void setAdmisiones(Admision admisiones) {
-        this.admisiones = admisiones;
-    }
-
-    public Integer getCapacidad() {
-        return capacidad;
-    }
-
-    public void setCapacidad(Integer capacidad) {
-        this.capacidad = capacidad;
-    }
-
-    public Integer getLugaresDisponibles() {
-        return lugaresDisponibles;
-    }
-
-    public void setLugaresDisponibles(Integer lugaresDisponibles) {
-        this.lugaresDisponibles = lugaresDisponibles;
-    }
-
-    public Boolean getTienePatio() {
-        return tienePatio;
-    }
-
-    public void setTienePatio(Boolean tienePatio) {
-        this.tienePatio = tienePatio;
-    }
-
-    public List<String> getCaracteristicas() {
-        return caracteristicas;
-    }
-
-    public void setCaracteristicas(List<String> caracteristicas) {
-        this.caracteristicas = caracteristicas;
-    }
 
     public boolean esPosibleHogarDeTransito(Integer radioCercania, Mascota mascota, Ubicacion direccion) {
         List<String> valoresCaracteristicasMascota = mascota.getCaracteristicas().stream().map(caracteristica -> caracteristica.getValorCaracteristica()).collect(Collectors.toList());
