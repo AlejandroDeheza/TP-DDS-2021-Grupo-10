@@ -3,6 +3,7 @@ package repositorios;
 import modelo.informe.InformeMascotaConDuenio;
 import modelo.informe.Ubicacion;
 import modelo.mascota.Foto;
+import modelo.mascota.Mascota;
 import modelo.persona.Persona;
 import modelo.usuario.Usuario;
 import org.junit.jupiter.api.*;
@@ -22,17 +23,20 @@ public class RepositorioInformesTest {
   Usuario duenioMascota = DummyData.getDummyUsuario();
   Persona rescatista = DummyData.getDummyPersona();
   LocalDate fechaDeHoy = LocalDate.now();
-  String direccion = "Av. Corrientes 576";
+  Ubicacion direccion = new Ubicacion(57.44, 57.55);
   List<Foto> fotosMascota = DummyData.getDummyFotosMascota();
   List<Foto> fotosMascotaVacio = new ArrayList<>();
-  Ubicacion ubicacion = new Ubicacion(57.44, 57.55);
+  Ubicacion lugarDeEncuentro = new Ubicacion(57.44, 57.55);
   String estadoActualMascota = "Bien de salud, pero asustado";
   InformeMascotaConDuenio informe;
+
+  RepositorioCaracteristicas repositorioCaracteristicas;
+  Mascota mascota = DummyData.getDummyMascota(repositorioCaracteristicas);
 
   @BeforeEach
   public void contextLoad() {
     repositorioInformes = new RepositorioInformes();
-    informe = generarInformeMascotaEncontrada(fotosMascota);
+    informe = generarInformeMascotaEncontrada(mascota);
   }
 
   @AfterEach
@@ -58,10 +62,8 @@ public class RepositorioInformesTest {
     assertEquals(repositorioInformes.listarMascotasEncontradasEnUltimosNDias(10).size(), 1);
   }
 
-  private InformeMascotaConDuenio generarInformeMascotaEncontrada(List<Foto> fotosMascota) {
-    return new InformeMascotaConDuenio(
-        duenioMascota, rescatista, fechaDeHoy, direccion, fotosMascota, ubicacion, estadoActualMascota,
-        repositorioInformes);
+  private InformeMascotaConDuenio generarInformeMascotaEncontrada(Mascota mascota) {
+    return new InformeMascotaConDuenio(duenioMascota, rescatista, fechaDeHoy, direccion, lugarDeEncuentro, repositorioInformes);
   }
 
 }

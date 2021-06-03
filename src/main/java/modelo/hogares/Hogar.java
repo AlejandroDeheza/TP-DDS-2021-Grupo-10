@@ -1,5 +1,6 @@
 package modelo.hogares;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import modelo.informe.Ubicacion;
 import modelo.mascota.Animal;
 import modelo.mascota.Mascota;
@@ -8,15 +9,33 @@ import modelo.mascota.caracteristica.Caracteristica;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 public class Hogar {
+    @JsonProperty("id")
     private String id;
+
+    @JsonProperty("nombre")
     private String nombre;
+
+    @JsonProperty("ubicacion")
     private Ubicacion ubicacion;
+
+    @JsonProperty("telefono")
     private String telefono;
+
+    @JsonProperty("admisiones")
     private Admision admisiones;
+
+    @JsonProperty("capacidad")
     private Integer capacidad;
+
+    @JsonProperty("lugares_disponibles")
     private Integer lugaresDisponibles;
+
+    @JsonProperty("patio")
     private Boolean tienePatio;
+
+    @JsonProperty("caracteristicas")
     private List<String> caracteristicas;
 
     public String getId() {

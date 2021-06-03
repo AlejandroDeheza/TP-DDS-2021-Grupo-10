@@ -12,7 +12,7 @@ public class RepositorioPublicaciones {
 
     private static RepositorioPublicaciones repositorioPublicaciones;
     private List<Publicacion> publicaciones = new ArrayList<>();
-
+   // private NotificacionCorreo notificacionSender = new NotificacionCorreo();
     //usamos el constructor solo para tests
     public RepositorioPublicaciones() {
     }
@@ -38,7 +38,11 @@ public class RepositorioPublicaciones {
               .get();
       publicacionConMascota.agregarDuenio(usuario);
     // TODO: notificar DatosDeContacto (rescatista) que se encontro la mascota del usuario
+        //  MsgEmail msgEmail=newMsgEmail()
+            //    msgEmail.setMsg("Contactar a "+usuario.getPersona().getDatosDeContacto().getEmail()+" para coordinar el encuentro con su mascota");
+     //notificacionSender(publicacionConMascota.getDatosDeContactoRescatista(),);
 
+        //
     }
 
     public List<Publicacion> listarPublicacionesSinDuenio(){

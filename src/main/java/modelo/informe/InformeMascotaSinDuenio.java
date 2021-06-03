@@ -2,6 +2,7 @@ package modelo.informe;
 
 import client.ObtenerHogaresClient;
 import client.response.HogaresResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import modelo.hogares.Hogar;
 import modelo.mascota.Foto;
 import modelo.mascota.Mascota;
@@ -44,10 +45,22 @@ public class InformeMascotaSinDuenio extends InformeMascotaEncontrada {
         RepositorioPublicaciones.getInstance().agregarPublicacion(new Publicacion(this.getRescatista().getDatosDeContacto(),this.getMascota().getFotos()));
     }
 
+<<<<<<< HEAD
     public List<Hogar> getHogaresTransitorios(Integer radioCercania){
 
         List<Hogar> hogares = this.hogaresClient.obtenerTodosLosHogares();
         return hogares.stream().filter( hogar -> hogar.esPosibleHogarDeTransito(radioCercania,this.getMascota(),this.getDireccion())).collect(Collectors.toList());
+=======
+    public List<Hogar> getHogaresTransitorios(Integer radioCercania) throws JsonProcessingException {
+        List<Hogar> hogares = null;
+        try {
+             hogares = this.hogaresClient.obtenerTodosLosHogares();
+        }
+        catch (Error error) {
+            System.out.println(error);
+        }
+         return hogares.stream().filter( hogar -> hogar.esPosibleHogarDeTransito(radioCercania,this.getMascota(),this.getDireccion())).collect(Collectors.toList());
+>>>>>>> d7ad8a7 (Fix del cliente)
     }
 
 }

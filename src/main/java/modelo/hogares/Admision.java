@@ -1,10 +1,13 @@
 package modelo.hogares;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import modelo.mascota.Animal;
 
 public class Admision {
+    @JsonProperty("perros")
     private Boolean aceptaPerro;
 
+    @JsonProperty("gatos")
     private Boolean aceptaGato;
 
     public Boolean getAceptaPerro(){

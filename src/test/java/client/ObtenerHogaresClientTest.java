@@ -1,8 +1,7 @@
 package client;
 
-import client.response.HogaresResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import modelo.hogares.Hogar;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -14,7 +13,7 @@ public class ObtenerHogaresClientTest {
     public static final int HTTP_BAD_REQUEST = 400;
 
     @Test
-    public void cuandoConsultoHogaresConOffsetMayorA4Devuelve400() {
+    public void consultarTodosLosHogaresDevuelveUnaListaDeHogares() throws JsonProcessingException {
         List<Hogar> hogaresPosibles = hogaresClient.obtenerTodosLosHogares();
     }
 

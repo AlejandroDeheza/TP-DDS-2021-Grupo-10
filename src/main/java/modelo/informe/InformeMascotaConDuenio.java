@@ -1,8 +1,12 @@
 package modelo.informe;
 
 import modelo.mascota.Foto;
+<<<<<<< HEAD
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.DatosDeContacto;
+=======
+import modelo.mascota.Mascota;
+>>>>>>> d7ad8a7 (Fix del cliente)
 import modelo.persona.Persona;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioInformes;
@@ -12,7 +16,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class InformeMascotaConDuenio extends InformeMascotaEncontrada {
-
     private Usuario duenioMascota;
     private NotificacionCorreo notificacionCorreo = new NotificacionCorreo();
 

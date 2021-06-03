@@ -3,12 +3,14 @@ package modelo.informe;
 import excepciones.InformeMascotaEncontradaInvalidaException;
 import modelo.mascota.Foto;
 import modelo.mascota.caracteristica.Caracteristica;
+import modelo.mascota.Mascota;
 import modelo.persona.Persona;
 import modelo.usuario.Usuario;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioInformes;
 import utils.DummyData;
 
@@ -34,7 +36,8 @@ public class InformeMascotaConDuenioTest {
     InformeMascotaConDuenio informeConFoto;
     InformeMascotaConDuenio informeSinFoto;
     RepositorioInformes repositorioInformes;
-
+    RepositorioCaracteristicas repositorioCaracteristicas;
+    Mascota mascota = DummyData.getDummyMascota(repositorioCaracteristicas);
     @BeforeEach
     public void contextLoad() {
         repositorioInformes = new RepositorioInformes();
@@ -72,6 +75,7 @@ public class InformeMascotaConDuenioTest {
     }
 
     private InformeMascotaConDuenio generarInformeMascotaEncontrada(List<Foto> fotosMascota) {
+
         return new InformeMascotaConDuenio(
                 duenioMascota, rescatista, fechaDeHoy, ubicacion, fotosMascota, ubicacion, estadoActualMascota,
                 repositorioInformes);
