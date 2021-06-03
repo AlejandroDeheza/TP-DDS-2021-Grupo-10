@@ -11,10 +11,13 @@ import org.junit.jupiter.api.Test;
 import repositorios.RepositorioInformes;
 import utils.DummyData;
 
+import javax.mail.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class InformeMascotaConDuenioTest {
@@ -62,8 +65,10 @@ public class InformeMascotaConDuenioTest {
 
     @Test
     @DisplayName("Se debe notificar al duenio cuando la mascota tiene chapita")
-    public void MascotaConDuenioNotificarTest(){
+    public void MascotaConDuenioNotificarTest() throws MessagingException {
         informeConFoto.procesarInforme();
+        String subjectEmail = this.getSubjectEmail();
+        assertEquals("rescatepatitasdds21@gmail.com", subjectEmail);
 
     }
 
@@ -73,17 +78,42 @@ public class InformeMascotaConDuenioTest {
                 repositorioInformes);
     }
 
-    private InformeMascotaConDuenio generarInformeMascotaEncontradaBuilder(List<Foto> fotosMascota){
+    private InformeMascotaConDuenio generarInformeMascotaEncontradaBuilder(List<Foto> fotosMascota) {
         InformeMascotaConDuenioBuilder builder = InformeMascotaConDuenioBuilder.crearBuilder();
         builder.conDuenioMascota(duenioMascota)
-            .conRescatista(rescatista)
-            .conFechaEncuentro(fechaDeHoy)
-            .conDireccion(direccion)
-            .conFotosMascota(fotosMascota)
-            .conLugarDeEncuentro(ubicacion)
-            .conEstadoActualMascota(estadoActualMascota)
-            .conRepositorioInformes(repositorioInformes);
+                .conRescatista(rescatista)
+                .conFechaEncuentro(fechaDeHoy)
+                .conDireccion(direccion)
+                .conFotosMascota(fotosMascota)
+                .conLugarDeEncuentro(ubicacion)
+                .conEstadoActualMascota(estadoActualMascota)
+                .conRepositorioInformes(repositorioInformes);
         return builder.build();
+    }
+
+    private String getSubjectEmail() throws MessagingException {
+        Properties prop = new Properties();
+
+        prop.setProperty("mail.pop3.starttls.enable", "false");
+
+        prop.setProperty("mail.pop3.socketFactory.class","javax.net.ssl.SSLSocketFactory" );
+        prop.setProperty("mail.pop3.socketFactory.fallback", "false");
+
+        prop.setProperty("mail.pop3.port","995");
+        prop.setProperty("mail.pop3.socketFactory.port", "995");
+
+        Session sesion = Session.getInstance(prop);
+        //imprime log cuando esta en true
+        sesion.setDebug(false);
+
+        Store store = sesion.getStore("pop3");
+        store.connect("pop.gmail.com","dds2021g10@gmail.com","viernesNoche21");
+        Folder folder = store.getFolder("INBOX");
+        folder.open(Folder.READ_ONLY);
+
+        Message[] mensajes = folder.getMessages();
+        //retorno el mensaje mas actual
+        return mensajes[mensajes.length-1].getFrom()[0].toString();
     }
 
 }

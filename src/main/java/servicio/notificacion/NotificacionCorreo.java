@@ -11,9 +11,9 @@ public class NotificacionCorreo implements NotificacionSender{
 
 
   @Override
-  public void enviarNotificacion(DatosDeContacto dc) {
+  public void enviarNotificacion(DatosDeContacto datosDeContacto, MensajeAMandar mensaje) {
     Session session = configurarConexionCorreo();
-    this.enviarMensaje(dc, session);
+    this.enviarMensaje(datosDeContacto, mensaje, session);
 
   }
 
@@ -26,37 +26,34 @@ public class NotificacionCorreo implements NotificacionSender{
 
     props.setProperty("mail.smtp.port","587");
 
-    props.setProperty("mail.smtp.user", "dds2021g10@gmail.com");
+    props.setProperty("mail.smtp.user", "rescatepatitasdds21@gmail.com");
 
     props.setProperty("mail.smtp.auth", "true");
 
     Session session = Session.getDefaultInstance(props);
-    session.setDebug(true);
-
+    //session.setDebug(true);
+    session.setDebug(false);
     return  session;
   }
 
-  private MimeMessage crearMensaje(Session session, DatosDeContacto dc) {
+  private MimeMessage crearMensaje(Session session, DatosDeContacto datosDeContacto, MensajeAMandar mensaje) {
     MimeMessage message = new MimeMessage(session);
     try {
-      message.setFrom(new InternetAddress("dds2021g10@gmail.com"));
+      message.setFrom(new InternetAddress(datosDeContacto.getEmail()));
 
-      message.addRecipient(Message.RecipientType.TO, new InternetAddress(dc.getEmail()));
+      message.addRecipient(Message.RecipientType.TO, new InternetAddress(datosDeContacto.getEmail()));
 
-      message.setSubject("Rescate de patitas: Encontramos a su mascota");
-      message.setText("<p>Hola!</p> <p>Encontramos tu mascota</p>" +
-          "<p>Comunicate con nosotros</p>" +
-          "<p>Gracias.</p>" +
-          "<p>Saludos Rescate de patitas</p>", "UTF-8", "html");
+      message.setSubject(mensaje.getAsunto());
+      message.setText(mensaje.getMensajeBody(), "UTF-8", "html");
     } catch (MessagingException e) {
       e.printStackTrace();
     }
     return message;
   }
 
-  private void enviarMensaje(DatosDeContacto datosDeContacto, Session session){
+  private void enviarMensaje(DatosDeContacto datosDeContacto,MensajeAMandar mensaje, Session session){
     try {
-      MimeMessage message = crearMensaje(session, datosDeContacto);
+      MimeMessage message = crearMensaje(session, datosDeContacto, mensaje);
       Transport t = session.getTransport("smtp");
 
       t.connect("rescatepatitasdds21@gmail.com","viernesNoche21");

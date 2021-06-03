@@ -4,15 +4,15 @@ import modelo.mascota.Foto;
 import modelo.persona.Persona;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioInformes;
+import servicio.notificacion.MensajeAMandar;
 import servicio.notificacion.NotificacionCorreo;
-
 import java.time.LocalDate;
 import java.util.List;
 
 public class InformeMascotaConDuenio extends InformeMascotaEncontrada {
 
     private Usuario duenioMascota;
-    private NotificacionCorreo notificacionSender = new NotificacionCorreo();
+    private NotificacionCorreo notificacionCorreo = new NotificacionCorreo();
 
     public InformeMascotaConDuenio(Usuario duenioMascota, Persona rescatista, LocalDate fechaEncuentro, String direccion, List<Foto> fotosMascota, Ubicacion lugarDeEncuentro, String estadoActualMascota, RepositorioInformes repositorioInformes) {
         super(rescatista, fechaEncuentro, direccion, fotosMascota, lugarDeEncuentro, estadoActualMascota, repositorioInformes);
@@ -25,8 +25,9 @@ public class InformeMascotaConDuenio extends InformeMascotaEncontrada {
 
     @Override
     public void procesarInforme(){
+        MensajeAMandar mensaje = new MensajeAMandar(getDuenioMascota().getPersona());
         super.procesarInforme();
-        notificacionSender.enviarNotificacion(this.getDuenioMascota().getPersona().getDatosDeContacto());
+        notificacionCorreo.enviarNotificacion(this.getDuenioMascota().getPersona().getDatosDeContacto(), mensaje);
     }
 
 }
