@@ -2,8 +2,9 @@ package modelo.informe;
 
 import excepciones.InformeMascotaEncontradaInvalidaException;
 import modelo.mascota.Foto;
+import modelo.mascota.Mascota;
+import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.Persona;
-import modelo.usuario.Usuario;
 import repositorios.RepositorioInformes;
 
 import java.time.LocalDate;
@@ -14,35 +15,29 @@ public abstract class  InformeMascotaEncontrada {
 
   private Persona rescatista;
   private LocalDate fechaEncuentro;
-  private String direccion;
-  private List<Foto> fotosMascota = new ArrayList<>();
+  private Ubicacion direccion;
   private Ubicacion lugarDeEncuentro;
-  private String estadoActualMascota;
-  private RepositorioInformes repositorioInformes;
+  private List<Foto> fotosMascota = new ArrayList<>();
+  private List<Caracteristica> estadoActualMascota;
+
 
   public InformeMascotaEncontrada(Persona rescatista, LocalDate fechaEncuentro,
-                                  String direccion, List<Foto> fotosMascota, Ubicacion lugarDeEncuentro,
-                                  String estadoActualMascota, RepositorioInformes repositorioInformes) {
+                                  Ubicacion direccion, List<Foto> fotosMascota, Ubicacion lugarDeEncuentro,
+                                  List<Caracteristica>  estadoActualMascota) {
     this.rescatista = rescatista;
     this.fechaEncuentro = fechaEncuentro;
     this.direccion = direccion;
     this.fotosMascota.addAll(fotosMascota);
     this.lugarDeEncuentro = lugarDeEncuentro;
     this.estadoActualMascota = estadoActualMascota;
-    this.repositorioInformes = repositorioInformes;
   }
 
   public void procesarInforme(){
     validarListaFotos();
-    repositorioInformes.agregarInformeMascotaEncontrada(this);
+    RepositorioInformes.getInstance().agregarInformeMascotaEncontrada(this);
   }
 
   private void validarListaFotos() {
-    if (fotosMascota == null || fotosMascota.isEmpty())
-      throw new InformeMascotaEncontradaInvalidaException("Se debe ingresar al menos 1 Foto de la mascota encontrada");
-  }
-
-  private void agregarInformePendiente() {
     if (fotosMascota == null || fotosMascota.isEmpty())
       throw new InformeMascotaEncontradaInvalidaException("Se debe ingresar al menos 1 Foto de la mascota encontrada");
   }
@@ -55,19 +50,19 @@ public abstract class  InformeMascotaEncontrada {
     return fechaEncuentro;
   }
 
-  public String getDireccion() {
+  public Ubicacion getDireccion() {
     return direccion;
-  }
-
-  public List<Foto> getFotosMascota() {
-    return fotosMascota;
   }
 
   public Ubicacion getLugarDeEncuentro() {
     return lugarDeEncuentro;
   }
 
-  public String getEstadoActualMascota() {
+  public List<Caracteristica>  getEstadoActualMascota(){
     return estadoActualMascota;
+  }
+
+  public List<Foto> getFotosMascota(){
+    return fotosMascota;
   }
 }

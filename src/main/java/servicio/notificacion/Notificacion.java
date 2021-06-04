@@ -1,7 +1,6 @@
 package servicio.notificacion;
 
 import modelo.persona.DatosDeContacto;
-import modelo.persona.Persona;
 
 public class Notificacion {
   private DatosDeContacto destinatario;
@@ -37,7 +36,6 @@ public class Notificacion {
   public String getAsunto() {
     return this.asunto;
   }
-
 
   public String getMensajeBody() {
     return "<p> Hola, " + this.getNombreSaludo() + "</p> </br></br>" +

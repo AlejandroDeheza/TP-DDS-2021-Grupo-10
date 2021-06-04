@@ -25,7 +25,7 @@ public class UsuarioTest {
     repositorioCaracteristicas.agregarCaracteristica(DummyData.getDummyCaracteristicaParaAdmin());
 
     Usuario usuario = DummyData.getDummyUsuario();
-    Mascota mascota = DummyData.getDummyMascota(repositorioCaracteristicas);
+    Mascota mascota = DummyData.getDummyMascota();
     usuario.agregarMascota(mascota);
     assertThrows(MascotaYaRegistradaException.class, () -> usuario.agregarMascota(mascota));
   }

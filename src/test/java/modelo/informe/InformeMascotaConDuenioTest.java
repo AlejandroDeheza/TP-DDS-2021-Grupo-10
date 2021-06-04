@@ -2,12 +2,15 @@ package modelo.informe;
 
 import excepciones.InformeMascotaEncontradaInvalidaException;
 import modelo.mascota.Foto;
+import modelo.mascota.caracteristica.Caracteristica;
+import modelo.mascota.Mascota;
 import modelo.persona.Persona;
 import modelo.usuario.Usuario;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioInformes;
 import utils.DummyData;
 
@@ -24,16 +27,16 @@ public class InformeMascotaConDuenioTest {
 
     Usuario duenioMascota = DummyData.getDummyUsuario();
     Persona rescatista = DummyData.getDummyPersona();
+    Usuario voluntario = DummyData.getDummyUsuarioVoluntario();
     LocalDate fechaDeHoy = LocalDate.now();
-    String direccion = "Av. Corrientes 576";
     List<Foto> fotosMascota = DummyData.getDummyFotosMascota();
     List<Foto> fotosMascotaVacio = new ArrayList<>();
-    Ubicacion ubicacion = new Ubicacion("57,44", "57,55");
-    String estadoActualMascota = "Bien de salud, pero asustado";
+    Ubicacion ubicacion = new Ubicacion(57.44, 57.55);
+    List<Caracteristica> estadoActualMascota = DummyData.getDummyListaCaracteristicasParaMascota();
     InformeMascotaConDuenio informeConFoto;
     InformeMascotaConDuenio informeSinFoto;
     RepositorioInformes repositorioInformes;
-
+    Mascota mascota = DummyData.getDummyMascota();
     @BeforeEach
     public void contextLoad() {
         repositorioInformes = new RepositorioInformes();
@@ -59,8 +62,7 @@ public class InformeMascotaConDuenioTest {
     @DisplayName("si se genera un InformeMascotaEncontrada sin fotos, se genera " +
             "InformeMascotaEncontradaInvalidaException")
     public void InformeMascotaEncontradaInvalidaExceptionTest() {
-        assertThrows(InformeMascotaEncontradaInvalidaException.class,
-                () -> informeSinFoto.procesarInforme());
+        assertThrows(InformeMascotaEncontradaInvalidaException.class, () -> informeSinFoto.procesarInforme());
     }
 
     @Test
@@ -69,13 +71,12 @@ public class InformeMascotaConDuenioTest {
         informeConFoto.procesarInforme();
         String subjectEmail = this.getSubjectEmail();
         assertEquals("rescatepatitasdds21@gmail.com", subjectEmail);
-
     }
 
     private InformeMascotaConDuenio generarInformeMascotaEncontrada(List<Foto> fotosMascota) {
+
         return new InformeMascotaConDuenio(
-                duenioMascota, rescatista, fechaDeHoy, direccion, fotosMascota, ubicacion, estadoActualMascota,
-                repositorioInformes);
+                duenioMascota, rescatista, fechaDeHoy, ubicacion, fotosMascota, ubicacion, estadoActualMascota);
     }
 
     private InformeMascotaConDuenio generarInformeMascotaEncontradaBuilder(List<Foto> fotosMascota) {
@@ -83,11 +84,10 @@ public class InformeMascotaConDuenioTest {
         builder.conDuenioMascota(duenioMascota)
                 .conRescatista(rescatista)
                 .conFechaEncuentro(fechaDeHoy)
-                .conDireccion(direccion)
+                .conDireccion(ubicacion)
                 .conFotosMascota(fotosMascota)
                 .conLugarDeEncuentro(ubicacion)
-                .conEstadoActualMascota(estadoActualMascota)
-                .conRepositorioInformes(repositorioInformes);
+                .conEstadoActualMascota(estadoActualMascota);
         return builder.build();
     }
 

@@ -1,5 +1,5 @@
 package modelo.usuario;
 
 public enum TipoUsuario {
-  NORMAL, ADMIN
+  NORMAL, ADMIN, VOLUNTARIO
 }

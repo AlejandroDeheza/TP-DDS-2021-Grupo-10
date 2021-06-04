@@ -1,9 +1,10 @@
 package repositorios;
 
 import modelo.informe.InformeMascotaConDuenio;
-import modelo.informe.InformeMascotaConDuenioTest;
 import modelo.informe.Ubicacion;
 import modelo.mascota.Foto;
+import modelo.mascota.Mascota;
+import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.Persona;
 import modelo.usuario.Usuario;
 import org.junit.jupiter.api.*;
@@ -13,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import utils.DummyData;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class RepositorioInformesTest {
@@ -23,17 +23,18 @@ public class RepositorioInformesTest {
   Usuario duenioMascota = DummyData.getDummyUsuario();
   Persona rescatista = DummyData.getDummyPersona();
   LocalDate fechaDeHoy = LocalDate.now();
-  String direccion = "Av. Corrientes 576";
+  Ubicacion direccion = new Ubicacion(57.44, 57.55);
   List<Foto> fotosMascota = DummyData.getDummyFotosMascota();
-  List<Foto> fotosMascotaVacio = new ArrayList<>();
-  Ubicacion ubicacion = new Ubicacion("57,44", "57,55");
-  String estadoActualMascota = "Bien de salud, pero asustado";
+  Ubicacion lugarDeEncuentro = new Ubicacion(57.44, 57.55);
+  List<Caracteristica> estadoActualMascota = DummyData.getDummyListaCaracteristicasParaMascota();
   InformeMascotaConDuenio informe;
+
+  Mascota mascota = DummyData.getDummyMascota();
 
   @BeforeEach
   public void contextLoad() {
     repositorioInformes = new RepositorioInformes();
-    informe = generarInformeMascotaEncontrada(fotosMascota);
+    informe = generarInformeMascotaEncontrada(mascota);
   }
 
   @AfterEach
@@ -43,10 +44,10 @@ public class RepositorioInformesTest {
   }
 
   @Test
-  @DisplayName("si se crea un InformeMascotaPerdida, se agrega un informe a InformesPendientes en RepositorioInformes ")
+  @DisplayName("si se crea un InformeMascotaPerdida, se agrega un informe a InformesPendientes en RepositorioInformes")
   public void InformesPendientesTest() {
     assertEquals(repositorioInformes.getInformesPendientes().size(), 0);
-    informe.procesarInforme();
+    repositorioInformes.agregarInformeMascotaEncontrada(informe);
     assertEquals(repositorioInformes.getInformesPendientes().size(), 1);
   }
 
@@ -55,14 +56,11 @@ public class RepositorioInformesTest {
       "un registro insertado previamente")
   public void listarMascotasEncontradasEnLosUltimos10DiasTest() {
     assertEquals(repositorioInformes.listarMascotasEncontradasEnUltimosNDias(10).size(), 0);
-    informe.procesarInforme();
+    repositorioInformes.agregarInformeMascotaEncontrada(informe);
     assertEquals(repositorioInformes.listarMascotasEncontradasEnUltimosNDias(10).size(), 1);
   }
 
-  private InformeMascotaConDuenio generarInformeMascotaEncontrada(List<Foto> fotosMascota) {
-    return new InformeMascotaConDuenio(
-        duenioMascota, rescatista, fechaDeHoy, direccion, fotosMascota, ubicacion, estadoActualMascota,
-        repositorioInformes);
+  private InformeMascotaConDuenio generarInformeMascotaEncontrada(Mascota mascota) {
+    return new InformeMascotaConDuenio(duenioMascota, rescatista, fechaDeHoy, direccion,fotosMascota, lugarDeEncuentro,estadoActualMascota);
   }
-
 }
