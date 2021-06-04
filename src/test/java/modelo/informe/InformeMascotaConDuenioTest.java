@@ -4,6 +4,7 @@ import excepciones.InformeMascotaEncontradaInvalidaException;
 import modelo.mascota.Foto;
 import modelo.persona.Persona;
 import modelo.usuario.Usuario;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,8 +33,22 @@ public class InformeMascotaConDuenioTest {
     @BeforeEach
     public void contextLoad() {
         repositorioInformes = new RepositorioInformes();
-        informe = generarInformeMascotaEncontrada(fotosMascotaVacio);
+        informe = generarInformeMascotaEncontradaBuilder(fotosMascotaVacio);
     }
+
+    @Test
+    @DisplayName("Chequeo igualdad entre Constructor y Builder")
+    public void InformeMascotaEncontradaBuilderConstructorTest(){
+        InformeMascotaConDuenio informeAux = generarInformeMascotaEncontrada(fotosMascotaVacio);
+        Assertions.assertEquals(informe.getDuenioMascota(), informeAux.getDuenioMascota());
+        Assertions.assertEquals(informe.getDireccion(), informeAux.getDireccion());
+        Assertions.assertEquals(informe.getEstadoActualMascota(), informeAux.getEstadoActualMascota());
+        Assertions.assertEquals(informe.getFotosMascota(), informeAux.getFotosMascota());
+        Assertions.assertEquals(informe.getFechaEncuentro(), informeAux.getFechaEncuentro());
+        Assertions.assertEquals(informe.getLugarDeEncuentro(), informeAux.getLugarDeEncuentro());
+        Assertions.assertEquals(informe.getRescatista(), informeAux.getRescatista());
+    }
+
 
     @Test
     @DisplayName("si se genera un InformeMascotaEncontrada sin fotos, se genera " +
@@ -47,6 +62,19 @@ public class InformeMascotaConDuenioTest {
         return new InformeMascotaConDuenio(
                 duenioMascota, rescatista, fechaDeHoy, direccion, fotosMascota, ubicacion, estadoActualMascota,
                 repositorioInformes);
+    }
+
+    private InformeMascotaConDuenio generarInformeMascotaEncontradaBuilder(List<Foto> fotosMascota){
+        InformeMascotaConDuenioBuilder builder = InformeMascotaConDuenioBuilder.crearBuilder();
+        builder.conDuenioMascota(duenioMascota)
+            .conRescatista(rescatista)
+            .conFechaEncuentro(fechaDeHoy)
+            .conDireccion(direccion)
+            .conFotosMascota(fotosMascota)
+            .conLugarDeEncuentro(ubicacion)
+            .conEstadoActualMascota(estadoActualMascota)
+            .conRepositorioInformes(repositorioInformes);
+        return builder.build();
     }
 
 }

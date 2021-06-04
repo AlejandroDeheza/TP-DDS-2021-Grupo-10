@@ -3,11 +3,13 @@ package utils;
 import modelo.mascota.Animal;
 import modelo.mascota.Foto;
 import modelo.mascota.Mascota;
+import modelo.mascota.MascotaBuilder;
 import modelo.mascota.Sexo;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 import modelo.persona.DatosDeContacto;
 import modelo.persona.Persona;
+import modelo.persona.PersonaBuilder;
 import modelo.persona.TipoDocumento;
 import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
@@ -25,18 +27,23 @@ public class DummyData {
   }
 
   public static Persona getDummyPersona() {
-    return new Persona("PersonaNombre", "PersonaApellido", TipoDocumento.DNI, "11111111",
-        getDummyDatosDeContacto(), LocalDate.of(1995, 8, 7));
+    return PersonaBuilder.crearBuilder().conNombre("PersonaNombre").conApellido("PersonaApellido")
+        .conTipoDocumento(TipoDocumento.DNI).conNumeroDeDocumento("11111111")
+        .conDatosDeContacto(getDummyDatosDeContacto()).conFechaNacimiento(LocalDate.of(1995, 8, 7))
+        .build();
   }
 
   public static Persona getDummyPersonaSinDatosDeContacto() {
-    return new Persona("PersonaNombre", "PersonaApellido", TipoDocumento.DNI, "11111111",
-        null, LocalDate.of(1995, 8, 7));
+    return PersonaBuilder.crearBuilder().conNombre("PersonaNombre").conApellido("PersonaApellido")
+        .conTipoDocumento(TipoDocumento.DNI).conNumeroDeDocumento("11111111")
+        .conDatosDeContacto(null).conFechaNacimiento(LocalDate.of(1995, 8, 7)).build();
   }
 
   public static Persona getDummyPersonaSinDatosDeContactoNiNombreNiApellido() {
-    return new Persona(null, null, TipoDocumento.DNI, "11111111",
-        new DatosDeContacto(null, null), LocalDate.of(1995, 8, 7));
+    return PersonaBuilder.crearBuilder().conNombre(null).conApellido(null)
+        .conTipoDocumento(TipoDocumento.DNI).conNumeroDeDocumento("11111111")
+        .conDatosDeContacto(new DatosDeContacto(null, null))
+        .conFechaNacimiento(LocalDate.of(1995, 8, 7)).build();
   }
 
   public static Usuario getDummyUsuario() {
@@ -51,7 +58,8 @@ public class DummyData {
     return new CaracteristicaConValoresPosibles("Comportamiento", Arrays.asList("Bueno", "Malo"));
   }
 
-  public static List<Caracteristica> getDummyListaCaracteristicasParaMascota(RepositorioCaracteristicas repo) {
+  public static List<Caracteristica> getDummyListaCaracteristicasParaMascota(
+      RepositorioCaracteristicas repo) {
     Caracteristica caracteristica = new Caracteristica("Comportamiento", "Bueno", repo);
     List<Caracteristica> listaCaracteristica = new ArrayList<>();
     listaCaracteristica.add(caracteristica);
@@ -66,9 +74,11 @@ public class DummyData {
   }
 
   public static Mascota getDummyMascota(RepositorioCaracteristicas repo) {
-    return new Mascota(Animal.PERRO, "Perro", "PerroApodo", LocalDate.of(2018, 3, 4),
-        Sexo.MACHO, "Descripcion Dummy", getDummyListaCaracteristicasParaMascota(repo),
-        getDummyFotosMascota());
+    return MascotaBuilder.crearBuilder().conAnimal(Animal.PERRO).conNombre("Negrito")
+        .conApodo("PerroApodo").conFechaNacimiento(LocalDate.of(2018, 3, 4)).conSexo(Sexo.MACHO)
+        .conDescripcionFisica("El firulais mismo")
+        .conCaracteristicas(getDummyListaCaracteristicasParaMascota(repo))
+        .conFotos(getDummyFotosMascota()).build();
   }
 
 }

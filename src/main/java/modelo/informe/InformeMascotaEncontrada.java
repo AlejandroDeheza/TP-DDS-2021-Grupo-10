@@ -12,7 +12,6 @@ import java.util.List;
 
 public abstract class  InformeMascotaEncontrada {
 
-  private Usuario duenioMascota;
   private Persona rescatista;
   private LocalDate fechaEncuentro;
   private String direccion;
@@ -21,10 +20,9 @@ public abstract class  InformeMascotaEncontrada {
   private String estadoActualMascota;
   private RepositorioInformes repositorioInformes;
 
-  public InformeMascotaEncontrada(Usuario duenioMascota, Persona rescatista, LocalDate fechaEncuentro,
+  public InformeMascotaEncontrada(Persona rescatista, LocalDate fechaEncuentro,
                                   String direccion, List<Foto> fotosMascota, Ubicacion lugarDeEncuentro,
                                   String estadoActualMascota, RepositorioInformes repositorioInformes) {
-    this.duenioMascota = duenioMascota;
     this.rescatista = rescatista;
     this.fechaEncuentro = fechaEncuentro;
     this.direccion = direccion;
@@ -47,10 +45,6 @@ public abstract class  InformeMascotaEncontrada {
   private void agregarInformePendiente() {
     if (fotosMascota == null || fotosMascota.isEmpty())
       throw new InformeMascotaEncontradaInvalidaException("Se debe ingresar al menos 1 Foto de la mascota encontrada");
-  }
-
-  public Usuario getDuenioMascota() {
-    return duenioMascota;
   }
 
   public Persona getRescatista() {
