@@ -23,19 +23,23 @@ public class ObtenerHogaresClient {
         client = Client.create();
     }
 
-    private HogaresResponse obtenerHogares(String offset) throws JsonProcessingException {
-        Properties properties = RepositorioProperties.getInstance().getProperties();
+    public HogaresResponse obtenerHogares(String offset) throws JsonProcessingException {
+        HogaresResponse hogaresResponse = objectMapper.readValue(getClientResponse(offset),HogaresResponse.class);
+        return hogaresResponse;
+    }
 
+    public String getClientResponse(String offset) {
+        Properties properties = RepositorioProperties.getInstance().getProperties();
         WebResource recurso = this.client.resource(properties.getProperty("HOGARES_API")).path(properties.getProperty("HOGARES"));
-        WebResource recursoConParametros = recurso.queryParam("offset",offset);
+        WebResource recursoConParametros = recurso.queryParam("offset", offset);
         WebResource.Builder builder = recursoConParametros.accept(MediaType.APPLICATION_JSON).header("Authorization","Bearer " + properties.getProperty("TOKEN"));
         ClientResponse response = builder.get(ClientResponse.class);
-        HogaresResponse hogaresResponse = objectMapper.readValue(response.getEntity(String.class),HogaresResponse.class);
-        return hogaresResponse;
+        return response.getEntity(String.class);
     }
 
     public List<Hogar> obtenerTodosLosHogares() throws JsonProcessingException {
         List<Hogar> resultado = new ArrayList<>();
+        //TODO Se tiene que poder treaer hogares hasta la cantidad que indica la property total.
         for (int offset = 1; offset < 5; offset++) {
             HogaresResponse response = this.obtenerHogares(String.valueOf(offset));
             resultado.addAll(response.getHogares());
