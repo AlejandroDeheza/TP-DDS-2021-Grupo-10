@@ -6,17 +6,23 @@ import modelo.publicacion.Publicacion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import servicio.notificacion.NotificacionCorreo;
 import utils.DummyData;
 
+import javax.mail.Transport;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 public class RepositorioPublicacionesTest {
     RepositorioPublicaciones repositorioPublicaciones;
+    Transport transportMockeado;
 
     @BeforeEach
     public void contextLoad() {
-        repositorioPublicaciones = new RepositorioPublicaciones();
-        }
+        transportMockeado = mock(Transport.class);
+        repositorioPublicaciones = new RepositorioPublicaciones(new NotificacionCorreo(sesion -> transportMockeado));
+    }
 
     @Test
     @DisplayName("Agregar una publicacion no da error")

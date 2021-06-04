@@ -19,22 +19,24 @@ public abstract class  InformeMascotaEncontrada {
   private Ubicacion lugarDeEncuentro;
   private List<Foto> fotosMascota = new ArrayList<>();
   private List<Caracteristica> estadoActualMascota;
+  private RepositorioInformes repositorioInformes;
 
 
   public InformeMascotaEncontrada(Persona rescatista, LocalDate fechaEncuentro,
                                   Ubicacion direccion, List<Foto> fotosMascota, Ubicacion lugarDeEncuentro,
-                                  List<Caracteristica>  estadoActualMascota) {
+                                  List<Caracteristica>  estadoActualMascota, RepositorioInformes repositorioInformes) {
     this.rescatista = rescatista;
     this.fechaEncuentro = fechaEncuentro;
     this.direccion = direccion;
     this.fotosMascota.addAll(fotosMascota);
     this.lugarDeEncuentro = lugarDeEncuentro;
     this.estadoActualMascota = estadoActualMascota;
+    this.repositorioInformes = repositorioInformes;
   }
 
   public void procesarInforme(){
     validarListaFotos();
-    RepositorioInformes.getInstance().agregarInformeMascotaEncontrada(this);
+    repositorioInformes.agregarInformeMascotaEncontrada(this);
   }
 
   private void validarListaFotos() {

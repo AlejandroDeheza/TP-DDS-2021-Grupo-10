@@ -10,23 +10,22 @@ import java.util.List;
 import modelo.usuario.Usuario;
 import servicio.notificacion.Notificacion;
 import servicio.notificacion.NotificacionCorreo;
+import servicio.notificacion.NotificacionSender;
 
 import java.util.stream.Collectors;
 public class RepositorioPublicaciones {
-    private NotificacionCorreo notificacionCorreo = new NotificacionCorreo();
+    private NotificacionSender notificacionCorreo;
 
-    private static RepositorioPublicaciones repositorioPublicaciones;
+    private static RepositorioPublicaciones repositorioPublicaciones = new RepositorioPublicaciones(new NotificacionCorreo(null));
     private List<Publicacion> publicaciones = new ArrayList<>();
 
     //usamos el constructor solo para tests
-    public RepositorioPublicaciones() {
+    public RepositorioPublicaciones(NotificacionSender notificacionCorreo) {
+        this.notificacionCorreo = notificacionCorreo;
     }
 
     //usamos el getInstance en el codigo de produccion
     public static RepositorioPublicaciones getInstance() {
-        if (repositorioPublicaciones == null) {
-            repositorioPublicaciones = new RepositorioPublicaciones();
-        }
         return repositorioPublicaciones;
     }
 

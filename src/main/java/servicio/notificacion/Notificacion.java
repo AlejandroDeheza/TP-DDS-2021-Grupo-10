@@ -13,7 +13,7 @@ public class Notificacion {
     this.destinatario = destinatario;
     this.nombreSaludo = nombreSaludo;
     this.cuerpoMensaje = cuerpoMensaje;
-    this.saludo = saludo;
+    if (saludo != null) this.saludo = saludo;
     this.asunto = asunto;
   }
 
