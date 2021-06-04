@@ -10,9 +10,12 @@ import modelo.usuario.Usuario;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
+import servicio.notificacion.NotificacionCorreo;
 import utils.DummyData;
 
+import javax.mail.Transport;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -31,10 +34,14 @@ public class RepositorioInformesTest {
 
   Mascota mascota = DummyData.getDummyMascota();
 
+  Transport transportMockeado;
+
   @BeforeEach
   public void contextLoad() {
     repositorioInformes = new RepositorioInformes();
     informe = generarInformeMascotaEncontrada(mascota);
+
+    transportMockeado = mock(Transport.class);
   }
 
   @AfterEach
@@ -61,6 +68,7 @@ public class RepositorioInformesTest {
   }
 
   private InformeMascotaConDuenio generarInformeMascotaEncontrada(Mascota mascota) {
-    return new InformeMascotaConDuenio(duenioMascota, rescatista, fechaDeHoy, direccion,fotosMascota, lugarDeEncuentro,estadoActualMascota);
+    return new InformeMascotaConDuenio(duenioMascota, rescatista, fechaDeHoy, direccion,fotosMascota,
+        lugarDeEncuentro,estadoActualMascota, new NotificacionCorreo(sesion -> transportMockeado), repositorioInformes);
   }
 }

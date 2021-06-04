@@ -1,18 +1,36 @@
 package servicio.notificacion;
 
+import excepciones.NotificacionCorreoException;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class NotificacionCorreo implements NotificacionSender {
 
   Session session = configurarConexionCorreo();
 
+  Function<Session, Transport> funcion = (sesion -> {
+    Transport t = null;   // nunca devuelve null, esto es para que compile nomas
+    try {
+      t = sesion.getTransport("smtp");
+    } catch (MessagingException e) {
+      throw new NotificacionCorreoException("Algo salio mal al generar el Transport en NotificacionCorreo", e);
+    }
+    return t;
+  });
+
+  public NotificacionCorreo(Function<Session, Transport> funcion) {
+    if (funcion != null) this.funcion = funcion;
+  }
+
   @Override
   public void enviarNotificacion(Notificacion notificacion) {
     MimeMessage mensaje = this.crearMensaje(notificacion);
-    this.enviarMensaje(mensaje);
+    this.enviarMensaje(mensaje, funcion.apply(session));
   }
 
   private Session configurarConexionCorreo(){
@@ -28,14 +46,13 @@ public class NotificacionCorreo implements NotificacionSender {
     return  session;
   }
 
-  private void enviarMensaje(MimeMessage mensaje){
+  private void enviarMensaje(MimeMessage mensaje, Transport t){
       try {
-        Transport t = session.getTransport("smtp");
         t.connect("rescatepatitasdds21@gmail.com","viernesNoche21");
-        t.sendMessage(mensaje,mensaje.getAllRecipients());
+        t.sendMessage(mensaje, mensaje.getAllRecipients());
         t.close();
       } catch (MessagingException e) {
-        e.printStackTrace();
+        throw new NotificacionCorreoException("Algo salio mal al enviar el mensaje en NotificacionCorreo", e);
       }
   }
 
@@ -49,7 +66,7 @@ public class NotificacionCorreo implements NotificacionSender {
       message.setSubject(notificacion.getAsunto());
       message.setText(notificacion.getMensajeBody(), "UTF-8", "html");
     } catch (MessagingException e) {
-      e.printStackTrace();
+      throw new NotificacionCorreoException("Algo salio mal al crear el mensaje en NotificacionCorreo", e);
     }
     return message;
   }

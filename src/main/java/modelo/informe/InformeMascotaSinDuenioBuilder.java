@@ -2,6 +2,7 @@ package modelo.informe;
 
 import modelo.mascota.Mascota;
 import modelo.usuario.Usuario;
+import repositorios.RepositorioInformes;
 
 public class InformeMascotaSinDuenioBuilder extends InformeMascotaBuilder {
 
@@ -15,7 +16,7 @@ public class InformeMascotaSinDuenioBuilder extends InformeMascotaBuilder {
   }
 
   public InformeMascotaSinDuenio build(){
-    return new InformeMascotaSinDuenio(rescatista, fechaEncuentro, direccion, lugarDeEncuentro, mascota);
+    return new InformeMascotaSinDuenio(rescatista, fechaEncuentro, direccion, lugarDeEncuentro, mascota, repositorioInformes);
   }
 
 }

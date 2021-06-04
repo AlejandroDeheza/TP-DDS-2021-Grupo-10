@@ -6,6 +6,7 @@ import modelo.hogares.Hogar;
 import modelo.mascota.Mascota;
 import modelo.persona.Persona;
 import modelo.publicacion.Publicacion;
+import repositorios.RepositorioInformes;
 import repositorios.RepositorioPublicaciones;
 
 import java.time.LocalDate;
@@ -17,8 +18,10 @@ public class InformeMascotaSinDuenio extends InformeMascotaEncontrada {
     ObtenerHogaresClient hogaresClient = new ObtenerHogaresClient();
     private Mascota mascota;
 
-    public InformeMascotaSinDuenio(Persona rescatista, LocalDate fechaEncuentro, Ubicacion direccion, Ubicacion lugarDeEncuentro,Mascota mascota) {
-        super(rescatista, fechaEncuentro, direccion, mascota.getFotos(), lugarDeEncuentro,mascota.getCaracteristicas());
+    public InformeMascotaSinDuenio(Persona rescatista, LocalDate fechaEncuentro, Ubicacion direccion,
+                                   Ubicacion lugarDeEncuentro,Mascota mascota, RepositorioInformes repositorioInformes) {
+        super(rescatista, fechaEncuentro, direccion, mascota.getFotos(), lugarDeEncuentro,mascota.getCaracteristicas(),
+            repositorioInformes);
         this.mascota=mascota;
     }
 

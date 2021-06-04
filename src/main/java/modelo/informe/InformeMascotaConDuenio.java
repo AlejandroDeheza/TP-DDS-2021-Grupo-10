@@ -5,10 +5,10 @@ import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.DatosDeContacto;
 import modelo.persona.Persona;
 import modelo.usuario.Usuario;
-
 import repositorios.RepositorioProperties;
+import repositorios.RepositorioInformes;
 import servicio.notificacion.Notificacion;
-import servicio.notificacion.NotificacionCorreo;
+import servicio.notificacion.NotificacionSender;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,11 +18,15 @@ import java.util.Properties;
 
 public class InformeMascotaConDuenio extends InformeMascotaEncontrada {
     private Usuario duenioMascota;
-    private NotificacionCorreo notificacionCorreo = new NotificacionCorreo();
+    private NotificacionSender notificacionCorreo;
 
-    public InformeMascotaConDuenio(Usuario duenioMascota, Persona rescatista, LocalDate fechaEncuentro, Ubicacion direccion, List<Foto> fotosMascota, Ubicacion lugarDeEncuentro, List<Caracteristica>  estadoActualMascota) {
-        super(rescatista, fechaEncuentro, direccion, fotosMascota, lugarDeEncuentro, estadoActualMascota);
+    public InformeMascotaConDuenio(Usuario duenioMascota, Persona rescatista, LocalDate fechaEncuentro,
+                                   Ubicacion direccion, List<Foto> fotosMascota, Ubicacion lugarDeEncuentro,
+                                   List<Caracteristica>  estadoActualMascota, NotificacionSender notificacionCorreo,
+                                   RepositorioInformes repositorioInformes) {
+        super(rescatista, fechaEncuentro, direccion, fotosMascota, lugarDeEncuentro, estadoActualMascota, repositorioInformes);
         this.duenioMascota = duenioMascota;
+        this.notificacionCorreo = notificacionCorreo;
     }
 
     public Usuario getDuenioMascota() {

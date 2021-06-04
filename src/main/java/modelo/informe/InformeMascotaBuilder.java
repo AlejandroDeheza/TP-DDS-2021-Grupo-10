@@ -16,8 +16,14 @@ public abstract class InformeMascotaBuilder {
   protected List<Foto> fotosMascota = new ArrayList<>();
   protected Ubicacion lugarDeEncuentro;
   protected List<Caracteristica>  estadoActualMascota;
+  protected RepositorioInformes repositorioInformes = RepositorioInformes.getInstance();
 
   protected InformeMascotaBuilder() {
+  }
+
+  public InformeMascotaBuilder conRepositorioInformes(RepositorioInformes repositorioInformes) {
+    this.repositorioInformes = repositorioInformes;
+    return this;
   }
 
   public InformeMascotaBuilder conRescatista(Persona rescatista) {
