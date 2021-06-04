@@ -4,11 +4,16 @@ import modelo.mascota.Foto;
 import modelo.persona.DatosDeContacto;
 import modelo.persona.Persona;
 import modelo.usuario.Usuario;
+import properties.MisProperties;
 import repositorios.RepositorioInformes;
 import servicio.notificacion.Notificacion;
 import servicio.notificacion.NotificacionCorreo;
+
 import java.time.LocalDate;
 import java.util.List;
+
+import java.util.Properties;
+
 
 public class InformeMascotaConDuenio extends InformeMascotaEncontrada {
 
@@ -32,11 +37,16 @@ public class InformeMascotaConDuenio extends InformeMascotaEncontrada {
     }
 
     private Notificacion buildNotificacion() {
+
+        Properties properties = new Properties();
+        MisProperties.cargarInfoPropertiesTests(properties);
+
         DatosDeContacto destinatario = this.getDuenioMascota().getPersona().getDatosDeContacto();
         String nombreSaludo = this.getDuenioMascota().getPersona().getNombre();
-        String cuerpoMensaje = "Encontramos a tu mascota. Ingresa a nuestra pagina para contactarte con nosotros.";
-        String saludo = "Hogar de Patitas";
-        String asunto = "Encontramos a tu mascota!";
+        String cuerpoMensaje = properties.getProperty("cuerpoMensaje_InformeMasctoaConDuenio");
+        //String cuerpoMensaje = "Encontramos a tu mascota. Ingresa a nuestra pagina para contactarte con nosotros.";
+        String saludo = properties.getProperty("saludo");
+        String asunto = properties.getProperty("asunto_InformeMasctoaConDuenio");
         Notificacion mensaje = new Notificacion(destinatario, nombreSaludo, cuerpoMensaje, saludo, asunto);
         return mensaje;
     }
