@@ -12,7 +12,7 @@ import utils.DummyData;
 import javax.mail.Transport;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 public class RepositorioPublicacionesTest {
     RepositorioPublicaciones repositorioPublicaciones;
@@ -65,6 +65,14 @@ public class RepositorioPublicacionesTest {
         assertThrows(PublicacionInexistenteException.class,()->repositorioPublicaciones.encontreMiMascota(publicacion2,DummyData.getDummyUsuario()));
     }
 
-
+    @Test
+    @DisplayName("Encontrar una Mascota envia una Notificacion")
+    public void encontrarunaMascotaPerdidaEnviaUnaNotificacion() {
+        NotificacionCorreo notificacionCorreoMock = new NotificacionCorreo(sesion -> transportMockeado);
+        Publicacion publicacion= DummyData.getDummyPublicacion();
+        repositorioPublicaciones.agregarPublicacion(publicacion);
+        repositorioPublicaciones.encontreMiMascota(publicacion,DummyData.getDummyUsuario());
+        verify(notificacionCorreoMock).enviarNotificacion(any());
+    }
 
 }

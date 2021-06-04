@@ -24,6 +24,9 @@ public class RepositorioPublicaciones {
         this.notificacionCorreo = notificacionCorreo;
     }
 
+    public void setNotificacionCorreo(NotificacionCorreo notificacionCorreo){
+        this.notificacionCorreo=notificacionCorreo;
+    }
     //usamos el getInstance en el codigo de produccion
     public static RepositorioPublicaciones getInstance() {
         return repositorioPublicaciones;
