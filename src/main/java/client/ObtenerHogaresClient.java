@@ -7,14 +7,12 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import modelo.hogares.Hogar;
-import properties.MisProperties;
+import repositorios.RepositorioProperties;
 
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-
-import properties.MisProperties;
 
 public class ObtenerHogaresClient {
 
@@ -26,9 +24,7 @@ public class ObtenerHogaresClient {
     }
 
     private HogaresResponse obtenerHogares(String offset) throws JsonProcessingException {
-
-        Properties properties = new Properties();
-        MisProperties.cargarInfoPropertiesMain(properties);
+        Properties properties = RepositorioProperties.getInstance().getProperties();
 
         WebResource recurso = this.client.resource(properties.getProperty("HOGARES_API")).path(properties.getProperty("HOGARES"));
         WebResource recursoConParametros = recurso.queryParam("offset",offset);

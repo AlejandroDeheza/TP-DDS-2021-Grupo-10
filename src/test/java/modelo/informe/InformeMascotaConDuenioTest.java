@@ -10,9 +10,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import properties.MisProperties;
-import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioInformes;
+import repositorios.RepositorioProperties;
 import utils.DummyData;
 
 import javax.mail.*;
@@ -93,8 +92,7 @@ public class InformeMascotaConDuenioTest {
   }
 
   private String getSubjectEmail() throws MessagingException {
-    Properties prop = new Properties();
-    MisProperties.cargarInfoPropertiesTests(prop);
+    Properties prop = RepositorioProperties.getInstance().getTestProperties();
 
     Session sesion = Session.getInstance(prop);
     //imprime log cuando esta en true

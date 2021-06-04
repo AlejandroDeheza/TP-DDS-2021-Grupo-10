@@ -5,9 +5,8 @@ import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.DatosDeContacto;
 import modelo.persona.Persona;
 import modelo.usuario.Usuario;
-import properties.MisProperties;
-import repositorios.RepositorioInformes;
 
+import repositorios.RepositorioProperties;
 import servicio.notificacion.Notificacion;
 import servicio.notificacion.NotificacionCorreo;
 
@@ -40,8 +39,7 @@ public class InformeMascotaConDuenio extends InformeMascotaEncontrada {
 
     private Notificacion buildNotificacion() {
 
-        Properties properties = new Properties();
-        MisProperties.cargarInfoPropertiesTests(properties);
+        Properties properties = RepositorioProperties.getInstance().getProperties();
 
         DatosDeContacto destinatario = this.getDuenioMascota().getPersona().getDatosDeContacto();
         String nombreSaludo = this.getDuenioMascota().getPersona().getNombre();
