@@ -12,6 +12,5 @@ public class InformeMascotaSinDuenioTest {
     @DisplayName("faltaImplementar")
     public void faltaImplementar() {
         fail();
-
     }
 }

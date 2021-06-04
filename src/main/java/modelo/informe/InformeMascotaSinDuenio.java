@@ -1,16 +1,11 @@
 package modelo.informe;
 
 import client.ObtenerHogaresClient;
-import client.response.HogaresResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import modelo.hogares.Hogar;
-import modelo.mascota.Foto;
 import modelo.mascota.Mascota;
-import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.Persona;
 import modelo.publicacion.Publicacion;
-import modelo.usuario.Usuario;
-import repositorios.RepositorioInformes;
 import repositorios.RepositorioPublicaciones;
 
 import java.time.LocalDate;
@@ -19,48 +14,31 @@ import java.util.stream.Collectors;
 
 public class InformeMascotaSinDuenio extends InformeMascotaEncontrada {
 
-    private Mascota mascota;
     ObtenerHogaresClient hogaresClient = new ObtenerHogaresClient();
+    private Mascota mascota;
 
-    public InformeMascotaSinDuenio(Persona rescatista, LocalDate fechaEncuentro, Ubicacion direccion, List<Foto> fotosMascota, Ubicacion lugarDeEncuentro, Caracteristica estadoActualMascota, RepositorioInformes repo) {
-        super(rescatista, fechaEncuentro, direccion, fotosMascota, lugarDeEncuentro, estadoActualMascota, repo);
-        this.mascota = mascota;
-    }
-
-    public Mascota getMascota() {
-        return mascota;
-    }
-
-    public void setMascota(Mascota mascota) {
-        this.mascota = mascota;
+    public InformeMascotaSinDuenio(Persona rescatista, LocalDate fechaEncuentro, Ubicacion direccion, Ubicacion lugarDeEncuentro,Mascota mascota) {
+        super(rescatista, fechaEncuentro, direccion, mascota.getFotos(), lugarDeEncuentro,mascota.getCaracteristicas());
+        this.mascota=mascota;
     }
 
     public Persona getRescatista() {
       return this.getRescatista();
     };
 
+    public Mascota getMascota() {
+        return mascota;
+    }
+
     @Override
     public void procesarInforme() {
         super.procesarInforme();
-        RepositorioPublicaciones.getInstance().agregarPublicacion(new Publicacion(this.getRescatista().getDatosDeContacto(),this.getMascota().getFotos()));
+        RepositorioPublicaciones.getInstance().agregarPublicacion(new Publicacion(this.getRescatista().getDatosDeContacto(),getFotosMascota()));
     }
 
-<<<<<<< HEAD
-    public List<Hogar> getHogaresTransitorios(Integer radioCercania){
-
+    public List<Hogar> getHogaresTransitorios(Integer radioCercania) throws JsonProcessingException{
         List<Hogar> hogares = this.hogaresClient.obtenerTodosLosHogares();
-        return hogares.stream().filter( hogar -> hogar.esPosibleHogarDeTransito(radioCercania,this.getMascota(),this.getDireccion())).collect(Collectors.toList());
-=======
-    public List<Hogar> getHogaresTransitorios(Integer radioCercania) throws JsonProcessingException {
-        List<Hogar> hogares = null;
-        try {
-             hogares = this.hogaresClient.obtenerTodosLosHogares();
-        }
-        catch (Error error) {
-            System.out.println(error);
-        }
-         return hogares.stream().filter( hogar -> hogar.esPosibleHogarDeTransito(radioCercania,this.getMascota(),this.getDireccion())).collect(Collectors.toList());
->>>>>>> d7ad8a7 (Fix del cliente)
+        return hogares.stream().filter( hogar -> hogar.esPosibleHogarDeTransito(radioCercania,getMascota(),this.getDireccion())).collect(Collectors.toList());
     }
 
 }

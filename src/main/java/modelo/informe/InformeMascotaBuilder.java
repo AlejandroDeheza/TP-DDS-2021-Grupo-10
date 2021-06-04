@@ -15,8 +15,7 @@ public abstract class InformeMascotaBuilder {
   protected Ubicacion direccion;
   protected List<Foto> fotosMascota = new ArrayList<>();
   protected Ubicacion lugarDeEncuentro;
-  protected Caracteristica estadoActualMascota;
-  protected RepositorioInformes repositorioInformes;
+  protected List<Caracteristica>  estadoActualMascota;
 
   protected InformeMascotaBuilder() {
   }
@@ -46,13 +45,8 @@ public abstract class InformeMascotaBuilder {
     return this;
   }
 
-  public InformeMascotaBuilder conEstadoActualMascota(Caracteristica estadoActualMascota) {
+  public InformeMascotaBuilder conEstadoActualMascota(List<Caracteristica>  estadoActualMascota) {
     this.estadoActualMascota = estadoActualMascota;
-    return this;
-  }
-
-  public InformeMascotaBuilder conRepositorioInformes(RepositorioInformes repositorioInformes) {
-    this.repositorioInformes = repositorioInformes;
     return this;
   }
 

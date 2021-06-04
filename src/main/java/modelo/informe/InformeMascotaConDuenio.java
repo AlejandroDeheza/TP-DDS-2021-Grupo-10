@@ -1,12 +1,8 @@
 package modelo.informe;
 
 import modelo.mascota.Foto;
-<<<<<<< HEAD
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.DatosDeContacto;
-=======
-import modelo.mascota.Mascota;
->>>>>>> d7ad8a7 (Fix del cliente)
 import modelo.persona.Persona;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioInformes;
@@ -19,8 +15,8 @@ public class InformeMascotaConDuenio extends InformeMascotaEncontrada {
     private Usuario duenioMascota;
     private NotificacionCorreo notificacionCorreo = new NotificacionCorreo();
 
-    public InformeMascotaConDuenio(Usuario duenioMascota, Persona rescatista, LocalDate fechaEncuentro, Ubicacion direccion, List<Foto> fotosMascota, Ubicacion lugarDeEncuentro, Caracteristica estadoActualMascota, RepositorioInformes repositorioInformes) {
-        super(rescatista, fechaEncuentro, direccion, fotosMascota, lugarDeEncuentro, estadoActualMascota, repositorioInformes);
+    public InformeMascotaConDuenio(Usuario duenioMascota, Persona rescatista, LocalDate fechaEncuentro, Ubicacion direccion, List<Foto> fotosMascota, Ubicacion lugarDeEncuentro, List<Caracteristica>  estadoActualMascota) {
+        super(rescatista, fechaEncuentro, direccion, fotosMascota, lugarDeEncuentro, estadoActualMascota);
         this.duenioMascota = duenioMascota;
     }
 

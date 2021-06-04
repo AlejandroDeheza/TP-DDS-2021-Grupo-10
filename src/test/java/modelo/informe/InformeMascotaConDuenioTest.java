@@ -32,12 +32,11 @@ public class InformeMascotaConDuenioTest {
     List<Foto> fotosMascota = DummyData.getDummyFotosMascota();
     List<Foto> fotosMascotaVacio = new ArrayList<>();
     Ubicacion ubicacion = new Ubicacion(57.44, 57.55);
-    Caracteristica estadoActualMascota = new Caracteristica("Estado actual","Bien de salud, pero asustado");
+    List<Caracteristica> estadoActualMascota = DummyData.getDummyListaCaracteristicasParaMascota();
     InformeMascotaConDuenio informeConFoto;
     InformeMascotaConDuenio informeSinFoto;
     RepositorioInformes repositorioInformes;
-    RepositorioCaracteristicas repositorioCaracteristicas;
-    Mascota mascota = DummyData.getDummyMascota(repositorioCaracteristicas);
+    Mascota mascota = DummyData.getDummyMascota();
     @BeforeEach
     public void contextLoad() {
         repositorioInformes = new RepositorioInformes();
@@ -77,8 +76,7 @@ public class InformeMascotaConDuenioTest {
     private InformeMascotaConDuenio generarInformeMascotaEncontrada(List<Foto> fotosMascota) {
 
         return new InformeMascotaConDuenio(
-                duenioMascota, rescatista, fechaDeHoy, ubicacion, fotosMascota, ubicacion, estadoActualMascota,
-                repositorioInformes);
+                duenioMascota, rescatista, fechaDeHoy, ubicacion, fotosMascota, ubicacion, estadoActualMascota);
     }
 
     private InformeMascotaConDuenio generarInformeMascotaEncontradaBuilder(List<Foto> fotosMascota) {
@@ -89,8 +87,7 @@ public class InformeMascotaConDuenioTest {
                 .conDireccion(ubicacion)
                 .conFotosMascota(fotosMascota)
                 .conLugarDeEncuentro(ubicacion)
-                .conEstadoActualMascota(estadoActualMascota)
-                .conRepositorioInformes(repositorioInformes);
+                .conEstadoActualMascota(estadoActualMascota);
         return builder.build();
     }
 

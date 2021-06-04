@@ -15,7 +15,7 @@ public class InformeMascotaSinDuenioBuilder extends InformeMascotaBuilder {
   }
 
   public InformeMascotaSinDuenio build(){
-    return new InformeMascotaSinDuenio(rescatista, fechaEncuentro, direccion, fotosMascota, lugarDeEncuentro, estadoActualMascota, repositorioInformes);
+    return new InformeMascotaSinDuenio(rescatista, fechaEncuentro, direccion, lugarDeEncuentro, mascota);
   }
 
 }

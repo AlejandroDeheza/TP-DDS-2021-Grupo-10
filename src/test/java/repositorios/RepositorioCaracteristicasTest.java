@@ -34,14 +34,14 @@ public class RepositorioCaracteristicasTest {
   @DisplayName("si un usuario ingresa una caracterstica valida, no se genera ningun problema")
   public void caracteristicaValidaTest() {
     assertDoesNotThrow(() -> new Caracteristica(
-        "Comportamiento", "Bueno", repositorioCaracteristicas));
+        "Comportamiento", "Bueno"));
   }
 
   @Test
   @DisplayName("si un usuario ingresa una caracterstica invalida, se genera CaracteristicasInvalidaException")
   public void CaracteristicasInvalidaExceptionTest() {
     assertThrows(CaracteristicasInvalidaException.class,
-        () -> new Caracteristica("Dormilon", "SI", repositorioCaracteristicas));
+        () -> new Caracteristica("Dormilon", "SI"));
   }
 
   @Test
@@ -49,6 +49,6 @@ public class RepositorioCaracteristicasTest {
       "ValorCaracteristicaIncompatibleException")
   public void ValorCaracteristicaIncompatibleExceptionTest() {
     assertThrows(ValorCaracteristicaIncompatibleException.class,
-        () -> new Caracteristica("Comportamiento", "Maso", repositorioCaracteristicas));
+        () -> new Caracteristica("Comportamiento", "Maso"));
   }
 }
