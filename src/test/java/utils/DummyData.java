@@ -11,6 +11,7 @@ import modelo.persona.DatosDeContacto;
 import modelo.persona.Persona;
 import modelo.persona.PersonaBuilder;
 import modelo.persona.TipoDocumento;
+import modelo.publicacion.Publicacion;
 import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioCaracteristicas;
@@ -24,6 +25,10 @@ public class DummyData {
 
   public static DatosDeContacto getDummyDatosDeContacto() {
     return new DatosDeContacto("01147474747", "dds2021g10@gmail.com");
+  }
+
+  public static DatosDeContacto getDummyDatosDeContactoSinCorreoAsociado() {
+    return new DatosDeContacto("01147474747", null);
   }
 
   public static Persona getDummyPersona() {
@@ -46,8 +51,20 @@ public class DummyData {
         .conFechaNacimiento(LocalDate.of(1995, 8, 7)).build();
   }
 
+  public static Persona getDummyPersonaSinCorreoAsociadoEnDatosDeContacto() {
+    return PersonaBuilder.crearBuilder().conNombre("PersonaNombre").conApellido("PersonaApellido")
+        .conTipoDocumento(TipoDocumento.DNI).conNumeroDeDocumento("11111111")
+        .conDatosDeContacto(getDummyDatosDeContactoSinCorreoAsociado())
+        .conFechaNacimiento(LocalDate.of(1995, 8, 7)).build();
+  }
+
   public static Usuario getDummyUsuario() {
     return new Usuario("DuenioMascota", "Password1234", TipoUsuario.NORMAL, getDummyPersona());
+  }
+
+  public static Usuario getDummyUsuarioSinCorreoAsociado() {
+    return new Usuario("DuenioMascota", "Password1234", TipoUsuario.NORMAL,
+        getDummyPersonaSinCorreoAsociadoEnDatosDeContacto());
   }
 
   public static Usuario getDummyUsuarioAdministrador() {
@@ -58,9 +75,10 @@ public class DummyData {
     return new CaracteristicaConValoresPosibles("Comportamiento", Arrays.asList("Bueno", "Malo"));
   }
 
-  public static List<Caracteristica> getDummyListaCaracteristicasParaMascota(
-      RepositorioCaracteristicas repo) {
-    Caracteristica caracteristica = new Caracteristica("Comportamiento", "Bueno", repo);
+  public static List<Caracteristica> getDummyListaCaracteristicasParaMascota() {
+    RepositorioCaracteristicas.getInstance()
+        .agregarCaracteristica(getDummyCaracteristicaParaAdmin());
+    Caracteristica caracteristica = new Caracteristica("Comportamiento", "Bueno");
     List<Caracteristica> listaCaracteristica = new ArrayList<>();
     listaCaracteristica.add(caracteristica);
     return listaCaracteristica;
@@ -73,12 +91,20 @@ public class DummyData {
     return fotosMascota;
   }
 
-  public static Mascota getDummyMascota(RepositorioCaracteristicas repo) {
+  public static Mascota getDummyMascota() {
     return MascotaBuilder.crearBuilder().conAnimal(Animal.PERRO).conNombre("Negrito")
         .conApodo("PerroApodo").conFechaNacimiento(LocalDate.of(2018, 3, 4)).conSexo(Sexo.MACHO)
         .conDescripcionFisica("El firulais mismo")
-        .conCaracteristicas(getDummyListaCaracteristicasParaMascota(repo))
+        .conCaracteristicas(getDummyListaCaracteristicasParaMascota())
         .conFotos(getDummyFotosMascota()).build();
+  }
+
+  public static Usuario getDummyUsuarioVoluntario() {
+    return new Usuario("Admin", "Password1234", TipoUsuario.VOLUNTARIO, getDummyPersona());
+  }
+
+  public static Publicacion getDummyPublicacion() {
+    return new Publicacion(getDummyDatosDeContacto(), getDummyFotosMascota());
   }
 
 }
