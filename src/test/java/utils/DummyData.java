@@ -23,7 +23,7 @@ import java.util.List;
 public class DummyData {
 
   public static DatosDeContacto getDummyDatosDeContacto() {
-    return new DatosDeContacto("01147474747", "pablo@mail.com");
+    return new DatosDeContacto("01147474747", "dds2021g10@gmail.com");
   }
 
   public static Persona getDummyPersona() {
