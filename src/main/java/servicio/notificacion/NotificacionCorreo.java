@@ -14,7 +14,7 @@ public class NotificacionCorreo implements NotificacionSender {
   Session session = configurarConexionCorreo();
 
   Function<Session, Transport> funcion = (sesion -> {
-    Transport t = null;   // nunca devuelve null, esto es para que compile nomas
+    Transport t = null;
     try {
       t = sesion.getTransport("smtp");
     } catch (MessagingException e) {
