@@ -1,8 +1,15 @@
-# TPA - Entrega 1
+# TPA
 
-## Diagrama de clases
+## Entrega 1
+### Diagrama de clases
 
 [Diagrama](https://lucid.app/documents/view/372f27ea-7637-4845-92ed-b14d86ed43ea)
+
+## Entrega 2
+### Diagrama de clases
+
+[Diagrama](https://lucid.app/lucidchart/d25b4587-01dc-4195-a0fa-87a428fd347f/edit?page=0_0#)
+
 
 # Validar el proyecto de forma exahustiva
 
