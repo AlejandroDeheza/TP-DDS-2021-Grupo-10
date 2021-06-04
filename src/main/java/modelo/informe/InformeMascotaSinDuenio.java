@@ -25,6 +25,7 @@ public class InformeMascotaSinDuenio extends InformeMascotaEncontrada {
             , Animal animal, RepositorioInformes repositorioInformes, RepositorioPublicaciones repositorioPublicaciones) {
         super(rescatista, fechaEncuentro, direccion, fotosMascota, lugarDeEncuentro,estadoActualMascota,repositorioInformes);
         this.animal=animal;
+        this.repositorioPublicaciones = repositorioPublicaciones;
     }
 
     public Animal getAnimal() {

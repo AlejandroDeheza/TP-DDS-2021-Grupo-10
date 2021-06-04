@@ -19,7 +19,7 @@ public class InformeMascotaSinDuenioBuilder extends InformeMascotaBuilder {
             fotosMascota, lugarDeEncuentro, estadoActualMascota, animal, repositorioInformes, repositorioPublicaciones);
   }
 
-  public void setRepositorioPublicaciones(RepositorioPublicaciones repositorioPublicaciones) {
+  public void conRepositorioPublicaciones(RepositorioPublicaciones repositorioPublicaciones) {
     this.repositorioPublicaciones = repositorioPublicaciones;
   }
 }

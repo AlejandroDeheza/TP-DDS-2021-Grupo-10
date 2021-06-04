@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import servicio.notificacion.NotificacionCorreo;
 import utils.DummyData;
 
+import javax.mail.MessagingException;
 import javax.mail.Transport;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -67,12 +68,11 @@ public class RepositorioPublicacionesTest {
 
     @Test
     @DisplayName("Encontrar una Mascota envia una Notificacion")
-    public void encontrarunaMascotaPerdidaEnviaUnaNotificacion() {
-        NotificacionCorreo notificacionCorreoMock = new NotificacionCorreo(sesion -> transportMockeado);
+    public void encontrarunaMascotaPerdidaEnviaUnaNotificacion() throws MessagingException {
         Publicacion publicacion= DummyData.getDummyPublicacion();
         repositorioPublicaciones.agregarPublicacion(publicacion);
         repositorioPublicaciones.encontreMiMascota(publicacion,DummyData.getDummyUsuario());
-        verify(notificacionCorreoMock).enviarNotificacion(any());
+        verify(transportMockeado).sendMessage(any(), any());
     }
 
 }
