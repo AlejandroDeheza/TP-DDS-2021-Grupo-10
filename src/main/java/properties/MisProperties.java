@@ -22,7 +22,7 @@ public class MisProperties {
   }
 
   public static void cargarInfoPropertiesTests(Properties properties){
-    MisProperties.cargarInfoPropertiesBase(properties, "src/test/resourcesTests/appTests.properties");
+    MisProperties.cargarInfoPropertiesBase(properties, "src/test/resources/app.properties");
   }
 
 }

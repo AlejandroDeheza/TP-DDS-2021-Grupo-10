@@ -46,7 +46,6 @@ public class InformeMascotaConDuenio extends InformeMascotaEncontrada {
         DatosDeContacto destinatario = this.getDuenioMascota().getPersona().getDatosDeContacto();
         String nombreSaludo = this.getDuenioMascota().getPersona().getNombre();
         String cuerpoMensaje = properties.getProperty("cuerpoMensaje_InformeMasctoaConDuenio");
-        //String cuerpoMensaje = "Encontramos a tu mascota. Ingresa a nuestra pagina para contactarte con nosotros.";
         String saludo = properties.getProperty("saludo");
         String asunto = properties.getProperty("asunto_InformeMasctoaConDuenio");
         Notificacion mensaje = new Notificacion(destinatario, nombreSaludo, cuerpoMensaje, saludo, asunto);
