@@ -2,7 +2,6 @@ package modelo.informe;
 
 import excepciones.InformeMascotaEncontradaInvalidaException;
 import modelo.mascota.Foto;
-import modelo.mascota.Mascota;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.Persona;
 import repositorios.RepositorioInformes;

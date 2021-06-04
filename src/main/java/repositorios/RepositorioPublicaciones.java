@@ -14,8 +14,7 @@ import servicio.notificacion.NotificacionSender;
 
 import java.util.stream.Collectors;
 public class RepositorioPublicaciones {
-    private NotificacionSender notificacionCorreo;
-
+    private NotificacionSender notificacionCorreo = new NotificacionCorreo(null);
     private static RepositorioPublicaciones repositorioPublicaciones = new RepositorioPublicaciones(new NotificacionCorreo(null));
     private List<Publicacion> publicaciones = new ArrayList<>();
 

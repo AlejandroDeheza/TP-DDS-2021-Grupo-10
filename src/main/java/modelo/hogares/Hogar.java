@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import modelo.informe.Ubicacion;
 import modelo.mascota.Animal;
-import modelo.mascota.Mascota;
 import modelo.mascota.caracteristica.Caracteristica;
 
 import java.util.List;
@@ -39,9 +38,9 @@ public class Hogar {
     @JsonProperty("caracteristicas")
     private List<String> caracteristicas;
 
-    public boolean esPosibleHogarDeTransito(Integer radioCercania, Mascota mascota, Ubicacion direccion) {
-        List<String> valoresCaracteristicasMascota = mascota.getCaracteristicas().stream().map(caracteristica -> caracteristica.getValorCaracteristica()).collect(Collectors.toList());
-        return aceptaAnimal(mascota.getAnimal()) && aceptaTamanioMascota(mascota.getCaracteristicas())
+    public boolean esPosibleHogarDeTransito(Integer radioCercania, Animal animal,List<Caracteristica> estadoActualMascota, Ubicacion direccion) {
+        List<String> valoresCaracteristicasMascota = estadoActualMascota.stream().map(caracteristica -> caracteristica.getValorCaracteristica()).collect(Collectors.toList());
+        return aceptaAnimal(animal) && aceptaTamanioMascota(estadoActualMascota)
                 && tieneLugaresDisponibles() && estaDentroDeRadio(radioCercania, direccion) &&
                 cumpleRequisitoDeCaracterista(valoresCaracteristicasMascota);
     }
