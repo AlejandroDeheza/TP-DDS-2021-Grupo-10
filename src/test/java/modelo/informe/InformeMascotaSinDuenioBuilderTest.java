@@ -17,12 +17,6 @@ public class InformeMascotaSinDuenioBuilderTest {
   @DisplayName("Construir Informe Mascota sin Duenio por el Builder")
   public void construirInformeMascotaSinDuenioBuilder() {
 
-//      MascotaBuilder mascotaBuilder= new MascotaBuilder();
-//      mascotaBuilder.conFotos(DummyData.getDummyFotosMascota());
-//      mascotaBuilder.conCaracteristicas(DummyData.getDummyListaCaracteristicasParaMascota());
-//      mascotaBuilder.conAnimal(Animal.PERRO);
-//      Mascota mascota=mascotaBuilder.build();
-
       InformeMascotaSinDuenioBuilder informeMascotaBuilder=new InformeMascotaSinDuenioBuilder();
       informeMascotaBuilder.conFotosMascota(DummyData.getDummyFotosMascota());
       informeMascotaBuilder.conDireccion(direccion);
@@ -31,6 +25,6 @@ public class InformeMascotaSinDuenioBuilderTest {
       informeMascotaBuilder.conLugarDeEncuentro(direccion);
 
       informeMascotaBuilder.conAnimal(Animal.PERRO);
-      informeMascotaBuilder.build();
+      assertDoesNotThrow(()->informeMascotaBuilder.build());
   }
 }
