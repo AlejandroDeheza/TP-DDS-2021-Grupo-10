@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import properties.MisProperties;
 import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioInformes;
 import utils.DummyData;
@@ -93,22 +94,18 @@ public class InformeMascotaConDuenioTest {
 
   private String getSubjectEmail() throws MessagingException {
     Properties prop = new Properties();
-
-    prop.setProperty("mail.pop3.starttls.enable", "false");
-
-    prop.setProperty("mail.pop3.socketFactory.class","javax.net.ssl.SSLSocketFactory" );
-    prop.setProperty("mail.pop3.socketFactory.fallback", "false");
-
-    prop.setProperty("mail.pop3.port","995");
-    prop.setProperty("mail.pop3.socketFactory.port", "995");
+    MisProperties.cargarInfoPropertiesTests(prop);
 
     Session sesion = Session.getInstance(prop);
     //imprime log cuando esta en true
     sesion.setDebug(false);
 
     Store store = sesion.getStore("pop3");
-    store.connect("pop.gmail.com","dds2021g10@gmail.com","viernesNoche21");
-    Folder folder = store.getFolder("INBOX");
+    store.connect(
+        prop.getProperty("host"),
+        prop.getProperty("user"),
+        prop.getProperty("password"));
+    Folder folder = store.getFolder(prop.getProperty("folder"));
     folder.open(Folder.READ_ONLY);
 
     Message[] mensajes = folder.getMessages();
