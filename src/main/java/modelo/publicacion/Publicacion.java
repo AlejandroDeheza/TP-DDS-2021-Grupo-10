@@ -27,4 +27,8 @@ public class Publicacion {
     public DatosDeContacto getDatosDeContactoRescatista(){
        return datosDeContactoRescatista;
     }
+
+  public List<Foto> getFotos() {
+    return fotos;
+  }
 }
