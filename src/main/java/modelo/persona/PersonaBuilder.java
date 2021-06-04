@@ -58,9 +58,13 @@ public class PersonaBuilder {
     Boolean noTieneNingunDatoDeContacto = !datosDeContacto.hayAlgunDatoDeContacto();
     Boolean noTieneNombreYApellido = nombre == null && apellido == null;
 
-    if (noTieneNombreYApellido && noTieneNingunDatoDeContacto)
+    if (noTieneNombreYApellido && noTieneNingunDatoDeContacto) {
       throw new DatosDeContactoIncompletosException(
           "Se debe agregar al menos un dato de contacto o el nombre y apellido");
+    } else if (!datosDeContacto.existeCorreoAsociado()) {
+      throw new DatosDeContactoIncompletosException(
+          "El dato de contacto debe tener un correo asociado");
+    }
   }
 
   public String getNombre() {

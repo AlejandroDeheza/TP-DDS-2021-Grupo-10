@@ -16,7 +16,8 @@ public class PersonaTest {
   private String apellido = "Mazzaglia";
   private TipoDocumento tipoDocumento = TipoDocumento.DNI;
   private String numeroDeDocumento = "35353535";
-  private DatosDeContacto datosDeContacto = new DatosDeContacto(null, null);
+  private DatosDeContacto datosDeContacto =
+      new DatosDeContacto("0123456789", "emimazzaglia@gmail.com");
   private LocalDate fechaNacimiento = LocalDate.now();
   private Persona persona;
 
@@ -61,6 +62,12 @@ public class PersonaTest {
   public void DatosDeContactoIncompletosExceptionTest() {
     assertThrows(DatosDeContactoIncompletosException.class,
         DummyData::getDummyPersonaSinDatosDeContactoNiNombreNiApellido);
+  }
+
+  @Test
+  public void UnaPersonaDebeTenerUnCorreoAsociadoEnSuDatoDeContactoTest() {
+    assertThrows(DatosDeContactoIncompletosException.class,
+        () -> DummyData.getDummyPersonaSinCorreoAsociadoEnDatosDeContacto());
   }
 
   private Persona generarPersonaBuilder() {

@@ -27,6 +27,10 @@ public class DummyData {
     return new DatosDeContacto("01147474747", "dds2021g10@gmail.com");
   }
 
+  public static DatosDeContacto getDummyDatosDeContactoSinCorreoAsociado() {
+    return new DatosDeContacto("01147474747", null);
+  }
+
   public static Persona getDummyPersona() {
     return PersonaBuilder.crearBuilder().conNombre("PersonaNombre").conApellido("PersonaApellido")
         .conTipoDocumento(TipoDocumento.DNI).conNumeroDeDocumento("11111111")
@@ -47,8 +51,20 @@ public class DummyData {
         .conFechaNacimiento(LocalDate.of(1995, 8, 7)).build();
   }
 
+  public static Persona getDummyPersonaSinCorreoAsociadoEnDatosDeContacto() {
+    return PersonaBuilder.crearBuilder().conNombre("PersonaNombre").conApellido("PersonaApellido")
+        .conTipoDocumento(TipoDocumento.DNI).conNumeroDeDocumento("11111111")
+        .conDatosDeContacto(getDummyDatosDeContactoSinCorreoAsociado())
+        .conFechaNacimiento(LocalDate.of(1995, 8, 7)).build();
+  }
+
   public static Usuario getDummyUsuario() {
     return new Usuario("DuenioMascota", "Password1234", TipoUsuario.NORMAL, getDummyPersona());
+  }
+
+  public static Usuario getDummyUsuarioSinCorreoAsociado() {
+    return new Usuario("DuenioMascota", "Password1234", TipoUsuario.NORMAL,
+        getDummyPersonaSinCorreoAsociadoEnDatosDeContacto());
   }
 
   public static Usuario getDummyUsuarioAdministrador() {
@@ -60,7 +76,8 @@ public class DummyData {
   }
 
   public static List<Caracteristica> getDummyListaCaracteristicasParaMascota() {
-    RepositorioCaracteristicas.getInstance().agregarCaracteristica(getDummyCaracteristicaParaAdmin());
+    RepositorioCaracteristicas.getInstance()
+        .agregarCaracteristica(getDummyCaracteristicaParaAdmin());
     Caracteristica caracteristica = new Caracteristica("Comportamiento", "Bueno");
     List<Caracteristica> listaCaracteristica = new ArrayList<>();
     listaCaracteristica.add(caracteristica);
@@ -82,12 +99,12 @@ public class DummyData {
         .conFotos(getDummyFotosMascota()).build();
   }
 
-  public static Usuario getDummyUsuarioVoluntario(){
+  public static Usuario getDummyUsuarioVoluntario() {
     return new Usuario("Admin", "Password1234", TipoUsuario.VOLUNTARIO, getDummyPersona());
   }
 
-  public static Publicacion getDummyPublicacion(){
-    return new Publicacion(getDummyDatosDeContacto(),getDummyFotosMascota());
+  public static Publicacion getDummyPublicacion() {
+    return new Publicacion(getDummyDatosDeContacto(), getDummyFotosMascota());
   }
 
 }

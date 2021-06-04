@@ -16,5 +16,9 @@ public class DatosDeContacto {
   public Boolean hayAlgunDatoDeContacto() {
     return (this.telefono != null || this.email != null);
   }
+  
+  public boolean existeCorreoAsociado() {
+    return this.email != null;
+  }
 
 }

@@ -5,10 +5,16 @@ import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.DatosDeContacto;
 import modelo.persona.Persona;
 import modelo.usuario.Usuario;
+
+import repositorios.RepositorioProperties;
 import servicio.notificacion.Notificacion;
 import servicio.notificacion.NotificacionCorreo;
+
 import java.time.LocalDate;
 import java.util.List;
+
+import java.util.Properties;
+
 
 public class InformeMascotaConDuenio extends InformeMascotaEncontrada {
     private Usuario duenioMascota;
@@ -25,13 +31,22 @@ public class InformeMascotaConDuenio extends InformeMascotaEncontrada {
 
     @Override
     public void procesarInforme() {
-        DatosDeContacto destinatario = this.getDuenioMascota().getPersona().getDatosDeContacto();
-        String nombreSaludo = this.getDuenioMascota().getPersona().getNombre();
-        String cuerpoMensaje = "Encontramos a tu mascota. Ingresa a nuestra pagina para contactarte con nosotros.";
-        String saludo = "Hogar de Patitas";
-        String asunto = "Encontramos a tu mascota!";
-        Notificacion notificacion = new Notificacion(destinatario, nombreSaludo, cuerpoMensaje, saludo, asunto);
+
+        Notificacion notificacion = buildNotificacion();
         super.procesarInforme();
         notificacionCorreo.enviarNotificacion(notificacion);
+    }
+
+    private Notificacion buildNotificacion() {
+
+        Properties properties = RepositorioProperties.getInstance().getProperties();
+
+        DatosDeContacto destinatario = this.getDuenioMascota().getPersona().getDatosDeContacto();
+        String nombreSaludo = this.getDuenioMascota().getPersona().getNombre();
+        String cuerpoMensaje = properties.getProperty("cuerpoMensaje_InformeMasctoaConDuenio");
+        String saludo = properties.getProperty("saludo");
+        String asunto = properties.getProperty("asunto_InformeMasctoaConDuenio");
+        Notificacion mensaje = new Notificacion(destinatario, nombreSaludo, cuerpoMensaje, saludo, asunto);
+        return mensaje;
     }
 }
