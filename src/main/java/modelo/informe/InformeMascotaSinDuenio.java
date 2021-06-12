@@ -2,7 +2,7 @@ package modelo.informe;
 
 import client.ObtenerHogaresClient;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import modelo.hogares.Hogar;
+import client.hogares.Hogar;
 import modelo.mascota.Animal;
 import modelo.mascota.Foto;
 import modelo.mascota.caracteristica.Caracteristica;

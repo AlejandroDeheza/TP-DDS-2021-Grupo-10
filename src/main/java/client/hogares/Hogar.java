@@ -1,4 +1,4 @@
-package modelo.hogares;
+package client.hogares;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import modelo.informe.Ubicacion;
