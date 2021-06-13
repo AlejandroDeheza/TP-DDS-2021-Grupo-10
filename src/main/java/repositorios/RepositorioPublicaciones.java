@@ -14,8 +14,8 @@ import servicio.notificacion.NotificacionSender;
 
 import java.util.stream.Collectors;
 public class RepositorioPublicaciones {
-    private NotificacionSender notificacionCorreo = new NotificacionCorreo(null);
-    private static RepositorioPublicaciones repositorioPublicaciones = new RepositorioPublicaciones(new NotificacionCorreo(null));
+    private NotificacionSender notificacionCorreo;
+    private static RepositorioPublicaciones repositorioPublicaciones = new RepositorioPublicaciones(new NotificacionCorreo());
     private List<Publicacion> publicaciones = new ArrayList<>();
 
     //usamos el constructor solo para tests
@@ -23,9 +23,6 @@ public class RepositorioPublicaciones {
         this.notificacionCorreo = notificacionCorreo;
     }
 
-    public void setNotificacionCorreo(NotificacionCorreo notificacionCorreo){
-        this.notificacionCorreo=notificacionCorreo;
-    }
     //usamos el getInstance en el codigo de produccion
     public static RepositorioPublicaciones getInstance() {
         return repositorioPublicaciones;

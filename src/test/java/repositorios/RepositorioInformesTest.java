@@ -29,10 +29,12 @@ public class RepositorioInformesTest {
   Ubicacion direccion = new Ubicacion(57.44, 57.55);
   List<Foto> fotosMascota = DummyData.getDummyFotosMascota();
   Ubicacion lugarDeEncuentro = new Ubicacion(57.44, 57.55);
-  List<Caracteristica> estadoActualMascota = DummyData.getDummyListaCaracteristicasParaMascota();
+  List<Caracteristica> estadoActualMascota = DummyData.getDummyListaCaracteristicasParaMascota(
+      new RepositorioCaracteristicas()
+  );
   InformeMascotaConDuenio informe;
 
-  Mascota mascota = DummyData.getDummyMascota();
+  Mascota mascota = DummyData.getDummyMascota(new RepositorioCaracteristicas());
 
   Transport transportMockeado;
 

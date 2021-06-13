@@ -9,19 +9,15 @@ import java.util.stream.Collectors;
 
 public class RepositorioInformes {
 
-  private static RepositorioInformes repositorioInformes;
+  private static RepositorioInformes repositorioInformes = new RepositorioInformes();
   private List<InformeMascotaEncontrada> informesPendientes = new ArrayList<>();
   private List<InformeMascotaEncontrada> informesProcesados = new ArrayList<>();
 
   //usamos el constructor solo para tests
-  public RepositorioInformes() {
-  }
+  public RepositorioInformes() {}
 
   //usamos el getInstance en el codigo de produccion
   public static RepositorioInformes getInstance() {
-    if (repositorioInformes == null) {
-      repositorioInformes = new RepositorioInformes();
-    }
     return repositorioInformes;
   }
 

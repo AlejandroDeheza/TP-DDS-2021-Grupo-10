@@ -6,6 +6,7 @@ import modelo.mascota.Animal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioPublicaciones;
 import servicio.notificacion.NotificacionCorreo;
 import utils.DummyData;
@@ -36,7 +37,10 @@ public class InformeMascotaSinDuenioTest {
         informeMascotaSinDuenioBuilder.conAnimal(Animal.PERRO);
         repositorioPublicaciones = new RepositorioPublicaciones(new NotificacionCorreo(asdas -> transportMockeado));
         informeMascotaSinDuenioBuilder.conRepositorioPublicaciones(repositorioPublicaciones);
-        informeMascotaSinDuenioBuilder.conEstadoActualMascota(DummyData.getDummyListaCaracteristicasParaMascota());
+        informeMascotaSinDuenioBuilder.conEstadoActualMascota(DummyData.getDummyListaCaracteristicasParaMascota(
+            new RepositorioCaracteristicas()
+            )
+        );
         informeMascotaSinDuenio =informeMascotaSinDuenioBuilder.build();
 
     }

@@ -8,7 +8,7 @@ import servicio.notificacion.NotificacionSender;
 public class InformeMascotaConDuenioBuilder extends InformeMascotaBuilder {
 
   protected Usuario duenioMascota;
-  protected NotificacionSender notificacionSender = new NotificacionCorreo(null);
+  protected NotificacionSender notificacionSender = new NotificacionCorreo();
 
   public InformeMascotaConDuenioBuilder conDuenioMascota(Usuario duenioMascota) {
     this.duenioMascota = duenioMascota;

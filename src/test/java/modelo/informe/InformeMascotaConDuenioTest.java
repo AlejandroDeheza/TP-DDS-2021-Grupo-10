@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioInformes;
 import servicio.notificacion.NotificacionCorreo;
 import servicio.notificacion.NotificacionSender;
@@ -27,7 +28,9 @@ public class InformeMascotaConDuenioTest {
   Persona rescatista = DummyData.getDummyPersona();
   LocalDate fechaDeHoy = LocalDate.now();
   Ubicacion ubicacion = new Ubicacion(57.44, 57.55);
-  List<Caracteristica> estadoActualMascota = DummyData.getDummyListaCaracteristicasParaMascota();
+  List<Caracteristica> estadoActualMascota = DummyData.getDummyListaCaracteristicasParaMascota(
+      new RepositorioCaracteristicas()
+  );
 
   RepositorioInformes repositorioInformes;
   List<Foto> fotosMascota = DummyData.getDummyFotosMascota();

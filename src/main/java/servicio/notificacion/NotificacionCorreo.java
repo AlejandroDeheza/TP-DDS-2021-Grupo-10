@@ -23,9 +23,13 @@ public class NotificacionCorreo implements NotificacionSender {
     return t;
   });
 
+  // solo para tests
   public NotificacionCorreo(Function<Session, Transport> funcion) {
-    if (funcion != null) this.funcion = funcion;
+    this.funcion = funcion;
   }
+
+  // para codigo productivo
+  public NotificacionCorreo(){}
 
   @Override
   public void enviarNotificacion(Notificacion notificacion) {

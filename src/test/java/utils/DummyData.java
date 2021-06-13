@@ -75,10 +75,12 @@ public class DummyData {
     return new CaracteristicaConValoresPosibles("Comportamiento", Arrays.asList("Bueno", "Malo"));
   }
 
-  public static List<Caracteristica> getDummyListaCaracteristicasParaMascota() {
-    RepositorioCaracteristicas.getInstance()
-        .agregarCaracteristica(getDummyCaracteristicaParaAdmin());
-    Caracteristica caracteristica = new Caracteristica("Comportamiento", "Bueno");
+  public static List<Caracteristica> getDummyListaCaracteristicasParaMascota(
+      RepositorioCaracteristicas repositorioCaracteristicas) {
+    repositorioCaracteristicas.agregarCaracteristica(getDummyCaracteristicaParaAdmin());
+    Caracteristica caracteristica = new Caracteristica(
+        "Comportamiento", "Bueno", repositorioCaracteristicas
+    );
     List<Caracteristica> listaCaracteristica = new ArrayList<>();
     listaCaracteristica.add(caracteristica);
     return listaCaracteristica;
@@ -91,11 +93,11 @@ public class DummyData {
     return fotosMascota;
   }
 
-  public static Mascota getDummyMascota() {
+  public static Mascota getDummyMascota(RepositorioCaracteristicas RepositorioCaracteristicas) {
     return MascotaBuilder.crearBuilder().conAnimal(Animal.PERRO).conNombre("Negrito")
         .conApodo("PerroApodo").conFechaNacimiento(LocalDate.of(2018, 3, 4)).conSexo(Sexo.MACHO)
         .conDescripcionFisica("El firulais mismo")
-        .conCaracteristicas(getDummyListaCaracteristicasParaMascota())
+        .conCaracteristicas(getDummyListaCaracteristicasParaMascota(RepositorioCaracteristicas))
         .conFotos(getDummyFotosMascota()).build();
   }
 
