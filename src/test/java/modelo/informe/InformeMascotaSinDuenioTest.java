@@ -35,7 +35,7 @@ public class InformeMascotaSinDuenioTest {
         informeMascotaSinDuenioBuilder.conRescatista(DummyData.getDummyPersona());
         informeMascotaSinDuenioBuilder.conLugarDeEncuentro(direccion);
         informeMascotaSinDuenioBuilder.conAnimal(Animal.PERRO);
-        repositorioPublicaciones = new RepositorioPublicaciones(new NotificacionCorreo(asdas -> transportMockeado));
+        repositorioPublicaciones = new RepositorioPublicaciones(new NotificacionCorreo(sesion -> transportMockeado));
         informeMascotaSinDuenioBuilder.conRepositorioPublicaciones(repositorioPublicaciones);
         informeMascotaSinDuenioBuilder.conEstadoActualMascota(DummyData.getDummyListaCaracteristicasParaMascota(
             new RepositorioCaracteristicas()
