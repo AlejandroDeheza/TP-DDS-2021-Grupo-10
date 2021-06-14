@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import client.hogares.Hogar;
 import modelo.mascota.Animal;
 import modelo.mascota.Foto;
+import modelo.mascota.MascotaEncontrada;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.Persona;
 import modelo.publicacion.Publicacion;
@@ -18,29 +19,24 @@ import java.util.stream.Collectors;
 public class InformeMascotaSinDuenio extends InformeMascotaEncontrada {
 
     ObtenerHogaresClient hogaresClient = new ObtenerHogaresClient();
-    private Animal animal;
     private RepositorioPublicaciones repositorioPublicaciones;
 
-    public InformeMascotaSinDuenio(Persona rescatista, LocalDate fechaEncuentro, Ubicacion direccion, List<Foto> fotosMascota, Ubicacion lugarDeEncuentro, List<Caracteristica>  estadoActualMascota
-            , Animal animal, RepositorioInformes repositorioInformes, RepositorioPublicaciones repositorioPublicaciones) {
-        super(rescatista, fechaEncuentro, direccion, fotosMascota, lugarDeEncuentro,estadoActualMascota,repositorioInformes);
-        this.animal=animal;
-        this.repositorioPublicaciones = repositorioPublicaciones;
+    public InformeMascotaSinDuenio(Persona rescatista, Ubicacion direccion, MascotaEncontrada mascota, ObtenerHogaresClient hogaresClient) {
+        super(rescatista, direccion, mascota);
+        this.hogaresClient = hogaresClient;
     }
 
-    public Animal getAnimal() {
-        return animal;
-    }
 
     @Override
     public void procesarInforme() {
         super.procesarInforme();
-        repositorioPublicaciones.agregarPublicacion(new Publicacion(this.getRescatista().getDatosDeContacto(),getFotosMascota()));
+        repositorioPublicaciones.agregarPublicacion(new Publicacion(this.getRescatista().getDatosDeContacto(),mascota.getFotos());
     }
 
     public List<Hogar> getHogaresTransitorios(Integer radioCercania) throws JsonProcessingException{
-        List<Hogar> hogares = this.hogaresClient.obtenerTodosLosHogares();
-        return hogares.stream().filter( hogar -> hogar.esPosibleHogarDeTransito(radioCercania,getAnimal(),getEstadoActualMascota(),this.getDireccion())).collect(Collectors.toList());
+        List<Hogar> hogares = this.hogaresClient.obtenerTodosLosHogares();                                      //Podria ser un String directo, para no generar un Map al pedo
+        return hogares.stream().filter( hogar -> hogar.esPosibleHogarDeTransito(radioCercania,mascota.getAnimal(),mascota.getEstadoActual(),this.getDireccion())).collect(Collectors.toList());
     }
+
 
 }

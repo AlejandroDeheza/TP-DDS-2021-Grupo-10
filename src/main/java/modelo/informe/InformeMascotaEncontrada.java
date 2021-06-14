@@ -2,6 +2,7 @@ package modelo.informe;
 
 import excepciones.InformeMascotaEncontradaInvalidaException;
 import modelo.mascota.Foto;
+import modelo.mascota.MascotaEncontrada;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.Persona;
 import repositorios.RepositorioInformes;
@@ -13,24 +14,15 @@ import java.util.List;
 public abstract class  InformeMascotaEncontrada {
 
   private Persona rescatista;
-  private LocalDate fechaEncuentro;
   private Ubicacion direccion;
-  private Ubicacion lugarDeEncuentro;
-  private List<Foto> fotosMascota = new ArrayList<>();
-  private List<Caracteristica> estadoActualMascota;
+  protected MascotaEncontrada mascota;
   private RepositorioInformes repositorioInformes;
 
 
-  public InformeMascotaEncontrada(Persona rescatista, LocalDate fechaEncuentro,
-                                  Ubicacion direccion, List<Foto> fotosMascota, Ubicacion lugarDeEncuentro,
-                                  List<Caracteristica>  estadoActualMascota, RepositorioInformes repositorioInformes) {
+  public InformeMascotaEncontrada(Persona rescatista, Ubicacion direccion, MascotaEncontrada mascota) {
     this.rescatista = rescatista;
-    this.fechaEncuentro = fechaEncuentro;
     this.direccion = direccion;
-    this.fotosMascota.addAll(fotosMascota);
-    this.lugarDeEncuentro = lugarDeEncuentro;
-    this.estadoActualMascota = estadoActualMascota;
-    this.repositorioInformes = repositorioInformes;
+    this.mascota = mascota;
   }
 
   public void procesarInforme(){
@@ -39,7 +31,7 @@ public abstract class  InformeMascotaEncontrada {
   }
 
   private void validarListaFotos() {
-    if (fotosMascota == null || fotosMascota.isEmpty())
+    if (mascota.getFotos() == null || mascota.getFotos().isEmpty())
       throw new InformeMascotaEncontradaInvalidaException("Se debe ingresar al menos 1 Foto de la mascota encontrada");
   }
 
@@ -47,23 +39,9 @@ public abstract class  InformeMascotaEncontrada {
     return rescatista;
   }
 
-  public LocalDate getFechaEncuentro() {
-    return fechaEncuentro;
-  }
-
   public Ubicacion getDireccion() {
     return direccion;
   }
 
-  public Ubicacion getLugarDeEncuentro() {
-    return lugarDeEncuentro;
-  }
 
-  public List<Caracteristica>  getEstadoActualMascota(){
-    return estadoActualMascota;
-  }
-
-  public List<Foto> getFotosMascota(){
-    return fotosMascota;
-  }
 }
