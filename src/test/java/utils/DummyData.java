@@ -12,7 +12,7 @@ import modelo.publicacion.Publicacion;
 import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioCaracteristicas;
-import servicio.notificacion.NotificacionSender;
+import servicio.notificacion.Notificador;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -105,7 +105,7 @@ public class DummyData {
     return new Usuario("Admin", "Password1234", TipoUsuario.VOLUNTARIO, getDummyPersona());
   }
 
-  public static Publicacion getDummyPublicacion(NotificacionSender notificacionCorreo) {
+  public static Publicacion getDummyPublicacion(Notificador notificacionCorreo) {
     return new Publicacion(getDummyDatosDeContacto(), getDummyFotosMascota(), notificacionCorreo);
   }
 

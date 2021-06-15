@@ -8,7 +8,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioPublicaciones;
-import servicio.notificacion.NotificacionCorreo;
 import utils.DummyData;
 
 import javax.mail.Transport;

@@ -4,17 +4,17 @@ import modelo.mascota.Foto;
 import modelo.usuario.Usuario;
 import modelo.persona.DatosDeContacto;
 import servicio.notificacion.Notificacion;
-import servicio.notificacion.NotificacionSender;
+import servicio.notificacion.Notificador;
 
 import java.util.List;
 
 public class Publicacion {
   private DatosDeContacto datosDeContactoRescatista;
   private List<Foto> fotos;
-  private NotificacionSender notificacionCorreo;
+  private Notificador notificacionCorreo;
   private String cuerpoMensaje = "El dueño encontro una mascota que vos rescataste. Por favor comunicarse al ";
 
-  public Publicacion(DatosDeContacto datosDeContacto, List<Foto> fotos, NotificacionSender notificacionCorreo) {
+  public Publicacion(DatosDeContacto datosDeContacto, List<Foto> fotos, Notificador notificacionCorreo) {
     this.datosDeContactoRescatista = datosDeContacto;
     this.fotos = fotos;
     this.notificacionCorreo = notificacionCorreo;

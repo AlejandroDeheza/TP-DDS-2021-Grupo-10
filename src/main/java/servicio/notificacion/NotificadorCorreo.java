@@ -8,7 +8,7 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 import java.util.function.Function;
 
-public class NotificacionCorreo implements NotificacionSender {
+public class NotificadorCorreo implements Notificador {
 
   Session session = configurarConexionCorreo();
 
@@ -23,12 +23,12 @@ public class NotificacionCorreo implements NotificacionSender {
   });
 
   // solo para tests
-  public NotificacionCorreo(Function<Session, Transport> funcion) {
+  public NotificadorCorreo(Function<Session, Transport> funcion) {
     this.funcion = funcion;
   }
 
   // para codigo productivo
-  public NotificacionCorreo(){}
+  public NotificadorCorreo(){}
 
   @Override
   public void enviarNotificacion(Notificacion notificacion) {

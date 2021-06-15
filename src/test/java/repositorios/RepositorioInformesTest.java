@@ -12,7 +12,7 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
-import servicio.notificacion.NotificacionCorreo;
+import servicio.notificacion.NotificadorCorreo;
 import utils.DummyData;
 
 import javax.mail.Transport;
@@ -71,6 +71,6 @@ public class RepositorioInformesTest {
 
   private InformeMascotaConDuenio generarInformeMascotaEncontrada(Mascota mascota) {
     return new InformeMascotaConDuenio(rescatista, duenioMascota, fechaDeHoy, direccion,fotosMascota,
-        lugarDeEncuentro,estadoActualMascota, new NotificacionCorreo(sesion -> transportMockeado), repositorioInformes);
+        lugarDeEncuentro,estadoActualMascota, new NotificadorCorreo(sesion -> transportMockeado), repositorioInformes);
   }
 }

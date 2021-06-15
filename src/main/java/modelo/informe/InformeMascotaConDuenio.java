@@ -1,29 +1,24 @@
 package modelo.informe;
 
-import modelo.mascota.Foto;
 import modelo.mascota.MascotaEncontrada;
-import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.DatosDeContacto;
 import modelo.persona.Persona;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioProperties;
 import repositorios.RepositorioInformes;
 import servicio.notificacion.Notificacion;
-import servicio.notificacion.NotificacionSender;
-
-import java.time.LocalDate;
-import java.util.List;
+import servicio.notificacion.Notificador;
 
 import java.util.Properties;
 
 
 public class InformeMascotaConDuenio extends InformeMascotaEncontrada {
     private Usuario duenioMascota;
-    private NotificacionSender notificacionCorreo;
+    private Notificador notificacionCorreo;
 
     public InformeMascotaConDuenio(Persona rescatista, Ubicacion direccion, MascotaEncontrada mascota,
                                    RepositorioInformes repositorioInformes, Usuario duenioMascota,
-                                   NotificacionSender notificacionCorreo) {
+                                   Notificador notificacionCorreo) {
         super(rescatista, direccion, mascota, repositorioInformes);
         this.duenioMascota = duenioMascota;
         this.notificacionCorreo = notificacionCorreo;

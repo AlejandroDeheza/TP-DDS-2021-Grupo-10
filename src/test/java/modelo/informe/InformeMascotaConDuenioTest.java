@@ -5,14 +5,13 @@ import modelo.mascota.*;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.Persona;
 import modelo.usuario.Usuario;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioInformes;
-import servicio.notificacion.NotificacionCorreo;
-import servicio.notificacion.NotificacionSender;
+import servicio.notificacion.NotificadorCorreo;
+import servicio.notificacion.Notificador;
 import utils.DummyData;
 
 import javax.mail.*;
@@ -36,7 +35,7 @@ public class InformeMascotaConDuenioTest {
   List<Foto> fotosMascotaVacio = new ArrayList<>();
   InformeMascotaConDuenio informeConFoto;
   InformeMascotaConDuenio informeSinFoto;
-  NotificacionCorreo notificacionCorreoMockeado;
+  NotificadorCorreo notificadorCorreoMockeado;
   Transport transportMockeado;
   MascotaEncontrada mascotaEncontrada = DummyData.getDummyMascotaEncontrada(listaCaracteristicas);
   MascotaRegistrada mascotaRegistrada = DummyData.getDummyMascotaRegistrada(listaCaracteristicas);
@@ -46,8 +45,8 @@ public class InformeMascotaConDuenioTest {
     repositorioInformes = new RepositorioInformes();
     transportMockeado = mock(Transport.class);
 
-    informeSinFoto = generarInformeMascotaEncontrada(new NotificacionCorreo(sesion -> transportMockeado));
-    informeConFoto = generarInformeMascotaEncontrada(new NotificacionCorreo(sesion -> transportMockeado));
+    informeSinFoto = generarInformeMascotaEncontrada(new NotificadorCorreo(sesion -> transportMockeado));
+    informeConFoto = generarInformeMascotaEncontrada(new NotificadorCorreo(sesion -> transportMockeado));
   }
 
 
@@ -74,8 +73,8 @@ public class InformeMascotaConDuenioTest {
     assertTrue(repositorioInformes.getInformesPendientes().contains(informeConFoto));
   }
 
-  private InformeMascotaConDuenio generarInformeMascotaEncontrada(NotificacionSender notificacionSender) {
-    return new InformeMascotaConDuenio(rescatista, new Ubicacion(12.25, 25.23), mascotaEncontrada, repositorioInformes, duenioMascota, notificacionSender);
+  private InformeMascotaConDuenio generarInformeMascotaEncontrada(Notificador notificador) {
+    return new InformeMascotaConDuenio(rescatista, new Ubicacion(12.25, 25.23), mascotaEncontrada, repositorioInformes, duenioMascota, notificador);
   }
 
 }

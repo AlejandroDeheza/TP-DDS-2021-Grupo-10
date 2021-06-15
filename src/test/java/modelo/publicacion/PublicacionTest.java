@@ -3,7 +3,7 @@ package modelo.publicacion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import servicio.notificacion.NotificacionCorreo;
+import servicio.notificacion.NotificadorCorreo;
 import utils.DummyData;
 
 import javax.mail.MessagingException;
@@ -15,18 +15,18 @@ import static org.mockito.Mockito.verify;
 
 public class PublicacionTest {
   Transport transportMockeado;
-  NotificacionCorreo notificacionCorreo;
+  NotificadorCorreo notificadorCorreo;
 
   @BeforeEach
   public void contextLoad() {
     transportMockeado = mock(Transport.class);
-    notificacionCorreo = new NotificacionCorreo(session -> transportMockeado);
+    notificadorCorreo = new NotificadorCorreo(session -> transportMockeado);
   }
 
   @Test
   @DisplayName("si se encuentra una Mascota, se envia una Notificacion")
   public void encontrarUnaMascotaPerdidaEnviaUnaNotificacion() throws MessagingException {
-    Publicacion publicacion = DummyData.getDummyPublicacion(notificacionCorreo);
+    Publicacion publicacion = DummyData.getDummyPublicacion(notificadorCorreo);
     publicacion.notificarEncuentroAlRescatista(DummyData.getDummyUsuario());
     verify(transportMockeado).sendMessage(any(), any());
   }
