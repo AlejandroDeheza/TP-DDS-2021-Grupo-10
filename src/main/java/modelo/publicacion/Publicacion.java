@@ -19,11 +19,11 @@ public class Publicacion {
     public void agregarDuenio(Usuario usuario) {
         this.duenioMascota=usuario;
     }
+
     public Boolean tieneDuenio(){
-       if (duenioMascota != null)
-        return  true;
-       return  false;
+      return duenioMascota != null;
     }
+
     public DatosDeContacto getDatosDeContactoRescatista(){
        return datosDeContactoRescatista;
     }

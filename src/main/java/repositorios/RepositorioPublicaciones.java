@@ -1,7 +1,6 @@
 package repositorios;
 
 import modelo.publicacion.Publicacion;
-import excepciones.PublicacionInexistenteException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +29,6 @@ public class RepositorioPublicaciones {
     }
 
     public void encontreMiMascota(Publicacion publicacion, Usuario usuario) {
-        if (!publicaciones.contains(publicacion))
-            throw new PublicacionInexistenteException();
         Publicacion publicacionConMascota = publicaciones.stream().filter(publicacion1 -> publicacion1.equals(publicacion)).findFirst()
                 .get();
         publicacionConMascota.agregarDuenio(usuario);

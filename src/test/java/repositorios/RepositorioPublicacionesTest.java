@@ -1,6 +1,5 @@
 package repositorios;
 
-import excepciones.PublicacionInexistenteException;
 import modelo.publicacion.Publicacion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -45,15 +44,6 @@ public class RepositorioPublicacionesTest {
         repositorioPublicaciones.agregarPublicacion(publicacion);
         repositorioPublicaciones.encontreMiMascota(publicacion,DummyData.getDummyUsuario());
         assertEquals(1,repositorioPublicaciones.listarPublicacionesConDuenio().size());
-    }
-
-    @Test
-    @DisplayName("Encontrar una Mascota que no esta perdida da error")
-    public void encontrarunaMascotaQueNoEstaPerdidadDaError() {
-        Publicacion publicacion= DummyData.getDummyPublicacion();
-        repositorioPublicaciones.agregarPublicacion(publicacion);
-        Publicacion publicacion2= DummyData.getDummyPublicacion();
-        assertThrows(PublicacionInexistenteException.class,()->repositorioPublicaciones.encontreMiMascota(publicacion2,DummyData.getDummyUsuario()));
     }
 
     @Test
