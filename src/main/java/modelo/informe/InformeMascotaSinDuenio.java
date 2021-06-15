@@ -11,6 +11,7 @@ import modelo.persona.Persona;
 import modelo.publicacion.Publicacion;
 import repositorios.RepositorioInformes;
 import repositorios.RepositorioPublicaciones;
+import servicio.notificacion.NotificacionCorreo;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,19 +19,24 @@ import java.util.stream.Collectors;
 
 public class InformeMascotaSinDuenio extends InformeMascotaEncontrada {
 
-    ObtenerHogaresClient hogaresClient = new ObtenerHogaresClient();
+    private ObtenerHogaresClient hogaresClient = new ObtenerHogaresClient();
     private RepositorioPublicaciones repositorioPublicaciones;
+    private NotificacionCorreo notificacionCorreo;
 
-    public InformeMascotaSinDuenio(Persona rescatista, Ubicacion direccion, MascotaEncontrada mascota, RepositorioInformes repositorioInformes, ObtenerHogaresClient hogaresClient, RepositorioPublicaciones repositorioPublicaciones) {
+    public InformeMascotaSinDuenio(Persona rescatista, Ubicacion direccion, MascotaEncontrada mascota,
+                                   RepositorioInformes repositorioInformes, ObtenerHogaresClient hogaresClient,
+                                   RepositorioPublicaciones repositorioPublicaciones,
+                                   NotificacionCorreo notificacionCorreo) {
         super(rescatista, direccion, mascota, repositorioInformes);
         this.hogaresClient = hogaresClient;
         this.repositorioPublicaciones = repositorioPublicaciones;
+        this.notificacionCorreo = notificacionCorreo;
     }
 
     @Override
     public void procesarInforme() {
         super.procesarInforme();
-        repositorioPublicaciones.agregarPublicacion(new Publicacion(this.getRescatista().getDatosDeContacto(),mascota.getFotos()));
+        repositorioPublicaciones.agregarPublicacion(new Publicacion(this.getRescatista().getDatosDeContacto(), mascota.getFotos(), notificacionCorreo));
     }
 
     public List<Hogar> getHogaresTransitorios(Integer radioCercania) throws JsonProcessingException{

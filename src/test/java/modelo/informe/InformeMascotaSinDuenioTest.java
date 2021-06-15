@@ -35,7 +35,7 @@ public class InformeMascotaSinDuenioTest {
         informeMascotaSinDuenioBuilder.conRescatista(DummyData.getDummyPersona());
         informeMascotaSinDuenioBuilder.conLugarDeEncuentro(direccion);
         informeMascotaSinDuenioBuilder.conAnimal(Animal.PERRO);
-        repositorioPublicaciones = new RepositorioPublicaciones(new NotificacionCorreo(sesion -> transportMockeado));
+        repositorioPublicaciones = new RepositorioPublicaciones();
         informeMascotaSinDuenioBuilder.conRepositorioPublicaciones(repositorioPublicaciones);
         informeMascotaSinDuenioBuilder.conEstadoActualMascota(DummyData.getDummyListaCaracteristicasParaMascota(
             new RepositorioCaracteristicas()
@@ -49,7 +49,7 @@ public class InformeMascotaSinDuenioTest {
     @DisplayName("Cuando Se se procesa un informe se genera una publicacion en Repo Publicacion")
     public void procesarInformeGeneraPublicacionEnElRepo(){
         informeMascotaSinDuenio.procesarInforme();
-        assertEquals(1,repositorioPublicaciones.listarPublicacionesSinDuenio().size());
+        assertEquals(1,repositorioPublicaciones.getPublicaciones().size());
     }
 
 
