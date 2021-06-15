@@ -1,7 +1,7 @@
 package modelo.informe;
 
 import excepciones.InformeMascotaEncontradaInvalidaException;
-import modelo.mascota.Foto;
+import modelo.mascota.*;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.Persona;
 import modelo.usuario.Usuario;
@@ -27,8 +27,7 @@ public class InformeMascotaConDuenioTest {
   Usuario duenioMascota = DummyData.getDummyUsuario();
   Persona rescatista = DummyData.getDummyPersona();
   LocalDate fechaDeHoy = LocalDate.now();
-  Ubicacion ubicacion = new Ubicacion(57.44, 57.55);
-  List<Caracteristica> estadoActualMascota = DummyData.getDummyListaCaracteristicasParaMascota(
+  List<Caracteristica> listaCaracteristicas = DummyData.getDummyListaCaracteristicasParaMascota(
       new RepositorioCaracteristicas()
   );
 
@@ -39,28 +38,18 @@ public class InformeMascotaConDuenioTest {
   InformeMascotaConDuenio informeSinFoto;
   NotificacionCorreo notificacionCorreoMockeado;
   Transport transportMockeado;
+  MascotaEncontrada mascotaEncontrada = DummyData.getDummyMascotaEncontrada(listaCaracteristicas);
+  MascotaRegistrada mascotaRegistrada = DummyData.getDummyMascotaRegistrada(listaCaracteristicas);
 
   @BeforeEach
   public void contextLoad() {
     repositorioInformes = new RepositorioInformes();
     transportMockeado = mock(Transport.class);
 
-    informeSinFoto = generarInformeMascotaEncontradaBuilder(fotosMascotaVacio, new NotificacionCorreo(sesion -> transportMockeado));
-    informeConFoto = generarInformeMascotaEncontradaBuilder(fotosMascota, new NotificacionCorreo(sesion -> transportMockeado));
+    informeSinFoto = generarInformeMascotaEncontrada(new NotificacionCorreo(sesion -> transportMockeado));
+    informeConFoto = generarInformeMascotaEncontrada(new NotificacionCorreo(sesion -> transportMockeado));
   }
 
-  @Test
-  @DisplayName("Chequeo igualdad entre Constructor y Builder")
-  public void InformeMascotaEncontradaBuilderConstructorTest(){
-    InformeMascotaConDuenio informeAux = generarInformeMascotaEncontrada(fotosMascotaVacio);
-    Assertions.assertEquals(informeSinFoto.getDuenioMascota(), informeAux.getDuenioMascota());
-    Assertions.assertEquals(informeSinFoto.getDireccion(), informeAux.getDireccion());
-    Assertions.assertEquals(informeSinFoto.getEstadoActualMascota(), informeAux.getEstadoActualMascota());
-    Assertions.assertEquals(informeSinFoto.getFotosMascota(), informeAux.getFotosMascota());
-    Assertions.assertEquals(informeSinFoto.getFechaEncuentro(), informeAux.getFechaEncuentro());
-    Assertions.assertEquals(informeSinFoto.getLugarDeEncuentro(), informeAux.getLugarDeEncuentro());
-    Assertions.assertEquals(informeSinFoto.getRescatista(), informeAux.getRescatista());
-  }
 
   @Test
   @DisplayName("si se genera un InformeMascotaEncontrada sin fotos, se genera " +
@@ -85,22 +74,8 @@ public class InformeMascotaConDuenioTest {
     assertTrue(repositorioInformes.getInformesPendientes().contains(informeConFoto));
   }
 
-  private InformeMascotaConDuenio generarInformeMascotaEncontrada(List<Foto> fotosMascota) {
-    return new InformeMascotaConDuenio(duenioMascota, rescatista, fechaDeHoy, ubicacion, fotosMascota, ubicacion,
-        estadoActualMascota, new NotificacionCorreo(sesion -> transportMockeado), repositorioInformes);
+  private InformeMascotaConDuenio generarInformeMascotaEncontrada(NotificacionSender notificacionSender) {
+    return new InformeMascotaConDuenio(rescatista, new Ubicacion(12.25, 25.23), mascotaEncontrada, repositorioInformes, duenioMascota, notificacionSender);
   }
 
-  private InformeMascotaConDuenio generarInformeMascotaEncontradaBuilder(List<Foto> fotosMascota, NotificacionSender notificacionSender) {
-    InformeMascotaConDuenioBuilder builder = InformeMascotaConDuenioBuilder.crearBuilder();
-    builder.conNotificacionSender(notificacionSender)
-        .conDuenioMascota(duenioMascota)
-        .conRepositorioInformes(repositorioInformes)
-        .conRescatista(rescatista)
-        .conFechaEncuentro(fechaDeHoy)
-        .conDireccion(ubicacion)
-        .conFotosMascota(fotosMascota)
-        .conLugarDeEncuentro(ubicacion)
-        .conEstadoActualMascota(estadoActualMascota);
-    return builder.build();
-  }
 }

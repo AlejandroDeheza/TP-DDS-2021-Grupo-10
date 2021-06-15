@@ -19,10 +19,11 @@ public abstract class  InformeMascotaEncontrada {
   private RepositorioInformes repositorioInformes;
 
 
-  public InformeMascotaEncontrada(Persona rescatista, Ubicacion direccion, MascotaEncontrada mascota) {
+  public InformeMascotaEncontrada(Persona rescatista, Ubicacion direccion, MascotaEncontrada mascota, RepositorioInformes repositorioInformes ) {
     this.rescatista = rescatista;
     this.direccion = direccion;
     this.mascota = mascota;
+    this.repositorioInformes = repositorioInformes;
   }
 
   public void procesarInforme(){
@@ -43,5 +44,8 @@ public abstract class  InformeMascotaEncontrada {
     return direccion;
   }
 
+  public LocalDate getFechaEncuentro(){
+    return mascota.getFechaEncuentro();
+  }
 
 }

@@ -1,10 +1,8 @@
 package utils;
 
-import modelo.mascota.Animal;
-import modelo.mascota.Foto;
-import modelo.mascota.Mascota;
+import modelo.informe.Ubicacion;
+import modelo.mascota.*;
 import modelo.mascota.MascotaBuilder;
-import modelo.mascota.Sexo;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 import modelo.persona.DatosDeContacto;
@@ -93,12 +91,14 @@ public class DummyData {
     return fotosMascota;
   }
 
-  public static Mascota getDummyMascota(RepositorioCaracteristicas RepositorioCaracteristicas) {
-    return MascotaBuilder.crearBuilder().conAnimal(Animal.PERRO).conNombre("Negrito")
-        .conApodo("PerroApodo").conFechaNacimiento(LocalDate.of(2018, 3, 4)).conSexo(Sexo.MACHO)
-        .conDescripcionFisica("El firulais mismo")
-        .conCaracteristicas(getDummyListaCaracteristicasParaMascota(RepositorioCaracteristicas))
-        .conFotos(getDummyFotosMascota()).build();
+  public static MascotaEncontrada getDummyMascotaEncontrada(RepositorioCaracteristicas RepositorioCaracteristicas) {
+    return new MascotaEncontrada(Animal.PERRO, Sexo.MACHO, "Pelo largo", getDummyListaCaracteristicasParaMascota(RepositorioCaracteristicas), getDummyFotosMascota(), "Limpio y Sano", getDummyContexto(), TamanioMascota.CHICA);
+
+  }
+
+  public static MascotaRegistrada getDummyMascotaRegistrada(RepositorioCaracteristicas RepositorioCaracteristicas) {
+    return new MascotaRegistrada(Animal.PERRO, Sexo.MACHO, "Pelo largo", getDummyListaCaracteristicasParaMascota(RepositorioCaracteristicas), getDummyFotosMascota(), "Felipe","Panchito",LocalDate.of(2018, 3, 4));
+
   }
 
   public static Usuario getDummyUsuarioVoluntario() {
@@ -107,6 +107,10 @@ public class DummyData {
 
   public static Publicacion getDummyPublicacion() {
     return new Publicacion(getDummyDatosDeContacto(), getDummyFotosMascota());
+  }
+
+  public static Contexto getDummyContexto(){
+    return new Contexto(LocalDate.of(2021, 3, 4), new Ubicacion(54.22, 72.23));
   }
 
 }

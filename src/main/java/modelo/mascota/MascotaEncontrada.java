@@ -9,14 +9,20 @@ public class MascotaEncontrada extends Mascota{
 
   private String estadoActual;
   private Contexto contextoEncuentro;
+  private TamanioMascota tamanio;
 
-  public MascotaEncontrada(Animal animal, String nombre, String apodo, LocalDate fechaNacimiento, Sexo sexo, String descripcionFisica, List<Caracteristica> catacteristicas, List<Foto> fotos, String estadoActualMascota, Contexto contextoEncuentro) {
-    super(animal, nombre, apodo, fechaNacimiento, sexo, descripcionFisica, catacteristicas, fotos);
-    this.estadoActual = estadoActualMascota;
+  public MascotaEncontrada(Animal animal, Sexo sexo, String descripcionFisica, List<Caracteristica> caracteristicas, List<Foto> fotos, String estadoActual, Contexto contextoEncuentro, TamanioMascota tamanio) {
+    super(animal, sexo, descripcionFisica, caracteristicas, fotos);
+    this.estadoActual = estadoActual;
     this.contextoEncuentro = contextoEncuentro;
+    this.tamanio = tamanio;
   }
 
   public String getEstadoActual(){
     return this.estadoActual;
+  }
+
+  public LocalDate getFechaEncuentro(){
+    return contextoEncuentro.getFechaEncuentro();
   }
 }

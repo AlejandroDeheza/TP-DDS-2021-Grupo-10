@@ -21,21 +21,21 @@ public class InformeMascotaSinDuenio extends InformeMascotaEncontrada {
     ObtenerHogaresClient hogaresClient = new ObtenerHogaresClient();
     private RepositorioPublicaciones repositorioPublicaciones;
 
-    public InformeMascotaSinDuenio(Persona rescatista, Ubicacion direccion, MascotaEncontrada mascota, ObtenerHogaresClient hogaresClient) {
-        super(rescatista, direccion, mascota);
+    public InformeMascotaSinDuenio(Persona rescatista, Ubicacion direccion, MascotaEncontrada mascota, RepositorioInformes repositorioInformes, ObtenerHogaresClient hogaresClient, RepositorioPublicaciones repositorioPublicaciones) {
+        super(rescatista, direccion, mascota, repositorioInformes);
         this.hogaresClient = hogaresClient;
+        this.repositorioPublicaciones = repositorioPublicaciones;
     }
-
 
     @Override
     public void procesarInforme() {
         super.procesarInforme();
-        repositorioPublicaciones.agregarPublicacion(new Publicacion(this.getRescatista().getDatosDeContacto(),mascota.getFotos());
+        repositorioPublicaciones.agregarPublicacion(new Publicacion(this.getRescatista().getDatosDeContacto(),mascota.getFotos()));
     }
 
     public List<Hogar> getHogaresTransitorios(Integer radioCercania) throws JsonProcessingException{
-        List<Hogar> hogares = this.hogaresClient.obtenerTodosLosHogares();                                      //Podria ser un String directo, para no generar un Map al pedo
-        return hogares.stream().filter( hogar -> hogar.esPosibleHogarDeTransito(radioCercania,mascota.getAnimal(),mascota.getEstadoActual(),this.getDireccion())).collect(Collectors.toList());
+        List<Hogar> hogares = this.hogaresClient.obtenerTodosLosHogares();                                      //Cambie estadoActual por Caractesitsicas
+        return hogares.stream().filter( hogar -> hogar.esPosibleHogarDeTransito(radioCercania,mascota.getAnimal(),mascota.getCaracteristicas(),this.getDireccion())).collect(Collectors.toList());
     }
 
 

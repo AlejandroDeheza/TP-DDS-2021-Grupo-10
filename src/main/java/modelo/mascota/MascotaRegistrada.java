@@ -11,10 +11,10 @@ public class MascotaRegistrada extends Mascota{
   private String apodo;
   private LocalDate fechaNacimiento;
 
-  public MascotaRegistrada(Animal animal, String nombre, String apodo, LocalDate fechaNacimiento, Sexo sexo, String descripcionFisica, List<Caracteristica> catacteristicas, List<Foto> fotos, String nombre1, String apodo1, LocalDate fechaNacimiento1) {
-    super(animal, nombre, apodo, fechaNacimiento, sexo, descripcionFisica, catacteristicas, fotos);
-    this.nombre = nombre1;
-    this.apodo = apodo1;
-    this.fechaNacimiento = fechaNacimiento1;
+  public MascotaRegistrada(Animal animal, Sexo sexo, String descripcionFisica, List<Caracteristica> caracteristicas, List<Foto> fotos, String nombre, String apodo, LocalDate fechaNacimiento) {
+    super(animal, sexo, descripcionFisica, caracteristicas, fotos);
+    this.nombre = nombre;
+    this.apodo = apodo;
+    this.fechaNacimiento = fechaNacimiento;
   }
 }

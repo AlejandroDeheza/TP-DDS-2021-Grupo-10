@@ -28,7 +28,7 @@ public class RepositorioInformes {
   public List<InformeMascotaEncontrada> listarMascotasEncontradasEnUltimosNDias(Integer diasPreviosABuscar) {
     LocalDate fechaFiltro = LocalDate.now().minusDays(diasPreviosABuscar);
     return informesPendientes.stream()
-        .filter(informe -> informe.getFechaEncuentro().isAfter(fechaFiltro))
+        .filter(informe -> informe.getFechaEncuentro().isAfter(fechaFiltro)) //Podria ser tambien informe.mascotaEncontrada.contexto.getFechaEncuentro()
         .collect(Collectors.toList());
   }
 

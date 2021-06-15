@@ -21,8 +21,8 @@ public class InformeMascotaConDuenio extends InformeMascotaEncontrada {
     private Usuario duenioMascota;
     private NotificacionSender notificacionCorreo;
 
-    public InformeMascotaConDuenio(Persona rescatista, Ubicacion direccion, MascotaEncontrada mascota, Usuario duenioMascota, NotificacionSender notificacionCorreo) {
-        super(rescatista, direccion, mascota);
+    public InformeMascotaConDuenio(Persona rescatista, Ubicacion direccion, MascotaEncontrada mascota, RepositorioInformes repositorioInformes, Usuario duenioMascota, NotificacionSender notificacionCorreo) {
+        super(rescatista, direccion, mascota, repositorioInformes);
         this.duenioMascota = duenioMascota;
         this.notificacionCorreo = notificacionCorreo;
     }

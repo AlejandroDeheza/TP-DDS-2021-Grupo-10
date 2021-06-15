@@ -13,12 +13,11 @@ public abstract class Mascota {
   private List<Caracteristica> caracteristicas;
   private List<Foto> fotos;
 
-  public Mascota(Animal animal, String nombre, String apodo, LocalDate fechaNacimiento, Sexo sexo,
-      String descripcionFisica, List<Caracteristica> catacteristicas, List<Foto> fotos) {
+  public Mascota(Animal animal, Sexo sexo, String descripcionFisica, List<Caracteristica> caracteristicas, List<Foto> fotos) {
     this.animal = animal;
     this.sexo = sexo;
     this.descripcionFisica = descripcionFisica;
-    this.caracteristicas = catacteristicas;
+    this.caracteristicas = caracteristicas;
     this.fotos = fotos;
   }
 
