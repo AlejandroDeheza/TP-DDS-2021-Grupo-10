@@ -70,7 +70,7 @@ public class RepositorioInformesTest {
   }
 
   private InformeMascotaConDuenio generarInformeMascotaEncontrada(Mascota mascota) {
-    return new InformeMascotaConDuenio(duenioMascota, rescatista, fechaDeHoy, direccion,fotosMascota,
+    return new InformeMascotaConDuenio(rescatista, duenioMascota, fechaDeHoy, direccion,fotosMascota,
         lugarDeEncuentro,estadoActualMascota, new NotificacionCorreo(sesion -> transportMockeado), repositorioInformes);
   }
 }

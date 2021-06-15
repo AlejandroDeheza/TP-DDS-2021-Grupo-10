@@ -8,18 +8,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class RepositorioInformes {
-
   private static RepositorioInformes repositorioInformes = new RepositorioInformes();
   private List<InformeMascotaEncontrada> informesPendientes = new ArrayList<>();
   private List<InformeMascotaEncontrada> informesProcesados = new ArrayList<>();
-
-  //usamos el constructor solo para tests
-  public RepositorioInformes() {}
-
-  //usamos el getInstance en el codigo de produccion
-  public static RepositorioInformes getInstance() {
-    return repositorioInformes;
-  }
 
   public void agregarInformeMascotaEncontrada(InformeMascotaEncontrada informe) {
     informesPendientes.add(informe);
@@ -32,9 +23,17 @@ public class RepositorioInformes {
         .collect(Collectors.toList());
   }
 
-  public void procesarInforme(InformeMascotaEncontrada informeAProcesar) {
+  public void marcarInformeComoProcesado(InformeMascotaEncontrada informeAProcesar) {
     this.informesPendientes.remove(informeAProcesar);
     this.informesProcesados.add(informeAProcesar);
+  }
+
+
+  //usamos el constructor solo para tests
+  public RepositorioInformes() {}
+  //usamos el getInstance en el codigo de produccion
+  public static RepositorioInformes getInstance() {
+    return repositorioInformes;
   }
 
   public List<InformeMascotaEncontrada> getInformesPendientes() {

@@ -2,7 +2,6 @@ package utils;
 
 import modelo.informe.Ubicacion;
 import modelo.mascota.*;
-import modelo.mascota.MascotaBuilder;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 import modelo.persona.DatosDeContacto;

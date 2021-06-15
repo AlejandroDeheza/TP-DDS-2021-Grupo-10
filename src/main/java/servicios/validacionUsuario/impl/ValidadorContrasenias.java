@@ -11,8 +11,8 @@ public class ValidadorContrasenias {
     validarContraseniasComunes(contrasenia);
   }
 
-  private void validarLargoMinimo(String password) {
-    if (password.length() < 8)
+  private void validarLargoMinimo(String contrasenia) {
+    if (contrasenia.length() < 8)
       throw new ContraseniaInvalidaException("El largo de la contraseña debe tener como mínimo 8 caracteres");
   }
 
