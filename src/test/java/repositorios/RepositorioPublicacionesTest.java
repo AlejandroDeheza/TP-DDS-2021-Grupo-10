@@ -1,6 +1,5 @@
 package repositorios;
 
-import excepciones.PublicacionExistenteException;
 import excepciones.PublicacionInexistenteException;
 import modelo.publicacion.Publicacion;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,15 +29,6 @@ public class RepositorioPublicacionesTest {
     public void agregarUnaPublicacionNoDaError() {
         assertDoesNotThrow(()->repositorioPublicaciones.agregarPublicacion(DummyData.getDummyPublicacion()));
     }
-
-    @Test
-    @DisplayName("Agregar dos publicaciones iguales da error")
-    public void agregarDosPublicacionesIgualesDaError() {
-        Publicacion publicacionDuplicada= DummyData.getDummyPublicacion();
-        repositorioPublicaciones.agregarPublicacion(publicacionDuplicada);
-        assertThrows(PublicacionExistenteException.class,() ->repositorioPublicaciones.agregarPublicacion(publicacionDuplicada));
-    }
-
 
     @Test
     @DisplayName("Listar Publicaciones Sin Duenio")

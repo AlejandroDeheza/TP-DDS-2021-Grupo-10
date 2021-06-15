@@ -6,7 +6,6 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class NotificacionCorreo implements NotificacionSender {
@@ -74,7 +73,5 @@ public class NotificacionCorreo implements NotificacionSender {
     }
     return message;
   }
-
-
 
 }

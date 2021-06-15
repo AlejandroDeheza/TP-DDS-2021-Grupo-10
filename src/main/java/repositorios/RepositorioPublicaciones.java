@@ -1,8 +1,6 @@
 package repositorios;
 
-import modelo.persona.DatosDeContacto;
 import modelo.publicacion.Publicacion;
-import excepciones.PublicacionExistenteException;
 import excepciones.PublicacionInexistenteException;
 
 import java.util.ArrayList;
@@ -22,15 +20,12 @@ public class RepositorioPublicaciones {
     public RepositorioPublicaciones(NotificacionSender notificacionCorreo) {
         this.notificacionCorreo = notificacionCorreo;
     }
-
     //usamos el getInstance en el codigo de produccion
     public static RepositorioPublicaciones getInstance() {
         return repositorioPublicaciones;
     }
 
     public void agregarPublicacion(Publicacion publicacion) {
-        if (publicaciones.contains(publicacion))
-            throw new PublicacionExistenteException();
         publicaciones.add(publicacion);
     }
 
