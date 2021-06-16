@@ -32,7 +32,7 @@ public abstract class  InformeMascotaEncontrada {
   }
 
   private void validarListaFotos() {
-    if (mascota.getFotos() == null || mascota.getFotos().isEmpty())
+    if (mascota.tieneFotos())
       throw new InformeMascotaEncontradaInvalidaException("Se debe ingresar al menos 1 Foto de la mascota encontrada");
   }
 

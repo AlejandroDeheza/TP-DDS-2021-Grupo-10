@@ -25,28 +25,31 @@ public class InformeMascotaConDuenioTest {
 
   Usuario duenioMascota = DummyData.getDummyUsuario();
   Persona rescatista = DummyData.getDummyPersona();
-  LocalDate fechaDeHoy = LocalDate.now();
+  Ubicacion ubicacion = DummyData.getDummyUbicacion();
+
   List<Caracteristica> listaCaracteristicas = DummyData.getDummyListaCaracteristicasParaMascota(
       new RepositorioCaracteristicas()
   );
 
-  RepositorioInformes repositorioInformes;
+  RepositorioInformes repositorioInformesMock;
   List<Foto> fotosMascota = DummyData.getDummyFotosMascota();
   List<Foto> fotosMascotaVacio = new ArrayList<>();
   InformeMascotaConDuenio informeConFoto;
   InformeMascotaConDuenio informeSinFoto;
   NotificadorCorreo notificadorCorreoMockeado;
   Transport transportMockeado;
-  MascotaEncontrada mascotaEncontrada = DummyData.getDummyMascotaEncontrada(listaCaracteristicas);
-  MascotaRegistrada mascotaRegistrada = DummyData.getDummyMascotaRegistrada(listaCaracteristicas);
+  MascotaEncontrada mascotaEncontradaConFotos = DummyData.getDummyMascotaEncontrada(new RepositorioCaracteristicas(), fotosMascota);
+  MascotaEncontrada mascotaEncontradaSinFotos = DummyData.getDummyMascotaEncontrada(new RepositorioCaracteristicas(), fotosMascotaVacio);
+
 
   @BeforeEach
   public void contextLoad() {
-    repositorioInformes = new RepositorioInformes();
+    repositorioInformesMock = mock(RepositorioInformes.class);
     transportMockeado = mock(Transport.class);
+    notificadorCorreoMockeado = new NotificadorCorreo(sesion -> transportMockeado);
 
-    informeSinFoto = generarInformeMascotaEncontrada(new NotificadorCorreo(sesion -> transportMockeado));
-    informeConFoto = generarInformeMascotaEncontrada(new NotificadorCorreo(sesion -> transportMockeado));
+    informeSinFoto = generarInformeMascotaEncontrada(notificadorCorreoMockeado, mascotaEncontradaSinFotos);
+    informeConFoto = generarInformeMascotaEncontrada(notificadorCorreoMockeado, mascotaEncontradaConFotos);
   }
 
 
@@ -70,11 +73,11 @@ public class InformeMascotaConDuenioTest {
     verify(transportMockeado, atMostOnce()).sendMessage(any(), any());
     verify(transportMockeado, atMostOnce()).close();
 
-    assertTrue(repositorioInformes.getInformesPendientes().contains(informeConFoto));
+    assertTrue(repositorioInformesMock.getInformesPendientes().contains(informeConFoto));
   }
 
-  private InformeMascotaConDuenio generarInformeMascotaEncontrada(Notificador notificador) {
-    return new InformeMascotaConDuenio(rescatista, new Ubicacion(12.25, 25.23), mascotaEncontrada, repositorioInformes, duenioMascota, notificador);
+  private InformeMascotaConDuenio generarInformeMascotaEncontrada(Notificador notificador, MascotaEncontrada mascota) {
+    return new InformeMascotaConDuenio(rescatista, ubicacion, mascota, repositorioInformesMock, duenioMascota, notificador);
   }
 
 }

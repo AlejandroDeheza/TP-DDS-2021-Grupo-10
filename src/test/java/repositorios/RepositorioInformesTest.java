@@ -3,15 +3,16 @@ package repositorios;
 import modelo.informe.InformeMascotaConDuenio;
 import modelo.informe.Ubicacion;
 import modelo.mascota.Foto;
-import modelo.mascota.Mascota;
+import modelo.mascota.MascotaEncontrada;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.Persona;
 import modelo.usuario.Usuario;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
+import servicio.notificacion.Notificador;
 import servicio.notificacion.NotificadorCorreo;
 import utils.DummyData;
 
@@ -21,12 +22,12 @@ import java.util.List;
 
 public class RepositorioInformesTest {
 
-  RepositorioInformes repositorioInformes;
+  RepositorioInformes repositorioInformesMock;
 
   Usuario duenioMascota = DummyData.getDummyUsuario();
   Persona rescatista = DummyData.getDummyPersona();
   LocalDate fechaDeHoy = LocalDate.now();
-  Ubicacion direccion = new Ubicacion(57.44, 57.55);
+  Ubicacion ubicacion = DummyData.getDummyUbicacion();
   List<Foto> fotosMascota = DummyData.getDummyFotosMascota();
   Ubicacion lugarDeEncuentro = new Ubicacion(57.44, 57.55);
   List<Caracteristica> estadoActualMascota = DummyData.getDummyListaCaracteristicasParaMascota(
@@ -34,43 +35,46 @@ public class RepositorioInformesTest {
   );
   InformeMascotaConDuenio informe;
 
-  Mascota mascota = DummyData.getDummyMascota(new RepositorioCaracteristicas());
+  MascotaEncontrada mascota = DummyData.getDummyMascotaEncontrada(new RepositorioCaracteristicas(), fotosMascota);
 
   Transport transportMockeado;
+  NotificadorCorreo notificadorCorreoMockeado;
+
 
   @BeforeEach
   public void contextLoad() {
-    repositorioInformes = new RepositorioInformes();
-    informe = generarInformeMascotaEncontrada(mascota);
+    repositorioInformesMock = mock(RepositorioInformes.class);
+    notificadorCorreoMockeado = new NotificadorCorreo(sesion -> transportMockeado);
+    informe = generarInformeMascotaEncontrada(notificadorCorreoMockeado, mascota);
 
     transportMockeado = mock(Transport.class);
   }
 
-  @AfterEach
-  public void destroyContext() {
-    repositorioInformes = null;
-    informe = null;
-  }
+//  @AfterEach
+//  public void destroyContext() {
+//    repositorioInformesMock = null;
+//    informe = null;
+//  }
 
   @Test
   @DisplayName("si se crea un InformeMascotaPerdida, se agrega un informe a InformesPendientes en RepositorioInformes")
   public void InformesPendientesTest() {
-    assertEquals(repositorioInformes.getInformesPendientes().size(), 0);
-    repositorioInformes.agregarInformeMascotaEncontrada(informe);
-    assertEquals(repositorioInformes.getInformesPendientes().size(), 1);
+    assertEquals(repositorioInformesMock.getInformesPendientes().size(), 0);
+    repositorioInformesMock.agregarInformeMascotaEncontrada(informe);
+    assertEquals(repositorioInformesMock.getInformesPendientes().size(), 1);
   }
 
   @Test
   @DisplayName("si se utiliza listarMascotasEncontradasEnLosUltimos10Dias(), este devuelve " +
       "un registro insertado previamente")
   public void listarMascotasEncontradasEnLosUltimos10DiasTest() {
-    assertEquals(repositorioInformes.listarMascotasEncontradasEnUltimosNDias(10).size(), 0);
-    repositorioInformes.agregarInformeMascotaEncontrada(informe);
-    assertEquals(repositorioInformes.listarMascotasEncontradasEnUltimosNDias(10).size(), 1);
+    assertEquals(repositorioInformesMock.listarMascotasEncontradasEnUltimosNDias(10).size(), 0);
+    repositorioInformesMock.agregarInformeMascotaEncontrada(informe);
+    assertEquals(repositorioInformesMock.listarMascotasEncontradasEnUltimosNDias(10).size(), 1);
   }
 
-  private InformeMascotaConDuenio generarInformeMascotaEncontrada(Mascota mascota) {
-    return new InformeMascotaConDuenio(rescatista, duenioMascota, fechaDeHoy, direccion,fotosMascota,
-        lugarDeEncuentro,estadoActualMascota, new NotificadorCorreo(sesion -> transportMockeado), repositorioInformes);
+  private InformeMascotaConDuenio generarInformeMascotaEncontrada(Notificador notificador, MascotaEncontrada mascota) {
+    return new InformeMascotaConDuenio(rescatista, ubicacion, mascota, repositorioInformesMock, duenioMascota, notificador);
+
   }
 }

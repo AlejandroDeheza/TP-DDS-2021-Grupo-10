@@ -1,5 +1,6 @@
 package utils;
 
+import modelo.informe.InformeMascotaSinDuenio;
 import modelo.informe.Ubicacion;
 import modelo.mascota.*;
 import modelo.mascota.caracteristica.Caracteristica;
@@ -12,6 +13,7 @@ import modelo.publicacion.Publicacion;
 import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioCaracteristicas;
+import repositorios.RepositorioInformes;
 import servicio.notificacion.Notificador;
 
 import java.time.LocalDate;
@@ -91,8 +93,8 @@ public class DummyData {
     return fotosMascota;
   }
 
-  public static MascotaEncontrada getDummyMascotaEncontrada(RepositorioCaracteristicas RepositorioCaracteristicas) {
-    return new MascotaEncontrada(Animal.PERRO, Sexo.MACHO, "Pelo largo", getDummyListaCaracteristicasParaMascota(RepositorioCaracteristicas), getDummyFotosMascota(), "Limpio y Sano", getDummyContexto(), TamanioMascota.CHICA);
+  public static MascotaEncontrada getDummyMascotaEncontrada(RepositorioCaracteristicas RepositorioCaracteristicas, List<Foto> fotos) {
+    return new MascotaEncontrada(Animal.PERRO, Sexo.MACHO, "Pelo largo", getDummyListaCaracteristicasParaMascota(RepositorioCaracteristicas), fotos, "Limpio y Sano", getDummyContexto(), TamanioMascota.CHICA);
 
   }
 
@@ -110,7 +112,11 @@ public class DummyData {
   }
 
   public static Contexto getDummyContexto(){
-    return new Contexto(LocalDate.of(2021, 3, 4), new Ubicacion(54.22, 72.23));
+    return new Contexto(LocalDate.of(2021, 3, 4), getDummyUbicacion());
+  }
+
+  public static Ubicacion getDummyUbicacion(){
+    return new Ubicacion(27.23, 25.78);
   }
 
 }

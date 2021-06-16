@@ -41,4 +41,8 @@ public abstract class Mascota {
     return caracteristicas;
   }
 
+  public Boolean tieneFotos(){
+    return this.getFotos() == null || this.getFotos().isEmpty();
+  }
+
 }
