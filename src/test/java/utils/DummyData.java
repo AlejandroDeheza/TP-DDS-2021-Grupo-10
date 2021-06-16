@@ -112,7 +112,7 @@ public class DummyData {
   }
 
   public static Contexto getDummyContexto(){
-    return new Contexto(LocalDate.of(2021, 3, 4), getDummyUbicacion());
+    return new Contexto(LocalDate.now(), getDummyUbicacion());
   }
 
   public static Ubicacion getDummyUbicacion(){

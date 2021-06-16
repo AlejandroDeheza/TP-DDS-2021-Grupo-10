@@ -15,7 +15,6 @@ import servicio.notificacion.Notificador;
 import utils.DummyData;
 
 import javax.mail.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,7 +30,7 @@ public class InformeMascotaConDuenioTest {
       new RepositorioCaracteristicas()
   );
 
-  RepositorioInformes repositorioInformesMock;
+  RepositorioInformes repositorioInformes;
   List<Foto> fotosMascota = DummyData.getDummyFotosMascota();
   List<Foto> fotosMascotaVacio = new ArrayList<>();
   InformeMascotaConDuenio informeConFoto;
@@ -44,7 +43,7 @@ public class InformeMascotaConDuenioTest {
 
   @BeforeEach
   public void contextLoad() {
-    repositorioInformesMock = mock(RepositorioInformes.class);
+    repositorioInformes = new RepositorioInformes();
     transportMockeado = mock(Transport.class);
     notificadorCorreoMockeado = new NotificadorCorreo(sesion -> transportMockeado);
 
@@ -73,11 +72,11 @@ public class InformeMascotaConDuenioTest {
     verify(transportMockeado, atMostOnce()).sendMessage(any(), any());
     verify(transportMockeado, atMostOnce()).close();
 
-    assertTrue(repositorioInformesMock.getInformesPendientes().contains(informeConFoto));
+    assertTrue(repositorioInformes.getInformesPendientes().contains(informeConFoto));
   }
 
   private InformeMascotaConDuenio generarInformeMascotaEncontrada(Notificador notificador, MascotaEncontrada mascota) {
-    return new InformeMascotaConDuenio(rescatista, ubicacion, mascota, repositorioInformesMock, duenioMascota, notificador);
+    return new InformeMascotaConDuenio(rescatista, ubicacion, mascota, repositorioInformes, duenioMascota, notificador);
   }
 
 }

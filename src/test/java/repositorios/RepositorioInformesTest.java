@@ -22,7 +22,7 @@ import java.util.List;
 
 public class RepositorioInformesTest {
 
-  RepositorioInformes repositorioInformesMock;
+  RepositorioInformes repositorioInformes;
 
   Usuario duenioMascota = DummyData.getDummyUsuario();
   Persona rescatista = DummyData.getDummyPersona();
@@ -43,38 +43,31 @@ public class RepositorioInformesTest {
 
   @BeforeEach
   public void contextLoad() {
-    repositorioInformesMock = mock(RepositorioInformes.class);
+    repositorioInformes = new RepositorioInformes();
+    transportMockeado = mock(Transport.class);
     notificadorCorreoMockeado = new NotificadorCorreo(sesion -> transportMockeado);
     informe = generarInformeMascotaEncontrada(notificadorCorreoMockeado, mascota);
-
-    transportMockeado = mock(Transport.class);
   }
-
-//  @AfterEach
-//  public void destroyContext() {
-//    repositorioInformesMock = null;
-//    informe = null;
-//  }
 
   @Test
   @DisplayName("si se crea un InformeMascotaPerdida, se agrega un informe a InformesPendientes en RepositorioInformes")
   public void InformesPendientesTest() {
-    assertEquals(repositorioInformesMock.getInformesPendientes().size(), 0);
-    repositorioInformesMock.agregarInformeMascotaEncontrada(informe);
-    assertEquals(repositorioInformesMock.getInformesPendientes().size(), 1);
+    assertEquals(repositorioInformes.getInformesPendientes().size(), 0);
+    repositorioInformes.agregarInformeMascotaEncontrada(informe);
+    assertEquals(repositorioInformes.getInformesPendientes().size(), 1);
   }
 
   @Test
   @DisplayName("si se utiliza listarMascotasEncontradasEnLosUltimos10Dias(), este devuelve " +
       "un registro insertado previamente")
   public void listarMascotasEncontradasEnLosUltimos10DiasTest() {
-    assertEquals(repositorioInformesMock.listarMascotasEncontradasEnUltimosNDias(10).size(), 0);
-    repositorioInformesMock.agregarInformeMascotaEncontrada(informe);
-    assertEquals(repositorioInformesMock.listarMascotasEncontradasEnUltimosNDias(10).size(), 1);
+    assertEquals(repositorioInformes.listarMascotasEncontradasEnUltimosNDias(10).size(), 0);
+    repositorioInformes.agregarInformeMascotaEncontrada(informe);
+    assertEquals(repositorioInformes.listarMascotasEncontradasEnUltimosNDias(10).size(), 1);
   }
 
   private InformeMascotaConDuenio generarInformeMascotaEncontrada(Notificador notificador, MascotaEncontrada mascota) {
-    return new InformeMascotaConDuenio(rescatista, ubicacion, mascota, repositorioInformesMock, duenioMascota, notificador);
+    return new InformeMascotaConDuenio(rescatista, ubicacion, mascota, repositorioInformes, duenioMascota, notificador);
 
   }
 }

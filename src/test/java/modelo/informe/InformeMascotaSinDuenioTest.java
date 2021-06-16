@@ -25,20 +25,20 @@ public class InformeMascotaSinDuenioTest {
     Persona rescatista = DummyData.getDummyPersona();
     Ubicacion ubicacion = DummyData.getDummyUbicacion();
     InformeMascotaSinDuenio informeMascotaSinDuenio;
-    RepositorioPublicaciones repositorioPublicacionesMock;
+    RepositorioPublicaciones repositorioPublicaciones;
     ObtenerHogaresClient obtenerHogaresClientMock = mock(ObtenerHogaresClient.class);
     NotificadorCorreo notificadorCorreoMockeado;
 
     MascotaEncontrada mascotaEncontrada = DummyData.getDummyMascotaEncontrada(new RepositorioCaracteristicas(), DummyData.getDummyFotosMascota());
-    RepositorioInformes repositorioInformesMockeado;
+    RepositorioInformes repositorioInformes;
 
 
     @BeforeEach
     public void loadContext() {
         transportMockeado = mock(Transport.class);
-        repositorioInformesMockeado = mock(RepositorioInformes.class);//TODO Repositorio Informes es un Singleton? Deberia ir Mockeado?
+        repositorioInformes = new RepositorioInformes();
         notificadorCorreoMockeado = new NotificadorCorreo(sesion -> transportMockeado);
-        repositorioPublicacionesMock = mock(RepositorioPublicaciones.class);
+        repositorioPublicaciones = new RepositorioPublicaciones();
         informeMascotaSinDuenio = generarInformeMascotaEncontrada(notificadorCorreoMockeado);
     }
 
@@ -46,7 +46,7 @@ public class InformeMascotaSinDuenioTest {
     @DisplayName("Cuando Se se procesa un informe se genera una publicacion en Repo Publicacion")
     public void procesarInformeGeneraPublicacionEnElRepo(){
         informeMascotaSinDuenio.procesarInforme();
-        assertEquals(1, repositorioPublicacionesMock.getPublicaciones().size());
+        assertEquals(1, repositorioPublicaciones.getPublicaciones().size());
     }
 
 
@@ -57,7 +57,7 @@ public class InformeMascotaSinDuenioTest {
     }
 
     private InformeMascotaSinDuenio generarInformeMascotaEncontrada(NotificadorCorreo notificador) {
-        return new InformeMascotaSinDuenio(rescatista, ubicacion, mascotaEncontrada, repositorioInformesMockeado, obtenerHogaresClientMock, repositorioPublicacionesMock, notificador);
+        return new InformeMascotaSinDuenio(rescatista, ubicacion, mascotaEncontrada, repositorioInformes, obtenerHogaresClientMock, repositorioPublicaciones, notificador);
     }
 
 }
