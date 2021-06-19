@@ -7,8 +7,7 @@ import excepciones.DatosDeContactoIncompletosException;
 public class PersonaBuilder {
   private String nombre;
   private String apellido;
-  private TipoDocumento tipoDocumento;
-  private String numeroDeDocumento;
+  private DocumentoIdentidad documentoIdentidad;
   private DatosDeContacto datosDeContacto;
   private LocalDate fechaNacimiento;
 
@@ -19,7 +18,7 @@ public class PersonaBuilder {
   public Persona build() {
     this.validarQueTengaDatosContacto(this.nombre, this.apellido, Objects
         .requireNonNull(this.datosDeContacto, "Falta referencia a instancia de DatosDeContacto"));
-    return new Persona(this.nombre, this.apellido, this.tipoDocumento, this.numeroDeDocumento,
+    return new Persona(this.nombre, this.apellido, this.documentoIdentidad,
         this.datosDeContacto, this.fechaNacimiento);
   }
 
@@ -33,13 +32,8 @@ public class PersonaBuilder {
     return this;
   }
 
-  public PersonaBuilder conTipoDocumento(TipoDocumento tipoDocumento) {
-    this.tipoDocumento = tipoDocumento;
-    return this;
-  }
-
-  public PersonaBuilder conNumeroDeDocumento(String numeroDeDocumento) {
-    this.numeroDeDocumento = numeroDeDocumento;
+  public PersonaBuilder conDocumentoIdentidad(DocumentoIdentidad documentoIdentidad) {
+    this.documentoIdentidad = documentoIdentidad;
     return this;
   }
 
@@ -75,12 +69,8 @@ public class PersonaBuilder {
     return apellido;
   }
 
-  public TipoDocumento getTipoDocumento() {
-    return tipoDocumento;
-  }
-
-  public String getNumeroDeDocumento() {
-    return numeroDeDocumento;
+  public DocumentoIdentidad getDocumentoIdentidad() {
+    return documentoIdentidad;
   }
 
   public DatosDeContacto getDatosDeContacto() {

@@ -6,17 +6,15 @@ public class Persona {
 
   private String nombre;
   private String apellido;
-  private TipoDocumento tipoDocumento;
-  private String numeroDeDocumento;
+  private DocumentoIdentidad documentoIdentidad;
   private DatosDeContacto datosDeContacto;
   private LocalDate fechaNacimiento;
 
-  public Persona(String nombre, String apellido, TipoDocumento tipoDocumento,
-      String numeroDeDocumento, DatosDeContacto datosDeContacto, LocalDate fechaNacimiento) {
+  public Persona(String nombre, String apellido, DocumentoIdentidad documentoIdentidad,
+       DatosDeContacto datosDeContacto, LocalDate fechaNacimiento) {
     this.nombre = nombre;
     this.apellido = apellido;
-    this.tipoDocumento = tipoDocumento;
-    this.numeroDeDocumento = numeroDeDocumento;
+    this.documentoIdentidad = documentoIdentidad;
     this.datosDeContacto = datosDeContacto;
     this.fechaNacimiento = fechaNacimiento;
   }
@@ -29,12 +27,8 @@ public class Persona {
     return apellido;
   }
 
-  public TipoDocumento getTipoDocumento() {
-    return tipoDocumento;
-  }
-
-  public String getNumeroDeDocumento() {
-    return numeroDeDocumento;
+  public DocumentoIdentidad getDocumentoIdentidad() {
+    return documentoIdentidad;
   }
 
   public DatosDeContacto getDatosDeContacto() {

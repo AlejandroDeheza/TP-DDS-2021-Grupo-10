@@ -14,8 +14,8 @@ public class PersonaTest {
 
   private String nombre = "Emi";
   private String apellido = "Mazzaglia";
-  private TipoDocumento tipoDocumento = TipoDocumento.DNI;
-  private String numeroDeDocumento = "35353535";
+  private DocumentoIdentidad documentoIdentidad =
+      new DocumentoIdentidad(TipoDocumento.DNI, "35353535");
   private DatosDeContacto datosDeContacto =
       new DatosDeContacto("0123456789", "emimazzaglia@gmail.com");
   private LocalDate fechaNacimiento = LocalDate.now();
@@ -32,8 +32,8 @@ public class PersonaTest {
     Persona personaAux = this.generarPersona();
     Assertions.assertEquals(persona.getNombre(), personaAux.getNombre());
     Assertions.assertEquals(persona.getApellido(), personaAux.getApellido());
-    Assertions.assertEquals(persona.getTipoDocumento(), personaAux.getTipoDocumento());
-    Assertions.assertEquals(persona.getNumeroDeDocumento(), personaAux.getNumeroDeDocumento());
+    Assertions.assertEquals(persona.getDocumentoIdentidad().getTipoDocumento(), personaAux.getDocumentoIdentidad().getTipoDocumento());
+    Assertions.assertEquals(persona.getDocumentoIdentidad().getNumeroDocumento(), personaAux.getDocumentoIdentidad().getNumeroDocumento());
     Assertions.assertEquals(persona.getDatosDeContacto(), personaAux.getDatosDeContacto());
     Assertions.assertEquals(persona.getFechaNacimiento(), personaAux.getFechaNacimiento());
   }
@@ -72,14 +72,15 @@ public class PersonaTest {
 
   private Persona generarPersonaBuilder() {
     PersonaBuilder builder = PersonaBuilder.crearBuilder();
-    builder.conNombre(nombre).conApellido(apellido).conTipoDocumento(tipoDocumento)
-        .conNumeroDeDocumento(numeroDeDocumento).conDatosDeContacto(datosDeContacto)
+    builder.conNombre(nombre).conApellido(apellido)
+        .conDocumentoIdentidad(documentoIdentidad)
+        .conDatosDeContacto(datosDeContacto)
         .conFechaNacimiento(fechaNacimiento);
     return builder.build();
   }
 
   private Persona generarPersona() {
-    return new Persona(this.nombre, this.apellido, this.tipoDocumento, this.numeroDeDocumento,
+    return new Persona(this.nombre, this.apellido, this.documentoIdentidad,
         this.datosDeContacto, this.fechaNacimiento);
   }
 
