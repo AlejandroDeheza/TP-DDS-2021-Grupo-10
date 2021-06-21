@@ -94,7 +94,7 @@ public class DummyData {
   }
 
   public static MascotaEncontrada getDummyMascotaEncontrada(RepositorioCaracteristicas RepositorioCaracteristicas, List<Foto> fotos) {
-    return new MascotaEncontrada(Animal.PERRO, Sexo.MACHO, "Pelo largo", getDummyListaCaracteristicasParaMascota(RepositorioCaracteristicas), fotos, "Limpio y Sano", getDummyContexto());
+    return new MascotaEncontrada(Animal.PERRO, Sexo.MACHO, "Pelo largo", getDummyListaCaracteristicasParaMascota(RepositorioCaracteristicas), fotos, "Limpio y Sano", getDummyContexto(), TamanioMascota.CHICA);
 
   }
 

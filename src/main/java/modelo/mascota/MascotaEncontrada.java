@@ -9,11 +9,13 @@ public class MascotaEncontrada extends Mascota{
 
   private String estadoActual;
   private Contexto contextoEncuentro;
+  private TamanioMascota tamanio;
 
-  public MascotaEncontrada(Animal animal, Sexo sexo, String descripcionFisica, List<Caracteristica> caracteristicas, List<Foto> fotos, String estadoActual, Contexto contextoEncuentro) {
+  public MascotaEncontrada(Animal animal, Sexo sexo, String descripcionFisica, List<Caracteristica> caracteristicas, List<Foto> fotos, String estadoActual, Contexto contextoEncuentro, TamanioMascota tamanio) {
     super(animal, sexo, descripcionFisica, caracteristicas, fotos);
     this.estadoActual = estadoActual;
     this.contextoEncuentro = contextoEncuentro;
+    this.tamanio = tamanio;
   }
 
   public String getEstadoActual(){
