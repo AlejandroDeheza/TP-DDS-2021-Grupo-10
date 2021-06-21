@@ -6,9 +6,19 @@ public class Caracteristica {
 
   private String nombreCaracteristica;
   private String valorCaracteristica;
+  RepositorioCaracteristicas repositorioCaracteristicas = RepositorioCaracteristicas.getInstance();
 
   public Caracteristica(String nombreCaracteristica, String valorCaracteristica) {
-    RepositorioCaracteristicas.getInstance().validarCaracteristica(nombreCaracteristica, valorCaracteristica);
+    completarCaracteristica(nombreCaracteristica, valorCaracteristica);
+  }
+
+  public Caracteristica(String nombreCaracteristica, String valorCaracteristica,RepositorioCaracteristicas repositorioCaracteristicas) {
+    this.repositorioCaracteristicas=repositorioCaracteristicas;
+    completarCaracteristica(nombreCaracteristica, valorCaracteristica);
+  }
+
+  private void completarCaracteristica(String nombreCaracteristica, String valorCaracteristica){
+    repositorioCaracteristicas.validarCaracteristica(nombreCaracteristica, valorCaracteristica);
     this.nombreCaracteristica = nombreCaracteristica;
     this.valorCaracteristica = valorCaracteristica;
   }
