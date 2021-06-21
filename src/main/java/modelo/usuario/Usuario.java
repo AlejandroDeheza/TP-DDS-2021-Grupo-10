@@ -57,5 +57,4 @@ public class Usuario {
   public Persona getPersona() {
     return persona;
   }
-
 }
