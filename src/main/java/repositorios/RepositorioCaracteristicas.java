@@ -11,18 +11,14 @@ import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 
 public class RepositorioCaracteristicas {
 
-  private static RepositorioCaracteristicas repositorioCaracteristicas;
+  private static RepositorioCaracteristicas repositorioCaracteristicas = new RepositorioCaracteristicas();
   private List<CaracteristicaConValoresPosibles> caracteristicas = new ArrayList<>();
 
   //usamos el constructor solo para tests
-  public RepositorioCaracteristicas() {
-  }
+  public RepositorioCaracteristicas() {}
 
   //usamos el getInstance en el codigo de produccion
   public static RepositorioCaracteristicas getInstance() {
-    if (repositorioCaracteristicas == null) {
-      repositorioCaracteristicas = new RepositorioCaracteristicas();
-    }
     return repositorioCaracteristicas;
   }
 

@@ -7,8 +7,9 @@ public class Caracteristica {
   private String nombreCaracteristica;
   private String valorCaracteristica;
 
-  public Caracteristica(String nombreCaracteristica, String valorCaracteristica) {
-    RepositorioCaracteristicas.getInstance().validarCaracteristica(nombreCaracteristica, valorCaracteristica);
+  public Caracteristica(String nombreCaracteristica, String valorCaracteristica,
+                        RepositorioCaracteristicas repositorioCaracteristicas) {
+    repositorioCaracteristicas.validarCaracteristica(nombreCaracteristica, valorCaracteristica);
     this.nombreCaracteristica = nombreCaracteristica;
     this.valorCaracteristica = valorCaracteristica;
   }

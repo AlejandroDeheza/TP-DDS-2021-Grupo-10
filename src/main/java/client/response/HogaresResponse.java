@@ -2,7 +2,7 @@ package client.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import modelo.hogares.Hogar;
+import client.hogares.Hogar;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,5 +1,5 @@
 package servicio.notificacion;
 
-public interface NotificacionSender {
+public interface Notificador {
     void enviarNotificacion(Notificacion notificacion);
 }

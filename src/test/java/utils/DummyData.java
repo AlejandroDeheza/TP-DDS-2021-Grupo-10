@@ -1,10 +1,8 @@
 package utils;
 
-import modelo.mascota.Animal;
-import modelo.mascota.Foto;
-import modelo.mascota.Mascota;
-import modelo.mascota.MascotaBuilder;
-import modelo.mascota.Sexo;
+import modelo.informe.InformeMascotaSinDuenio;
+import modelo.informe.Ubicacion;
+import modelo.mascota.*;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 import modelo.persona.DatosDeContacto;
@@ -15,6 +13,8 @@ import modelo.publicacion.Publicacion;
 import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioCaracteristicas;
+import repositorios.RepositorioInformes;
+import servicio.notificacion.Notificador;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -75,10 +75,12 @@ public class DummyData {
     return new CaracteristicaConValoresPosibles("Comportamiento", Arrays.asList("Bueno", "Malo"));
   }
 
-  public static List<Caracteristica> getDummyListaCaracteristicasParaMascota() {
-    RepositorioCaracteristicas.getInstance()
-        .agregarCaracteristica(getDummyCaracteristicaParaAdmin());
-    Caracteristica caracteristica = new Caracteristica("Comportamiento", "Bueno");
+  public static List<Caracteristica> getDummyListaCaracteristicasParaMascota(
+      RepositorioCaracteristicas repositorioCaracteristicas) {
+    repositorioCaracteristicas.agregarCaracteristica(getDummyCaracteristicaParaAdmin());
+    Caracteristica caracteristica = new Caracteristica(
+        "Comportamiento", "Bueno", repositorioCaracteristicas
+    );
     List<Caracteristica> listaCaracteristica = new ArrayList<>();
     listaCaracteristica.add(caracteristica);
     return listaCaracteristica;
@@ -91,20 +93,30 @@ public class DummyData {
     return fotosMascota;
   }
 
-  public static Mascota getDummyMascota() {
-    return MascotaBuilder.crearBuilder().conAnimal(Animal.PERRO).conNombre("Negrito")
-        .conApodo("PerroApodo").conFechaNacimiento(LocalDate.of(2018, 3, 4)).conSexo(Sexo.MACHO)
-        .conDescripcionFisica("El firulais mismo")
-        .conCaracteristicas(getDummyListaCaracteristicasParaMascota())
-        .conFotos(getDummyFotosMascota()).build();
+  public static MascotaEncontrada getDummyMascotaEncontrada(RepositorioCaracteristicas RepositorioCaracteristicas, List<Foto> fotos) {
+    return new MascotaEncontrada(Animal.PERRO, Sexo.MACHO, "Pelo largo", getDummyListaCaracteristicasParaMascota(RepositorioCaracteristicas), fotos, "Limpio y Sano", getDummyContexto(), TamanioMascota.CHICA);
+
+  }
+
+  public static MascotaRegistrada getDummyMascotaRegistrada(RepositorioCaracteristicas RepositorioCaracteristicas) {
+    return new MascotaRegistrada(Animal.PERRO, Sexo.MACHO, "Pelo largo", getDummyListaCaracteristicasParaMascota(RepositorioCaracteristicas), getDummyFotosMascota(), "Felipe","Panchito",LocalDate.of(2018, 3, 4));
+
   }
 
   public static Usuario getDummyUsuarioVoluntario() {
     return new Usuario("Admin", "Password1234", TipoUsuario.VOLUNTARIO, getDummyPersona());
   }
 
-  public static Publicacion getDummyPublicacion() {
-    return new Publicacion(getDummyDatosDeContacto(), getDummyFotosMascota());
+  public static Publicacion getDummyPublicacion(Notificador notificacionCorreo) {
+    return new Publicacion(getDummyDatosDeContacto(), getDummyFotosMascota(), notificacionCorreo);
+  }
+
+  public static Contexto getDummyContexto(){
+    return new Contexto(LocalDate.now(), getDummyUbicacion());
+  }
+
+  public static Ubicacion getDummyUbicacion(){
+    return new Ubicacion(27.23, 25.78);
   }
 
 }

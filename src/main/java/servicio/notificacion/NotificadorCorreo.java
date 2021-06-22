@@ -6,10 +6,9 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class NotificacionCorreo implements NotificacionSender {
+public class NotificadorCorreo implements Notificador {
 
   Session session = configurarConexionCorreo();
 
@@ -23,9 +22,13 @@ public class NotificacionCorreo implements NotificacionSender {
     return t;
   });
 
-  public NotificacionCorreo(Function<Session, Transport> funcion) {
-    if (funcion != null) this.funcion = funcion;
+  // solo para tests
+  public NotificadorCorreo(Function<Session, Transport> funcion) {
+    this.funcion = funcion;
   }
+
+  // para codigo productivo
+  public NotificadorCorreo(){}
 
   @Override
   public void enviarNotificacion(Notificacion notificacion) {
@@ -70,7 +73,5 @@ public class NotificacionCorreo implements NotificacionSender {
     }
     return message;
   }
-
-
 
 }

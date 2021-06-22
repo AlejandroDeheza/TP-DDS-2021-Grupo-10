@@ -2,6 +2,7 @@ package modelo.usuario;
 
 import excepciones.MascotaYaRegistradaException;
 import modelo.mascota.Mascota;
+import modelo.persona.Persona;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -25,9 +26,24 @@ public class UsuarioTest {
     repositorioCaracteristicas.agregarCaracteristica(DummyData.getDummyCaracteristicaParaAdmin());
 
     Usuario usuario = DummyData.getDummyUsuario();
-    Mascota mascota = DummyData.getDummyMascota();
+    Mascota mascota = DummyData.getDummyMascotaRegistrada(new RepositorioCaracteristicas());
     usuario.agregarMascota(mascota);
     assertThrows(MascotaYaRegistradaException.class, () -> usuario.agregarMascota(mascota));
   }
 
+  @Test
+  @DisplayName("Se puede generar una persona Voluntaria")
+  public void usuarioVoluntarioTest(){
+    Usuario usuarioVoluntario = generarVoluntario();
+    assertEquals(usuarioVoluntario.getTipo(), TipoUsuario.VOLUNTARIO);
+  }
+
+  public Usuario generarVoluntario(){
+    Persona personaVoluntaria = DummyData.getDummyPersona();
+    Usuario usuarioVoluntario = new Usuario("User Voluntario", "Password1159Hard", TipoUsuario.VOLUNTARIO, personaVoluntaria);
+    return usuarioVoluntario;
+  }
+
 }
+
+

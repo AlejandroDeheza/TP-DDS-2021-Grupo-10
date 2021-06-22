@@ -8,22 +8,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class RepositorioInformes {
-
-  private static RepositorioInformes repositorioInformes;
+  private static RepositorioInformes repositorioInformes = new RepositorioInformes();
   private List<InformeMascotaEncontrada> informesPendientes = new ArrayList<>();
   private List<InformeMascotaEncontrada> informesProcesados = new ArrayList<>();
-
-  //usamos el constructor solo para tests
-  public RepositorioInformes() {
-  }
-
-  //usamos el getInstance en el codigo de produccion
-  public static RepositorioInformes getInstance() {
-    if (repositorioInformes == null) {
-      repositorioInformes = new RepositorioInformes();
-    }
-    return repositorioInformes;
-  }
 
   public void agregarInformeMascotaEncontrada(InformeMascotaEncontrada informe) {
     informesPendientes.add(informe);
@@ -32,13 +19,21 @@ public class RepositorioInformes {
   public List<InformeMascotaEncontrada> listarMascotasEncontradasEnUltimosNDias(Integer diasPreviosABuscar) {
     LocalDate fechaFiltro = LocalDate.now().minusDays(diasPreviosABuscar);
     return informesPendientes.stream()
-        .filter(informe -> informe.getFechaEncuentro().isAfter(fechaFiltro))
+        .filter(informe -> informe.getFechaEncuentro().isAfter(fechaFiltro)) //Podria ser tambien informe.mascotaEncontrada.contexto.getFechaEncuentro()
         .collect(Collectors.toList());
   }
 
-  public void procesarInforme(InformeMascotaEncontrada informeAProcesar) {
+  public void marcarInformeComoProcesado(InformeMascotaEncontrada informeAProcesar) {
     this.informesPendientes.remove(informeAProcesar);
     this.informesProcesados.add(informeAProcesar);
+  }
+
+
+  //usamos el constructor solo para tests
+  public RepositorioInformes() {}
+  //usamos el getInstance en el codigo de produccion
+  public static RepositorioInformes getInstance() {
+    return repositorioInformes;
   }
 
   public List<InformeMascotaEncontrada> getInformesPendientes() {
