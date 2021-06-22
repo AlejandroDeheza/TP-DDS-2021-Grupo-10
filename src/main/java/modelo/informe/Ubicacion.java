@@ -23,7 +23,6 @@ public class Ubicacion {
 
   }
 
-
   public Double getLatitud() {
     return latitud;
   }
@@ -32,19 +31,8 @@ public class Ubicacion {
     return longitud;
   }
 
-  public void setLatitud(Double latitud) {
-    this.latitud = latitud;
-  }
-
-  public void setLongitud(Double longitud) {
-    this.longitud = longitud;
-  }
-
   public String getDireccion() {
     return direccion;
   }
 
-  public void setDireccion(String direccion) {
-    this.direccion = direccion;
-  }
 }
