@@ -14,14 +14,32 @@ import utils.DummyData;
 public class UsuarioTest {
 
   @Test
-  @DisplayName("si se crea un usuario valido, no se genera ningun problema")
+  @DisplayName("Si se crea un usuario valido, no se genera ningun problema")
   public void usuarioValidoTest() {
     assertDoesNotThrow(DummyData::getDummyUsuario);
   }
 
   @Test
-  @DisplayName("si un Usuario intenta registrar a la misma mascota 2 veces, se genera MascotaYaRegistradaException")
-  public void DuenioMascotaMascotaRegistradaExceptionTest() {
+  @DisplayName("Si un Usuario intenta registrar una mascota que no existe no da error")
+  public void usuarioAgregaMascota() {
+    Usuario usuario =  DummyData.getDummyUsuario();
+    Mascota mascota = DummyData.getDummyMascota();
+    assertDoesNotThrow(()-> usuario.agregarMascota(mascota));
+  }
+
+  @Test
+  @DisplayName("Si un Usuario elimina un mascota no da error")
+  public void usuarioEliminarMascotaAgregadaNoDaError() {
+    Usuario usuario =  DummyData.getDummyUsuario();
+    Mascota mascota = DummyData.getDummyMascota();
+    usuario.agregarMascota(mascota);
+    assertDoesNotThrow(()-> usuario.eliminarMascota(mascota));
+  }
+  //TODO: creo que faltaria un getter a listaMAscotas
+
+  @Test
+  @DisplayName("Si un Usuario intenta registrar a la misma mascota 2 veces, se genera MascotaYaRegistradaException")
+  public void duenioMascotaMascotaRegistradaExceptionTest() {
     RepositorioCaracteristicas repositorioCaracteristicas = new RepositorioCaracteristicas();
     repositorioCaracteristicas.agregarCaracteristica(DummyData.getDummyCaracteristicaParaAdmin());
 
