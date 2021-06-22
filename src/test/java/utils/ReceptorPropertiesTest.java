@@ -3,21 +3,22 @@ package repositorios;
 import excepciones.RepositorioPropertiesException;
 
 import org.junit.jupiter.api.Test;
+import util.ReceptorProperties;
 
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class RepositorioPropertiesTest {
+public class ReceptorPropertiesTest {
   String pathTest = "src/test/resources/app.properties";
 
   @Test
   public void cargarPropertiesValido(){
-    assertDoesNotThrow(()-> new RepositorioProperties(pathTest));
+    assertDoesNotThrow(()-> new ReceptorProperties(pathTest));
   }
 
 
   @Test
   public void noSePuedecargarPropertiesValido(){
-    assertThrows(RepositorioPropertiesException.class,()->new RepositorioProperties("llaal"));
+    assertThrows(RepositorioPropertiesException.class, ()-> new ReceptorProperties("llaal").getProperties());
   }
 }

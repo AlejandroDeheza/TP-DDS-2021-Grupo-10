@@ -49,10 +49,10 @@ public class InformeConQR extends Informe {
         notificador.enviarNotificacion(
             new Notificacion(
                 mascotaRegistrada.getDuenio().getPersona().getDatosDeContacto(),
+                properties.getProperty("asunto_InformeMasctoaConDuenio"),
                 mascotaRegistrada.getDuenio().getPersona().getNombre(),
                 properties.getProperty("cuerpoMensaje_InformeMasctoaConDuenio"),
-                properties.getProperty("saludo"),
-                properties.getProperty("asunto_InformeMasctoaConDuenio")
+                properties.getProperty("saludo")
             )
         );
     }

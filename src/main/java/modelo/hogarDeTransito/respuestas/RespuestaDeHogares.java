@@ -1,23 +1,19 @@
-package client.response;
+package modelo.hogarDeTransito.respuestas;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import client.hogares.Hogar;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class HogaresResponse {
+public class RespuestaDeHogares {
 
     @JsonProperty("hogares")
-    private List<Hogar> hogares = new ArrayList<>();
+    private List<RespuestaDeHogar> hogares = new ArrayList<>();
 
-    public List<Hogar> getHogares() {
+    public List<RespuestaDeHogar> getHogares() {
         return hogares;
     }
 
-    public void setHogares(List<Hogar> hogares) {
-        this.hogares = hogares;
-    }
 }

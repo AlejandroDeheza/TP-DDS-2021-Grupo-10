@@ -9,7 +9,7 @@ import modelo.publicacion.Publicacion;
 import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioCaracteristicas;
-import servicio.notificacion.Notificador;
+import modelo.notificacion.Notificador;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -31,30 +31,23 @@ public class DummyData {
   }
 
   public static Persona getDummyPersona() {
-    return PersonaBuilder.crearBuilder().conNombre("PersonaNombre").conApellido("PersonaApellido")
-        .conDocumentoIdentidad(getDummyDocumentoIdentidad())
-        .conDatosDeContacto(getDummyDatosDeContacto()).conFechaNacimiento(LocalDate.of(1995, 8, 7))
-        .build();
+    return new Persona("PersonaNombre", "PersonaApellido", getDummyDocumentoIdentidad(),
+        getDummyDatosDeContacto(), LocalDate.of(1995, 8, 7));
   }
 
   public static Persona getDummyPersonaSinDatosDeContacto() {
-    return PersonaBuilder.crearBuilder().conNombre("PersonaNombre").conApellido("PersonaApellido")
-        .conDocumentoIdentidad(getDummyDocumentoIdentidad())
-        .conDatosDeContacto(null).conFechaNacimiento(LocalDate.of(1995, 8, 7)).build();
+    return new Persona("PersonaNombre", "PersonaApellido", getDummyDocumentoIdentidad(),
+        null, LocalDate.of(1995, 8, 7));
   }
 
   public static Persona getDummyPersonaSinDatosDeContactoNiNombreNiApellido() {
-    return PersonaBuilder.crearBuilder().conNombre(null).conApellido(null)
-        .conDocumentoIdentidad(getDummyDocumentoIdentidad())
-        .conDatosDeContacto(new DatosDeContacto(null, null))
-        .conFechaNacimiento(LocalDate.of(1995, 8, 7)).build();
+    return new Persona(null, null, getDummyDocumentoIdentidad(),
+        new DatosDeContacto(null, null), LocalDate.of(1995, 8, 7));
   }
 
   public static Persona getDummyPersonaSinCorreoAsociadoEnDatosDeContacto() {
-    return PersonaBuilder.crearBuilder().conNombre("PersonaNombre").conApellido("PersonaApellido")
-        .conDocumentoIdentidad(getDummyDocumentoIdentidad())
-        .conDatosDeContacto(getDummyDatosDeContactoSinCorreoAsociado())
-        .conFechaNacimiento(LocalDate.of(1995, 8, 7)).build();
+    return new Persona("PersonaNombre", "PersonaApellido", getDummyDocumentoIdentidad(),
+        getDummyDatosDeContactoSinCorreoAsociado(), LocalDate.of(1995, 8, 7));
   }
 
   public static Usuario getDummyUsuario() {
@@ -93,14 +86,14 @@ public class DummyData {
   }
 
   public static MascotaEncontrada getDummyMascotaEncontrada(RepositorioCaracteristicas RepositorioCaracteristicas, List<Foto> fotos) {
-    return new MascotaEncontrada("Limpio y Sano", getDummyContexto(), fotos, TamanioMascota.CHICA);
+    return new MascotaEncontrada("Limpio y Sano", getDummyContexto(), fotos, TamanioMascota.CHICO);
 
   }
 
   public static MascotaRegistrada getDummyMascotaRegistrada(RepositorioCaracteristicas RepositorioCaracteristicas) {
     return new MascotaRegistrada(getDummyUsuario(),"Felipe","Panchito", LocalDate.of(2018, 3, 4),
         "Pelo largo", Sexo.MACHO, Animal.PERRO, getDummyListaCaracteristicasParaMascota(RepositorioCaracteristicas),
-        getDummyFotosMascota(), TamanioMascota.CHICA);
+        getDummyFotosMascota(), TamanioMascota.CHICO);
 
   }
 
@@ -109,7 +102,8 @@ public class DummyData {
   }
 
   public static Publicacion getDummyPublicacion(Notificador notificacionCorreo) {
-    return new Publicacion(getDummyDatosDeContacto(), getDummyFotosMascota(), notificacionCorreo);
+    return new Publicacion(getDummyMascotaEncontrada(new RepositorioCaracteristicas(), getDummyFotosMascota()),
+        getDummyDatosDeContacto(), notificacionCorreo);
   }
 
   public static Contexto getDummyContexto(){

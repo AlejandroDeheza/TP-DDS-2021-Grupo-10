@@ -1,9 +1,10 @@
-package modelo.hogares;
+package modelo.hogarDeTransito;
 
-import client.hogares.Admision;
-import client.hogares.Hogar;
+import modelo.hogarDeTransito.respuestas.RespuestaDeAdmision;
+import modelo.hogarDeTransito.respuestas.RespuestaDeHogar;
 import modelo.informe.Ubicacion;
 import modelo.mascota.Animal;
+import modelo.mascota.TamanioMascota;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,15 +18,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class HogarTest {
+public class RespuestaDeHogarTest {
   Ubicacion ubicacionEncuentro,ubicacionHogar;
-  Hogar hogar = new Hogar();
+  RespuestaDeHogar respuestaDeHogar = new RespuestaDeHogar();
   CaracteristicaConValoresPosibles caracteristicasPosiblesTamanio;
   CaracteristicaConValoresPosibles caracteristicasPosiblesComportamiento;
-  Caracteristica caracteristicaTamanio;
+  TamanioMascota tamanioMascota;
   Caracteristica caracteristicaComportamiento;
   List<Caracteristica> listaCaracteristica = new ArrayList<>();
-  Admision admision;
+  RespuestaDeAdmision respuestaDeAdmision;
   RepositorioCaracteristicas repositorioCaracteristicas=new RepositorioCaracteristicas();
 
   @BeforeEach
@@ -36,11 +37,11 @@ public class HogarTest {
     caracteristicasPosiblesComportamiento = new CaracteristicaConValoresPosibles("Comportamiento", Arrays.asList("Inquieto", "Tranquilo"));
     repositorioCaracteristicas.agregarCaracteristica(caracteristicasPosiblesTamanio);
     repositorioCaracteristicas.agregarCaracteristica(caracteristicasPosiblesComportamiento);
-    caracteristicaTamanio = new Caracteristica("tamaño", "pequeño",repositorioCaracteristicas);
+    tamanioMascota = TamanioMascota.CHICO;
     caracteristicaComportamiento = new Caracteristica("Comportamiento", "Inquieto",repositorioCaracteristicas);
-    admision = new Admision();
-    admision.setAceptaGato(true);
-    admision.setAceptaPerro(true);
+    respuestaDeAdmision = new RespuestaDeAdmision();
+    respuestaDeAdmision.setAceptaGato(true);
+    respuestaDeAdmision.setAceptaPerro(true);
   }
 
   @Test
@@ -49,16 +50,15 @@ public class HogarTest {
     Integer radioCercania = 1000;
     Animal animal = Animal.PERRO;
 
-    listaCaracteristica.add(caracteristicaTamanio);
     listaCaracteristica.add(caracteristicaComportamiento);
-    hogar.setCapacidad(2);
-    hogar.setLugaresDisponibles(2);
-    hogar.setCaracteristicas(convertirListaCaracteristicasAListaStrings(listaCaracteristica));
-    hogar.setAdmisiones(admision);
-    hogar.setUbicacion(ubicacionHogar);
-    hogar.setTienePatio(false);
+    respuestaDeHogar.setCapacidad(2);
+    respuestaDeHogar.setLugaresDisponibles(2);
+    respuestaDeHogar.setCaracteristicas(convertirListaCaracteristicasAListaStrings(listaCaracteristica));
+    respuestaDeHogar.setAdmisiones(respuestaDeAdmision);
+    respuestaDeHogar.setUbicacion(ubicacionHogar);
+    respuestaDeHogar.setTienePatio(false);
 
-    assertTrue(hogar.esPosibleHogarDeTransito(ubicacionEncuentro, radioCercania,animal,listaCaracteristica));
+    assertTrue(respuestaDeHogar.estaDisponible(ubicacionEncuentro, radioCercania, animal, tamanioMascota, listaCaracteristica));
 
   }
 
@@ -69,16 +69,15 @@ public class HogarTest {
     Integer radioCercania = 1;
     Animal animal = Animal.PERRO;
 
-    listaCaracteristica.add(caracteristicaTamanio);
     listaCaracteristica.add(caracteristicaComportamiento);
-    hogar.setCapacidad(2);
-    hogar.setLugaresDisponibles(2);
-    hogar.setCaracteristicas(convertirListaCaracteristicasAListaStrings(listaCaracteristica));
-    hogar.setAdmisiones(admision);
-    hogar.setUbicacion(ubicacionHogar);
-    hogar.setTienePatio(false);
+    respuestaDeHogar.setCapacidad(2);
+    respuestaDeHogar.setLugaresDisponibles(2);
+    respuestaDeHogar.setCaracteristicas(convertirListaCaracteristicasAListaStrings(listaCaracteristica));
+    respuestaDeHogar.setAdmisiones(respuestaDeAdmision);
+    respuestaDeHogar.setUbicacion(ubicacionHogar);
+    respuestaDeHogar.setTienePatio(false);
 
-    assertFalse(hogar.esPosibleHogarDeTransito(ubicacionEncuentro, radioCercania,animal,listaCaracteristica));
+    assertFalse(respuestaDeHogar.estaDisponible(ubicacionEncuentro, radioCercania, animal, tamanioMascota, listaCaracteristica));
 
   }
 

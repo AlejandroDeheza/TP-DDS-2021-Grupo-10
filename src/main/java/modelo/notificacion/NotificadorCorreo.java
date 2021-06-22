@@ -22,16 +22,16 @@ public class NotificadorCorreo implements Notificador {
     return t;
   });
 
+  // el notificador, en codigo de produccion, lo inyectamos por constructor
   // solo para tests
   public NotificadorCorreo(Function<Session, Transport> funcion) {
     this.funcion = funcion;
   }
-
-  // para codigo productivo
+  // para Main
   public NotificadorCorreo(){}
 
   @Override
-  public void enviarNotificacion(Notificacion notificacion) {
+  public void notificar(Notificacion notificacion) {
     MimeMessage mensaje = this.crearMensaje(notificacion);
     this.enviarMensaje(mensaje, funcion.apply(session));
   }
@@ -46,7 +46,7 @@ public class NotificadorCorreo implements Notificador {
     Session session = Session.getDefaultInstance(props);
     //session.setDebug(true);
     session.setDebug(false);
-    return  session;
+    return session;
   }
 
   private void enviarMensaje(MimeMessage mensaje, Transport t){
@@ -65,7 +65,6 @@ public class NotificadorCorreo implements Notificador {
     try {
       message.setFrom(new InternetAddress(email));
       message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
-
       message.setSubject(notificacion.getAsunto());
       message.setText(notificacion.getMensajeBody(), "UTF-8", "html");
     } catch (MessagingException e) {

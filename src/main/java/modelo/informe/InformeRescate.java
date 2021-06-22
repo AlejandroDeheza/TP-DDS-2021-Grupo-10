@@ -31,10 +31,6 @@ public abstract class Informe {
     this.receptorHogares = receptorHogares;
   }
 
-  public void procesarInforme(){
-    repositorioInformes.marcarInformeComoProcesado(this);
-  }
-
   public List<Hogar> getHogaresCercanos(Integer radioCercania, Animal tipoAnimal,
                                         List<Caracteristica> caracteristicas) {
     return receptorHogares.getHogaresDisponibles(
@@ -43,6 +39,10 @@ public abstract class Informe {
         tipoAnimal,
         caracteristicas
     );
+  }
+
+  public void procesarInforme(){
+    repositorioInformes.marcarInformeComoProcesado(this);
   }
 
   public MascotaEncontrada getMascotaEncontrada() {

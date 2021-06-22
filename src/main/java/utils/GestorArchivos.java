@@ -1,4 +1,4 @@
-package servicios.validacionUsuario.impl;
+package util;
 
 import excepciones.ArchivoException;
 

@@ -1,4 +1,4 @@
-package servicios.validacionUsuario.impl;
+package util;
 
 import excepciones.ContraseniaInvalidaException;
 import modelo.usuario.Usuario;
