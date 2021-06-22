@@ -5,10 +5,7 @@ import modelo.informe.Ubicacion;
 import modelo.mascota.*;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
-import modelo.persona.DatosDeContacto;
-import modelo.persona.Persona;
-import modelo.persona.PersonaBuilder;
-import modelo.persona.TipoDocumento;
+import modelo.persona.*;
 import modelo.publicacion.Publicacion;
 import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
@@ -31,29 +28,33 @@ public class DummyData {
     return new DatosDeContacto("01147474747", null);
   }
 
+  public static DocumentoIdentidad getDummyDocumentoIdentidad() {
+    return new DocumentoIdentidad(TipoDocumento.DNI, "11111111");
+  }
+
   public static Persona getDummyPersona() {
     return PersonaBuilder.crearBuilder().conNombre("PersonaNombre").conApellido("PersonaApellido")
-        .conTipoDocumento(TipoDocumento.DNI).conNumeroDeDocumento("11111111")
+        .conDocumentoIdentidad(getDummyDocumentoIdentidad())
         .conDatosDeContacto(getDummyDatosDeContacto()).conFechaNacimiento(LocalDate.of(1995, 8, 7))
         .build();
   }
 
   public static Persona getDummyPersonaSinDatosDeContacto() {
     return PersonaBuilder.crearBuilder().conNombre("PersonaNombre").conApellido("PersonaApellido")
-        .conTipoDocumento(TipoDocumento.DNI).conNumeroDeDocumento("11111111")
+        .conDocumentoIdentidad(getDummyDocumentoIdentidad())
         .conDatosDeContacto(null).conFechaNacimiento(LocalDate.of(1995, 8, 7)).build();
   }
 
   public static Persona getDummyPersonaSinDatosDeContactoNiNombreNiApellido() {
     return PersonaBuilder.crearBuilder().conNombre(null).conApellido(null)
-        .conTipoDocumento(TipoDocumento.DNI).conNumeroDeDocumento("11111111")
+        .conDocumentoIdentidad(getDummyDocumentoIdentidad())
         .conDatosDeContacto(new DatosDeContacto(null, null))
         .conFechaNacimiento(LocalDate.of(1995, 8, 7)).build();
   }
 
   public static Persona getDummyPersonaSinCorreoAsociadoEnDatosDeContacto() {
     return PersonaBuilder.crearBuilder().conNombre("PersonaNombre").conApellido("PersonaApellido")
-        .conTipoDocumento(TipoDocumento.DNI).conNumeroDeDocumento("11111111")
+        .conDocumentoIdentidad(getDummyDocumentoIdentidad())
         .conDatosDeContacto(getDummyDatosDeContactoSinCorreoAsociado())
         .conFechaNacimiento(LocalDate.of(1995, 8, 7)).build();
   }
