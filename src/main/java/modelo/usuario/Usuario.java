@@ -1,13 +1,8 @@
 package modelo.usuario;
 
-import excepciones.MascotaYaRegistradaException;
-import modelo.mascota.Mascota;
 import modelo.persona.Persona;
 import servicios.validacionUsuario.impl.ValidadorAutenticacion;
 import servicios.validacionUsuario.impl.ValidadorContrasenias;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Usuario {
 
@@ -15,7 +10,6 @@ public class Usuario {
   private String contrasenia;
   private TipoUsuario tipo;
   private Persona persona;
-  private List<Mascota> listaMascotas = new ArrayList<>();
   private ValidadorAutenticacion validadorAutenticacion;
 
   public Usuario(String usuario, String contrasenia, TipoUsuario tipo, Persona persona) {
@@ -30,21 +24,6 @@ public class Usuario {
   public void autenticarUsuario(String contraseniaIngresada) {
     validadorAutenticacion.autenticarUsuario(contraseniaIngresada);
   }
-
-  public void agregarMascota(Mascota mascota) {
-    validarExistenciaMascota(mascota);
-    this.listaMascotas.add(mascota);
-  }
-
-  private void validarExistenciaMascota(Mascota mascota) {
-    if (this.listaMascotas.contains(mascota))
-      throw new MascotaYaRegistradaException("Ya tiene registrada la mascota");
-  }
-
-  public void eliminarMascota(Mascota mascota) {
-    this.listaMascotas.remove(mascota);
-  }
-
 
   public String getUsuario() {
     return usuario;

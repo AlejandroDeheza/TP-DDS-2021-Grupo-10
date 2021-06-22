@@ -95,12 +95,14 @@ public class DummyData {
   }
 
   public static MascotaEncontrada getDummyMascotaEncontrada(RepositorioCaracteristicas RepositorioCaracteristicas, List<Foto> fotos) {
-    return new MascotaEncontrada(Animal.PERRO, Sexo.MACHO, "Pelo largo", getDummyListaCaracteristicasParaMascota(RepositorioCaracteristicas), fotos, "Limpio y Sano", getDummyContexto(), TamanioMascota.CHICA);
+    return new MascotaEncontrada("Limpio y Sano", getDummyContexto(), fotos, TamanioMascota.CHICA);
 
   }
 
   public static MascotaRegistrada getDummyMascotaRegistrada(RepositorioCaracteristicas RepositorioCaracteristicas) {
-    return new MascotaRegistrada(Animal.PERRO, Sexo.MACHO, "Pelo largo", getDummyListaCaracteristicasParaMascota(RepositorioCaracteristicas), getDummyFotosMascota(), "Felipe","Panchito",LocalDate.of(2018, 3, 4));
+    return new MascotaRegistrada("Felipe","Panchito", LocalDate.of(2018, 3, 4),
+        "Pelo largo", Sexo.MACHO, Animal.PERRO, getDummyListaCaracteristicasParaMascota(RepositorioCaracteristicas),
+        getDummyFotosMascota(), TamanioMascota.CHICA);
 
   }
 

@@ -3,7 +3,9 @@ package modelo.informe;
 import client.ObtenerHogaresClient;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import client.hogares.Hogar;
+import modelo.mascota.Animal;
 import modelo.mascota.MascotaEncontrada;
+import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.Persona;
 import modelo.publicacion.Publicacion;
 import repositorios.RepositorioInformes;
@@ -18,6 +20,8 @@ public class InformeMascotaSinDuenio extends InformeMascotaEncontrada {
     private ObtenerHogaresClient hogaresClient = new ObtenerHogaresClient();
     private RepositorioPublicaciones repositorioPublicaciones;
     private NotificadorCorreo notificadorCorreo;
+    private Animal tipoAnimal;
+    private List<Caracteristica> caracteristicas;
 
     public InformeMascotaSinDuenio(Persona rescatista, Ubicacion direccion, MascotaEncontrada mascota,
                                    RepositorioInformes repositorioInformes, ObtenerHogaresClient hogaresClient,
@@ -37,7 +41,7 @@ public class InformeMascotaSinDuenio extends InformeMascotaEncontrada {
 
     public List<Hogar> getHogaresTransitorios(Integer radioCercania) throws JsonProcessingException{
         List<Hogar> hogares = this.hogaresClient.obtenerTodosLosHogares();                                      //Cambie estadoActual por Caractesitsicas
-        return hogares.stream().filter( hogar -> hogar.esPosibleHogarDeTransito(radioCercania,mascota.getAnimal(),mascota.getCaracteristicas(),this.getDireccion())).collect(Collectors.toList());
+        return hogares.stream().filter( hogar -> hogar.esPosibleHogarDeTransito(radioCercania, tipoAnimal, caracteristicas,this.getDireccion())).collect(Collectors.toList());
     }
 
 

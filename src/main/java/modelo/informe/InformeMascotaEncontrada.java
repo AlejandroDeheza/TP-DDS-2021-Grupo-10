@@ -27,13 +27,7 @@ public abstract class  InformeMascotaEncontrada {
   }
 
   public void procesarInforme(){
-    validarListaFotos();
     repositorioInformes.agregarInformeMascotaEncontrada(this);
-  }
-
-  private void validarListaFotos() {
-    if (mascota.tieneFotos())
-      throw new InformeMascotaEncontradaInvalidaException("Se debe ingresar al menos 1 Foto de la mascota encontrada");
   }
 
   public Persona getRescatista() {

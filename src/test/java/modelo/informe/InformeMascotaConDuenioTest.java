@@ -1,6 +1,6 @@
 package modelo.informe;
 
-import excepciones.InformeMascotaEncontradaInvalidaException;
+import excepciones.FotosMascotaException;
 import modelo.mascota.*;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.Persona;
@@ -34,11 +34,9 @@ public class InformeMascotaConDuenioTest {
   List<Foto> fotosMascota = DummyData.getDummyFotosMascota();
   List<Foto> fotosMascotaVacio = new ArrayList<>();
   InformeMascotaConDuenio informeConFoto;
-  InformeMascotaConDuenio informeSinFoto;
   NotificadorCorreo notificadorCorreoMockeado;
   Transport transportMockeado;
   MascotaEncontrada mascotaEncontradaConFotos = DummyData.getDummyMascotaEncontrada(new RepositorioCaracteristicas(), fotosMascota);
-  MascotaEncontrada mascotaEncontradaSinFotos = DummyData.getDummyMascotaEncontrada(new RepositorioCaracteristicas(), fotosMascotaVacio);
 
 
   @BeforeEach
@@ -46,17 +44,14 @@ public class InformeMascotaConDuenioTest {
     repositorioInformes = new RepositorioInformes();
     transportMockeado = mock(Transport.class);
     notificadorCorreoMockeado = new NotificadorCorreo(sesion -> transportMockeado);
-
-    informeSinFoto = generarInformeMascotaEncontrada(notificadorCorreoMockeado, mascotaEncontradaSinFotos);
     informeConFoto = generarInformeMascotaEncontrada(notificadorCorreoMockeado, mascotaEncontradaConFotos);
   }
 
 
   @Test
-  @DisplayName("si se genera un InformeMascotaEncontrada sin fotos, se genera " +
-      "InformeMascotaEncontradaInvalidaException")
+  @DisplayName("si se genera una MascotaEncontrada sin fotos, se genera FotosMascotaException")
   public void InformeMascotaEncontradaInvalidaExceptionTest() {
-    assertThrows(InformeMascotaEncontradaInvalidaException.class, () -> informeSinFoto.procesarInforme());
+    assertThrows(FotosMascotaException.class, () -> DummyData.getDummyMascotaEncontrada(new RepositorioCaracteristicas(), fotosMascotaVacio));
   }
 
   @Test
