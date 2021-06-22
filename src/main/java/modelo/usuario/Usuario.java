@@ -1,8 +1,6 @@
 package modelo.usuario;
 
 import modelo.persona.Persona;
-import servicios.validacionUsuario.impl.ValidadorAutenticacion;
-import servicios.validacionUsuario.impl.ValidadorContrasenias;
 
 public class Usuario {
 

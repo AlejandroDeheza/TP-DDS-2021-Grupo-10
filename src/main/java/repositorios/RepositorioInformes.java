@@ -1,6 +1,6 @@
 package repositorios;
 
-import modelo.informe.Informe;
+import modelo.informe.InformeRescate;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -9,38 +9,39 @@ import java.util.stream.Collectors;
 
 public class RepositorioInformes {
   private static RepositorioInformes repositorioInformes = new RepositorioInformes();
-  private List<Informe> informesPendientes = new ArrayList<>();
-  private List<Informe> informesProcesados = new ArrayList<>();
+  private List<InformeRescate> informesPendientes = new ArrayList<>();
+  private List<InformeRescate> informesProcesados = new ArrayList<>();
 
-  public void agregarInformeMascotaEncontrada(Informe informe) {
+  public void agregarInformeRescate(InformeRescate informe) {
     informesPendientes.add(informe);
   }
 
-  public List<Informe> listarMascotasEncontradasEnUltimosNDias(Integer diasPreviosABuscar) {
+  public List<InformeRescate> informesDeUltimosNDias(Integer diasPreviosABuscar) {
     LocalDate fechaFiltro = LocalDate.now().minusDays(diasPreviosABuscar);
     return informesPendientes.stream()
         .filter(informe -> informe.getFechaEncuentro().isAfter(fechaFiltro))
         .collect(Collectors.toList());
   }
 
-  public void marcarInformeComoProcesado(Informe informeAProcesar) {
+  public void marcarInformeComoProcesado(InformeRescate informeAProcesar) {
     this.informesPendientes.remove(informeAProcesar);
     this.informesProcesados.add(informeAProcesar);
   }
 
 
+  //el repositorio, en codigo de produccion, lo inyectamos por constructor
   //usamos el constructor solo para tests
   public RepositorioInformes() {}
-  //usamos el getInstance en el codigo de produccion
+  //usamos el getInstance en Main
   public static RepositorioInformes getInstance() {
     return repositorioInformes;
   }
 
-  public List<Informe> getInformesPendientes() {
+  public List<InformeRescate> getInformesPendientes() {
     return informesPendientes;
   }
 
-  public List<Informe> getInformesProcesados() {
+  public List<InformeRescate> getInformesProcesados() {
     return informesProcesados;
   }
 

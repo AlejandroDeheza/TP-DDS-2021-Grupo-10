@@ -1,7 +1,7 @@
 package modelo.mascota;
 
 public enum TamanioMascota {
-  CHICA,
-  MEDIANA,
+  CHICO,
+  MEDIANO,
   GRANDE
 }

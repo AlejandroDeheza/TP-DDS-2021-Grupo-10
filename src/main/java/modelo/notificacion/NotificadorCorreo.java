@@ -1,4 +1,4 @@
-package servicio.notificacion;
+package modelo.notificacion;
 
 import excepciones.NotificacionCorreoException;
 

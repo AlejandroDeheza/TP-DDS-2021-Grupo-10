@@ -1,8 +1,8 @@
 package modelo.informe;
 
-import client.ReceptorHogares;
+import modelo.hogarDeTransito.Hogar;
+import modelo.hogarDeTransito.ReceptorHogares;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import client.hogares.Hogar;
 import modelo.mascota.Animal;
 import modelo.mascota.MascotaEncontrada;
 import modelo.mascota.caracteristica.Caracteristica;
@@ -10,11 +10,11 @@ import modelo.persona.Persona;
 import modelo.publicacion.Publicacion;
 import repositorios.RepositorioInformes;
 import repositorios.RepositorioPublicaciones;
-import servicio.notificacion.NotificadorCorreo;
+import modelo.notificacion.NotificadorCorreo;
 
 import java.util.List;
 
-public class InformeSinQR extends Informe {
+public class InformeSinQR extends InformeRescate {
 
     private Animal tipoAnimal;
     private List<Caracteristica> caracteristicas;
@@ -34,7 +34,11 @@ public class InformeSinQR extends Informe {
     }
 
     public List<Hogar> getHogaresCercanos(Integer radioCercania) throws JsonProcessingException{
-        return super.getHogaresCercanos(radioCercania, tipoAnimal, caracteristicas);
+        return super.getHogaresCercanos(
+            radioCercania,
+            tipoAnimal,
+            this.getMascotaEncontrada().getTamanio(),
+            caracteristicas);
     }
 
     @Override
@@ -46,8 +50,8 @@ public class InformeSinQR extends Informe {
     private void generarPublicacion() {
         repositorioPublicaciones.agregarPublicacion(
             new Publicacion(
+                this.getMascotaEncontrada(),
                 this.getRescatista().getDatosDeContacto(),
-                this.getMascotaEncontrada().getFotos(),
                 notificadorCorreo)
         );
     }

@@ -1,9 +1,10 @@
 package modelo.informe;
 
-import client.ReceptorHogares;
-import client.hogares.Hogar;
+import modelo.hogarDeTransito.Hogar;
+import modelo.hogarDeTransito.ReceptorHogares;
 import modelo.mascota.Animal;
 import modelo.mascota.MascotaEncontrada;
+import modelo.mascota.TamanioMascota;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.Persona;
 import repositorios.RepositorioInformes;
@@ -11,7 +12,7 @@ import repositorios.RepositorioInformes;
 import java.time.LocalDate;
 import java.util.List;
 
-public abstract class Informe {
+public abstract class InformeRescate {
 
   private Persona rescatista;
   private Ubicacion ubicacionRescatista;
@@ -20,9 +21,9 @@ public abstract class Informe {
   private RepositorioInformes repositorioInformes;
   private ReceptorHogares receptorHogares;
 
-  public Informe(Persona rescatista, Ubicacion ubicacionRescatista, String direccionRescatista,
-                 MascotaEncontrada mascotaEncontrada, RepositorioInformes repositorioInformes,
-                 ReceptorHogares receptorHogares) {
+  public InformeRescate(Persona rescatista, Ubicacion ubicacionRescatista, String direccionRescatista,
+                        MascotaEncontrada mascotaEncontrada, RepositorioInformes repositorioInformes,
+                        ReceptorHogares receptorHogares) {
     this.rescatista = rescatista;
     this.ubicacionRescatista = ubicacionRescatista;
     this.direccionRescatista = direccionRescatista;
@@ -31,12 +32,13 @@ public abstract class Informe {
     this.receptorHogares = receptorHogares;
   }
 
-  public List<Hogar> getHogaresCercanos(Integer radioCercania, Animal tipoAnimal,
+  public List<Hogar> getHogaresCercanos(Integer radioCercania, Animal tipoAnimal, TamanioMascota tamanioMascota,
                                         List<Caracteristica> caracteristicas) {
     return receptorHogares.getHogaresDisponibles(
         ubicacionRescatista,
         radioCercania,
         tipoAnimal,
+        tamanioMascota,
         caracteristicas
     );
   }

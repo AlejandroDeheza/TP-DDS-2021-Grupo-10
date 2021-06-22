@@ -1,39 +1,40 @@
 package modelo.informe;
 
-import client.ReceptorHogares;
-import client.hogares.Hogar;
+import modelo.hogarDeTransito.Hogar;
+import modelo.hogarDeTransito.ReceptorHogares;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import modelo.mascota.MascotaEncontrada;
 import modelo.mascota.MascotaRegistrada;
 import modelo.persona.Persona;
-import repositorios.RepositorioProperties;
+import utils.ReceptorProperties;
 import repositorios.RepositorioInformes;
-import servicio.notificacion.Notificacion;
-import servicio.notificacion.Notificador;
+import modelo.notificacion.Notificacion;
+import modelo.notificacion.Notificador;
 
 import java.util.List;
 import java.util.Properties;
 
-public class InformeConQR extends Informe {
+public class InformeConQR extends InformeRescate {
     private MascotaRegistrada mascotaRegistrada;
     private Notificador notificador;
-    private RepositorioProperties repositorioProperties;
+    private ReceptorProperties receptorProperties;
 
     public InformeConQR(Persona rescatista, Ubicacion ubicacionRescatista, String direccionRescatista,
                         MascotaEncontrada mascotaEncontrada, RepositorioInformes repositorioInformes,
                         ReceptorHogares receptorHogares, MascotaRegistrada mascotaRegistrada,
-                        Notificador notificador, RepositorioProperties repositorioProperties) {
+                        Notificador notificador, ReceptorProperties receptorProperties) {
         super(rescatista, ubicacionRescatista, direccionRescatista, mascotaEncontrada, repositorioInformes,
             receptorHogares);
         this.mascotaRegistrada = mascotaRegistrada;
         this.notificador = notificador;
-        this.repositorioProperties = repositorioProperties;
+        this.receptorProperties = receptorProperties;
     }
 
     public List<Hogar> getHogaresCercanos(Integer radioCercania) throws JsonProcessingException {
         return super.getHogaresCercanos(
             radioCercania,
             mascotaRegistrada.getAnimal(),
+            mascotaRegistrada.getTamanio(),
             mascotaRegistrada.getCaracteristicas()
         );
     }
@@ -45,8 +46,8 @@ public class InformeConQR extends Informe {
     }
 
     private void notificarAlDuenio() {
-        Properties properties = repositorioProperties.getProperties();
-        notificador.enviarNotificacion(
+        Properties properties = receptorProperties.getProperties();
+        notificador.notificar(
             new Notificacion(
                 mascotaRegistrada.getDuenio().getPersona().getDatosDeContacto(),
                 properties.getProperty("asunto_InformeMasctoaConDuenio"),

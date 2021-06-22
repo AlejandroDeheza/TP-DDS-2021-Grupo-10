@@ -20,9 +20,10 @@ public class RepositorioPublicaciones {
     }
 
 
+    //el repositorio, en codigo de produccion, lo inyectamos por constructor
     //usamos el constructor solo para tests
     public RepositorioPublicaciones() {}
-    //usamos el getInstance en el codigo de produccion
+    //usamos el getInstance en Main
     public static RepositorioPublicaciones getInstance() {
         return repositorioPublicaciones;
     }

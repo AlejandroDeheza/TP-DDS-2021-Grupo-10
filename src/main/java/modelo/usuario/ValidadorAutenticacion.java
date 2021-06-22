@@ -1,4 +1,4 @@
-package servicios.validacionUsuario.impl;
+package modelo.usuario;
 
 import excepciones.AutenticacionConsecutivaException;
 import excepciones.AutenticacionInvalidaException;

@@ -19,9 +19,7 @@ public class Ubicacion {
     this.longitud = longitud;
   }
 
-  public Ubicacion() {
-
-  }
+  public Ubicacion() {}
 
   public Double getLatitud() {
     return latitud;
