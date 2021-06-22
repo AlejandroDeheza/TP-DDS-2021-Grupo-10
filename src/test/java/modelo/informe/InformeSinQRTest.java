@@ -1,7 +1,7 @@
 package modelo.informe;
 
 
-import client.ObtenerHogaresClient;
+import client.ReceptorHogares;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import modelo.mascota.Animal;
 import modelo.mascota.MascotaEncontrada;
@@ -27,7 +27,7 @@ public class InformeSinQRTest {
     Ubicacion ubicacion = DummyData.getDummyUbicacion();
     InformeSinQR informeSinQR;
     RepositorioPublicaciones repositorioPublicaciones;
-    ObtenerHogaresClient obtenerHogaresClientMock = mock(ObtenerHogaresClient.class);
+    ReceptorHogares receptorHogaresMock = mock(ReceptorHogares.class);
     NotificadorCorreo notificadorCorreoMockeado;
 
     MascotaEncontrada mascotaEncontrada = DummyData.getDummyMascotaEncontrada(new RepositorioCaracteristicas(), DummyData.getDummyFotosMascota());
@@ -58,7 +58,7 @@ public class InformeSinQRTest {
     }
 
     private InformeSinQR generarInformeMascotaEncontrada(NotificadorCorreo notificador) {
-        return new InformeSinQR(rescatista, ubicacion, "", mascotaEncontrada, repositorioInformes, obtenerHogaresClientMock,
+        return new InformeSinQR(rescatista, ubicacion, "", mascotaEncontrada, repositorioInformes, receptorHogaresMock,
             Animal.PERRO, DummyData.getDummyListaCaracteristicasParaMascota(new RepositorioCaracteristicas()),
             repositorioPublicaciones, notificador);
     }

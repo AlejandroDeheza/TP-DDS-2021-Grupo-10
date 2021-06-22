@@ -1,8 +1,7 @@
 package modelo.informe;
 
-import client.ObtenerHogaresClient;
+import client.ReceptorHogares;
 import client.hogares.Hogar;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import modelo.mascota.Animal;
 import modelo.mascota.MascotaEncontrada;
 import modelo.mascota.caracteristica.Caracteristica;
@@ -11,7 +10,6 @@ import repositorios.RepositorioInformes;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public abstract class Informe {
 
@@ -20,11 +18,11 @@ public abstract class Informe {
   private String direccionRescatista;
   private MascotaEncontrada mascotaEncontrada;
   private RepositorioInformes repositorioInformes;
-  private ObtenerHogaresClient receptorHogares;
+  private ReceptorHogares receptorHogares;
 
   public Informe(Persona rescatista, Ubicacion ubicacionRescatista, String direccionRescatista,
                  MascotaEncontrada mascotaEncontrada, RepositorioInformes repositorioInformes,
-                 ObtenerHogaresClient receptorHogares) {
+                 ReceptorHogares receptorHogares) {
     this.rescatista = rescatista;
     this.ubicacionRescatista = ubicacionRescatista;
     this.direccionRescatista = direccionRescatista;
@@ -37,15 +35,14 @@ public abstract class Informe {
     repositorioInformes.marcarInformeComoProcesado(this);
   }
 
-  public List<Hogar> getHogaresCercanos(Integer radioCercania, Animal tipoAnimal, List<Caracteristica> caracteristicas)
-      throws JsonProcessingException {
-    List<Hogar> hogares = receptorHogares.obtenerTodosLosHogares();
-    return hogares.stream().filter( hogar -> hogar.esPosibleHogarDeTransito(
+  public List<Hogar> getHogaresCercanos(Integer radioCercania, Animal tipoAnimal,
+                                        List<Caracteristica> caracteristicas) {
+    return receptorHogares.getHogaresDisponibles(
+        ubicacionRescatista,
         radioCercania,
         tipoAnimal,
-        caracteristicas,
-        ubicacionRescatista
-    )).collect(Collectors.toList());
+        caracteristicas
+    );
   }
 
   public MascotaEncontrada getMascotaEncontrada() {

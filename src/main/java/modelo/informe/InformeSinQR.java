@@ -1,6 +1,6 @@
 package modelo.informe;
 
-import client.ObtenerHogaresClient;
+import client.ReceptorHogares;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import client.hogares.Hogar;
 import modelo.mascota.Animal;
@@ -13,7 +13,6 @@ import repositorios.RepositorioPublicaciones;
 import servicio.notificacion.NotificadorCorreo;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class InformeSinQR extends Informe {
 
@@ -24,7 +23,7 @@ public class InformeSinQR extends Informe {
 
     public InformeSinQR(Persona rescatista, Ubicacion ubicacionRescatista, String direccionRescatista,
                         MascotaEncontrada mascotaEncontrada, RepositorioInformes repositorioInformes,
-                        ObtenerHogaresClient receptorHogares, Animal tipoAnimal, List<Caracteristica> caracteristicas,
+                        ReceptorHogares receptorHogares, Animal tipoAnimal, List<Caracteristica> caracteristicas,
                         RepositorioPublicaciones repositorioPublicaciones, NotificadorCorreo notificadorCorreo) {
         super(rescatista, ubicacionRescatista, direccionRescatista, mascotaEncontrada, repositorioInformes,
             receptorHogares);

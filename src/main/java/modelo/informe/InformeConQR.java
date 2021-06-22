@@ -1,6 +1,6 @@
 package modelo.informe;
 
-import client.ObtenerHogaresClient;
+import client.ReceptorHogares;
 import client.hogares.Hogar;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import modelo.mascota.MascotaEncontrada;
@@ -21,7 +21,7 @@ public class InformeConQR extends Informe {
 
     public InformeConQR(Persona rescatista, Ubicacion ubicacionRescatista, String direccionRescatista,
                         MascotaEncontrada mascotaEncontrada, RepositorioInformes repositorioInformes,
-                        ObtenerHogaresClient receptorHogares, MascotaRegistrada mascotaRegistrada,
+                        ReceptorHogares receptorHogares, MascotaRegistrada mascotaRegistrada,
                         Notificador notificador, RepositorioProperties repositorioProperties) {
         super(rescatista, ubicacionRescatista, direccionRescatista, mascotaEncontrada, repositorioInformes,
             receptorHogares);

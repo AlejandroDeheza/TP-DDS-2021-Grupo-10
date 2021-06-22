@@ -36,7 +36,8 @@ public class Hogar {
     @JsonProperty("caracteristicas")
     private List<String> caracteristicas;
 
-    public boolean esPosibleHogarDeTransito(Integer radioCercania, Animal animal,List<Caracteristica> estadoActualMascota, Ubicacion direccion) {
+    public boolean esPosibleHogarDeTransito(Ubicacion direccion, Integer radioCercania, Animal animal,
+                                            List<Caracteristica> estadoActualMascota) {
         List<String> valoresCaracteristicasMascota = estadoActualMascota.stream().map(caracteristica -> caracteristica.getValorCaracteristica()).collect(Collectors.toList());
         return aceptaAnimal(animal) && aceptaTamanioMascota(estadoActualMascota)
                 && tieneLugaresDisponibles() && estaDentroDeRadio(radioCercania, direccion) &&

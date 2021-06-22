@@ -58,7 +58,7 @@ public class HogarTest {
     hogar.setUbicacion(ubicacionHogar);
     hogar.setTienePatio(false);
 
-    assertTrue(hogar.esPosibleHogarDeTransito(radioCercania,animal,listaCaracteristica,ubicacionEncuentro));
+    assertTrue(hogar.esPosibleHogarDeTransito(ubicacionEncuentro, radioCercania,animal,listaCaracteristica));
 
   }
 
@@ -78,7 +78,7 @@ public class HogarTest {
     hogar.setUbicacion(ubicacionHogar);
     hogar.setTienePatio(false);
 
-    assertFalse(hogar.esPosibleHogarDeTransito(radioCercania,animal,listaCaracteristica,ubicacionEncuentro));
+    assertFalse(hogar.esPosibleHogarDeTransito(ubicacionEncuentro, radioCercania,animal,listaCaracteristica));
 
   }
 

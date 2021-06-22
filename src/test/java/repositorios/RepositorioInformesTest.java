@@ -1,6 +1,6 @@
 package repositorios;
 
-import client.ObtenerHogaresClient;
+import client.ReceptorHogares;
 import modelo.informe.InformeConQR;
 import modelo.informe.Ubicacion;
 import modelo.mascota.Foto;
@@ -72,7 +72,7 @@ public class RepositorioInformesTest {
   }
 
   private InformeConQR generarInformeMascotaEncontrada(Notificador notificador, MascotaEncontrada mascotaEncontrada) {
-    return new InformeConQR(rescatista, ubicacion, "", mascotaEncontrada, repositorioInformes, new ObtenerHogaresClient(),
+    return new InformeConQR(rescatista, ubicacion, "", mascotaEncontrada, repositorioInformes, new ReceptorHogares(),
         mascotaRegistrada, notificador, repositorioProperties);
 
   }

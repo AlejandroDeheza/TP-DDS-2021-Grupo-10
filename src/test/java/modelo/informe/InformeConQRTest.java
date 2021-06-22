@@ -1,6 +1,6 @@
 package modelo.informe;
 
-import client.ObtenerHogaresClient;
+import client.ReceptorHogares;
 import excepciones.FotosMascotaException;
 import modelo.mascota.*;
 import modelo.mascota.caracteristica.Caracteristica;
@@ -77,7 +77,7 @@ public class InformeConQRTest {
   }
 
   private InformeConQR generarInformeMascotaEncontrada(Notificador notificador, MascotaEncontrada mascotaEncontrada) {
-    return new InformeConQR(rescatista, ubicacion, "", mascotaEncontrada, repositorioInformes, new ObtenerHogaresClient(),
+    return new InformeConQR(rescatista, ubicacion, "", mascotaEncontrada, repositorioInformes, new ReceptorHogares(),
         mascotaRegistrada, notificador, repositorioProperties);
   }
 
