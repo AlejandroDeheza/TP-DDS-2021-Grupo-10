@@ -1,6 +1,6 @@
 package repositorios;
 
-import client.ReceptorHogares;
+import modelo.hogarDeTransito.ReceptorHogares;
 import modelo.informe.InformeConQR;
 import modelo.informe.Ubicacion;
 import modelo.mascota.Foto;
@@ -14,8 +14,9 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import servicio.notificacion.Notificador;
-import servicio.notificacion.NotificadorCorreo;
+import modelo.notificacion.Notificador;
+import modelo.notificacion.NotificadorCorreo;
+import utils.ReceptorProperties;
 import utils.DummyData;
 
 import javax.mail.Transport;
@@ -36,7 +37,7 @@ public class RepositorioInformesTest {
       new RepositorioCaracteristicas()
   );
   MascotaRegistrada mascotaRegistrada = DummyData.getDummyMascotaRegistrada(new RepositorioCaracteristicas());
-  RepositorioProperties repositorioProperties = RepositorioProperties.getInstance();
+  ReceptorProperties receptorProperties = new ReceptorProperties();
 
   InformeConQR informe;
 
@@ -58,7 +59,7 @@ public class RepositorioInformesTest {
   @DisplayName("si se crea un InformeMascotaPerdida, se agrega un informe a InformesPendientes en RepositorioInformes")
   public void InformesPendientesTest() {
     assertEquals(repositorioInformes.getInformesPendientes().size(), 0);
-    repositorioInformes.agregarInformeMascotaEncontrada(informe);
+    repositorioInformes.agregarInformeRescate(informe);
     assertEquals(repositorioInformes.getInformesPendientes().size(), 1);
   }
 
@@ -66,14 +67,14 @@ public class RepositorioInformesTest {
   @DisplayName("si se utiliza listarMascotasEncontradasEnLosUltimos10Dias(), este devuelve " +
       "un registro insertado previamente")
   public void listarMascotasEncontradasEnLosUltimos10DiasTest() {
-    assertEquals(repositorioInformes.listarMascotasEncontradasEnUltimosNDias(10).size(), 0);
-    repositorioInformes.agregarInformeMascotaEncontrada(informe);
-    assertEquals(repositorioInformes.listarMascotasEncontradasEnUltimosNDias(10).size(), 1);
+    assertEquals(repositorioInformes.informesDeUltimosNDias(10).size(), 0);
+    repositorioInformes.agregarInformeRescate(informe);
+    assertEquals(repositorioInformes.informesDeUltimosNDias(10).size(), 1);
   }
 
   private InformeConQR generarInformeMascotaEncontrada(Notificador notificador, MascotaEncontrada mascotaEncontrada) {
     return new InformeConQR(rescatista, ubicacion, "", mascotaEncontrada, repositorioInformes, new ReceptorHogares(),
-        mascotaRegistrada, notificador, repositorioProperties);
+        mascotaRegistrada, notificador, receptorProperties);
 
   }
 }

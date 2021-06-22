@@ -1,9 +1,8 @@
-package repositorios;
+package utils;
 
 import excepciones.RepositorioPropertiesException;
 
 import org.junit.jupiter.api.Test;
-import util.ReceptorProperties;
 
 
 import static org.junit.jupiter.api.Assertions.*;

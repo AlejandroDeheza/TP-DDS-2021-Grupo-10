@@ -1,7 +1,7 @@
 package modelo.informe;
 
 
-import client.ReceptorHogares;
+import modelo.hogarDeTransito.ReceptorHogares;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import modelo.mascota.Animal;
 import modelo.mascota.MascotaEncontrada;
@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioInformes;
 import repositorios.RepositorioPublicaciones;
-import servicio.notificacion.NotificadorCorreo;
+import modelo.notificacion.NotificadorCorreo;
 import utils.DummyData;
 
 import javax.mail.Transport;

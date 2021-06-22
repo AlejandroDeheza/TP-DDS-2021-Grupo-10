@@ -1,6 +1,6 @@
 package modelo.informe;
 
-import client.ReceptorHogares;
+import modelo.hogarDeTransito.ReceptorHogares;
 import excepciones.FotosMascotaException;
 import modelo.mascota.*;
 import modelo.mascota.caracteristica.Caracteristica;
@@ -11,9 +11,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioInformes;
-import repositorios.RepositorioProperties;
-import servicio.notificacion.NotificadorCorreo;
-import servicio.notificacion.Notificador;
+import utils.ReceptorProperties;
+import modelo.notificacion.NotificadorCorreo;
+import modelo.notificacion.Notificador;
 import utils.DummyData;
 
 import javax.mail.*;
@@ -28,7 +28,7 @@ public class InformeConQRTest {
   Persona rescatista = DummyData.getDummyPersona();
   Ubicacion ubicacion = DummyData.getDummyUbicacion();
   MascotaRegistrada mascotaRegistrada = DummyData.getDummyMascotaRegistrada(new RepositorioCaracteristicas());
-  RepositorioProperties repositorioProperties = RepositorioProperties.getInstance();
+  ReceptorProperties receptorProperties = new ReceptorProperties();
 
   List<Caracteristica> listaCaracteristicas = DummyData.getDummyListaCaracteristicasParaMascota(
       new RepositorioCaracteristicas()
@@ -59,9 +59,9 @@ public class InformeConQRTest {
   }
 
   @Test
-  @DisplayName("Al procesar un informe con QR, se envia una notificacion y se marca el informe como procesado")
+  @DisplayName("Al procesar un informe con QR, se envia una modelo.notificacion y se marca el informe como procesado")
   public void MascotaConDuenioNotificarTest() throws MessagingException {
-    repositorioInformes.agregarInformeMascotaEncontrada(informeConFoto);
+    repositorioInformes.agregarInformeRescate(informeConFoto);
     assertTrue(repositorioInformes.getInformesPendientes().contains(informeConFoto));
 
     informeConFoto.procesarInforme();
@@ -78,7 +78,7 @@ public class InformeConQRTest {
 
   private InformeConQR generarInformeMascotaEncontrada(Notificador notificador, MascotaEncontrada mascotaEncontrada) {
     return new InformeConQR(rescatista, ubicacion, "", mascotaEncontrada, repositorioInformes, new ReceptorHogares(),
-        mascotaRegistrada, notificador, repositorioProperties);
+        mascotaRegistrada, notificador, receptorProperties);
   }
 
 }

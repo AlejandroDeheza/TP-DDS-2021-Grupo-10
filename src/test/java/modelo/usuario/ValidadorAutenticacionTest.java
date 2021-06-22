@@ -1,7 +1,6 @@
-package util;
+package modelo.usuario;
 
 import excepciones.AutenticacionInvalidaException;
-import modelo.usuario.Usuario;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import utils.DummyData;

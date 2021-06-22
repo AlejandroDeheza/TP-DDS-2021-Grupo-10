@@ -3,7 +3,7 @@ package modelo.publicacion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import servicio.notificacion.NotificadorCorreo;
+import modelo.notificacion.NotificadorCorreo;
 import utils.DummyData;
 
 import javax.mail.MessagingException;
