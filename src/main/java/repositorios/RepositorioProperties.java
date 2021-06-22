@@ -9,14 +9,11 @@ import java.util.Properties;
 
 public class RepositorioProperties {
 
-    private static RepositorioProperties repositorioProperties;
+    private static RepositorioProperties repositorioProperties = new RepositorioProperties();
     private Properties properties = new Properties();
     private String path = "src/main/resources/app.properties";
 
     public static RepositorioProperties getInstance() {
-        if (repositorioProperties == null) {
-            repositorioProperties = new RepositorioProperties();
-        }
         return repositorioProperties;
     }
 

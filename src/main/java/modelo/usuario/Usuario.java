@@ -4,7 +4,7 @@ import excepciones.MascotaYaRegistradaException;
 import modelo.mascota.Mascota;
 import modelo.persona.Persona;
 import servicios.validacionUsuario.impl.ValidadorAutenticacion;
-import servicios.validacionUsuario.impl.ValidadorContraseniasImpl;
+import servicios.validacionUsuario.impl.ValidadorContrasenias;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ public class Usuario {
   private ValidadorAutenticacion validadorAutenticacion;
 
   public Usuario(String usuario, String contrasenia, TipoUsuario tipo, Persona persona) {
-    new ValidadorContraseniasImpl().correrValidaciones(contrasenia);
+    new ValidadorContrasenias().correrValidaciones(contrasenia);
     this.usuario = usuario;
     this.contrasenia = contrasenia;
     this.tipo = tipo;
@@ -57,5 +57,4 @@ public class Usuario {
   public Persona getPersona() {
     return persona;
   }
-
 }

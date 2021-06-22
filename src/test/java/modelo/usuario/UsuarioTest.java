@@ -1,8 +1,8 @@
 package modelo.usuario;
 
-import excepciones.AutenticacionInvalidaException;
 import excepciones.MascotaYaRegistradaException;
 import modelo.mascota.Mascota;
+import modelo.persona.Persona;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -44,43 +44,24 @@ public class UsuarioTest {
     repositorioCaracteristicas.agregarCaracteristica(DummyData.getDummyCaracteristicaParaAdmin());
 
     Usuario usuario = DummyData.getDummyUsuario();
-    Mascota mascota = DummyData.getDummyMascota();
+    Mascota mascota = DummyData.getDummyMascotaRegistrada(new RepositorioCaracteristicas());
     usuario.agregarMascota(mascota);
     assertThrows(MascotaYaRegistradaException.class, () -> usuario.agregarMascota(mascota));
   }
 
   @Test
-  @DisplayName("Obtener login de usuario")
-  public void obtenerUsuario() {
-    String login = "DuenioMascota";
-    Usuario usuario =  new Usuario(login, "P3p3.2019", TipoUsuario.NORMAL, DummyData.getDummyPersona());
-    assertEquals(login,usuario.getUsuario());
+  @DisplayName("Se puede generar una persona Voluntaria")
+  public void usuarioVoluntarioTest(){
+    Usuario usuarioVoluntario = generarVoluntario();
+    assertEquals(usuarioVoluntario.getTipo(), TipoUsuario.VOLUNTARIO);
   }
 
-  @Test
-  @DisplayName("Obtener Tipo de usuario")
-  public void obtenerTipoUsuario() {
-    TipoUsuario tipoUsuario = TipoUsuario.NORMAL;
-    Usuario usuario =  new Usuario("DuenioMascota", "P3p3.2019", tipoUsuario, DummyData.getDummyPersona());
-    assertEquals(tipoUsuario,usuario.getTipo());
+  public Usuario generarVoluntario(){
+    Persona personaVoluntaria = DummyData.getDummyPersona();
+    Usuario usuarioVoluntario = new Usuario("User Voluntario", "Password1159Hard", TipoUsuario.VOLUNTARIO, personaVoluntaria);
+    return usuarioVoluntario;
   }
-
-  @Test
-  @DisplayName("Cuando un usuario intenta autenticarse con la contraseña valida no da error")
-  public void autenticarUsuarioConContraseniaCorrectaNoDaError() {
-    String contrasenia = "M1m45C0t4";
-    Usuario usuario =  new Usuario("DuenioMascota", contrasenia, TipoUsuario.NORMAL, DummyData.getDummyPersona());
-    assertDoesNotThrow(()->usuario.autenticarUsuario(contrasenia));
-  }
-
-  @Test
-  @DisplayName("Cuando un usuario intenta autenticarse con la contraseña incorrecta da error")
-  public void autenticarUsuarioConContraseniaIncorrectaDaError() {
-    String contrasenia = "M1m45C0t4";
-    Usuario usuario =  DummyData.getDummyUsuario();
-    assertThrows(AutenticacionInvalidaException.class,()->usuario.autenticarUsuario(contrasenia));
-  }
-  //TODO: Tendriamos que validar cantidad de intentos? Creo que ese test va mas del lado de ValidadorAutenticacionTest
-
 
 }
+
+

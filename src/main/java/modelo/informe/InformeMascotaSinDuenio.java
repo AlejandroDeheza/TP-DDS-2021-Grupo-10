@@ -2,45 +2,43 @@ package modelo.informe;
 
 import client.ObtenerHogaresClient;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import modelo.hogares.Hogar;
-import modelo.mascota.Animal;
-import modelo.mascota.Foto;
-import modelo.mascota.caracteristica.Caracteristica;
+import client.hogares.Hogar;
+import modelo.mascota.MascotaEncontrada;
 import modelo.persona.Persona;
 import modelo.publicacion.Publicacion;
 import repositorios.RepositorioInformes;
 import repositorios.RepositorioPublicaciones;
+import servicio.notificacion.NotificadorCorreo;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class InformeMascotaSinDuenio extends InformeMascotaEncontrada {
 
-    ObtenerHogaresClient hogaresClient = new ObtenerHogaresClient();
-    private Animal animal;
+    private ObtenerHogaresClient hogaresClient = new ObtenerHogaresClient();
     private RepositorioPublicaciones repositorioPublicaciones;
+    private NotificadorCorreo notificadorCorreo;
 
-    public InformeMascotaSinDuenio(Persona rescatista, LocalDate fechaEncuentro, Ubicacion direccion, List<Foto> fotosMascota, Ubicacion lugarDeEncuentro, List<Caracteristica>  estadoActualMascota
-            , Animal animal, RepositorioInformes repositorioInformes, RepositorioPublicaciones repositorioPublicaciones) {
-        super(rescatista, fechaEncuentro, direccion, fotosMascota, lugarDeEncuentro,estadoActualMascota,repositorioInformes);
-        this.animal=animal;
+    public InformeMascotaSinDuenio(Persona rescatista, Ubicacion direccion, MascotaEncontrada mascota,
+                                   RepositorioInformes repositorioInformes, ObtenerHogaresClient hogaresClient,
+                                   RepositorioPublicaciones repositorioPublicaciones,
+                                   NotificadorCorreo notificadorCorreo) {
+        super(rescatista, direccion, mascota, repositorioInformes);
+        this.hogaresClient = hogaresClient;
         this.repositorioPublicaciones = repositorioPublicaciones;
-    }
-
-    public Animal getAnimal() {
-        return animal;
+        this.notificadorCorreo = notificadorCorreo;
     }
 
     @Override
     public void procesarInforme() {
         super.procesarInforme();
-        repositorioPublicaciones.agregarPublicacion(new Publicacion(this.getRescatista().getDatosDeContacto(),getFotosMascota()));
+        repositorioPublicaciones.agregarPublicacion(new Publicacion(this.getRescatista().getDatosDeContacto(), mascota.getFotos(), notificadorCorreo));
     }
 
     public List<Hogar> getHogaresTransitorios(Integer radioCercania) throws JsonProcessingException{
-        List<Hogar> hogares = this.hogaresClient.obtenerTodosLosHogares();
-        return hogares.stream().filter( hogar -> hogar.esPosibleHogarDeTransito(radioCercania,getAnimal(),getEstadoActualMascota(),this.getDireccion())).collect(Collectors.toList());
+        List<Hogar> hogares = this.hogaresClient.obtenerTodosLosHogares();                                      //Cambie estadoActual por Caractesitsicas
+        return hogares.stream().filter( hogar -> hogar.esPosibleHogarDeTransito(radioCercania,mascota.getAnimal(),mascota.getCaracteristicas(),this.getDireccion())).collect(Collectors.toList());
     }
+
 
 }

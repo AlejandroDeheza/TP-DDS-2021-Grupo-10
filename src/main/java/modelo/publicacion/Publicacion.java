@@ -3,30 +3,33 @@ package modelo.publicacion;
 import modelo.mascota.Foto;
 import modelo.usuario.Usuario;
 import modelo.persona.DatosDeContacto;
+import servicio.notificacion.Notificacion;
+import servicio.notificacion.Notificador;
 
 import java.util.List;
 
 public class Publicacion {
-    DatosDeContacto datosDeContactoRescatista;
-    List<Foto> fotos;
-    Usuario duenioMascota;
+  private DatosDeContacto datosDeContactoRescatista;
+  private List<Foto> fotos;
+  private Notificador notificacionCorreo;
+  private String cuerpoMensaje = "El dueño encontro una mascota que vos rescataste. Por favor comunicarse al ";
 
-   public Publicacion(DatosDeContacto datosDeContacto,List<Foto> fotos){
-       this.datosDeContactoRescatista=datosDeContacto;
-       this.fotos=fotos;
-   }
+  public Publicacion(DatosDeContacto datosDeContacto, List<Foto> fotos, Notificador notificacionCorreo) {
+    this.datosDeContactoRescatista = datosDeContacto;
+    this.fotos = fotos;
+    this.notificacionCorreo = notificacionCorreo;
+  }
 
-    public void agregarDuenio(Usuario usuario) {
-        this.duenioMascota=usuario;
-    }
-    public Boolean tieneDuenio(){
-       if (duenioMascota != null)
-        return  true;
-       return  false;
-    }
-    public DatosDeContacto getDatosDeContactoRescatista(){
-       return datosDeContactoRescatista;
-    }
+  public void notificarEncuentroAlRescatista(Usuario duenio) {
+    Notificacion notificacion = new Notificacion(
+        datosDeContactoRescatista,
+        null,
+        cuerpoMensaje.concat(duenio.getPersona().getDatosDeContacto().getEmail()),
+        "Hogar de Patitas",
+        "Han Encontrado una mascota que rescataste!"
+    );
+    notificacionCorreo.enviarNotificacion(notificacion);
+  }
 
   public List<Foto> getFotos() {
     return fotos;

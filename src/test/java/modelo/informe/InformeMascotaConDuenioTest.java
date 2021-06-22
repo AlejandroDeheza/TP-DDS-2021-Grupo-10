@@ -1,21 +1,20 @@
 package modelo.informe;
 
 import excepciones.InformeMascotaEncontradaInvalidaException;
-import modelo.mascota.Foto;
+import modelo.mascota.*;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.Persona;
 import modelo.usuario.Usuario;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioInformes;
-import servicio.notificacion.NotificacionCorreo;
-import servicio.notificacion.NotificacionSender;
+import servicio.notificacion.NotificadorCorreo;
+import servicio.notificacion.Notificador;
 import utils.DummyData;
 
 import javax.mail.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,39 +24,33 @@ public class InformeMascotaConDuenioTest {
 
   Usuario duenioMascota = DummyData.getDummyUsuario();
   Persona rescatista = DummyData.getDummyPersona();
-  LocalDate fechaDeHoy = LocalDate.now();
-  Ubicacion ubicacion = new Ubicacion(57.44, 57.55);
-  List<Caracteristica> estadoActualMascota = DummyData.getDummyListaCaracteristicasParaMascota();
+  Ubicacion ubicacion = DummyData.getDummyUbicacion();
+
+  List<Caracteristica> listaCaracteristicas = DummyData.getDummyListaCaracteristicasParaMascota(
+      new RepositorioCaracteristicas()
+  );
 
   RepositorioInformes repositorioInformes;
   List<Foto> fotosMascota = DummyData.getDummyFotosMascota();
   List<Foto> fotosMascotaVacio = new ArrayList<>();
   InformeMascotaConDuenio informeConFoto;
   InformeMascotaConDuenio informeSinFoto;
-  NotificacionCorreo notificacionCorreoMockeado;
+  NotificadorCorreo notificadorCorreoMockeado;
   Transport transportMockeado;
+  MascotaEncontrada mascotaEncontradaConFotos = DummyData.getDummyMascotaEncontrada(new RepositorioCaracteristicas(), fotosMascota);
+  MascotaEncontrada mascotaEncontradaSinFotos = DummyData.getDummyMascotaEncontrada(new RepositorioCaracteristicas(), fotosMascotaVacio);
+
 
   @BeforeEach
   public void contextLoad() {
     repositorioInformes = new RepositorioInformes();
     transportMockeado = mock(Transport.class);
+    notificadorCorreoMockeado = new NotificadorCorreo(sesion -> transportMockeado);
 
-    informeSinFoto = generarInformeMascotaEncontradaBuilder(fotosMascotaVacio, new NotificacionCorreo(sesion -> transportMockeado));
-    informeConFoto = generarInformeMascotaEncontradaBuilder(fotosMascota, new NotificacionCorreo(sesion -> transportMockeado));
+    informeSinFoto = generarInformeMascotaEncontrada(notificadorCorreoMockeado, mascotaEncontradaSinFotos);
+    informeConFoto = generarInformeMascotaEncontrada(notificadorCorreoMockeado, mascotaEncontradaConFotos);
   }
 
-  @Test
-  @DisplayName("Chequeo igualdad entre Constructor y Builder")
-  public void InformeMascotaEncontradaBuilderConstructorTest(){
-    InformeMascotaConDuenio informeAux = generarInformeMascotaEncontrada(fotosMascotaVacio);
-    Assertions.assertEquals(informeSinFoto.getDuenioMascota(), informeAux.getDuenioMascota());
-    Assertions.assertEquals(informeSinFoto.getDireccion(), informeAux.getDireccion());
-    Assertions.assertEquals(informeSinFoto.getEstadoActualMascota(), informeAux.getEstadoActualMascota());
-    Assertions.assertEquals(informeSinFoto.getFotosMascota(), informeAux.getFotosMascota());
-    Assertions.assertEquals(informeSinFoto.getFechaEncuentro(), informeAux.getFechaEncuentro());
-    Assertions.assertEquals(informeSinFoto.getLugarDeEncuentro(), informeAux.getLugarDeEncuentro());
-    Assertions.assertEquals(informeSinFoto.getRescatista(), informeAux.getRescatista());
-  }
 
   @Test
   @DisplayName("si se genera un InformeMascotaEncontrada sin fotos, se genera " +
@@ -82,22 +75,8 @@ public class InformeMascotaConDuenioTest {
     assertTrue(repositorioInformes.getInformesPendientes().contains(informeConFoto));
   }
 
-  private InformeMascotaConDuenio generarInformeMascotaEncontrada(List<Foto> fotosMascota) {
-    return new InformeMascotaConDuenio(duenioMascota, rescatista, fechaDeHoy, ubicacion, fotosMascota, ubicacion,
-        estadoActualMascota, new NotificacionCorreo(sesion -> transportMockeado), repositorioInformes);
+  private InformeMascotaConDuenio generarInformeMascotaEncontrada(Notificador notificador, MascotaEncontrada mascota) {
+    return new InformeMascotaConDuenio(rescatista, ubicacion, mascota, repositorioInformes, duenioMascota, notificador);
   }
 
-  private InformeMascotaConDuenio generarInformeMascotaEncontradaBuilder(List<Foto> fotosMascota, NotificacionSender notificacionSender) {
-    InformeMascotaConDuenioBuilder builder = InformeMascotaConDuenioBuilder.crearBuilder();
-    builder.conNotificacionSender(notificacionSender)
-        .conDuenioMascota(duenioMascota)
-        .conRepositorioInformes(repositorioInformes)
-        .conRescatista(rescatista)
-        .conFechaEncuentro(fechaDeHoy)
-        .conDireccion(ubicacion)
-        .conFotosMascota(fotosMascota)
-        .conLugarDeEncuentro(ubicacion)
-        .conEstadoActualMascota(estadoActualMascota);
-    return builder.build();
-  }
 }
