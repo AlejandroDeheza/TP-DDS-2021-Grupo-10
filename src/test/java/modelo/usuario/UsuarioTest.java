@@ -23,7 +23,7 @@ public class UsuarioTest {
   @DisplayName("Si un Usuario intenta registrar una mascota que no existe no da error")
   public void usuarioAgregaMascota() {
     Usuario usuario =  DummyData.getDummyUsuario();
-    Mascota mascota = DummyData.getDummyMascota();
+    Mascota mascota = DummyData.getDummyMascotaRegistrada(new RepositorioCaracteristicas());
     assertDoesNotThrow(()-> usuario.agregarMascota(mascota));
   }
 
@@ -31,7 +31,7 @@ public class UsuarioTest {
   @DisplayName("Si un Usuario elimina un mascota no da error")
   public void usuarioEliminarMascotaAgregadaNoDaError() {
     Usuario usuario =  DummyData.getDummyUsuario();
-    Mascota mascota = DummyData.getDummyMascota();
+    Mascota mascota = DummyData.getDummyMascotaRegistrada(new RepositorioCaracteristicas());
     usuario.agregarMascota(mascota);
     assertDoesNotThrow(()-> usuario.eliminarMascota(mascota));
   }

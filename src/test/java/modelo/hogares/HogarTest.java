@@ -1,5 +1,7 @@
 package modelo.hogares;
 
+import client.hogares.Admision;
+import client.hogares.Hogar;
 import modelo.informe.Ubicacion;
 import modelo.mascota.Animal;
 import modelo.mascota.caracteristica.Caracteristica;
