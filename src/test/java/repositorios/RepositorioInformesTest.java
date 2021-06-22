@@ -1,9 +1,11 @@
 package repositorios;
 
-import modelo.informe.InformeMascotaConDuenio;
+import client.ObtenerHogaresClient;
+import modelo.informe.InformeConQR;
 import modelo.informe.Ubicacion;
 import modelo.mascota.Foto;
 import modelo.mascota.MascotaEncontrada;
+import modelo.mascota.MascotaRegistrada;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.Persona;
 import modelo.usuario.Usuario;
@@ -33,7 +35,10 @@ public class RepositorioInformesTest {
   List<Caracteristica> estadoActualMascota = DummyData.getDummyListaCaracteristicasParaMascota(
       new RepositorioCaracteristicas()
   );
-  InformeMascotaConDuenio informe;
+  MascotaRegistrada mascotaRegistrada = DummyData.getDummyMascotaRegistrada(new RepositorioCaracteristicas());
+  RepositorioProperties repositorioProperties = RepositorioProperties.getInstance();
+
+  InformeConQR informe;
 
   MascotaEncontrada mascota = DummyData.getDummyMascotaEncontrada(new RepositorioCaracteristicas(), fotosMascota);
 
@@ -66,8 +71,9 @@ public class RepositorioInformesTest {
     assertEquals(repositorioInformes.listarMascotasEncontradasEnUltimosNDias(10).size(), 1);
   }
 
-  private InformeMascotaConDuenio generarInformeMascotaEncontrada(Notificador notificador, MascotaEncontrada mascota) {
-    return new InformeMascotaConDuenio(rescatista, ubicacion, mascota, repositorioInformes, duenioMascota, notificador);
+  private InformeConQR generarInformeMascotaEncontrada(Notificador notificador, MascotaEncontrada mascotaEncontrada) {
+    return new InformeConQR(rescatista, ubicacion, "", mascotaEncontrada, repositorioInformes, new ObtenerHogaresClient(),
+        mascotaRegistrada, notificador, repositorioProperties);
 
   }
 }

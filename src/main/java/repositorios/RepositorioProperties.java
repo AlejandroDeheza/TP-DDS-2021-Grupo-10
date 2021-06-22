@@ -25,10 +25,8 @@ public class RepositorioProperties {
         try{
             properties.load(new FileInputStream(path));
         }catch (FileNotFoundException e) {
-//            e.printStackTrace();
             throw new RepositorioPropertiesException(e.getMessage());
         } catch (IOException e) {
-//            e.printStackTrace();
             throw new RepositorioPropertiesException(e.getMessage());
         }
     }

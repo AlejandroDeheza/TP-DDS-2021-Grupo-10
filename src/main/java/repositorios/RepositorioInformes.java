@@ -1,6 +1,6 @@
 package repositorios;
 
-import modelo.informe.InformeMascotaEncontrada;
+import modelo.informe.Informe;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -9,21 +9,21 @@ import java.util.stream.Collectors;
 
 public class RepositorioInformes {
   private static RepositorioInformes repositorioInformes = new RepositorioInformes();
-  private List<InformeMascotaEncontrada> informesPendientes = new ArrayList<>();
-  private List<InformeMascotaEncontrada> informesProcesados = new ArrayList<>();
+  private List<Informe> informesPendientes = new ArrayList<>();
+  private List<Informe> informesProcesados = new ArrayList<>();
 
-  public void agregarInformeMascotaEncontrada(InformeMascotaEncontrada informe) {
+  public void agregarInformeMascotaEncontrada(Informe informe) {
     informesPendientes.add(informe);
   }
 
-  public List<InformeMascotaEncontrada> listarMascotasEncontradasEnUltimosNDias(Integer diasPreviosABuscar) {
+  public List<Informe> listarMascotasEncontradasEnUltimosNDias(Integer diasPreviosABuscar) {
     LocalDate fechaFiltro = LocalDate.now().minusDays(diasPreviosABuscar);
     return informesPendientes.stream()
         .filter(informe -> informe.getFechaEncuentro().isAfter(fechaFiltro))
         .collect(Collectors.toList());
   }
 
-  public void marcarInformeComoProcesado(InformeMascotaEncontrada informeAProcesar) {
+  public void marcarInformeComoProcesado(Informe informeAProcesar) {
     this.informesPendientes.remove(informeAProcesar);
     this.informesProcesados.add(informeAProcesar);
   }
@@ -36,11 +36,11 @@ public class RepositorioInformes {
     return repositorioInformes;
   }
 
-  public List<InformeMascotaEncontrada> getInformesPendientes() {
+  public List<Informe> getInformesPendientes() {
     return informesPendientes;
   }
 
-  public List<InformeMascotaEncontrada> getInformesProcesados() {
+  public List<Informe> getInformesProcesados() {
     return informesProcesados;
   }
 

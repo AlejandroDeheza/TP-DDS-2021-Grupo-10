@@ -3,6 +3,7 @@ package modelo.informe;
 
 import client.ObtenerHogaresClient;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import modelo.mascota.Animal;
 import modelo.mascota.MascotaEncontrada;
 import modelo.persona.Persona;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,12 +20,12 @@ import javax.mail.Transport;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
-public class InformeMascotaSinDuenioTest {
+public class InformeSinQRTest {
 
     Transport transportMockeado;
     Persona rescatista = DummyData.getDummyPersona();
     Ubicacion ubicacion = DummyData.getDummyUbicacion();
-    InformeMascotaSinDuenio informeMascotaSinDuenio;
+    InformeSinQR informeSinQR;
     RepositorioPublicaciones repositorioPublicaciones;
     ObtenerHogaresClient obtenerHogaresClientMock = mock(ObtenerHogaresClient.class);
     NotificadorCorreo notificadorCorreoMockeado;
@@ -39,13 +40,13 @@ public class InformeMascotaSinDuenioTest {
         repositorioInformes = new RepositorioInformes();
         notificadorCorreoMockeado = new NotificadorCorreo(sesion -> transportMockeado);
         repositorioPublicaciones = new RepositorioPublicaciones();
-        informeMascotaSinDuenio = generarInformeMascotaEncontrada(notificadorCorreoMockeado);
+        informeSinQR = generarInformeMascotaEncontrada(notificadorCorreoMockeado);
     }
 
     @Test
     @DisplayName("Cuando Se se procesa un informe se genera una publicacion en Repo Publicacion")
     public void procesarInformeGeneraPublicacionEnElRepo(){
-        informeMascotaSinDuenio.procesarInforme();
+        informeSinQR.procesarInforme();
         assertEquals(1, repositorioPublicaciones.getPublicaciones().size());
     }
 
@@ -53,11 +54,13 @@ public class InformeMascotaSinDuenioTest {
     @Test
     @DisplayName("Obtener Hogares disponibles")
     public void obtenerHogaresDisponiblesParaElInforme() throws JsonProcessingException {
-        assertEquals(0,informeMascotaSinDuenio.getHogaresTransitorios(0).size());
+        assertEquals(0, informeSinQR.getHogaresCercanos(0).size());
     }
 
-    private InformeMascotaSinDuenio generarInformeMascotaEncontrada(NotificadorCorreo notificador) {
-        return new InformeMascotaSinDuenio(rescatista, ubicacion, mascotaEncontrada, repositorioInformes, obtenerHogaresClientMock, repositorioPublicaciones, notificador);
+    private InformeSinQR generarInformeMascotaEncontrada(NotificadorCorreo notificador) {
+        return new InformeSinQR(rescatista, ubicacion, "", mascotaEncontrada, repositorioInformes, obtenerHogaresClientMock,
+            Animal.PERRO, DummyData.getDummyListaCaracteristicasParaMascota(new RepositorioCaracteristicas()),
+            repositorioPublicaciones, notificador);
     }
 
 }

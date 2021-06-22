@@ -1,12 +1,14 @@
 package modelo.mascota;
 
 import modelo.mascota.caracteristica.Caracteristica;
+import modelo.usuario.Usuario;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public class MascotaRegistrada {
 
+  private Usuario duenio;
   private String nombre;
   private String apodo;
   private LocalDate fechaNacimiento;
@@ -17,8 +19,10 @@ public class MascotaRegistrada {
   private List<Foto> fotos;
   private TamanioMascota tamanio;
 
-  public MascotaRegistrada(String nombre, String apodo, LocalDate fechaNacimiento, String descripcionFisica, Sexo sexo,
-  Animal animal, List<Caracteristica> caracteristicas, List<Foto> fotos, TamanioMascota tamanio) {
+  public MascotaRegistrada(Usuario duenio, String nombre, String apodo, LocalDate fechaNacimiento,
+                           String descripcionFisica, Sexo sexo, Animal animal, List<Caracteristica> caracteristicas,
+                           List<Foto> fotos, TamanioMascota tamanio) {
+    this.duenio = duenio;
     this.nombre = nombre;
     this.apodo = apodo;
     this.fechaNacimiento = fechaNacimiento;
@@ -28,6 +32,10 @@ public class MascotaRegistrada {
     this.caracteristicas = caracteristicas;
     this.fotos = fotos;
     this.tamanio = tamanio;
+  }
+
+  public Usuario getDuenio() {
+    return duenio;
   }
 
   public String getNombre() {

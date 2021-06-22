@@ -1,6 +1,5 @@
 package utils;
 
-import modelo.informe.InformeMascotaSinDuenio;
 import modelo.informe.Ubicacion;
 import modelo.mascota.*;
 import modelo.mascota.caracteristica.Caracteristica;
@@ -10,7 +9,6 @@ import modelo.publicacion.Publicacion;
 import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioCaracteristicas;
-import repositorios.RepositorioInformes;
 import servicio.notificacion.Notificador;
 
 import java.time.LocalDate;
@@ -100,7 +98,7 @@ public class DummyData {
   }
 
   public static MascotaRegistrada getDummyMascotaRegistrada(RepositorioCaracteristicas RepositorioCaracteristicas) {
-    return new MascotaRegistrada("Felipe","Panchito", LocalDate.of(2018, 3, 4),
+    return new MascotaRegistrada(getDummyUsuario(),"Felipe","Panchito", LocalDate.of(2018, 3, 4),
         "Pelo largo", Sexo.MACHO, Animal.PERRO, getDummyListaCaracteristicasParaMascota(RepositorioCaracteristicas),
         getDummyFotosMascota(), TamanioMascota.CHICA);
 

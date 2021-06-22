@@ -1,5 +1,6 @@
 package modelo.informe;
 
+import client.ObtenerHogaresClient;
 import excepciones.FotosMascotaException;
 import modelo.mascota.*;
 import modelo.mascota.caracteristica.Caracteristica;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioInformes;
+import repositorios.RepositorioProperties;
 import servicio.notificacion.NotificadorCorreo;
 import servicio.notificacion.Notificador;
 import utils.DummyData;
@@ -20,11 +22,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class InformeMascotaConDuenioTest {
+public class InformeConQRTest {
 
   Usuario duenioMascota = DummyData.getDummyUsuario();
   Persona rescatista = DummyData.getDummyPersona();
   Ubicacion ubicacion = DummyData.getDummyUbicacion();
+  MascotaRegistrada mascotaRegistrada = DummyData.getDummyMascotaRegistrada(new RepositorioCaracteristicas());
+  RepositorioProperties repositorioProperties = RepositorioProperties.getInstance();
 
   List<Caracteristica> listaCaracteristicas = DummyData.getDummyListaCaracteristicasParaMascota(
       new RepositorioCaracteristicas()
@@ -33,7 +37,7 @@ public class InformeMascotaConDuenioTest {
   RepositorioInformes repositorioInformes;
   List<Foto> fotosMascota = DummyData.getDummyFotosMascota();
   List<Foto> fotosMascotaVacio = new ArrayList<>();
-  InformeMascotaConDuenio informeConFoto;
+  InformeConQR informeConFoto;
   NotificadorCorreo notificadorCorreoMockeado;
   Transport transportMockeado;
   MascotaEncontrada mascotaEncontradaConFotos = DummyData.getDummyMascotaEncontrada(new RepositorioCaracteristicas(), fotosMascota);
@@ -55,9 +59,11 @@ public class InformeMascotaConDuenioTest {
   }
 
   @Test
-  @DisplayName("Al procesar un informe de mascota encontrada con duenio, se envia una notificacion" +
-      " y se agrega el informe al repositorio")
+  @DisplayName("Al procesar un informe con QR, se envia una notificacion y se marca el informe como procesado")
   public void MascotaConDuenioNotificarTest() throws MessagingException {
+    repositorioInformes.agregarInformeMascotaEncontrada(informeConFoto);
+    assertTrue(repositorioInformes.getInformesPendientes().contains(informeConFoto));
+
     informeConFoto.procesarInforme();
     verify(transportMockeado, times(1)).connect(any(), any());
     verify(transportMockeado, times(1)).sendMessage(any(), any());
@@ -67,11 +73,12 @@ public class InformeMascotaConDuenioTest {
     verify(transportMockeado, atMostOnce()).sendMessage(any(), any());
     verify(transportMockeado, atMostOnce()).close();
 
-    assertTrue(repositorioInformes.getInformesPendientes().contains(informeConFoto));
+    assertTrue(repositorioInformes.getInformesProcesados().contains(informeConFoto));
   }
 
-  private InformeMascotaConDuenio generarInformeMascotaEncontrada(Notificador notificador, MascotaEncontrada mascota) {
-    return new InformeMascotaConDuenio(rescatista, ubicacion, mascota, repositorioInformes, duenioMascota, notificador);
+  private InformeConQR generarInformeMascotaEncontrada(Notificador notificador, MascotaEncontrada mascotaEncontrada) {
+    return new InformeConQR(rescatista, ubicacion, "", mascotaEncontrada, repositorioInformes, new ObtenerHogaresClient(),
+        mascotaRegistrada, notificador, repositorioProperties);
   }
 
 }
