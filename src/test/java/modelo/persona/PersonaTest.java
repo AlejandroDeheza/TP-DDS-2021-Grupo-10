@@ -1,6 +1,7 @@
 package modelo.persona;
 
 import excepciones.DatosDeContactoIncompletosException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;

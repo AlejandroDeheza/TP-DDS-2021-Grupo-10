@@ -71,7 +71,7 @@ public class DummyData {
   public static List<Caracteristica> getCaracteristicasParaMascota(RepositorioCaracteristicas repo) {
     repo.agregarCaracteristica(getCaracteristicaParaAdmin());
     List<Caracteristica> listaCaracteristica = new ArrayList<>();
-    listaCaracteristica.add( new Caracteristica("Comportamiento", "Tranquilo", repo) );
+    listaCaracteristica.add(new Caracteristica("Comportamiento", "Tranquilo", repo));
     return listaCaracteristica;
   }
 
@@ -84,21 +84,19 @@ public class DummyData {
   public static MascotaEncontrada getMascotaEncontrada(List<Foto> fotos) {
     return new MascotaEncontrada(fotos, getUbicacion(), "Limpio y Sano", LocalDate.now(),
         TamanioMascota.CHICO);
-
   }
 
   public static MascotaRegistrada getMascotaRegistrada(RepositorioCaracteristicas RepositorioCaracteristicas) {
-    return new MascotaRegistrada(getUsuario(),"Felipe","Panchito",
+    return new MascotaRegistrada(getUsuario(), "Felipe", "Panchito",
         LocalDate.of(2018, 3, 4), "Pelo largo", Sexo.MACHO, Animal.PERRO,
         getCaracteristicasParaMascota(RepositorioCaracteristicas), getFotos(), TamanioMascota.CHICO);
-
   }
 
   public static Publicacion getPublicacion(Notificador notificacionCorreo) {
     return new Publicacion(getMascotaEncontrada(getFotos()), getDatosDeContacto(), notificacionCorreo);
   }
 
-  public static Ubicacion getUbicacion(){
+  public static Ubicacion getUbicacion() {
     return new Ubicacion(27.23, 25.78, null);
   }
 

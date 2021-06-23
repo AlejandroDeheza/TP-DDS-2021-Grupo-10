@@ -14,15 +14,16 @@ import static org.mockito.Mockito.*;
 public class NotificadorCorreoTest {
 
   @BeforeEach
-  public void contextLoad() {}
+  public void contextLoad() {
+  }
 
   @Test
   @DisplayName("notificar")
   public void notificarTest() throws MessagingException {
     Transport transportMockeado = mock(Transport.class);
     NotificadorCorreo notificadorCorreo = new NotificadorCorreo(sesion -> transportMockeado);
-    notificadorCorreo.notificar(new Notificacion(DummyData.getDatosDeContacto(),
-        null, null, null, null));
+    notificadorCorreo.notificar(new Notificacion(DummyData.getDatosDeContacto(), null, null,
+        null, null));
 
     verify(transportMockeado, times(1)).connect(any(), any());
     verify(transportMockeado, times(1)).sendMessage(any(), any());

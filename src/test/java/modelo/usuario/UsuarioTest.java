@@ -17,7 +17,7 @@ public class UsuarioTest {
 
   @Test
   @DisplayName("Se puede generar una persona Voluntaria")
-  public void usuarioVoluntarioTest(){
+  public void usuarioVoluntarioTest() {
     assertEquals(DummyData.getUsuarioVoluntario().getTipo(), TipoUsuario.VOLUNTARIO);
   }
 

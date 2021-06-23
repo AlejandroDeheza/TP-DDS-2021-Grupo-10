@@ -13,6 +13,7 @@ import utils.DummyData;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -48,7 +49,8 @@ public class InformeConQRTest {
     List<Hogar> hogares = new ArrayList<>();
     when(receptorHogaresMock.getHogaresDisponibles(any(), any(), any(), any(), any())).thenReturn(hogares);
     assertEquals(hogares, informeConQR.getHogaresCercanos(1000));
-    verify(receptorHogaresMock, times(1)).getHogaresDisponibles(any(), any(), any(), any(), any());
+    verify(receptorHogaresMock,
+        times(1)).getHogaresDisponibles(any(), any(), any(), any(), any());
   }
 
   private InformeConQR generarInformeConQR() {

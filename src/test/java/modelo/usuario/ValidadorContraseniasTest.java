@@ -11,8 +11,8 @@ public class ValidadorContraseniasTest {
   @Test
   @DisplayName("si se crea un usuario, y se registra una contrasenia valida, no se generan problemas")
   public void contraseniaValidaTest() {
-    assertDoesNotThrow(() -> new Usuario(
-        null, "flashbacksDeSistemasOperativos", null, null));
+    assertDoesNotThrow(
+        () -> new Usuario(null, "flashbacksDeSistemasOperativos", null, null));
   }
 
   @Test

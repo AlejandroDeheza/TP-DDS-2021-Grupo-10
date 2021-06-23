@@ -4,7 +4,6 @@ import excepciones.FotosMascotaException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import repositorios.RepositorioCaracteristicas;
 import utils.DummyData;
 
 import java.util.ArrayList;
@@ -14,7 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class MascotaEncontradaTest {
 
   @BeforeEach
-  public void contextLoad() {}
+  public void contextLoad() {
+  }
 
   @Test
   @DisplayName("si se genera una MascotaEncontrada sin fotos en lista, se genera FotosMascotaException")

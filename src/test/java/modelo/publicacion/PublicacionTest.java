@@ -13,7 +13,8 @@ import static org.mockito.Mockito.verify;
 public class PublicacionTest {
 
   @BeforeEach
-  public void contextLoad() {}
+  public void contextLoad() {
+  }
 
   @Test
   @DisplayName("Si un usuario encuentra a su mascota en una publicacion, se envia una Notificacion al rescatista")

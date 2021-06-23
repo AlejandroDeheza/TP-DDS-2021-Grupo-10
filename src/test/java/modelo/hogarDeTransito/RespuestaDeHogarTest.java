@@ -6,7 +6,6 @@ import modelo.informe.Ubicacion;
 import modelo.mascota.Animal;
 import modelo.mascota.TamanioMascota;
 import modelo.mascota.caracteristica.Caracteristica;
-import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,9 +13,9 @@ import repositorios.RepositorioCaracteristicas;
 import utils.DummyData;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RespuestaDeHogarTest {
@@ -75,5 +74,5 @@ public class RespuestaDeHogarTest {
         .stream()
         .map(Caracteristica::getValorCaracteristica)
         .collect(Collectors.toList());
-}
+  }
 }
