@@ -43,7 +43,8 @@ public class RepositorioCaracteristicas {
 
   //el repositorio, en codigo de produccion, lo inyectamos por constructor
   //usamos el constructor solo para tests
-  public RepositorioCaracteristicas() {}
+  public RepositorioCaracteristicas() {
+  }
   //usamos el getInstance en Main
   public static RepositorioCaracteristicas getInstance() {
     return repositorioCaracteristicas;

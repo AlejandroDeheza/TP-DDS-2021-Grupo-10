@@ -28,7 +28,8 @@ public class NotificadorCorreo implements Notificador {
     this.funcion = funcion;
   }
   // para Main
-  public NotificadorCorreo(){}
+  public NotificadorCorreo() {
+  }
 
   @Override
   public void notificar(Notificacion notificacion) {
@@ -36,11 +37,11 @@ public class NotificadorCorreo implements Notificador {
     this.enviarMensaje(mensaje, funcion.apply(session));
   }
 
-  private Session configurarConexionCorreo(){
+  private Session configurarConexionCorreo() {
     Properties props = new Properties();
     props.setProperty("mail.smtp.host", "smtp.gmail.com");
     props.setProperty("mail.smtp.starttls.enable", "true");
-    props.setProperty("mail.smtp.port","587");
+    props.setProperty("mail.smtp.port", "587");
     props.setProperty("mail.smtp.user", "rescatepatitasdds21@gmail.com");
     props.setProperty("mail.smtp.auth", "true");
     Session session = Session.getDefaultInstance(props);
@@ -49,14 +50,14 @@ public class NotificadorCorreo implements Notificador {
     return session;
   }
 
-  private void enviarMensaje(MimeMessage mensaje, Transport t){
-      try {
-        t.connect("rescatepatitasdds21@gmail.com","viernesNoche21");
-        t.sendMessage(mensaje, mensaje.getAllRecipients());
-        t.close();
-      } catch (MessagingException e) {
-        throw new NotificacionCorreoException("Algo salio mal al enviar el mensaje en NotificacionCorreo", e);
-      }
+  private void enviarMensaje(MimeMessage mensaje, Transport t) {
+    try {
+      t.connect("rescatepatitasdds21@gmail.com", "viernesNoche21");
+      t.sendMessage(mensaje, mensaje.getAllRecipients());
+      t.close();
+    } catch (MessagingException e) {
+      throw new NotificacionCorreoException("Algo salio mal al enviar el mensaje en NotificacionCorreo", e);
+    }
   }
 
   private MimeMessage crearMensaje(Notificacion notificacion) {

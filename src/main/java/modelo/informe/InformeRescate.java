@@ -43,7 +43,7 @@ public abstract class InformeRescate {
     );
   }
 
-  public void procesarInforme(){
+  public void procesarInforme() {
     repositorioInformes.marcarInformeComoProcesado(this);
   }
 
@@ -63,7 +63,7 @@ public abstract class InformeRescate {
     return ubicacionRescatista;
   }
 
-  public LocalDate getFechaEncuentro(){
+  public LocalDate getFechaEncuentro() {
     return mascotaEncontrada.getFechaEncuentro();
   }
 

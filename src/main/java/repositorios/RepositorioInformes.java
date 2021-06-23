@@ -31,7 +31,8 @@ public class RepositorioInformes {
 
   //el repositorio, en codigo de produccion, lo inyectamos por constructor
   //usamos el constructor solo para tests
-  public RepositorioInformes() {}
+  public RepositorioInformes() {
+  }
   //usamos el getInstance en Main
   public static RepositorioInformes getInstance() {
     return repositorioInformes;

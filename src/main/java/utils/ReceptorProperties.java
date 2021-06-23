@@ -8,28 +8,28 @@ import java.util.Properties;
 
 public class ReceptorProperties {
 
-    private Properties properties = new Properties();
-    private String path = "src/main/resources/app.properties";
+  private Properties properties = new Properties();
+  private String path = "src/main/resources/app.properties";
 
-    public ReceptorProperties() {
-        cargarPath();
-    }
+  public ReceptorProperties() {
+    cargarPath();
+  }
 
-    public ReceptorProperties(String path){
-        this.path = path;
-        cargarPath();
-    }
+  public ReceptorProperties(String path) {
+    this.path = path;
+    cargarPath();
+  }
 
-    private void cargarPath(){
-        try{
-            properties.load(new FileInputStream(path));
-        } catch (IOException e) {
-            throw new RepositorioPropertiesException(e);
-        }
+  private void cargarPath() {
+    try {
+      properties.load(new FileInputStream(path));
+    } catch (IOException e) {
+      throw new RepositorioPropertiesException(e);
     }
+  }
 
-    public Properties getProperties() {
-        return properties;
-    }
+  public Properties getProperties() {
+    return properties;
+  }
 
 }

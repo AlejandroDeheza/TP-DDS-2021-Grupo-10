@@ -13,8 +13,8 @@ public class Persona {
   private DatosDeContacto datosDeContacto;
   private LocalDate fechaNacimiento;
 
-  public Persona(String nombre, String apellido, DocumentoIdentidad documentoIdentidad,
-       DatosDeContacto datosDeContacto, LocalDate fechaNacimiento) {
+  public Persona(String nombre, String apellido, DocumentoIdentidad documentoIdentidad, DatosDeContacto datosDeContacto,
+                 LocalDate fechaNacimiento) {
     validarQueTengaDatosDeContacto(
         nombre,
         apellido,

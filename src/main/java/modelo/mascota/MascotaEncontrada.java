@@ -18,7 +18,7 @@ public class MascotaEncontrada {
                            TamanioMascota tamanio) {
     validarFotos(fotos);
     this.fotos = fotos;
-    this.ubicacion =ubicacion;
+    this.ubicacion = ubicacion;
     this.estadoActual = estadoActual;
     this.fechaEncuentro = fechaEncuentro;
     this.tamanio = tamanio;
@@ -37,11 +37,11 @@ public class MascotaEncontrada {
     return ubicacion;
   }
 
-  public String getEstadoActual(){
+  public String getEstadoActual() {
     return this.estadoActual;
   }
 
-  public LocalDate getFechaEncuentro(){
+  public LocalDate getFechaEncuentro() {
     return fechaEncuentro;
   }
 

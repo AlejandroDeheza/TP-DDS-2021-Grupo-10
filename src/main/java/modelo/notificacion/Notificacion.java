@@ -27,8 +27,7 @@ public class Notificacion {
   }
 
   public String getMensajeBody() {
-    return "<p> Hola, " + nombreSaludo + "</p> </br></br>" +
-            "<p>" + cuerpoMensaje + "</p></br></br>" +
-            "<p> Saludos, </br>" +  saludo;
+    return "<p> Hola, " + nombreSaludo + "</p> </br></br> <p>" + cuerpoMensaje + "</p> </br></br> <p> Saludos, </br>" +
+        saludo;
   }
 }

@@ -16,7 +16,7 @@ public class DatosDeContacto {
   public Boolean noHayDatosDeContacto() {
     return telefono == null && email == null;
   }
-  
+
   public boolean noExisteCorreoAsociado() {
     return this.email == null;
   }

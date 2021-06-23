@@ -4,13 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Ubicacion {
 
-  @JsonProperty("lat")
   private Double latitud;
-
-  @JsonProperty("long")
   private Double longitud;
-
-  @JsonProperty("direccion")
   private String direccion;
 
   public Ubicacion(@JsonProperty("lat") Double latitud, @JsonProperty("long") Double longitud,
