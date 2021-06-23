@@ -31,7 +31,7 @@ public class ReceptorProperties {
     } finally {
       try {
         if (stream != null) stream.close();
-      } catch (Exception e) {
+      } catch (IOException e) {
         throw new RepositorioPropertiesException(e);
       }
     }
