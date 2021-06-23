@@ -15,9 +15,8 @@ public class ReceptorPropertiesTest {
     assertDoesNotThrow(()-> new ReceptorProperties(pathTest));
   }
 
-
   @Test
-  public void noSePuedecargarPropertiesValido(){
-    assertThrows(RepositorioPropertiesException.class, ()-> new ReceptorProperties("llaal").getProperties());
+  public void noSePuedeCargarPropertiesInvalido(){
+    assertThrows(RepositorioPropertiesException.class, ()-> new ReceptorProperties("llaal"));
   }
 }
