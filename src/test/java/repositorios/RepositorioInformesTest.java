@@ -73,7 +73,7 @@ public class RepositorioInformesTest {
   }
 
   private InformeConQR generarInformeMascotaEncontrada(Notificador notificador, MascotaEncontrada mascotaEncontrada) {
-    return new InformeConQR(rescatista, ubicacion, "", mascotaEncontrada, repositorioInformes, new ReceptorHogares(),
+    return new InformeConQR(rescatista, ubicacion, "", mascotaEncontrada, repositorioInformes, null,
         mascotaRegistrada, notificador, receptorProperties);
 
   }

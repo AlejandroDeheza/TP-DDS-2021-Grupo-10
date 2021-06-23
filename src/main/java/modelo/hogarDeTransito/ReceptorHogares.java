@@ -22,12 +22,20 @@ import java.util.stream.Collectors;
 
 public class ReceptorHogares {
 
-    private final Client client;
-    ObjectMapper objectMapper = new ObjectMapper();
+    private Client client = Client.create();
+    private ObjectMapper objectMapper = new ObjectMapper();
+    private int limiteDePaginasAtraer = 4;
+    // TODO Se tiene que poder treaer hogares hasta la cantidad que indica la property total.
+    private String jsonParaTestear;
 
-    public ReceptorHogares() {
-        client = Client.create();
+    // para testear
+    public ReceptorHogares(String jsonParaTestear) {
+        this.limiteDePaginasAtraer = 1;
+        this.jsonParaTestear = jsonParaTestear;
     }
+    // para Main
+    public ReceptorHogares() {}
+    // el ReceptorHogares, en codigo de produccion, lo inyectamos por constructor
 
     public List<Hogar> getHogaresDisponibles(Ubicacion ubicacionRescatista, Integer radioCercania,
                                              Animal tipoAnimal, TamanioMascota tamanioMascota,
@@ -52,30 +60,36 @@ public class ReceptorHogares {
 
     public List<RespuestaDeHogar> obtenerTodosLosHogares() {
         List<RespuestaDeHogar> resultado = new ArrayList<>();
-        //TODO Se tiene que poder treaer hogares hasta la cantidad que indica la property total.
-        for (int offset = 1; offset < 5; offset++) {
-            RespuestaDeHogares response = this.getJsonMapeado(String.valueOf(offset));
-            resultado.addAll(response.getHogares());
+        for (int offset = 1; offset <= limiteDePaginasAtraer; offset++) {
+            resultado.addAll( getJsonMapeado(String.valueOf(offset)).getHogares() );
         }
         return resultado;
     }
 
     public RespuestaDeHogares getJsonMapeado(String offset) {
-        Properties properties = new ReceptorProperties().getProperties();
-        WebResource recurso = client.resource(properties.getProperty("HOGARES_API")).path(properties
-            .getProperty("HOGARES"));
-        WebResource recursoConParametros = recurso.queryParam("offset", offset);
-        WebResource.Builder builder = recursoConParametros.accept(MediaType.APPLICATION_JSON)
-            .header("Authorization","Bearer " + properties.getProperty("TOKEN"));
-        ClientResponse response = builder.get(ClientResponse.class);
-        String responseJson = response.getEntity(String.class);
         RespuestaDeHogares respuesta;
         try {
-            respuesta = objectMapper.readValue(responseJson, RespuestaDeHogares.class);
+            if (jsonParaTestear != null) {
+                respuesta = objectMapper.readValue(jsonParaTestear, RespuestaDeHogares.class);
+            } else {
+                respuesta = objectMapper.readValue(getJson(offset), RespuestaDeHogares.class);
+            }
         }
         catch (JsonProcessingException e) {
             throw new JsonException(e);
         }
         return respuesta;
+    }
+
+    public String getJson(String offset) {
+        Properties properties = new ReceptorProperties().getProperties();
+        return client
+            .resource(properties.getProperty("HOGARES_API"))
+            .path(properties.getProperty("HOGARES"))
+            .queryParam("offset", offset)
+            .accept(MediaType.APPLICATION_JSON)
+            .header("Authorization","Bearer " + properties.getProperty("TOKEN"))
+            .get(ClientResponse.class)
+            .getEntity(String.class);
     }
 }

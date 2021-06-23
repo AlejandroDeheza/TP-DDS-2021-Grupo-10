@@ -19,76 +19,67 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RespuestaDeHogarTest {
-  Ubicacion ubicacionEncuentro,ubicacionHogar;
-  RespuestaDeHogar respuestaDeHogar = new RespuestaDeHogar();
-  CaracteristicaConValoresPosibles caracteristicasPosiblesTamanio;
-  CaracteristicaConValoresPosibles caracteristicasPosiblesComportamiento;
-  TamanioMascota tamanioMascota;
-  Caracteristica caracteristicaComportamiento;
-  List<Caracteristica> listaCaracteristica = new ArrayList<>();
-  RespuestaDeAdmision respuestaDeAdmision;
-  RepositorioCaracteristicas repositorioCaracteristicas=new RepositorioCaracteristicas();
+  Ubicacion ubicacionEncuentro;
+  RespuestaDeHogar respuestaDeHogar;
+  TamanioMascota tamanio;
+  List<Caracteristica> caracteristicas;
+  RepositorioCaracteristicas repositorioCaracteristicas;
+  Animal animal;
 
   @BeforeEach
   public void contextLoad() {
+    repositorioCaracteristicas = new RepositorioCaracteristicas();
+    repositorioCaracteristicas.agregarCaracteristica(new CaracteristicaConValoresPosibles(
+            "Comportamiento", Arrays.asList("Inquieto", "Tranquilo")));
+    caracteristicas = new ArrayList<>();
+    caracteristicas.add(new Caracteristica("Comportamiento", "Tranquilo",
+        repositorioCaracteristicas));
+
     ubicacionEncuentro = new Ubicacion(70.0, 70.0);
-    ubicacionHogar = new Ubicacion(70.1, 70.1);
-    caracteristicasPosiblesTamanio = new CaracteristicaConValoresPosibles("tamaño", Arrays.asList("pequeño", "Mediano", "Grande"));
-    caracteristicasPosiblesComportamiento = new CaracteristicaConValoresPosibles("Comportamiento", Arrays.asList("Inquieto", "Tranquilo"));
-    repositorioCaracteristicas.agregarCaracteristica(caracteristicasPosiblesTamanio);
-    repositorioCaracteristicas.agregarCaracteristica(caracteristicasPosiblesComportamiento);
-    tamanioMascota = TamanioMascota.CHICO;
-    caracteristicaComportamiento = new Caracteristica("Comportamiento", "Inquieto",repositorioCaracteristicas);
-    respuestaDeAdmision = new RespuestaDeAdmision();
-    respuestaDeAdmision.setAceptaGato(true);
-    respuestaDeAdmision.setAceptaPerro(true);
+    animal = Animal.PERRO;
+    tamanio = TamanioMascota.CHICO;
+    respuestaDeHogar = new RespuestaDeHogar(null, null, new Ubicacion(70.1, 70.1),
+        null, new RespuestaDeAdmision(true, false), null, 2,
+        false, getValores(caracteristicas));
   }
 
   @Test
-  @DisplayName("La mascota cumple todos los requisitos de un hogar")
-  public void esPosibleHogarDeTransitoConUnRadioCercano() {
-    Integer radioCercania = 1000;
-    Animal animal = Animal.PERRO;
-
-    listaCaracteristica.add(caracteristicaComportamiento);
-    respuestaDeHogar.setCapacidad(2);
-    respuestaDeHogar.setLugaresDisponibles(2);
-    respuestaDeHogar.setCaracteristicas(convertirListaCaracteristicasAListaStrings(listaCaracteristica));
-    respuestaDeHogar.setAdmisiones(respuestaDeAdmision);
-    respuestaDeHogar.setUbicacion(ubicacionHogar);
-    respuestaDeHogar.setTienePatio(false);
-
-    assertTrue(respuestaDeHogar.estaDisponible(ubicacionEncuentro, radioCercania, animal, tamanioMascota, listaCaracteristica));
-
+  @DisplayName("Si se cumplen todos los requisitos, el hogar esta disponible")
+  public void siSeCumplenTodosLosRequisitosElHogarEstaDisponible() {
+    assertTrue(respuestaDeHogar.estaDisponible(ubicacionEncuentro, 1000, animal, tamanio, caracteristicas));
   }
-
 
   @Test
-  @DisplayName("La mascota cumple todos los requisitos de un hogar")
-  public void noEsPosibleHogarDeTransitoFueraDeRadioCercano() {
-    Integer radioCercania = 1;
-    Animal animal = Animal.PERRO;
-
-    listaCaracteristica.add(caracteristicaComportamiento);
-    respuestaDeHogar.setCapacidad(2);
-    respuestaDeHogar.setLugaresDisponibles(2);
-    respuestaDeHogar.setCaracteristicas(convertirListaCaracteristicasAListaStrings(listaCaracteristica));
-    respuestaDeHogar.setAdmisiones(respuestaDeAdmision);
-    respuestaDeHogar.setUbicacion(ubicacionHogar);
-    respuestaDeHogar.setTienePatio(false);
-
-    assertFalse(respuestaDeHogar.estaDisponible(ubicacionEncuentro, radioCercania, animal, tamanioMascota, listaCaracteristica));
-
+  @DisplayName("Si el hogar esta muy lejos para el rescatista, entonces no esta disponible")
+  public void fueraDeRadio() {
+    assertFalse(respuestaDeHogar.estaDisponible(ubicacionEncuentro, 1, animal, tamanio, caracteristicas));
   }
 
+  @Test
+  @DisplayName("Si la mascota es grande y el hogar no tiene patio, entonces no esta disponible")
+  public void mascotaGrande() {
+    assertFalse(respuestaDeHogar.estaDisponible(ubicacionEncuentro, 1000, animal, TamanioMascota.GRANDE,
+        caracteristicas));
+  }
 
+  @Test
+  @DisplayName("Si el hogar no acepta el tipo de mascota, entonces no esta disponible")
+  public void noAceptaGatos() {
+    assertFalse(respuestaDeHogar.estaDisponible(ubicacionEncuentro, 1000, Animal.GATO, tamanio,
+        caracteristicas));
+  }
 
-  private List<String> convertirListaCaracteristicasAListaStrings(List<Caracteristica> listaCaracteristica) {
-    List<String> valoresCaracteristicasMascota =listaCaracteristica.stream().
+  @Test
+  @DisplayName("Si la mascota no cumple con las caracteristicas que pide el hogar, entonces no esta disponible")
+  public void noCumpleCaracteristicasEspecificas() {
+    assertFalse(respuestaDeHogar.estaDisponible(ubicacionEncuentro, 1000, animal, tamanio,
+        new ArrayList<>()));
+  }
 
-  map(caracteristica ->caracteristica.getValorCaracteristica()).
-
-  collect(Collectors.toList());
-  return valoresCaracteristicasMascota;
+  private List<String> getValores(List<Caracteristica> listaCaracteristica) {
+    return listaCaracteristica
+        .stream()
+        .map(Caracteristica::getValorCaracteristica)
+        .collect(Collectors.toList());
 }
 }

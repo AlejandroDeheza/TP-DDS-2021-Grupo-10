@@ -10,34 +10,36 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class RespuestaDeHogar {
-    @JsonProperty("id")
+
     private String id;
-
-  @JsonProperty("nombre")
     private String nombre;
-
-    @JsonProperty("ubicacion")
     private Ubicacion ubicacion;
-
-    @JsonProperty("telefono")
     private String telefono;
-
-    @JsonProperty("admisiones")
     private RespuestaDeAdmision admisiones;
-
-    @JsonProperty("capacidad")
-    private Integer capacidad;
-
-    @JsonProperty("lugares_disponibles")
+  private Integer capacidad;
     private Integer lugaresDisponibles;
-
-    @JsonProperty("patio")
     private Boolean tienePatio;
-
-    @JsonProperty("caracteristicas")
     private List<String> caracteristicas;
 
-    public boolean estaDisponible(Ubicacion ubicacionRescatista, Integer radioCercania, Animal animal,
+  public RespuestaDeHogar(@JsonProperty("id") String id, @JsonProperty("nombre") String nombre,
+                          @JsonProperty("ubicacion") Ubicacion ubicacion, @JsonProperty("telefono") String telefono,
+                          @JsonProperty("admisiones") RespuestaDeAdmision admisiones,
+                          @JsonProperty("capacidad") Integer capacidad,
+                          @JsonProperty("lugares_disponibles") Integer lugaresDisponibles,
+                          @JsonProperty("patio") Boolean tienePatio,
+                          @JsonProperty("caracteristicas") List<String> caracteristicas) {
+    this.id = id;
+    this.nombre = nombre;
+    this.ubicacion = ubicacion;
+    this.telefono = telefono;
+    this.admisiones = admisiones;
+    this.capacidad = capacidad;
+    this.lugaresDisponibles = lugaresDisponibles;
+    this.tienePatio = tienePatio;
+    this.caracteristicas = caracteristicas;
+  }
+
+  public boolean estaDisponible(Ubicacion ubicacionRescatista, Integer radioCercania, Animal animal,
                                   TamanioMascota tamanioMascota, List<Caracteristica> caracteristicas) {
         List<String> valoresCaracteristicas = caracteristicas
             .stream()
@@ -53,9 +55,7 @@ public class RespuestaDeHogar {
     }
 
     private Boolean aceptaTamanioMascota(TamanioMascota tamanioMascota) {
-        return
-            (!tienePatio && tamanioMascota == TamanioMascota.CHICO) ||
-            (tienePatio && tamanioMascota != TamanioMascota.CHICO);
+        return tienePatio || tamanioMascota == TamanioMascota.CHICO;
     }
 
     private Boolean tieneLugaresDisponibles() {
@@ -66,32 +66,22 @@ public class RespuestaDeHogar {
         return valoresCaracteristicas.containsAll(this.caracteristicas);
     }
 
-    private Boolean estaDentroDeRadio(Integer radioCercania, Ubicacion ubicacionDireccion) {
+    private Boolean estaDentroDeRadio(Integer radioCercaniaEnKilometros, Ubicacion ubicacion) {
         // https://www.geeksforgeeks.org/program-distance-two-points-earth/
-            double latDireccionRescatista;
-            double latHogar;
-            double lonDireccionRescatista;
-            double lonHogar;
-            lonDireccionRescatista = Math.toRadians(ubicacionDireccion.getLongitud());
-            lonHogar = Math.toRadians(this.ubicacion.getLongitud());
-            latDireccionRescatista = Math.toRadians(ubicacionDireccion.getLatitud());
-            latHogar = Math.toRadians(this.ubicacion.getLatitud());
+      double lonDireccionRescatista = Math.toRadians(ubicacion.getLongitud());
+      double lonHogar = Math.toRadians(this.ubicacion.getLongitud());
+      double latDireccionRescatista = Math.toRadians(ubicacion.getLatitud());
+      double latHogar = Math.toRadians(this.ubicacion.getLatitud());
 
             // Haversine formula
             double dlon = lonHogar - lonDireccionRescatista;
             double dlat = latHogar - latDireccionRescatista;
             double a = Math.pow(Math.sin(dlat / 2), 2)
-                    + Math.cos(latDireccionRescatista) * Math.cos(latHogar)
-                    * Math.pow(Math.sin(dlon / 2),2);
+                    + Math.cos(latDireccionRescatista) * Math.cos(latHogar) * Math.pow(Math.sin(dlon / 2),2);
 
             double c = 2 * Math.asin(Math.sqrt(a));
-
-            // Radius of earth in kilometers. Use 3956
-            // for miles
-            double r = 6371;
-
-            // calculate the result
-            return (c * r)<radioCercania;
+            double r = 6371; // Radius of earth in kilometers. Use 3956 for miles
+            return (c * r) < radioCercaniaEnKilometros; // calculate the result
     }
 
   public String getNombre() {
@@ -106,27 +96,12 @@ public class RespuestaDeHogar {
     return ubicacion;
   }
 
-    public void setUbicacion(Ubicacion ubicacion) {
-        this.ubicacion = ubicacion;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public void setAdmisiones(RespuestaDeAdmision admisiones) {
-        this.admisiones = admisiones;
-    }
+  public Integer getCapacidad() {
+    return capacidad;
+  }
 
-    public void setCapacidad(Integer capacidad) {
-        this.capacidad = capacidad;
-    }
-
-    public void setLugaresDisponibles(Integer lugaresDisponibles) {
-        this.lugaresDisponibles = lugaresDisponibles;
-    }
-
-    public void setTienePatio(Boolean tienePatio) {
-        this.tienePatio = tienePatio;
-    }
-
-    public void setCaracteristicas(List<String> caracteristicas) {
-        this.caracteristicas = caracteristicas;
-    }
 }

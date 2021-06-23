@@ -4,17 +4,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import modelo.mascota.Animal;
 
 public class RespuestaDeAdmision {
-    @JsonProperty("perros")
-    private Boolean aceptaPerro;
 
-    @JsonProperty("gatos")
+    private Boolean aceptaPerro;
     private Boolean aceptaGato;
 
-    public void setAceptaPerro(Boolean aceptaPerro){
+    public RespuestaDeAdmision(@JsonProperty("perros") Boolean aceptaPerro, @JsonProperty("gatos") Boolean aceptaGato) {
         this.aceptaPerro = aceptaPerro;
-    }
-
-    public void setAceptaGato(Boolean aceptaGato){
         this.aceptaGato = aceptaGato;
     }
 

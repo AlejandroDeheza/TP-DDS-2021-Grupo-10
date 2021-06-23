@@ -9,8 +9,11 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RespuestaDeHogares {
 
-    @JsonProperty("hogares")
-    private List<RespuestaDeHogar> hogares = new ArrayList<>();
+    private List<RespuestaDeHogar> hogares;
+
+    public RespuestaDeHogares(@JsonProperty("hogares") List<RespuestaDeHogar> hogares) {
+        this.hogares = hogares;
+    }
 
     public List<RespuestaDeHogar> getHogares() {
         return hogares;
