@@ -2,7 +2,6 @@ package modelo.informe;
 
 import modelo.hogarDeTransito.Hogar;
 import modelo.hogarDeTransito.ReceptorHogares;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import modelo.mascota.MascotaEncontrada;
 import modelo.mascota.MascotaRegistrada;
 import modelo.persona.Persona;

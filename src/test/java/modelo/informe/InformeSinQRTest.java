@@ -1,11 +1,9 @@
 package modelo.informe;
 
 
+import modelo.hogarDeTransito.Hogar;
 import modelo.hogarDeTransito.ReceptorHogares;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import modelo.mascota.Animal;
-import modelo.mascota.MascotaEncontrada;
-import modelo.persona.Persona;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,50 +15,53 @@ import utils.DummyData;
 
 import javax.mail.Transport;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 public class InformeSinQRTest {
 
-    Transport transportMockeado;
-    Persona rescatista = DummyData.getDummyPersona();
-    Ubicacion ubicacion = DummyData.getDummyUbicacion();
-    InformeSinQR informeSinQR;
-    RepositorioPublicaciones repositorioPublicaciones;
-    ReceptorHogares receptorHogaresMock = mock(ReceptorHogares.class);
-    NotificadorCorreo notificadorCorreoMockeado;
-
-    MascotaEncontrada mascotaEncontrada = DummyData.getDummyMascotaEncontrada(new RepositorioCaracteristicas(), DummyData.getDummyFotosMascota());
     RepositorioInformes repositorioInformes;
-
+    RepositorioPublicaciones repositorioPublicaciones;
+    ReceptorHogares receptorHogaresMock;
+    InformeSinQR informeSinQR;
 
     @BeforeEach
     public void loadContext() {
-        transportMockeado = mock(Transport.class);
         repositorioInformes = new RepositorioInformes();
-        notificadorCorreoMockeado = new NotificadorCorreo(sesion -> transportMockeado);
         repositorioPublicaciones = new RepositorioPublicaciones();
-        informeSinQR = generarInformeMascotaEncontrada(notificadorCorreoMockeado);
+        receptorHogaresMock = mock(ReceptorHogares.class);
+        informeSinQR = generarInforme();
     }
 
     @Test
-    @DisplayName("Cuando Se se procesa un informe se genera una publicacion en Repo Publicacion")
+    @DisplayName("Cuando Se se procesa un informe sin QR se agrega una publicacion al RepositorioPublicaciones")
     public void procesarInformeGeneraPublicacionEnElRepo(){
+        repositorioInformes.agregarInformeRescate(informeSinQR);
+        assertTrue(repositorioInformes.getInformesPendientes().contains(informeSinQR));
         informeSinQR.procesarInforme();
+        assertTrue(repositorioInformes.getInformesProcesados().contains(informeSinQR));
+
         assertEquals(1, repositorioPublicaciones.getPublicaciones().size());
     }
 
-
     @Test
-    @DisplayName("Obtener Hogares disponibles")
-    public void obtenerHogaresDisponiblesParaElInforme() throws JsonProcessingException {
-        assertEquals(0, informeSinQR.getHogaresCercanos(0).size());
+    @DisplayName("Obtener Hogares cercanos")
+    public void obtenerHogaresDisponiblesParaElInforme() {
+        List<Hogar> hogares = new ArrayList<>();
+        when(receptorHogaresMock.getHogaresDisponibles(any(), any(), any(), any(), any())).thenReturn(hogares);
+        assertEquals(hogares, informeSinQR.getHogaresCercanos(1000));
+        verify(receptorHogaresMock, times(1)).getHogaresDisponibles(any(), any(), any(), any(), any());
     }
 
-    private InformeSinQR generarInformeMascotaEncontrada(NotificadorCorreo notificador) {
-        return new InformeSinQR(rescatista, ubicacion, "", mascotaEncontrada, repositorioInformes, receptorHogaresMock,
-            Animal.PERRO, DummyData.getDummyListaCaracteristicasParaMascota(new RepositorioCaracteristicas()),
-            repositorioPublicaciones, notificador);
+    private InformeSinQR generarInforme() {
+        return new InformeSinQR(DummyData.getPersona(), DummyData.getUbicacion(), null,
+            DummyData.getMascotaEncontrada(DummyData.getFotos()), repositorioInformes, receptorHogaresMock,
+            Animal.PERRO, DummyData.getCaracteristicasParaMascota(new RepositorioCaracteristicas()),
+            repositorioPublicaciones, null);
     }
 
 }
