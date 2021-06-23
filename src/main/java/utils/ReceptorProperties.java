@@ -4,6 +4,7 @@ import excepciones.RepositorioPropertiesException;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class ReceptorProperties {
@@ -21,10 +22,18 @@ public class ReceptorProperties {
   }
 
   private void cargarPath() {
+    InputStream stream = null;
     try {
-      properties.load(new FileInputStream(path));
+      stream = new FileInputStream(path);
+      properties.load(stream);
     } catch (IOException e) {
       throw new RepositorioPropertiesException(e);
+    } finally {
+      try {
+        if (stream != null) stream.close();
+      } catch (Exception e) {
+        throw new RepositorioPropertiesException(e);
+      }
     }
   }
 
