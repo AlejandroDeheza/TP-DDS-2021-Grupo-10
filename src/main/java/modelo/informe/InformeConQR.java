@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Properties;
 
 public class InformeConQR extends InformeRescate {
-  
+
   private MascotaRegistrada mascotaRegistrada;
   private Notificador notificador;
   private ReceptorProperties receptorProperties;
