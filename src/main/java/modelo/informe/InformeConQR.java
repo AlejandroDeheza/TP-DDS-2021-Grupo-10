@@ -30,7 +30,7 @@ public class InformeConQR extends InformeRescate {
         this.receptorProperties = receptorProperties;
     }
 
-    public List<Hogar> getHogaresCercanos(Integer radioCercania) throws JsonProcessingException {
+    public List<Hogar> getHogaresCercanos(Integer radioCercania) {
         return super.getHogaresCercanos(
             radioCercania,
             mascotaRegistrada.getAnimal(),

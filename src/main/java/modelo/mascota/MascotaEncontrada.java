@@ -1,22 +1,26 @@
 package modelo.mascota;
 
 import excepciones.FotosMascotaException;
+import modelo.informe.Ubicacion;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public class MascotaEncontrada {
 
-  private String estadoActual;
-  private Contexto contextoEncuentro;
   private List<Foto> fotos;
+  private Ubicacion ubicacion;
+  private String estadoActual;
+  private LocalDate fechaEncuentro;
   private TamanioMascota tamanio;
 
-  public MascotaEncontrada(String estadoActual, Contexto contextoEncuentro, List<Foto> fotos, TamanioMascota tamanio) {
+  public MascotaEncontrada(List<Foto> fotos, Ubicacion ubicacion, String estadoActual, LocalDate fechaEncuentro,
+                           TamanioMascota tamanio) {
     validarFotos(fotos);
-    this.estadoActual = estadoActual;
-    this.contextoEncuentro = contextoEncuentro;
     this.fotos = fotos;
+    this.ubicacion =ubicacion;
+    this.estadoActual = estadoActual;
+    this.fechaEncuentro = fechaEncuentro;
     this.tamanio = tamanio;
   }
 
@@ -25,16 +29,20 @@ public class MascotaEncontrada {
       throw new FotosMascotaException("Se debe ingresar al menos una foto de la mascota");
   }
 
+  public List<Foto> getFotos() {
+    return fotos;
+  }
+
+  public Ubicacion getUbicacion() {
+    return ubicacion;
+  }
+
   public String getEstadoActual(){
     return this.estadoActual;
   }
 
   public LocalDate getFechaEncuentro(){
-    return contextoEncuentro.getFechaEncuentro();
-  }
-
-  public List<Foto> getFotos() {
-    return fotos;
+    return fechaEncuentro;
   }
 
   public TamanioMascota getTamanio() {

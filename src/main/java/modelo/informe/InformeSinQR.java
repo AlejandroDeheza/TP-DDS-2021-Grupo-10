@@ -33,7 +33,7 @@ public class InformeSinQR extends InformeRescate {
         this.notificadorCorreo = notificadorCorreo;
     }
 
-    public List<Hogar> getHogaresCercanos(Integer radioCercania) throws JsonProcessingException{
+    public List<Hogar> getHogaresCercanos(Integer radioCercania) {
         return super.getHogaresCercanos(
             radioCercania,
             tipoAnimal,

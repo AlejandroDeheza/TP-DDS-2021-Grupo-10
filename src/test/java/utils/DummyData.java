@@ -86,7 +86,7 @@ public class DummyData {
   }
 
   public static MascotaEncontrada getDummyMascotaEncontrada(RepositorioCaracteristicas RepositorioCaracteristicas, List<Foto> fotos) {
-    return new MascotaEncontrada("Limpio y Sano", getDummyContexto(), fotos, TamanioMascota.CHICO);
+    return new MascotaEncontrada(fotos, getDummyUbicacion(), "Limpio y Sano", LocalDate.now(), TamanioMascota.CHICO);
 
   }
 
@@ -104,10 +104,6 @@ public class DummyData {
   public static Publicacion getDummyPublicacion(Notificador notificacionCorreo) {
     return new Publicacion(getDummyMascotaEncontrada(new RepositorioCaracteristicas(), getDummyFotosMascota()),
         getDummyDatosDeContacto(), notificacionCorreo);
-  }
-
-  public static Contexto getDummyContexto(){
-    return new Contexto(LocalDate.now(), getDummyUbicacion());
   }
 
   public static Ubicacion getDummyUbicacion(){

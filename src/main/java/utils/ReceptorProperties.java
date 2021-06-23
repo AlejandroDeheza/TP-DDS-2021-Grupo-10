@@ -24,7 +24,7 @@ public class ReceptorProperties {
         try{
             properties.load(new FileInputStream(path));
         } catch (IOException e) {
-            throw new RepositorioPropertiesException(e.getMessage());
+            throw new RepositorioPropertiesException(e);
         }
     }
 
