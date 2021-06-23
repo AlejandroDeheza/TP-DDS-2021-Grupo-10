@@ -1,7 +1,6 @@
 package modelo.usuario;
 
 import excepciones.ContraseniaInvalidaException;
-import modelo.usuario.Usuario;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

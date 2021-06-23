@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import repositorios.RepositorioCaracteristicas;
+import utils.DummyData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,22 +24,15 @@ public class RespuestaDeHogarTest {
   RespuestaDeHogar respuestaDeHogar;
   TamanioMascota tamanio;
   List<Caracteristica> caracteristicas;
-  RepositorioCaracteristicas repositorioCaracteristicas;
   Animal animal;
 
   @BeforeEach
   public void contextLoad() {
-    repositorioCaracteristicas = new RepositorioCaracteristicas();
-    repositorioCaracteristicas.agregarCaracteristica(new CaracteristicaConValoresPosibles(
-            "Comportamiento", Arrays.asList("Inquieto", "Tranquilo")));
-    caracteristicas = new ArrayList<>();
-    caracteristicas.add(new Caracteristica("Comportamiento", "Tranquilo",
-        repositorioCaracteristicas));
-
-    ubicacionEncuentro = new Ubicacion(70.0, 70.0);
+    caracteristicas = DummyData.getCaracteristicasParaMascota(new RepositorioCaracteristicas());
+    ubicacionEncuentro = new Ubicacion(70.0, 70.0, null);
     animal = Animal.PERRO;
     tamanio = TamanioMascota.CHICO;
-    respuestaDeHogar = new RespuestaDeHogar(null, null, new Ubicacion(70.1, 70.1),
+    respuestaDeHogar = new RespuestaDeHogar(null, null, new Ubicacion(70.1, 70.1, null),
         null, new RespuestaDeAdmision(true, false), null, 2,
         false, getValores(caracteristicas));
   }

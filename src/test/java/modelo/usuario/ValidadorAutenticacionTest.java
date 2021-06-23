@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ValidadorAutenticacionTest {
 
-  Usuario usuario = DummyData.getDummyUsuario();
+  Usuario usuario = DummyData.getUsuario();
 
   @Test
   @DisplayName("si un usuario dummy se autentica correctamente, no se genera ningun problema")
@@ -21,7 +21,6 @@ public class ValidadorAutenticacionTest {
   @Test
   @DisplayName("si un usuario dummy se autentica mal, se genera AutenticacionInvalidaException")
   public void autenticacionInvalidaExceptionTest() {
-    assertThrows(AutenticacionInvalidaException.class,
-        () -> usuario.autenticarUsuario("Password12"));
+    assertThrows(AutenticacionInvalidaException.class, () -> usuario.autenticarUsuario("Password12"));
   }
 }
