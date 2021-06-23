@@ -1,34 +1,33 @@
 package repositorios;
 
+import modelo.publicacion.Publicacion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import modelo.notificacion.NotificadorCorreo;
 import utils.DummyData;
 
-import javax.mail.Transport;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 public class RepositorioPublicacionesTest {
-    RepositorioPublicaciones repositorioPublicaciones;
-    Transport transportMockeado;
-    NotificadorCorreo notificadorCorreo;
 
     @BeforeEach
-    public void contextLoad() {
-        transportMockeado = mock(Transport.class);
-        repositorioPublicaciones = new RepositorioPublicaciones();
-        notificadorCorreo = new NotificadorCorreo(session -> transportMockeado);
-    }
+    public void contextLoad() {}
 
     @Test
-    @DisplayName("Agregar una publicacion no da error")
-    public void agregarUnaPublicacionNoDaError() {
-        assertDoesNotThrow(
-            () -> repositorioPublicaciones.agregarPublicacion(DummyData.getDummyPublicacion(notificadorCorreo))
-        );
+    @DisplayName("Procesar una publicacion no genera problemas")
+    public void procesaroUnaPublicacionNoGeneraProblemas() {
+        Publicacion publicacion = DummyData.getPublicacion(null);
+        RepositorioPublicaciones repositorioPublicaciones = new RepositorioPublicaciones();
+
+        assertEquals(repositorioPublicaciones.getPublicaciones().size(), 0);
+        repositorioPublicaciones.agregarPublicacion(publicacion);
+        assertEquals(repositorioPublicaciones.getPublicaciones().size(), 1);
+        assertEquals(publicacion, repositorioPublicaciones.getPublicaciones().get(0));
+
+        assertEquals(repositorioPublicaciones.getPublicacionesEncontradas().size(), 0);
+        repositorioPublicaciones.marcarPublicacionComoEncontrada(publicacion);
+        assertEquals(repositorioPublicaciones.getPublicacionesEncontradas().size(), 1);
+        assertEquals(publicacion, repositorioPublicaciones.getPublicacionesEncontradas().get(0));
     }
 
 }
