@@ -1,28 +1,19 @@
 package modelo.informe;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Ubicacion {
 
-  @JsonProperty("lat")
   private Double latitud;
-
-  @JsonProperty("long")
   private Double longitud;
-
-  @JsonProperty("direccion")
   private String direccion;
 
-  public Ubicacion(Double latitud, Double longitud) {
+  public Ubicacion(@JsonProperty("lat") Double latitud, @JsonProperty("long") Double longitud,
+                   @JsonProperty("direccion") String direccion) {
     this.latitud = latitud;
     this.longitud = longitud;
+    this.direccion = direccion;
   }
-
-  public Ubicacion() {
-
-  }
-
 
   public Double getLatitud() {
     return latitud;
@@ -32,19 +23,8 @@ public class Ubicacion {
     return longitud;
   }
 
-  public void setLatitud(Double latitud) {
-    this.latitud = latitud;
-  }
-
-  public void setLongitud(Double longitud) {
-    this.longitud = longitud;
-  }
-
   public String getDireccion() {
     return direccion;
   }
 
-  public void setDireccion(String direccion) {
-    this.direccion = direccion;
-  }
 }

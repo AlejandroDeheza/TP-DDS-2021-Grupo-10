@@ -14,22 +14,6 @@ public class RepositorioCaracteristicas {
   private static RepositorioCaracteristicas repositorioCaracteristicas = new RepositorioCaracteristicas();
   private List<CaracteristicaConValoresPosibles> caracteristicas = new ArrayList<>();
 
-  //usamos el constructor solo para tests
-  public RepositorioCaracteristicas() {}
-
-  //usamos el getInstance en el codigo de produccion
-  public static RepositorioCaracteristicas getInstance() {
-    return repositorioCaracteristicas;
-  }
-
-  public void agregarCaracteristica(CaracteristicaConValoresPosibles caracteristica) {
-    caracteristicas.add(caracteristica);
-  }
-
-  public List<CaracteristicaConValoresPosibles> getCaracteristicas() {
-    return caracteristicas;
-  }
-
   public void validarCaracteristica(String nombreCaracteristica, String valorCaracteristica) {
 
     List<CaracteristicaConValoresPosibles> listaCaracteristicasFiltered = caracteristicas
@@ -47,5 +31,22 @@ public class RepositorioCaracteristicas {
 
     if (!contieneCaracteristica)
       throw new ValorCaracteristicaIncompatibleException("El valor de la caracteristica ingresada no es valida ");
+  }
+
+  public void agregarCaracteristica(CaracteristicaConValoresPosibles caracteristica) {
+    caracteristicas.add(caracteristica);
+  }
+
+  public List<CaracteristicaConValoresPosibles> getCaracteristicas() {
+    return caracteristicas;
+  }
+
+  //el repositorio, en codigo de produccion, lo inyectamos por constructor
+  //usamos el constructor solo para tests
+  public RepositorioCaracteristicas() {
+  }
+  //usamos el getInstance en Main
+  public static RepositorioCaracteristicas getInstance() {
+    return repositorioCaracteristicas;
   }
 }

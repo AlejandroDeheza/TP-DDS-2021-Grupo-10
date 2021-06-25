@@ -19,7 +19,7 @@ public class RepositorioCaracteristicasTest {
 
   @BeforeEach
   public void contextLoad() {
-    caracteristica = DummyData.getDummyCaracteristicaParaAdmin();
+    caracteristica = DummyData.getCaracteristicaParaAdmin();
     repositorioCaracteristicas = new RepositorioCaracteristicas();
     repositorioCaracteristicas.agregarCaracteristica(caracteristica);
   }
@@ -34,7 +34,7 @@ public class RepositorioCaracteristicasTest {
   @DisplayName("si un usuario ingresa una caracterstica valida, no se genera ningun problema")
   public void caracteristicaValidaTest() {
     assertDoesNotThrow(() -> new Caracteristica(
-        "Comportamiento", "Bueno", repositorioCaracteristicas));
+        "Comportamiento", "Tranquilo", repositorioCaracteristicas));
   }
 
   @Test

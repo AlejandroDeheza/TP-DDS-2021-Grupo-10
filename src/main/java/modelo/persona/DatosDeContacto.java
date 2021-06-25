@@ -13,12 +13,12 @@ public class DatosDeContacto {
     return email;
   }
 
-  public Boolean hayAlgunDatoDeContacto() {
-    return (this.telefono != null || this.email != null);
+  public Boolean noHayDatosDeContacto() {
+    return telefono == null && email == null;
   }
-  
-  public boolean existeCorreoAsociado() {
-    return this.email != null;
+
+  public boolean noExisteCorreoAsociado() {
+    return this.email == null;
   }
 
 }
