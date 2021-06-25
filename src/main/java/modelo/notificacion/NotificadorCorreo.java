@@ -45,7 +45,6 @@ public class NotificadorCorreo implements Notificador {
     props.setProperty("mail.smtp.user", "rescatepatitasdds21@gmail.com");
     props.setProperty("mail.smtp.auth", "true");
     Session session = Session.getDefaultInstance(props);
-    //session.setDebug(true);
     session.setDebug(false);
     return session;
   }
