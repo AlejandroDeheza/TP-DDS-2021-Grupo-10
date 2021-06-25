@@ -1,10 +1,10 @@
 package modelo.publicacion;
 
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import excepciones.NoHayPreguntasObligatoriasException;
@@ -14,6 +14,8 @@ import repositorios.RepositorioCaracteristicas;
 import utils.DummyData;
 
 public class PublicacionAdopcionTest {
+
+  NotificadorCorreo notificadorCorreo;
 
   /*
    * TODO: Las preguntas obligatorias deberían ser conseguidas del "repositorio de preguntas".
@@ -39,10 +41,13 @@ public class PublicacionAdopcionTest {
   /* Listas de preguntas particulares a cada asociación */
   List<PreguntaConRespuesta> preguntasAsociacion;
 
-  NotificadorCorreo notificadorCorreo;
+  /* Posts de adopción */
+  DarEnAdopcion postDeAdopcion;
 
   @BeforeEach
   public void contextLoad() {
+
+    this.notificadorCorreo = mock(NotificadorCorreo.class);
 
     /* Preguntas obligatorias */
     this.preguntaObligatoriaConRespuesta1 =
@@ -69,12 +74,15 @@ public class PublicacionAdopcionTest {
     this.preguntasAsociacion =
         Arrays.asList(this.preguntaAsociacionConRespuesta, this.preguntaAsociacionSinRespuesta);
 
-    this.notificadorCorreo = mock(NotificadorCorreo.class);
+    /* Posts de adopción */
+    postDeAdopcion = new DarEnAdopcion(DummyData.getDatosDeContacto(), DummyData.getUbicacion(),
+        this.preguntasObligatoriasCorrectas, this.preguntasAsociacion,
+        DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()), notificadorCorreo);
   }
 
   @Test
   public void unaPublicacionDeDarEnAdopcionNoPuedeTenerUnaListaDePreguntasAsociadasEnNulo() {
-    Assertions.assertThrows(NoHayPreguntasObligatoriasException.class,
+    assertThrows(NoHayPreguntasObligatoriasException.class,
         () -> new DarEnAdopcion(DummyData.getDatosDeContacto(), DummyData.getUbicacion(), null,
             null /* La asociación no posee preguntas en particular */,
             DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()), notificadorCorreo));
@@ -82,7 +90,7 @@ public class PublicacionAdopcionTest {
 
   @Test
   public void unaPublicacionDeDarEnAdopcionNoPuedeTenerUnaListaDePreguntasAsociadasVacia() {
-    Assertions.assertThrows(NoHayPreguntasObligatoriasException.class,
+    assertThrows(NoHayPreguntasObligatoriasException.class,
         () -> new DarEnAdopcion(DummyData.getDatosDeContacto(), DummyData.getUbicacion(),
             this.sinPreguntas, null /* La asociación no posee preguntas en particular */,
             DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()), notificadorCorreo));
@@ -90,7 +98,7 @@ public class PublicacionAdopcionTest {
 
   @Test
   public void unaPublicacionDeDarEnAdopcionNoPuedeTenerPreguntasSinRespuesta() {
-    Assertions.assertThrows(PreguntaSinRespuestaException.class,
+    assertThrows(PreguntaSinRespuestaException.class,
         () -> new DarEnAdopcion(DummyData.getDatosDeContacto(), DummyData.getUbicacion(),
             this.preguntasObligatoriasSinRespuesta,
             null /* La asociación no posee preguntas en particular */,
@@ -99,18 +107,15 @@ public class PublicacionAdopcionTest {
 
   @Test
   public void unaPublicacionDeDarEnAdopcionPuedeTenerPreguntasParticularesDeLaAsociacion() {
-    DarEnAdopcion postDeAdopcion = new DarEnAdopcion(DummyData.getDatosDeContacto(),
-        DummyData.getUbicacion(), this.preguntasObligatoriasCorrectas, this.preguntasAsociacion,
-        DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()), notificadorCorreo);
-    Assertions.assertEquals(postDeAdopcion.getPreguntasDeLaAsociacion().size(), 2);
+    assertEquals(postDeAdopcion.getPreguntasDeLaAsociacion().size(), 2);
   }
 
+  // TODO: Implementar luego de saber si PublicacionAdopcion es parte de Publicacion, o bien son 2
+  // cosas distintas.
   // @Test
   // @DisplayName("Se puede generar una publicación para dar en adopción a una mascota")
   // public void unaPersonaPuedeGenerarUnaPublicacionParaDarEnAdopcionASuMascota() {
-  //
-  //
-  //
+  // postDeAdopcion.notificarPosteador(DummyData.getUsuario());
   // verify(notificadorCorreo).notificar(any());
   // }
 

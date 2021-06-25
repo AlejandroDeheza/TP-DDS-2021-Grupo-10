@@ -10,10 +10,12 @@ import modelo.persona.DatosDeContacto;
 
 public class DarEnAdopcion extends PublicacionAdopcion {
 
-  private List<PreguntaConRespuesta> preguntasObligatorias; // TODO: PreguntaConRespuesta fue stubeado
+  private List<PreguntaConRespuesta> preguntasObligatorias; // TODO: PreguntaConRespuesta fue
+                                                            // stubeado
   // TODO [preguntasObligatorias]: verificar que no sea null en constructor, verificar tambien que
   // las respuestas tampoco sean null, se obtienen del repositorio de preguntas
-  private List<PreguntaConRespuesta> preguntasDeLaAsociacion; // TODO: PreguntaConRespuesta fue stubeado
+  private List<PreguntaConRespuesta> preguntasDeLaAsociacion; // TODO: PreguntaConRespuesta fue
+                                                              // stubeado
   private MascotaRegistrada mascotaEnAdopcion;
   private Notificador notificador;
   // private Asociacion asociacion; // TODO: Integrar en futuras ocasiones
@@ -25,7 +27,11 @@ public class DarEnAdopcion extends PublicacionAdopcion {
       Notificador notificador) {
     super(contactoPosteador, ubicacionPosteador);
     this.validarEntradas(preguntasObligatorias);
+    // TODO: Si las preguntas obligatorias-mancomunadas entre las asociaciones está en el
+    // repositorio de asociaciones, debería hacer un
+    // this.repositorioAsociaciones.getPreguntasObligatorias();
     this.preguntasObligatorias = preguntasObligatorias;
+    // TODO: En realidad creo que debería hacer un this.asociacion.getPreguntas();
     this.preguntasDeLaAsociacion = preguntasDeLaAsociacion;
     this.mascotaEnAdopcion = mascotaEnAdopcion;
   }
