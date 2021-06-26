@@ -43,6 +43,9 @@ public class DarEnAdopcion extends Publicacion {
     }
   }
 
+  /**
+   * @see Publicacion::notificarPosteador/2
+   */
   @Override
   public Notificacion generarNotificacion(Usuario usuario) {
     return null;
