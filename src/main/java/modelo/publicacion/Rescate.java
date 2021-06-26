@@ -26,12 +26,20 @@ public class Rescate extends Publicacion {
     this.mascotaEncontrada = mascotaEncontrada;
   }
 
-  public void notificarEncuentroAlRescatista(Usuario duenio) {
-    Notificacion notificacion =
-        new Notificacion(super.getContactoPosteador(), "Han Encontrado una mascota que rescataste!",
-            null, cuerpoMensaje.concat(duenio.getPersona().getDatosDeContacto().getEmail()),
-            "Hogar de Patitas");
-    super.getNotificador().notificar(notificacion);
+  // @Override
+  // public Notificacion generarNotificacion(Usuario duenio) {
+  // return new Notificacion(super.getContactoPosteador(),
+  // "Han Encontrado una mascota que rescataste!", null,
+  // cuerpoMensaje.concat(duenio.getPersona().getDatosDeContacto().getEmail()),
+  // "Hogar de Patitas");
+  // }
+
+  @Override
+  public Notificacion generarNotificacion(Usuario duenio) {
+    return new Notificacion(super.getContactoPosteador(),
+        "Han Encontrado una mascota que rescataste!", null,
+        cuerpoMensaje.concat(duenio.getPersona().getDatosDeContacto().getEmail()),
+        "Hogar de Patitas");
   }
 
   public MascotaEncontrada getMascotaEncontrada() {

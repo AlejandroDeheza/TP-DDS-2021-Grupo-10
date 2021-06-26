@@ -16,8 +16,7 @@ public abstract class Publicacion {
   // private RepositorioAsociaciones repositorioAsociaciones; // TODO: Integrar en futuras ocasiones
   // private Asociacion asociacion; // TODO: Integrar en futuras ocasiones
 
-  public Publicacion(DatosDeContacto contactoPosteador, Ubicacion ubicacionPosteador,
-      Notificador notificador, RepositorioPublicaciones repositorioPublicaciones) {
+  public Publicacion(DatosDeContacto contactoPosteador, Ubicacion ubicacionPosteador, Notificador notificador, RepositorioPublicaciones repositorioPublicaciones) {
     // TODO: Hace falta validación? o confiar en lo de adentro?
     this.contactoPosteador = contactoPosteador;
     this.ubicacionPosteador = ubicacionPosteador;
@@ -28,11 +27,23 @@ public abstract class Publicacion {
   /**
    * Marca la publicacion como publicacionProcesada y usa un Notificador
    */
-  public void notificarPosteador(Usuario emisor, Notificacion notificacion) {
+  public void lograrObjetivoDeLaPublicacion(Usuario usuario, Notificacion notificacion) {
     this.repositorioPublicaciones.marcarPublicacionComoProcesada(this);
-    // TODO: ¿Instancias de DarEnAdopcion también envían notificación?
-    notificador.notificar(notificacion);
+    this.notificarPosteador(usuario, notificacion);
   }
+
+  /**
+   * @see DarEnAdopcion::generarNotificacion/1
+   */
+  public void notificarPosteador(Usuario usuario, Notificacion notificacion) {
+    if (notificacion != null) { // TODO: ¿Instancias de DarEnAdopcion también envían notificación?
+                                // En caso de que así sea, quitar este if y modelar la Notificación
+                                // a ser enviada para DarEnAdocion
+      this.notificador.notificar(notificacion);
+    }
+  }
+
+  public abstract Notificacion generarNotificacion(Usuario usuario);
 
   public DatosDeContacto getContactoPosteador() {
     return this.contactoPosteador;
