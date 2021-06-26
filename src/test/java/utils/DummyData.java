@@ -5,10 +5,14 @@ import modelo.mascota.*;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 import modelo.persona.*;
+import modelo.publicacion.DarEnAdopcion;
+import modelo.publicacion.PreguntaConRespuesta;
 import modelo.publicacion.Rescate;
+import modelo.publicacion.StubPreguntaConRespuesta;
 import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioCaracteristicas;
+import repositorios.RepositorioPublicaciones;
 import modelo.notificacion.Notificador;
 
 import java.time.LocalDate;
@@ -27,8 +31,8 @@ public class DummyData {
   }
 
   public static Persona getPersona() {
-    return new Persona("PersonaNombre", "PersonaApellido", getDocumentoIdentidad(), getDatosDeContacto(),
-        LocalDate.of(1995, 8, 7));
+    return new Persona("PersonaNombre", "PersonaApellido", getDocumentoIdentidad(),
+        getDatosDeContacto(), LocalDate.of(1995, 8, 7));
   }
 
   public static Persona getPersonaSinDatosDeContacto() {
@@ -68,7 +72,46 @@ public class DummyData {
         Arrays.asList("Inquieto", "Tranquilo"));
   }
 
-  public static List<Caracteristica> getCaracteristicasParaMascota(RepositorioCaracteristicas repo) {
+  /* Publicaciones */
+  public static DarEnAdopcion getPublicacionDeDarEnAdopcionCorrecta(Notificador notificador,
+      RepositorioPublicaciones repositorioPublicaciones,
+      List<PreguntaConRespuesta> preguntasObligatoriasConRespuestas,
+      List<PreguntaConRespuesta> preguntasAsociacion) {
+    return new DarEnAdopcion(DummyData.getDatosDeContacto(), DummyData.getUbicacion(), notificador,
+        DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()), repositorioPublicaciones,
+        preguntasObligatoriasConRespuestas, preguntasAsociacion);
+  }
+
+  public static DarEnAdopcion getPublicacionDeDarEnAdopcionConPreguntasEnNulo(
+      Notificador notificador, RepositorioPublicaciones repositorioPublicaciones) {
+    return new DarEnAdopcion(DummyData.getDatosDeContacto(), DummyData.getUbicacion(), notificador,
+        DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()), repositorioPublicaciones,
+        null, null /* La asociación no posee preguntas en particular */);
+  }
+
+  public static DarEnAdopcion getPublicacionDeDarEnAdopcionConNingunaPregunta(
+      Notificador notificador) {
+    return new DarEnAdopcion(DummyData.getDatosDeContacto(), DummyData.getUbicacion(), notificador,
+        DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()),
+        new RepositorioPublicaciones(), new ArrayList<>(),
+        null /* La asociación no posee preguntas en particular */);
+  }
+
+  /* PreguntasConRespuesta */
+  public static StubPreguntaConRespuesta getPreguntaConRespuesta(String pregunta,
+      String respuesta) {
+    return new StubPreguntaConRespuesta(pregunta, respuesta);
+  }
+
+  public static List<PreguntaConRespuesta> getListadoPreguntasConRespuesta(
+      PreguntaConRespuesta... preguntasConRespuestas) {
+    return Arrays.asList(preguntasConRespuestas);
+  }
+  
+  /**/
+
+  public static List<Caracteristica> getCaracteristicasParaMascota(
+      RepositorioCaracteristicas repo) {
     repo.agregarCaracteristica(getCaracteristicaParaAdmin());
     List<Caracteristica> listaCaracteristica = new ArrayList<>();
     listaCaracteristica.add(new Caracteristica("Comportamiento", "Tranquilo", repo));
@@ -86,28 +129,33 @@ public class DummyData {
         TamanioMascota.CHICO);
   }
 
-  public static MascotaRegistrada getMascotaRegistrada(RepositorioCaracteristicas RepositorioCaracteristicas) {
-    return new MascotaRegistrada(getUsuario(), "Felipe", "Panchito",
-        LocalDate.of(2018, 3, 4), "Pelo largo", Sexo.MACHO, Animal.PERRO,
-        getCaracteristicasParaMascota(RepositorioCaracteristicas), getFotos(), TamanioMascota.CHICO);
+  public static MascotaRegistrada getMascotaRegistrada(
+      RepositorioCaracteristicas RepositorioCaracteristicas) {
+    return new MascotaRegistrada(getUsuario(), "Felipe", "Panchito", LocalDate.of(2018, 3, 4),
+        "Pelo largo", Sexo.MACHO, Animal.PERRO,
+        getCaracteristicasParaMascota(RepositorioCaracteristicas), getFotos(),
+        TamanioMascota.CHICO);
   }
 
-  public static Rescate getPublicacion(Notificador notificacionCorreo) {
-    return new Rescate(getDatosDeContacto(), getUbicacion(), notificacionCorreo, getMascotaEncontrada(getFotos()));
+  public static Rescate getPublicacionDeRescate(Notificador notificacionCorreo,
+      RepositorioPublicaciones repositorioPublicaciones) {
+    return new Rescate(getDatosDeContacto(), getUbicacion(), notificacionCorreo,
+        repositorioPublicaciones, getMascotaEncontrada(getFotos()));
   }
 
   public static Ubicacion getUbicacion() {
     return new Ubicacion(27.23, 25.78, null);
   }
 
-  public static String getJsonHogaresApi() { //Un response con un solo hogar en la lista de hogares.
-    return "{\"total\":40,\"offset\":\"1\",\"hogares\":[{\"id\":\"eyJpdiI6IjV6OHZLa1pxK09KZHRkdEZpclBLUl" +
-        "E9PSIsInZhbHVlIjoiY3JwNjZKQW1XcjRjaVBOQ3gxNVRjZz09IiwibWFjIjoiODgwODJhN2Y4YjA5MmNmNGE1MWU4NDY5ZWQ4MGZjMDRk" +
-        "YjA0Yzg5MjJmMjQ4ODkzNGUxYzNmMjc1ZDBhMWI0MCJ9\",\"nombre\":\"Pensionado de mascotas \\\"Como en casa\\\"\"," +
-        "\"ubicacion\":{\"direccion\":\"Av. Ing Eduardo Madero 2300, B1669BZQ Del Viso, Provincia de Buenos Aires\"," +
-        "\"lat\":-34.46013439745161,\"long\":-58.80857841888721},\"telefono\":\"+541164657462\",\"admisiones\":{\"" +
-        "perros\":false,\"gatos\":true},\"capacidad\":50,\"lugares_disponibles\":45,\"patio\":true,\"caracteristicas" +
-        "\":[\"Tranquilo\"]}]}";
+  public static String getJsonHogaresApi() { // Un response con un solo hogar en la lista de
+                                             // hogares.
+    return "{\"total\":40,\"offset\":\"1\",\"hogares\":[{\"id\":\"eyJpdiI6IjV6OHZLa1pxK09KZHRkdEZpclBLUl"
+        + "E9PSIsInZhbHVlIjoiY3JwNjZKQW1XcjRjaVBOQ3gxNVRjZz09IiwibWFjIjoiODgwODJhN2Y4YjA5MmNmNGE1MWU4NDY5ZWQ4MGZjMDRk"
+        + "YjA0Yzg5MjJmMjQ4ODkzNGUxYzNmMjc1ZDBhMWI0MCJ9\",\"nombre\":\"Pensionado de mascotas \\\"Como en casa\\\"\","
+        + "\"ubicacion\":{\"direccion\":\"Av. Ing Eduardo Madero 2300, B1669BZQ Del Viso, Provincia de Buenos Aires\","
+        + "\"lat\":-34.46013439745161,\"long\":-58.80857841888721},\"telefono\":\"+541164657462\",\"admisiones\":{\""
+        + "perros\":false,\"gatos\":true},\"capacidad\":50,\"lugares_disponibles\":45,\"patio\":true,\"caracteristicas"
+        + "\":[\"Tranquilo\"]}]}";
   }
 
 }

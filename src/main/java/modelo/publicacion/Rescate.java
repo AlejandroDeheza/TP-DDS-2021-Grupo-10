@@ -3,6 +3,7 @@ package modelo.publicacion;
 import modelo.informe.Ubicacion;
 import modelo.mascota.MascotaEncontrada;
 import modelo.usuario.Usuario;
+import repositorios.RepositorioPublicaciones;
 import modelo.persona.DatosDeContacto;
 import modelo.notificacion.Notificacion;
 import modelo.notificacion.Notificador;
@@ -19,8 +20,9 @@ public class Rescate extends Publicacion {
       "El dueño encontro una mascota que vos rescataste. Por favor comunicarse al ";
 
   public Rescate(DatosDeContacto contactoRescatista, Ubicacion ubicacionRescatista,
-      Notificador notificador, MascotaEncontrada mascotaEncontrada) {
-    super(contactoRescatista, ubicacionRescatista, notificador);
+      Notificador notificador, RepositorioPublicaciones repositorioPublicaciones,
+      MascotaEncontrada mascotaEncontrada) {
+    super(contactoRescatista, ubicacionRescatista, notificador, repositorioPublicaciones);
     this.mascotaEncontrada = mascotaEncontrada;
   }
 

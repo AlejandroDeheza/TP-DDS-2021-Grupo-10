@@ -7,6 +7,7 @@ import modelo.informe.Ubicacion;
 import modelo.mascota.MascotaRegistrada;
 import modelo.notificacion.Notificador;
 import modelo.persona.DatosDeContacto;
+import repositorios.RepositorioPublicaciones;
 
 public class DarEnAdopcion extends Publicacion {
 
@@ -18,9 +19,10 @@ public class DarEnAdopcion extends Publicacion {
 
   public DarEnAdopcion(DatosDeContacto contactoPosteador, Ubicacion ubicacionPosteador,
       Notificador notificador, MascotaRegistrada mascotaEnAdopcion,
+      RepositorioPublicaciones repositorioPublicaciones,
       List<PreguntaConRespuesta> preguntasObligatorias,
       List<PreguntaConRespuesta> preguntasDeLaAsociacion) {
-    super(contactoPosteador, ubicacionPosteador, notificador);
+    super(contactoPosteador, ubicacionPosteador, notificador, repositorioPublicaciones);
     this.mascotaEnAdopcion = mascotaEnAdopcion;
 
     this.validarEntradas(preguntasObligatorias);
@@ -44,6 +46,15 @@ public class DarEnAdopcion extends Publicacion {
       }
     }
   }
+
+  // TODO: Implementar una idea similar
+  // public void notificarEncuentroAlRescatista(Usuario duenio) {
+  // Notificacion notificacion =
+  // new Notificacion(super.getContactoPosteador(), "Han Encontrado una mascota que rescataste!",
+  // null, cuerpoMensaje.concat(duenio.getPersona().getDatosDeContacto().getEmail()),
+  // "Hogar de Patitas");
+  // super.getNotificador().notificar(notificacion);
+  // }
 
   public List<PreguntaConRespuesta> getPreguntasObligatorias() {
     return preguntasObligatorias;
