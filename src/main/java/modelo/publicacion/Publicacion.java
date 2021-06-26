@@ -25,6 +25,7 @@ public class Publicacion {
 
   public void notificarPosteador(Usuario emisor) {
     // TODO: Usa un Notificador y marca la publicacion como publicacionProcesada.
+    
   }
 
   public DatosDeContacto getContactoPosteador() {

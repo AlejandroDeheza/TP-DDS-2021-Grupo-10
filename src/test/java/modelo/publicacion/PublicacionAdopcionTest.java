@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import excepciones.NoHayPreguntasObligatoriasException;
 import excepciones.PreguntaSinRespuestaException;
@@ -110,8 +111,6 @@ public class PublicacionAdopcionTest {
     assertEquals(postDeAdopcion.getPreguntasDeLaAsociacion().size(), 2);
   }
 
-  // TODO: Implementar luego de saber si PublicacionAdopcion es parte de Publicacion, o bien son 2
-  // cosas distintas.
   // @Test
   // @DisplayName("Se puede generar una publicación para dar en adopción a una mascota")
   // public void unaPersonaPuedeGenerarUnaPublicacionParaDarEnAdopcionASuMascota() {

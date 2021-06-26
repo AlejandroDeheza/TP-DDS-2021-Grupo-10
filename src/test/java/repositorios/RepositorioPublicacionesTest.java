@@ -20,15 +20,15 @@ public class RepositorioPublicacionesTest {
     Rescate publicacion = DummyData.getPublicacion(null);
     RepositorioPublicaciones repositorioPublicaciones = new RepositorioPublicaciones();
 
-    assertEquals(repositorioPublicaciones.getPublicaciones().size(), 0);
+    assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 0);
     repositorioPublicaciones.agregarPublicacion(publicacion);
-    assertEquals(repositorioPublicaciones.getPublicaciones().size(), 1);
-    assertEquals(publicacion, repositorioPublicaciones.getPublicaciones().get(0));
+    assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 1);
+    assertEquals(publicacion, repositorioPublicaciones.getPublicacionesPendientes().get(0));
 
-    assertEquals(repositorioPublicaciones.getPublicacionesEncontradas().size(), 0);
-    repositorioPublicaciones.marcarPublicacionComoEncontrada(publicacion);
-    assertEquals(repositorioPublicaciones.getPublicacionesEncontradas().size(), 1);
-    assertEquals(publicacion, repositorioPublicaciones.getPublicacionesEncontradas().get(0));
+    assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 0);
+    repositorioPublicaciones.marcarPublicacionComoProcesada(publicacion);
+    assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 1);
+    assertEquals(publicacion, repositorioPublicaciones.getPublicacionesProcesadas().get(0));
   }
 
 }

@@ -41,7 +41,7 @@ public class InformeSinQRTest {
     informeSinQR.procesarInforme();
     assertTrue(repositorioInformes.getInformesProcesados().contains(informeSinQR));
 
-    assertEquals(1, repositorioPublicaciones.getPublicaciones().size());
+    assertEquals(1, repositorioPublicaciones.getPublicacionesPendientes().size());
   }
 
   @Test
