@@ -1,6 +1,6 @@
 package repositorios;
 
-import modelo.publicacion.Publicacion;
+import modelo.publicacion.Rescate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ public class RepositorioPublicacionesTest {
   @Test
   @DisplayName("Procesar una publicacion no genera problemas")
   public void procesaroUnaPublicacionNoGeneraProblemas() {
-    Publicacion publicacion = DummyData.getPublicacion(null);
+    Rescate publicacion = DummyData.getPublicacion(null);
     RepositorioPublicaciones repositorioPublicaciones = new RepositorioPublicaciones();
 
     assertEquals(repositorioPublicaciones.getPublicaciones().size(), 0);

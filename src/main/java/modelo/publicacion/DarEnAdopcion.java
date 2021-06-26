@@ -8,32 +8,29 @@ import modelo.mascota.MascotaRegistrada;
 import modelo.notificacion.Notificador;
 import modelo.persona.DatosDeContacto;
 
-public class DarEnAdopcion extends PublicacionAdopcion {
+public class DarEnAdopcion extends Publicacion {
 
   private List<PreguntaConRespuesta> preguntasObligatorias; // TODO: PreguntaConRespuesta fue
                                                             // stubeado
-  // TODO [preguntasObligatorias]: verificar que no sea null en constructor, verificar tambien que
-  // las respuestas tampoco sean null, se obtienen del repositorio de preguntas
   private List<PreguntaConRespuesta> preguntasDeLaAsociacion; // TODO: PreguntaConRespuesta fue
                                                               // stubeado
   private MascotaRegistrada mascotaEnAdopcion;
-  private Notificador notificador;
-  // private Asociacion asociacion; // TODO: Integrar en futuras ocasiones
-  // private RepositorioAsociaciones repositorioAsociaciones; // TODO: Integrar en futuras ocasiones
 
   public DarEnAdopcion(DatosDeContacto contactoPosteador, Ubicacion ubicacionPosteador,
+      Notificador notificador, MascotaRegistrada mascotaEnAdopcion,
       List<PreguntaConRespuesta> preguntasObligatorias,
-      List<PreguntaConRespuesta> preguntasDeLaAsociacion, MascotaRegistrada mascotaEnAdopcion,
-      Notificador notificador) {
-    super(contactoPosteador, ubicacionPosteador);
+      List<PreguntaConRespuesta> preguntasDeLaAsociacion) {
+    super(contactoPosteador, ubicacionPosteador, notificador);
+    this.mascotaEnAdopcion = mascotaEnAdopcion;
+
     this.validarEntradas(preguntasObligatorias);
     // TODO: Si las preguntas obligatorias-mancomunadas entre las asociaciones está en el
     // repositorio de asociaciones, debería hacer un
     // this.repositorioAsociaciones.getPreguntasObligatorias();
     this.preguntasObligatorias = preguntasObligatorias;
+
     // TODO: En realidad creo que debería hacer un this.asociacion.getPreguntas();
     this.preguntasDeLaAsociacion = preguntasDeLaAsociacion;
-    this.mascotaEnAdopcion = mascotaEnAdopcion;
   }
 
   public void validarEntradas(List<PreguntaConRespuesta> preguntasObligatorias) {
@@ -58,9 +55,5 @@ public class DarEnAdopcion extends PublicacionAdopcion {
 
   public MascotaRegistrada getMascotaEnAdopcion() {
     return mascotaEnAdopcion;
-  }
-
-  public Notificador getNotificador() {
-    return notificador;
   }
 }

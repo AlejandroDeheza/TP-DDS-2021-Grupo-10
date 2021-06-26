@@ -1,20 +1,20 @@
 package repositorios;
 
-import modelo.publicacion.Publicacion;
+import modelo.publicacion.Rescate;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RepositorioPublicaciones {
   private static RepositorioPublicaciones repositorioPublicaciones = new RepositorioPublicaciones();
-  private List<Publicacion> publicaciones = new ArrayList<>();
-  private List<Publicacion> publicacionesEncontradas = new ArrayList<>();
+  private List<Rescate> publicaciones = new ArrayList<>();
+  private List<Rescate> publicacionesEncontradas = new ArrayList<>();
 
-  public void agregarPublicacion(Publicacion publicacion) {
+  public void agregarPublicacion(Rescate publicacion) {
     publicaciones.add(publicacion);
   }
 
-  public void marcarPublicacionComoEncontrada(Publicacion publicacion) {
+  public void marcarPublicacionComoEncontrada(Rescate publicacion) {
     publicaciones.remove(publicacion);
     publicacionesEncontradas.add(publicacion);
   }
@@ -30,11 +30,11 @@ public class RepositorioPublicaciones {
   }
 
   // GETTERS
-  public List<Publicacion> getPublicaciones() {
+  public List<Rescate> getPublicaciones() {
     return publicaciones;
   }
 
-  public List<Publicacion> getPublicacionesEncontradas() {
+  public List<Rescate> getPublicacionesEncontradas() {
     return publicacionesEncontradas;
   }
 

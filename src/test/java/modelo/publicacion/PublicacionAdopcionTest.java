@@ -76,33 +76,33 @@ public class PublicacionAdopcionTest {
 
     /* Posts de adopción */
     postDeAdopcion = new DarEnAdopcion(DummyData.getDatosDeContacto(), DummyData.getUbicacion(),
-        this.preguntasObligatoriasCorrectas, this.preguntasAsociacion,
-        DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()), notificadorCorreo);
+        notificadorCorreo, DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()),
+        this.preguntasObligatoriasCorrectas, this.preguntasAsociacion);
   }
 
   @Test
   public void unaPublicacionDeDarEnAdopcionNoPuedeTenerUnaListaDePreguntasAsociadasEnNulo() {
     assertThrows(NoHayPreguntasObligatoriasException.class,
-        () -> new DarEnAdopcion(DummyData.getDatosDeContacto(), DummyData.getUbicacion(), null,
-            null /* La asociación no posee preguntas en particular */,
-            DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()), notificadorCorreo));
+        () -> new DarEnAdopcion(DummyData.getDatosDeContacto(), DummyData.getUbicacion(),
+            notificadorCorreo, DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()),
+            null, null /* La asociación no posee preguntas en particular */));
   }
 
   @Test
   public void unaPublicacionDeDarEnAdopcionNoPuedeTenerUnaListaDePreguntasAsociadasVacia() {
     assertThrows(NoHayPreguntasObligatoriasException.class,
         () -> new DarEnAdopcion(DummyData.getDatosDeContacto(), DummyData.getUbicacion(),
-            this.sinPreguntas, null /* La asociación no posee preguntas en particular */,
-            DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()), notificadorCorreo));
+            notificadorCorreo, DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()),
+            this.sinPreguntas, null /* La asociación no posee preguntas en particular */));
   }
 
   @Test
   public void unaPublicacionDeDarEnAdopcionNoPuedeTenerPreguntasSinRespuesta() {
     assertThrows(PreguntaSinRespuestaException.class,
         () -> new DarEnAdopcion(DummyData.getDatosDeContacto(), DummyData.getUbicacion(),
+            notificadorCorreo, DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()),
             this.preguntasObligatoriasSinRespuesta,
-            null /* La asociación no posee preguntas en particular */,
-            DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()), notificadorCorreo));
+            null /* La asociación no posee preguntas en particular */));
   }
 
   @Test

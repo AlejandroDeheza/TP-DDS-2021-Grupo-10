@@ -1,36 +1,42 @@
 package modelo.publicacion;
 
-import modelo.mascota.MascotaEncontrada;
-import modelo.usuario.Usuario;
-import modelo.persona.DatosDeContacto;
-import modelo.notificacion.Notificacion;
+import modelo.informe.Ubicacion;
 import modelo.notificacion.Notificador;
+import modelo.persona.DatosDeContacto;
+import modelo.usuario.Usuario;
 
 public class Publicacion {
-  private MascotaEncontrada mascotaEncontrada;
-  private DatosDeContacto contactoRescatista;
-  private Notificador notificador;
-  private String cuerpoMensaje = "El dueño encontro una mascota que vos rescataste. Por favor comunicarse al ";
 
-  public Publicacion(MascotaEncontrada mascotaEncontrada, DatosDeContacto contactoRescatista,
-                     Notificador notificador) {
-    this.mascotaEncontrada = mascotaEncontrada;
-    this.contactoRescatista = contactoRescatista;
+  private DatosDeContacto contactoPosteador;
+  private Ubicacion ubicacionPosteador;
+  private Notificador notificador;
+  // private RepositorioAsociaciones repositorioAsociaciones; // TODO: Integrar en futuras ocasiones
+  // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+  // private Asociacion asociacion; // TODO: Integrar en futuras ocasiones
+  // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+  public Publicacion(DatosDeContacto contactoPosteador, Ubicacion ubicacionPosteador,
+      Notificador notificador) {
+    // TODO: Hace falta validación? o confiar en lo de adentro?
+    this.contactoPosteador = contactoPosteador;
+    this.ubicacionPosteador = ubicacionPosteador;
     this.notificador = notificador;
   }
 
-  public void notificarEncuentroAlRescatista(Usuario duenio) {
-    Notificacion notificacion = new Notificacion(
-        contactoRescatista,
-        "Han Encontrado una mascota que rescataste!",
-        null,
-        cuerpoMensaje.concat(duenio.getPersona().getDatosDeContacto().getEmail()),
-        "Hogar de Patitas"
-    );
-    notificador.notificar(notificacion);
+  public void notificarPosteador(Usuario emisor) {
+    // TODO: Usa un Notificador y marca la publicacion como publicacionProcesada.
   }
 
-  public MascotaEncontrada getMascotaEncontrada() {
-    return mascotaEncontrada;
+  public DatosDeContacto getContactoPosteador() {
+    return this.contactoPosteador;
   }
+
+  public Ubicacion getUbicacionPosteador() {
+    return this.ubicacionPosteador;
+  }
+
+  public Notificador getNotificador() {
+    return this.notificador;
+  }
+
 }

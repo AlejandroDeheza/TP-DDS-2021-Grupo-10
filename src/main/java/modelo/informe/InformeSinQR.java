@@ -6,7 +6,7 @@ import modelo.mascota.Animal;
 import modelo.mascota.MascotaEncontrada;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.Persona;
-import modelo.publicacion.Publicacion;
+import modelo.publicacion.Rescate;
 import repositorios.RepositorioInformes;
 import repositorios.RepositorioPublicaciones;
 import modelo.notificacion.NotificadorCorreo;
@@ -21,11 +21,11 @@ public class InformeSinQR extends InformeRescate {
   private NotificadorCorreo notificadorCorreo;
 
   public InformeSinQR(Persona rescatista, Ubicacion ubicacionRescatista, String direccionRescatista,
-                      MascotaEncontrada mascotaEncontrada, RepositorioInformes repositorioInformes,
-                      ReceptorHogares receptorHogares, Animal tipoAnimal, List<Caracteristica> caracteristicas,
-                      RepositorioPublicaciones repositorioPublicaciones, NotificadorCorreo notificadorCorreo) {
-    super(rescatista, ubicacionRescatista, direccionRescatista, mascotaEncontrada, repositorioInformes,
-        receptorHogares);
+      MascotaEncontrada mascotaEncontrada, RepositorioInformes repositorioInformes,
+      ReceptorHogares receptorHogares, Animal tipoAnimal, List<Caracteristica> caracteristicas,
+      RepositorioPublicaciones repositorioPublicaciones, NotificadorCorreo notificadorCorreo) {
+    super(rescatista, ubicacionRescatista, direccionRescatista, mascotaEncontrada,
+        repositorioInformes, receptorHogares);
     this.tipoAnimal = tipoAnimal;
     this.caracteristicas = caracteristicas;
     this.repositorioPublicaciones = repositorioPublicaciones;
@@ -33,11 +33,8 @@ public class InformeSinQR extends InformeRescate {
   }
 
   public List<Hogar> getHogaresCercanos(Integer radioCercania) {
-    return super.getHogaresCercanos(
-        radioCercania,
-        tipoAnimal,
-        this.getMascotaEncontrada().getTamanio(),
-        caracteristicas);
+    return super.getHogaresCercanos(radioCercania, tipoAnimal,
+        this.getMascotaEncontrada().getTamanio(), caracteristicas);
   }
 
   @Override
@@ -47,12 +44,8 @@ public class InformeSinQR extends InformeRescate {
   }
 
   private void generarPublicacion() {
-    repositorioPublicaciones.agregarPublicacion(
-        new Publicacion(
-            this.getMascotaEncontrada(),
-            this.getRescatista().getDatosDeContacto(),
-            notificadorCorreo)
-    );
+    repositorioPublicaciones
+        .agregarPublicacion(new Rescate(super.getRescatista().getDatosDeContacto(),
+            super.getUbicacionRescatista(), this.notificadorCorreo, super.getMascotaEncontrada()));
   }
-
 }

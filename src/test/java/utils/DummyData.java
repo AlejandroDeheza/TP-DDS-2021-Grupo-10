@@ -5,7 +5,7 @@ import modelo.mascota.*;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 import modelo.persona.*;
-import modelo.publicacion.Publicacion;
+import modelo.publicacion.Rescate;
 import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioCaracteristicas;
@@ -92,8 +92,8 @@ public class DummyData {
         getCaracteristicasParaMascota(RepositorioCaracteristicas), getFotos(), TamanioMascota.CHICO);
   }
 
-  public static Publicacion getPublicacion(Notificador notificacionCorreo) {
-    return new Publicacion(getMascotaEncontrada(getFotos()), getDatosDeContacto(), notificacionCorreo);
+  public static Rescate getPublicacion(Notificador notificacionCorreo) {
+    return new Rescate(getDatosDeContacto(), getUbicacion(), notificacionCorreo, getMascotaEncontrada(getFotos()));
   }
 
   public static Ubicacion getUbicacion() {
