@@ -13,7 +13,7 @@ public class ParDePreguntas {
     this.preguntaDelAdoptante = preguntaDelAdoptante;
   }
 
-  public void agregarRespuesta(ParDeRespuestas parDeRespuestas){
+  public void agregarRespuesta(ParDeRespuestas parDeRespuestas) {
     paresDeRespuestas.add(parDeRespuestas);
   }
 
