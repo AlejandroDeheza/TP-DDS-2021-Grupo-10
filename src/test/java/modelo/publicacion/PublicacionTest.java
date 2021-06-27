@@ -8,18 +8,18 @@ import excepciones.PreguntaSinRespuestaException;
 import modelo.informe.Ubicacion;
 import modelo.mascota.MascotaEncontrada;
 import modelo.mascota.MascotaRegistrada;
-import modelo.notificacion.Notificacion;
 import modelo.notificacion.NotificadorCorreo;
 import modelo.persona.Persona;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioPublicaciones;
 import utils.DummyData;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import java.util.List;
 
 /**
  * @see RepositorioPublicacionesTest para ver la forma en cómo se procesa una publicación
@@ -75,8 +75,10 @@ public class PublicacionTest {
     this.preguntaObligatoriaSinRespuesta1 = DummyData.getPreguntaConRespuesta("¿Cuántas veces lleva a su mascota a pasear usualmente?", null);
     this.preguntaObligatoriaSinRespuesta2 = DummyData.getPreguntaConRespuesta("¿Cómo se comporta su mascota frente a otros tipos de mascotas?", null);
 
-    this.preguntasObligatoriasCorrectas = DummyData.getListadoPreguntasConRespuesta(this.preguntaObligatoriaConRespuesta1, this.preguntaObligatoriaConRespuesta2);
-    this.preguntasObligatoriasSinRespuesta = DummyData.getListadoPreguntasConRespuesta(this.preguntaObligatoriaConRespuesta1, this.preguntaObligatoriaSinRespuesta1);
+    this.preguntasObligatoriasCorrectas =
+        DummyData.getListadoPreguntasConRespuesta(this.preguntaObligatoriaConRespuesta1, this.preguntaObligatoriaConRespuesta2);
+    this.preguntasObligatoriasSinRespuesta =
+        DummyData.getListadoPreguntasConRespuesta(this.preguntaObligatoriaConRespuesta1, this.preguntaObligatoriaSinRespuesta1);
 
     /* Preguntas de cada asociación */
     this.preguntaAsociacionConRespuesta = DummyData.getPreguntaConRespuesta("¿Su mascota es muy activo?", "No");
@@ -85,7 +87,8 @@ public class PublicacionTest {
     this.preguntasAsociacion = DummyData.getListadoPreguntasConRespuesta(this.preguntaAsociacionConRespuesta, this.preguntaAsociacionSinRespuesta);
 
     /* Publicaciones de DarEnAdopcion */
-    publicacionDeDarEnAdopcionCorrecta = DummyData.getPublicacionDeDarEnAdopcionCorrecta(this.notificadorCorreo, new RepositorioPublicaciones(), this.preguntasObligatoriasCorrectas, this.preguntasAsociacion);
+    publicacionDeDarEnAdopcionCorrecta = DummyData.getPublicacionDeDarEnAdopcionCorrecta(this.notificadorCorreo, new RepositorioPublicaciones(),
+        this.preguntasObligatoriasCorrectas, this.preguntasAsociacion);
 
     /* Etc. */
     unUsuario = DummyData.getUsuario();
@@ -104,13 +107,14 @@ public class PublicacionTest {
     // RepositorioPublicaciones()).notificarEncuentroAlRescatista(DummyData.getUsuario());
     RepositorioPublicaciones repositorioPublicaciones = new RepositorioPublicaciones();
     Usuario rescatista = DummyData.getUsuario();
-    DummyData.getPublicacionDeRescate(notificadorCorreo, repositorioPublicaciones).notificarPosteador(rescatista, DummyData.getPublicacionDeRescate(this.notificadorCorreo, repositorioPublicaciones).generarNotificacion(rescatista));
+    DummyData.getPublicacionDeRescate(notificadorCorreo, repositorioPublicaciones).notificarPosteador(rescatista);
     verify(notificadorCorreo).notificar(any());
   }
 
   @Test
   public void unaPublicacionDeDarEnAdopcionNoPuedeTenerUnaListaDePreguntasAsociadasEnNulo() {
-    assertThrows(NoHayPreguntasObligatoriasException.class, () -> DummyData.getPublicacionDeDarEnAdopcionConPreguntasEnNulo(this.notificadorCorreo, new RepositorioPublicaciones()));
+    assertThrows(NoHayPreguntasObligatoriasException.class,
+        () -> DummyData.getPublicacionDeDarEnAdopcionConPreguntasEnNulo(this.notificadorCorreo, new RepositorioPublicaciones()));
   }
 
   @Test
@@ -120,7 +124,10 @@ public class PublicacionTest {
 
   @Test
   public void unaPublicacionDeDarEnAdopcionNoPuedeTenerPreguntasSinRespuesta() {
-    assertThrows(PreguntaSinRespuestaException.class, () -> new DarEnAdopcion(DummyData.getDatosDeContacto(), DummyData.getUbicacion(), notificadorCorreo, DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()), new RepositorioPublicaciones(), this.preguntasObligatoriasSinRespuesta, null /* La asociación no posee preguntas en particular */));
+    assertThrows(PreguntaSinRespuestaException.class,
+        () -> new DarEnAdopcion(DummyData.getDatosDeContacto(), DummyData.getUbicacion(), notificadorCorreo,
+            DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()), new RepositorioPublicaciones(), this.preguntasObligatoriasSinRespuesta,
+            null /* La asociación no posee preguntas en particular */));
   }
 
   @Test
@@ -139,9 +146,8 @@ public class PublicacionTest {
   public void procesarUnaPublicacionDeDarEnAdopcionProcesaNoEnviaUnaNotificacion() {
     RepositorioPublicaciones repositorioPublicaciones = new RepositorioPublicaciones();
 
-    DarEnAdopcion publicacionDarEnAdopcion = new DarEnAdopcion(this.unaPersona.getDatosDeContacto(), this.unaUbicacion, this.notificadorCorreo, this.unaMascotaRegistrada, repositorioPublicaciones, this.preguntasObligatoriasCorrectas, null);
-
-    Notificacion unaNotificacion = publicacionDarEnAdopcion.generarNotificacion(this.unUsuario);
+    DarEnAdopcion publicacionDarEnAdopcion = new DarEnAdopcion(this.unaPersona.getDatosDeContacto(), this.unaUbicacion, this.notificadorCorreo,
+        this.unaMascotaRegistrada, repositorioPublicaciones, this.preguntasObligatoriasCorrectas, null);
 
     assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 0);
     assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 0);
@@ -150,20 +156,19 @@ public class PublicacionTest {
     assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 1);
     assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 0);
 
-    publicacionDarEnAdopcion.lograrObjetivoDeLaPublicacion(unUsuario, unaNotificacion);
+    publicacionDarEnAdopcion.lograrObjetivoDeLaPublicacion(unUsuario);
     assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 0);
     assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 1);
 
-    verify(this.notificadorCorreo, times(0)).notificar(unaNotificacion);
+    verify(this.notificadorCorreo, times(0)).notificar(any());
   }
 
   @Test
   public void procesarUnaPublicacionDeRescateEnviaUnaNotificacion() {
     RepositorioPublicaciones repositorioPublicaciones = new RepositorioPublicaciones();
 
-    Rescate publicacionRescate = new Rescate(this.unaPersona.getDatosDeContacto(), this.unaUbicacion, this.notificadorCorreo, repositorioPublicaciones, this.unaMascotaEncontrada);
-
-    Notificacion unaNotificacion = publicacionRescate.generarNotificacion(unUsuario);
+    Rescate publicacionRescate = new Rescate(this.unaPersona.getDatosDeContacto(), this.unaUbicacion, this.notificadorCorreo,
+        repositorioPublicaciones, this.unaMascotaEncontrada);
 
     assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 0);
     assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 0);
@@ -172,10 +177,10 @@ public class PublicacionTest {
     assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 1);
     assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 0);
 
-    publicacionRescate.lograrObjetivoDeLaPublicacion(unUsuario, unaNotificacion);
+    publicacionRescate.lograrObjetivoDeLaPublicacion(unUsuario);
     assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 0);
     assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 1);
 
-    verify(this.notificadorCorreo, times(1)).notificar(unaNotificacion);
+    verify(this.notificadorCorreo, times(1)).notificar(any());
   }
 }

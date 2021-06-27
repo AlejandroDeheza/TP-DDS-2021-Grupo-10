@@ -27,15 +27,16 @@ public abstract class Publicacion {
   /**
    * Marca la publicacion como publicacionProcesada y usa un Notificador
    */
-  public void lograrObjetivoDeLaPublicacion(Usuario usuario, Notificacion notificacion) {
+  public void lograrObjetivoDeLaPublicacion(Usuario usuario) {
     this.repositorioPublicaciones.marcarPublicacionComoProcesada(this);
-    this.notificarPosteador(usuario, notificacion);
+    this.notificarPosteador(usuario);
   }
 
   /**
    * @see DarEnAdopcion::generarNotificacion/1
    */
-  public void notificarPosteador(Usuario usuario, Notificacion notificacion) {
+  public void notificarPosteador(Usuario usuario) {
+    Notificacion notificacion = this.generarNotificacion(usuario);
     if (notificacion != null) { // TODO: ¿Instancias de DarEnAdopcion también envían notificación?
                                 // En caso de que así sea, quitar este if y modelar la Notificación
                                 // a ser enviada para DarEnAdocion
