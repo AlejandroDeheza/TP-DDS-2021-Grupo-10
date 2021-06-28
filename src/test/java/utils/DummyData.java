@@ -10,7 +10,8 @@ import modelo.publicacion.Rescate;
 import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioCaracteristicas;
-import repositorios.RepositorioPublicaciones;
+import repositorios.RepositorioDarEnAdopcion;
+import repositorios.RepositorioRescates;
 import modelo.notificacion.Notificador;
 
 import java.time.LocalDate;
@@ -67,9 +68,9 @@ public class DummyData {
   }
 
   /* Publicaciones */
-  public static DarEnAdopcion getPublicacionDeDarEnAdopcionCorrecta(Notificador notificador, RepositorioPublicaciones repositorioPublicaciones) {
+  public static DarEnAdopcion getPublicacionDeDarEnAdopcionCorrecta(Notificador notificador, RepositorioDarEnAdopcion repositorio) {
     return new DarEnAdopcion(DummyData.getDatosDeContacto(), notificador, DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()),
-        repositorioPublicaciones);
+        repositorio);
   }
 
   public static List<Caracteristica> getCaracteristicasParaMascota(RepositorioCaracteristicas repo) {
@@ -94,8 +95,8 @@ public class DummyData {
         getCaracteristicasParaMascota(RepositorioCaracteristicas), getFotos(), TamanioMascota.CHICO);
   }
 
-  public static Rescate getPublicacionDeRescate(Notificador notificacionCorreo, RepositorioPublicaciones repositorioPublicaciones) {
-    return new Rescate(getDatosDeContacto(), notificacionCorreo, repositorioPublicaciones, getMascotaEncontrada(getFotos()));
+  public static Rescate getPublicacionDeRescate(Notificador notificacionCorreo, RepositorioRescates repositorio) {
+    return new Rescate(getDatosDeContacto(), notificacionCorreo, repositorio, getMascotaEncontrada(getFotos()));
   }
 
   public static Ubicacion getUbicacion() {

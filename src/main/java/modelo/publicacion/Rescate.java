@@ -2,7 +2,7 @@ package modelo.publicacion;
 
 import modelo.mascota.MascotaEncontrada;
 import modelo.usuario.Usuario;
-import repositorios.RepositorioPublicaciones;
+import repositorios.RepositorioRescates;
 import modelo.persona.DatosDeContacto;
 import modelo.notificacion.Notificacion;
 import modelo.notificacion.Notificador;
@@ -16,16 +16,18 @@ public class Rescate extends Publicacion {
 
   private MascotaEncontrada mascotaEncontrada;
   private String cuerpoMensaje = "El dueño encontro una mascota que vos rescataste. Por favor comunicarse al ";
+  private RepositorioRescates repositorioRescates;
 
-  public Rescate(DatosDeContacto contactoRescatista, Notificador notificador, RepositorioPublicaciones repositorioPublicaciones,
+  public Rescate(DatosDeContacto contactoRescatista, Notificador notificador, RepositorioRescates repositorioRescates,
       MascotaEncontrada mascotaEncontrada) {
-    super(contactoRescatista, notificador, repositorioPublicaciones);
+    super(contactoRescatista, notificador);
     this.mascotaEncontrada = mascotaEncontrada;
+    this.repositorioRescates = repositorioRescates;
   }
 
   @Override
   public void notificarAlPosteador(Usuario usuario) {
-    this.getRepositorioPublicaciones().marcarComoProcesada(this);
+    this.getRepositorioRescates().marcarComoProcesada(this);
     super.notificarAlPosteador(usuario);
   }
 
@@ -37,5 +39,9 @@ public class Rescate extends Publicacion {
 
   public MascotaEncontrada getMascotaEncontrada() {
     return mascotaEncontrada;
+  }
+
+  public RepositorioRescates getRepositorioRescates() {
+    return this.repositorioRescates;
   }
 }

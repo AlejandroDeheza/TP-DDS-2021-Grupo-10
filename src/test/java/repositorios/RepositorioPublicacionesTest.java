@@ -18,7 +18,7 @@ public class RepositorioPublicacionesTest {
   @Test
   @DisplayName("Procesar una publicacion de rescate no genera problemas")
   public void procesarUnaPublicacionDeRescateNoGeneraProblemas() {
-    RepositorioPublicaciones repositorioPublicaciones = new RepositorioPublicaciones();
+    RepositorioRescates repositorioPublicaciones = new RepositorioRescates();
     Rescate publicacion = DummyData.getPublicacionDeRescate(null, repositorioPublicaciones);
 
     assertEquals(repositorioPublicaciones.getRescates().size(), 0);
@@ -35,7 +35,7 @@ public class RepositorioPublicacionesTest {
   @Test
   @DisplayName("Procesar una publicacion de dar en adopción no genera problemas")
   public void procesarUnaPublicacionDeDarEnAdopcionNoGeneraProblemas() {
-    RepositorioPublicaciones repositorioPublicaciones = new RepositorioPublicaciones();
+    RepositorioDarEnAdopcion repositorioPublicaciones = new RepositorioDarEnAdopcion();
     DarEnAdopcion publicacion = DummyData.getPublicacionDeDarEnAdopcionCorrecta(new NotificadorCorreo(), repositorioPublicaciones);
 
     assertEquals(repositorioPublicaciones.getDarEnAdopcion().size(), 0);

@@ -9,24 +9,20 @@ import modelo.notificacion.NotificadorCorreo;
 import modelo.persona.Persona;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioCaracteristicas;
-import repositorios.RepositorioPublicaciones;
+import repositorios.RepositorioDarEnAdopcion;
+import repositorios.RepositorioRescates;
 import utils.DummyData;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-/**
- * @see RepositorioPublicacionesTest para ver la forma en cómo se procesa una publicación
- */
 public class PublicacionTest {
 
   NotificadorCorreo notificadorCorreo;
 
-  /* Posts de adopción */
   DarEnAdopcion publicacionDeDarEnAdopcionCorrecta;
 
-  /* Etc */
   Usuario unUsuario;
   Persona unaPersona;
   MascotaRegistrada unaMascotaRegistrada;
@@ -37,10 +33,8 @@ public class PublicacionTest {
 
     this.notificadorCorreo = mock(NotificadorCorreo.class);
 
-    /* Publicaciones de DarEnAdopcion */
-    publicacionDeDarEnAdopcionCorrecta = DummyData.getPublicacionDeDarEnAdopcionCorrecta(this.notificadorCorreo, new RepositorioPublicaciones());
+    publicacionDeDarEnAdopcionCorrecta = DummyData.getPublicacionDeDarEnAdopcionCorrecta(this.notificadorCorreo, new RepositorioDarEnAdopcion());
 
-    /* Etc. */
     unUsuario = DummyData.getUsuario();
     unaPersona = this.unUsuario.getPersona();
     unaMascotaRegistrada = DummyData.getMascotaRegistrada(new RepositorioCaracteristicas());
@@ -51,57 +45,56 @@ public class PublicacionTest {
   @DisplayName("Si un usuario encuentra a su mascota en una publicacion, se envia una Notificacion al rescatista")
   public void encontrarUnaMascotaPerdidaEnviaUnaNotificacion() {
     NotificadorCorreo notificadorCorreo = mock(NotificadorCorreo.class);
-    RepositorioPublicaciones repositorioPublicaciones = new RepositorioPublicaciones();
+    RepositorioRescates repositorio = new RepositorioRescates();
     Usuario rescatista = DummyData.getUsuario();
-    DummyData.getPublicacionDeRescate(notificadorCorreo, repositorioPublicaciones).notificarAlPosteador(rescatista);
+    DummyData.getPublicacionDeRescate(notificadorCorreo, repositorio).notificarAlPosteador(rescatista);
     verify(notificadorCorreo).notificar(any());
   }
 
   @Test
   public void sePuedeGenerarUnaPublicacionParaDarEnAdopcionAUnaMascota() {
-    RepositorioPublicaciones repositorioPublicaciones = new RepositorioPublicaciones();
-    repositorioPublicaciones.agregar(publicacionDeDarEnAdopcionCorrecta);
-    assertEquals(repositorioPublicaciones.getDarEnAdopcion().size(), 1);
+    RepositorioDarEnAdopcion repositorio = new RepositorioDarEnAdopcion();
+    repositorio.agregar(publicacionDeDarEnAdopcionCorrecta);
+    assertEquals(repositorio.getDarEnAdopcion().size(), 1);
   }
 
   @Test
   public void procesarUnaPublicacionDeDarEnAdopcionProcesaNoEnviaUnaNotificacion() {
-    RepositorioPublicaciones repositorioPublicaciones = new RepositorioPublicaciones();
+    RepositorioDarEnAdopcion repositorio = new RepositorioDarEnAdopcion();
 
-    DarEnAdopcion publicacionDarEnAdopcion =
-        new DarEnAdopcion(this.unaPersona.getDatosDeContacto(), this.notificadorCorreo, this.unaMascotaRegistrada, repositorioPublicaciones);
+    DarEnAdopcion publicacion =
+        new DarEnAdopcion(this.unaPersona.getDatosDeContacto(), this.notificadorCorreo, this.unaMascotaRegistrada, repositorio);
 
-    assertEquals(repositorioPublicaciones.getDarEnAdopcion().size(), 0);
-    assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 0);
+    assertEquals(repositorio.getDarEnAdopcion().size(), 0);
+    assertEquals(repositorio.getPublicacionesProcesadas().size(), 0);
 
-    repositorioPublicaciones.agregar(publicacionDarEnAdopcion);
-    assertEquals(repositorioPublicaciones.getDarEnAdopcion().size(), 1);
-    assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 0);
+    repositorio.agregar(publicacion);
+    assertEquals(repositorio.getDarEnAdopcion().size(), 1);
+    assertEquals(repositorio.getPublicacionesProcesadas().size(), 0);
 
-    publicacionDarEnAdopcion.notificarAlPosteador(unUsuario);
-    assertEquals(repositorioPublicaciones.getDarEnAdopcion().size(), 0);
-    assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 1);
+    publicacion.notificarAlPosteador(unUsuario);
+    assertEquals(repositorio.getDarEnAdopcion().size(), 0);
+    assertEquals(repositorio.getPublicacionesProcesadas().size(), 1);
 
     verify(this.notificadorCorreo, times(0)).notificar(any());
   }
 
   @Test
   public void procesarUnaPublicacionDeRescateEnviaUnaNotificacion() {
-    RepositorioPublicaciones repositorioPublicaciones = new RepositorioPublicaciones();
+    RepositorioRescates repositorio = new RepositorioRescates();
 
-    Rescate publicacionRescate =
-        new Rescate(this.unaPersona.getDatosDeContacto(), this.notificadorCorreo, repositorioPublicaciones, this.unaMascotaEncontrada);
+    Rescate publicacion = new Rescate(this.unaPersona.getDatosDeContacto(), this.notificadorCorreo, repositorio, this.unaMascotaEncontrada);
 
-    assertEquals(repositorioPublicaciones.getRescates().size(), 0);
-    assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 0);
+    assertEquals(repositorio.getRescates().size(), 0);
+    assertEquals(repositorio.getPublicacionesProcesadas().size(), 0);
 
-    repositorioPublicaciones.agregar(publicacionRescate);
-    assertEquals(repositorioPublicaciones.getRescates().size(), 1);
-    assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 0);
+    repositorio.agregar(publicacion);
+    assertEquals(repositorio.getRescates().size(), 1);
+    assertEquals(repositorio.getPublicacionesProcesadas().size(), 0);
 
-    publicacionRescate.notificarAlPosteador(unUsuario);
-    assertEquals(repositorioPublicaciones.getRescates().size(), 0);
-    assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 1);
+    publicacion.notificarAlPosteador(unUsuario);
+    assertEquals(repositorio.getRescates().size(), 0);
+    assertEquals(repositorio.getPublicacionesProcesadas().size(), 1);
 
     verify(this.notificadorCorreo, times(1)).notificar(any());
   }

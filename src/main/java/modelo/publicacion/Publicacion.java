@@ -4,19 +4,16 @@ import modelo.notificacion.Notificacion;
 import modelo.notificacion.Notificador;
 import modelo.persona.DatosDeContacto;
 import modelo.usuario.Usuario;
-import repositorios.RepositorioPublicaciones;
 
 public abstract class Publicacion {
 
   private DatosDeContacto contactoPosteador;
   private Notificador notificador;
-  private RepositorioPublicaciones repositorioPublicaciones;
   // private Asociacion asociacion; // TODO: Integrar en futuras ocasiones
 
-  public Publicacion(DatosDeContacto contactoPosteador, Notificador notificador, RepositorioPublicaciones repositorioPublicaciones) {
+  public Publicacion(DatosDeContacto contactoPosteador, Notificador notificador) {
     this.contactoPosteador = contactoPosteador;
     this.notificador = notificador;
-    this.repositorioPublicaciones = repositorioPublicaciones;
   }
 
   /**
@@ -41,9 +38,5 @@ public abstract class Publicacion {
 
   public Notificador getNotificador() {
     return this.notificador;
-  }
-  
-  public RepositorioPublicaciones getRepositorioPublicaciones() {
-    return this.repositorioPublicaciones;
   }
 }
