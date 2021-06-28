@@ -29,28 +29,25 @@ public class DummyData {
   }
 
   public static Persona getPersona() {
-    return new Persona("PersonaNombre", "PersonaApellido", getDocumentoIdentidad(),
-        getDatosDeContacto(), LocalDate.of(1995, 8, 7));
+    return new Persona("PersonaNombre", "PersonaApellido", getDocumentoIdentidad(), getDatosDeContacto(), LocalDate.of(1995, 8, 7));
   }
 
   public static Persona getPersonaSinDatosDeContacto() {
-    return new Persona("PersonaNombre", "PersonaApellido", getDocumentoIdentidad(), null,
-        LocalDate.of(1995, 8, 7));
+    return new Persona("PersonaNombre", "PersonaApellido", getDocumentoIdentidad(), null, LocalDate.of(1995, 8, 7));
   }
 
   public static Persona getPersonaSinDatosDeContactoNiNombreNiApellido() {
-    return new Persona(null, null, getDocumentoIdentidad(), new DatosDeContacto(null, null),
-        LocalDate.of(1995, 8, 7));
+    return new Persona(null, null, getDocumentoIdentidad(), new DatosDeContacto(null, null), LocalDate.of(1995, 8, 7));
   }
 
   public static Persona getPersonaSinTelefono() {
-    return new Persona("PersonaNombre", "PersonaApellido", getDocumentoIdentidad(),
-        new DatosDeContacto(null, "dds2021g10@gmail.com"), LocalDate.of(1995, 8, 7));
+    return new Persona("PersonaNombre", "PersonaApellido", getDocumentoIdentidad(), new DatosDeContacto(null, "dds2021g10@gmail.com"),
+        LocalDate.of(1995, 8, 7));
   }
 
   public static Persona getPersonaSinCorreo() {
-    return new Persona("PersonaNombre", "PersonaApellido", getDocumentoIdentidad(),
-        new DatosDeContacto("01147474747", null), LocalDate.of(1995, 8, 7));
+    return new Persona("PersonaNombre", "PersonaApellido", getDocumentoIdentidad(), new DatosDeContacto("01147474747", null),
+        LocalDate.of(1995, 8, 7));
   }
 
   public static Usuario getUsuario() {
@@ -66,19 +63,16 @@ public class DummyData {
   }
 
   public static CaracteristicaConValoresPosibles getCaracteristicaParaAdmin() {
-    return new CaracteristicaConValoresPosibles("Comportamiento",
-        Arrays.asList("Inquieto", "Tranquilo"));
+    return new CaracteristicaConValoresPosibles("Comportamiento", Arrays.asList("Inquieto", "Tranquilo"));
   }
 
   /* Publicaciones */
-  public static DarEnAdopcion getPublicacionDeDarEnAdopcionCorrecta(Notificador notificador,
-      RepositorioPublicaciones repositorioPublicaciones) {
-    return new DarEnAdopcion(DummyData.getDatosDeContacto(), DummyData.getUbicacion(), notificador,
-        DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()), repositorioPublicaciones);
+  public static DarEnAdopcion getPublicacionDeDarEnAdopcionCorrecta(Notificador notificador, RepositorioPublicaciones repositorioPublicaciones) {
+    return new DarEnAdopcion(DummyData.getDatosDeContacto(), notificador, DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()),
+        repositorioPublicaciones);
   }
 
-  public static List<Caracteristica> getCaracteristicasParaMascota(
-      RepositorioCaracteristicas repo) {
+  public static List<Caracteristica> getCaracteristicasParaMascota(RepositorioCaracteristicas repo) {
     repo.agregarCaracteristica(getCaracteristicaParaAdmin());
     List<Caracteristica> listaCaracteristica = new ArrayList<>();
     listaCaracteristica.add(new Caracteristica("Comportamiento", "Tranquilo", repo));
@@ -92,22 +86,16 @@ public class DummyData {
   }
 
   public static MascotaEncontrada getMascotaEncontrada(List<Foto> fotos) {
-    return new MascotaEncontrada(fotos, getUbicacion(), "Limpio y Sano", LocalDate.now(),
-        TamanioMascota.CHICO);
+    return new MascotaEncontrada(fotos, getUbicacion(), "Limpio y Sano", LocalDate.now(), TamanioMascota.CHICO);
   }
 
-  public static MascotaRegistrada getMascotaRegistrada(
-      RepositorioCaracteristicas RepositorioCaracteristicas) {
-    return new MascotaRegistrada(getUsuario(), "Felipe", "Panchito", LocalDate.of(2018, 3, 4),
-        "Pelo largo", Sexo.MACHO, Animal.PERRO,
-        getCaracteristicasParaMascota(RepositorioCaracteristicas), getFotos(),
-        TamanioMascota.CHICO);
+  public static MascotaRegistrada getMascotaRegistrada(RepositorioCaracteristicas RepositorioCaracteristicas) {
+    return new MascotaRegistrada(getUsuario(), "Felipe", "Panchito", LocalDate.of(2018, 3, 4), "Pelo largo", Sexo.MACHO, Animal.PERRO,
+        getCaracteristicasParaMascota(RepositorioCaracteristicas), getFotos(), TamanioMascota.CHICO);
   }
 
-  public static Rescate getPublicacionDeRescate(Notificador notificacionCorreo,
-      RepositorioPublicaciones repositorioPublicaciones) {
-    return new Rescate(getDatosDeContacto(), getUbicacion(), notificacionCorreo,
-        repositorioPublicaciones, getMascotaEncontrada(getFotos()));
+  public static Rescate getPublicacionDeRescate(Notificador notificacionCorreo, RepositorioPublicaciones repositorioPublicaciones) {
+    return new Rescate(getDatosDeContacto(), notificacionCorreo, repositorioPublicaciones, getMascotaEncontrada(getFotos()));
   }
 
   public static Ubicacion getUbicacion() {
@@ -121,8 +109,7 @@ public class DummyData {
         + "YjA0Yzg5MjJmMjQ4ODkzNGUxYzNmMjc1ZDBhMWI0MCJ9\",\"nombre\":\"Pensionado de mascotas \\\"Como en casa\\\"\","
         + "\"ubicacion\":{\"direccion\":\"Av. Ing Eduardo Madero 2300, B1669BZQ Del Viso, Provincia de Buenos Aires\","
         + "\"lat\":-34.46013439745161,\"long\":-58.80857841888721},\"telefono\":\"+541164657462\",\"admisiones\":{\""
-        + "perros\":false,\"gatos\":true},\"capacidad\":50,\"lugares_disponibles\":45,\"patio\":true,\"caracteristicas"
-        + "\":[\"Tranquilo\"]}]}";
+        + "perros\":false,\"gatos\":true},\"capacidad\":50,\"lugares_disponibles\":45,\"patio\":true,\"caracteristicas" + "\":[\"Tranquilo\"]}]}";
   }
 
 }

@@ -1,6 +1,5 @@
 package modelo.publicacion;
 
-import modelo.informe.Ubicacion;
 import modelo.mascota.MascotaRegistrada;
 import modelo.notificacion.Notificacion;
 import modelo.notificacion.Notificador;
@@ -14,9 +13,9 @@ public class DarEnAdopcion extends Publicacion {
   // private List<Respuesta> respuestasDelDador;
   private MascotaRegistrada mascotaEnAdopcion;
 
-  public DarEnAdopcion(DatosDeContacto contactoPosteador, Ubicacion ubicacionPosteador, Notificador notificador, MascotaRegistrada mascotaEnAdopcion,
+  public DarEnAdopcion(DatosDeContacto contactoPosteador, Notificador notificador, MascotaRegistrada mascotaEnAdopcion,
       RepositorioPublicaciones repositorioPublicaciones /* , List<Respuesta> respuestasDelDador */) {
-    super(contactoPosteador, ubicacionPosteador, notificador, repositorioPublicaciones);
+    super(contactoPosteador, notificador, repositorioPublicaciones);
     this.mascotaEnAdopcion = mascotaEnAdopcion;
     // this.respuestasDelDador = respuestasDelDador;
   }

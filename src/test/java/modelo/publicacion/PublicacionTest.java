@@ -3,7 +3,6 @@ package modelo.publicacion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import modelo.informe.Ubicacion;
 import modelo.mascota.MascotaEncontrada;
 import modelo.mascota.MascotaRegistrada;
 import modelo.notificacion.NotificadorCorreo;
@@ -30,7 +29,6 @@ public class PublicacionTest {
   /* Etc */
   Usuario unUsuario;
   Persona unaPersona;
-  Ubicacion unaUbicacion;
   MascotaRegistrada unaMascotaRegistrada;
   MascotaEncontrada unaMascotaEncontrada;
 
@@ -45,10 +43,8 @@ public class PublicacionTest {
     /* Etc. */
     unUsuario = DummyData.getUsuario();
     unaPersona = this.unUsuario.getPersona();
-    unaUbicacion = DummyData.getUbicacion();
     unaMascotaRegistrada = DummyData.getMascotaRegistrada(new RepositorioCaracteristicas());
     unaMascotaEncontrada = DummyData.getMascotaEncontrada(DummyData.getFotos());
-
   }
 
   @Test
@@ -74,8 +70,8 @@ public class PublicacionTest {
   public void procesarUnaPublicacionDeDarEnAdopcionProcesaNoEnviaUnaNotificacion() {
     RepositorioPublicaciones repositorioPublicaciones = new RepositorioPublicaciones();
 
-    DarEnAdopcion publicacionDarEnAdopcion = new DarEnAdopcion(this.unaPersona.getDatosDeContacto(), this.unaUbicacion, this.notificadorCorreo,
-        this.unaMascotaRegistrada, repositorioPublicaciones);
+    DarEnAdopcion publicacionDarEnAdopcion =
+        new DarEnAdopcion(this.unaPersona.getDatosDeContacto(), this.notificadorCorreo, this.unaMascotaRegistrada, repositorioPublicaciones);
 
     assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 0);
     assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 0);
@@ -95,8 +91,8 @@ public class PublicacionTest {
   public void procesarUnaPublicacionDeRescateEnviaUnaNotificacion() {
     RepositorioPublicaciones repositorioPublicaciones = new RepositorioPublicaciones();
 
-    Rescate publicacionRescate = new Rescate(this.unaPersona.getDatosDeContacto(), this.unaUbicacion, this.notificadorCorreo,
-        repositorioPublicaciones, this.unaMascotaEncontrada);
+    Rescate publicacionRescate =
+        new Rescate(this.unaPersona.getDatosDeContacto(), this.notificadorCorreo, repositorioPublicaciones, this.unaMascotaEncontrada);
 
     assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 0);
     assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 0);

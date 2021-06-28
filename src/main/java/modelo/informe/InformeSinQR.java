@@ -20,12 +20,10 @@ public class InformeSinQR extends InformeRescate {
   private RepositorioPublicaciones repositorioPublicaciones;
   private NotificadorCorreo notificadorCorreo;
 
-  public InformeSinQR(Persona rescatista, Ubicacion ubicacionRescatista, String direccionRescatista,
-      MascotaEncontrada mascotaEncontrada, RepositorioInformes repositorioInformes,
-      ReceptorHogares receptorHogares, Animal tipoAnimal, List<Caracteristica> caracteristicas,
+  public InformeSinQR(Persona rescatista, Ubicacion ubicacionRescatista, String direccionRescatista, MascotaEncontrada mascotaEncontrada,
+      RepositorioInformes repositorioInformes, ReceptorHogares receptorHogares, Animal tipoAnimal, List<Caracteristica> caracteristicas,
       RepositorioPublicaciones repositorioPublicaciones, NotificadorCorreo notificadorCorreo) {
-    super(rescatista, ubicacionRescatista, direccionRescatista, mascotaEncontrada,
-        repositorioInformes, receptorHogares);
+    super(rescatista, ubicacionRescatista, direccionRescatista, mascotaEncontrada, repositorioInformes, receptorHogares);
     this.tipoAnimal = tipoAnimal;
     this.caracteristicas = caracteristicas;
     this.repositorioPublicaciones = repositorioPublicaciones;
@@ -33,8 +31,7 @@ public class InformeSinQR extends InformeRescate {
   }
 
   public List<Hogar> getHogaresCercanos(Integer radioCercania) {
-    return super.getHogaresCercanos(radioCercania, tipoAnimal,
-        this.getMascotaEncontrada().getTamanio(), caracteristicas);
+    return super.getHogaresCercanos(radioCercania, tipoAnimal, this.getMascotaEncontrada().getTamanio(), caracteristicas);
   }
 
   @Override
@@ -45,7 +42,6 @@ public class InformeSinQR extends InformeRescate {
 
   private void generarPublicacion() {
     repositorioPublicaciones.agregarPublicacion(
-        new Rescate(super.getRescatista().getDatosDeContacto(), super.getUbicacionRescatista(),
-            this.notificadorCorreo, this.repositorioPublicaciones, super.getMascotaEncontrada()));
+        new Rescate(super.getRescatista().getDatosDeContacto(), this.notificadorCorreo, this.repositorioPublicaciones, super.getMascotaEncontrada()));
   }
 }
