@@ -8,11 +8,13 @@ import java.util.List;
 
 public class RepositorioPublicaciones {
   private static RepositorioPublicaciones repositorioPublicaciones = new RepositorioPublicaciones();
-  private List<Publicacion> publicacionesPendientes = new ArrayList<>();
+  private List<DarEnAdopcion> darEnAdopcion = new ArrayList<>();
+  // private List<IntencionDeAdopcion> intencionesDeAdopcion = new ArrayList<>();
+  private List<Rescate> rescates = new ArrayList<>();
   private List<Publicacion> publicacionesProcesadas = new ArrayList<>();
 
   public void agregar(Rescate publicacion) {
-    publicacionesPendientes.add(publicacion);
+    this.rescates.add(publicacion);
   }
 
   // public void agregar(IntencionDeAdopcion publicacion) {
@@ -20,12 +22,12 @@ public class RepositorioPublicaciones {
   // }
 
   public void agregar(DarEnAdopcion publicacion) {
-    publicacionesPendientes.add(publicacion);
+    this.darEnAdopcion.add(publicacion);
   }
 
   public void marcarComoProcesada(Rescate publicacion) {
-    publicacionesPendientes.remove(publicacion);
-    publicacionesProcesadas.add(publicacion);
+    this.rescates.remove(publicacion);
+    this.publicacionesProcesadas.add(publicacion);
   }
 
   // public void marcarComoProcesada(IntencionDeAdopcion publicacion) {
@@ -34,8 +36,8 @@ public class RepositorioPublicaciones {
   // }
 
   public void marcarComoProcesada(DarEnAdopcion publicacion) {
-    publicacionesPendientes.remove(publicacion);
-    publicacionesProcesadas.add(publicacion);
+    this.darEnAdopcion.remove(publicacion);
+    this.publicacionesProcesadas.add(publicacion);
   }
 
   // el repositorio, en codigo de produccion, lo inyectamos por constructor
@@ -48,12 +50,19 @@ public class RepositorioPublicaciones {
   }
 
   // GETTERS
-  public List<Publicacion> getPublicacionesPendientes() {
-    return publicacionesPendientes;
+  public static RepositorioPublicaciones getRepositorioPublicaciones() {
+    return repositorioPublicaciones;
+  }
+
+  public List<DarEnAdopcion> getDarEnAdopcion() {
+    return this.darEnAdopcion;
+  }
+
+  public List<Rescate> getRescates() {
+    return this.rescates;
   }
 
   public List<Publicacion> getPublicacionesProcesadas() {
-    return publicacionesProcesadas;
+    return this.publicacionesProcesadas;
   }
-
 }

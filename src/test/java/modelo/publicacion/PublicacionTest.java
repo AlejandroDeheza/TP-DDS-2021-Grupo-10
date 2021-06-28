@@ -61,7 +61,7 @@ public class PublicacionTest {
   public void sePuedeGenerarUnaPublicacionParaDarEnAdopcionAUnaMascota() {
     RepositorioPublicaciones repositorioPublicaciones = new RepositorioPublicaciones();
     repositorioPublicaciones.agregar(publicacionDeDarEnAdopcionCorrecta);
-    assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 1);
+    assertEquals(repositorioPublicaciones.getDarEnAdopcion().size(), 1);
   }
 
   @Test
@@ -71,15 +71,15 @@ public class PublicacionTest {
     DarEnAdopcion publicacionDarEnAdopcion =
         new DarEnAdopcion(this.unaPersona.getDatosDeContacto(), this.notificadorCorreo, this.unaMascotaRegistrada, repositorioPublicaciones);
 
-    assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 0);
+    assertEquals(repositorioPublicaciones.getDarEnAdopcion().size(), 0);
     assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 0);
 
     repositorioPublicaciones.agregar(publicacionDarEnAdopcion);
-    assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 1);
+    assertEquals(repositorioPublicaciones.getDarEnAdopcion().size(), 1);
     assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 0);
 
     publicacionDarEnAdopcion.notificarAlPosteador(unUsuario);
-    assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 0);
+    assertEquals(repositorioPublicaciones.getDarEnAdopcion().size(), 0);
     assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 1);
 
     verify(this.notificadorCorreo, times(0)).notificar(any());
@@ -92,15 +92,15 @@ public class PublicacionTest {
     Rescate publicacionRescate =
         new Rescate(this.unaPersona.getDatosDeContacto(), this.notificadorCorreo, repositorioPublicaciones, this.unaMascotaEncontrada);
 
-    assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 0);
+    assertEquals(repositorioPublicaciones.getRescates().size(), 0);
     assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 0);
 
     repositorioPublicaciones.agregar(publicacionRescate);
-    assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 1);
+    assertEquals(repositorioPublicaciones.getRescates().size(), 1);
     assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 0);
 
     publicacionRescate.notificarAlPosteador(unUsuario);
-    assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 0);
+    assertEquals(repositorioPublicaciones.getRescates().size(), 0);
     assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 1);
 
     verify(this.notificadorCorreo, times(1)).notificar(any());
