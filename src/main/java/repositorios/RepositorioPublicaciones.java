@@ -1,6 +1,7 @@
 package repositorios;
 
 import modelo.publicacion.DarEnAdopcion;
+import modelo.publicacion.IntencionDeAdopcion;
 import modelo.publicacion.Publicacion;
 import modelo.publicacion.Rescate;
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.List;
 public class RepositorioPublicaciones {
   private static RepositorioPublicaciones repositorioPublicaciones = new RepositorioPublicaciones();
   private List<DarEnAdopcion> darEnAdopcion = new ArrayList<>();
-  // private List<IntencionDeAdopcion> intencionesDeAdopcion = new ArrayList<>();
+  private List<IntencionDeAdopcion> intencionesDeAdopcion = new ArrayList<>();
   private List<Rescate> rescates = new ArrayList<>();
   private List<Publicacion> publicacionesProcesadas = new ArrayList<>();
 
@@ -17,9 +18,9 @@ public class RepositorioPublicaciones {
     this.rescates.add(publicacion);
   }
 
-  // public void agregar(IntencionDeAdopcion publicacion) {
-  // publicacionesPendientes.add(publicacion);
-  // }
+  public void agregar(IntencionDeAdopcion publicacion) {
+    intencionesDeAdopcion.add(publicacion);
+  }
 
   public void agregar(DarEnAdopcion publicacion) {
     this.darEnAdopcion.add(publicacion);
@@ -30,10 +31,10 @@ public class RepositorioPublicaciones {
     this.publicacionesProcesadas.add(publicacion);
   }
 
-  // public void marcarComoProcesada(IntencionDeAdopcion publicacion) {
-  // publicacionesPendientes.remove(publicacion);
-  // publicacionesProcesadas.add(publicacion);
-  // }
+  public void marcarComoProcesada(IntencionDeAdopcion publicacion) {
+    intencionesDeAdopcion.remove(publicacion);
+    publicacionesProcesadas.add(publicacion);
+  }
 
   public void marcarComoProcesada(DarEnAdopcion publicacion) {
     this.darEnAdopcion.remove(publicacion);
