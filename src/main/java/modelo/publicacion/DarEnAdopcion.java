@@ -20,6 +20,12 @@ public class DarEnAdopcion extends Publicacion {
     // this.respuestasDelDador = respuestasDelDador;
   }
 
+  @Override
+  public void notificarAlPosteador(Usuario usuario) {
+    this.getRepositorioPublicaciones().marcarComoProcesada(this);
+    super.notificarAlPosteador(usuario);
+  }
+
   /**
    * @see Publicacion::notificarPosteador/2
    */

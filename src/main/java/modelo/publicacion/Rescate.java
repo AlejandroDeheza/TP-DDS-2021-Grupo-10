@@ -24,6 +24,12 @@ public class Rescate extends Publicacion {
   }
 
   @Override
+  public void notificarAlPosteador(Usuario usuario) {
+    this.getRepositorioPublicaciones().marcarComoProcesada(this);
+    super.notificarAlPosteador(usuario);
+  }
+
+  @Override
   public Notificacion generarNotificacion(Usuario duenio) {
     return new Notificacion(super.getContactoPosteador(), "Han Encontrado una mascota que rescataste!", null,
         cuerpoMensaje.concat(duenio.getPersona().getDatosDeContacto().getEmail()), "Hogar de Patitas");

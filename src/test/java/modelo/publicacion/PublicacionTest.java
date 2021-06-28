@@ -60,7 +60,7 @@ public class PublicacionTest {
   @Test
   public void sePuedeGenerarUnaPublicacionParaDarEnAdopcionAUnaMascota() {
     RepositorioPublicaciones repositorioPublicaciones = new RepositorioPublicaciones();
-    repositorioPublicaciones.agregarPublicacion(publicacionDeDarEnAdopcionCorrecta);
+    repositorioPublicaciones.agregar(publicacionDeDarEnAdopcionCorrecta);
     assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 1);
   }
 
@@ -74,7 +74,7 @@ public class PublicacionTest {
     assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 0);
     assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 0);
 
-    repositorioPublicaciones.agregarPublicacion(publicacionDarEnAdopcion);
+    repositorioPublicaciones.agregar(publicacionDarEnAdopcion);
     assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 1);
     assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 0);
 
@@ -95,7 +95,7 @@ public class PublicacionTest {
     assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 0);
     assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 0);
 
-    repositorioPublicaciones.agregarPublicacion(publicacionRescate);
+    repositorioPublicaciones.agregar(publicacionRescate);
     assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 1);
     assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 0);
 

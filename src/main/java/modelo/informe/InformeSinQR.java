@@ -41,7 +41,7 @@ public class InformeSinQR extends InformeRescate {
   }
 
   private void generarPublicacion() {
-    repositorioPublicaciones.agregarPublicacion(
+    repositorioPublicaciones.agregar(
         new Rescate(super.getRescatista().getDatosDeContacto(), this.notificadorCorreo, this.repositorioPublicaciones, super.getMascotaEncontrada()));
   }
 }

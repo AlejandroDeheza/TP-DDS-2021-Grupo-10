@@ -23,7 +23,6 @@ public abstract class Publicacion {
    * Marca la publicacion como publicacionProcesada y usa un Notificador
    */
   public void notificarAlPosteador(Usuario usuario) {
-    this.repositorioPublicaciones.marcarPublicacionComoProcesada(this);
     Notificacion notificacion = this.generarNotificacion(usuario);
     if (notificacion != null) {
       this.notificador.notificar(notificacion);
@@ -43,5 +42,8 @@ public abstract class Publicacion {
   public Notificador getNotificador() {
     return this.notificador;
   }
-
+  
+  public RepositorioPublicaciones getRepositorioPublicaciones() {
+    return this.repositorioPublicaciones;
+  }
 }

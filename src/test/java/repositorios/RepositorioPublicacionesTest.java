@@ -22,12 +22,12 @@ public class RepositorioPublicacionesTest {
     Rescate publicacion = DummyData.getPublicacionDeRescate(null, repositorioPublicaciones);
 
     assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 0);
-    repositorioPublicaciones.agregarPublicacion(publicacion);
+    repositorioPublicaciones.agregar(publicacion);
     assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 1);
     assertEquals(publicacion, repositorioPublicaciones.getPublicacionesPendientes().get(0));
 
     assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 0);
-    repositorioPublicaciones.marcarPublicacionComoProcesada(publicacion);
+    repositorioPublicaciones.marcarComoProcesada(publicacion);
     assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 1);
     assertEquals(publicacion, repositorioPublicaciones.getPublicacionesProcesadas().get(0));
   }
@@ -39,12 +39,12 @@ public class RepositorioPublicacionesTest {
     DarEnAdopcion publicacion = DummyData.getPublicacionDeDarEnAdopcionCorrecta(new NotificadorCorreo(), repositorioPublicaciones);
 
     assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 0);
-    repositorioPublicaciones.agregarPublicacion(publicacion);
+    repositorioPublicaciones.agregar(publicacion);
     assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 1);
     assertEquals(publicacion, repositorioPublicaciones.getPublicacionesPendientes().get(0));
 
     assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 0);
-    repositorioPublicaciones.marcarPublicacionComoProcesada(publicacion);
+    repositorioPublicaciones.marcarComoProcesada(publicacion);
     assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 1);
     assertEquals(publicacion, repositorioPublicaciones.getPublicacionesProcesadas().get(0));
   }
