@@ -6,9 +6,7 @@ import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 import modelo.persona.*;
 import modelo.publicacion.DarEnAdopcion;
-import modelo.publicacion.PreguntaConRespuesta;
 import modelo.publicacion.Rescate;
-import modelo.publicacion.StubPreguntaConRespuesta;
 import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioCaracteristicas;
@@ -74,41 +72,10 @@ public class DummyData {
 
   /* Publicaciones */
   public static DarEnAdopcion getPublicacionDeDarEnAdopcionCorrecta(Notificador notificador,
-      RepositorioPublicaciones repositorioPublicaciones,
-      List<PreguntaConRespuesta> preguntasObligatoriasConRespuestas,
-      List<PreguntaConRespuesta> preguntasAsociacion) {
+      RepositorioPublicaciones repositorioPublicaciones) {
     return new DarEnAdopcion(DummyData.getDatosDeContacto(), DummyData.getUbicacion(), notificador,
-        DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()), repositorioPublicaciones,
-        preguntasObligatoriasConRespuestas, preguntasAsociacion);
+        DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()), repositorioPublicaciones);
   }
-
-  public static DarEnAdopcion getPublicacionDeDarEnAdopcionConPreguntasEnNulo(
-      Notificador notificador, RepositorioPublicaciones repositorioPublicaciones) {
-    return new DarEnAdopcion(DummyData.getDatosDeContacto(), DummyData.getUbicacion(), notificador,
-        DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()), repositorioPublicaciones,
-        null, null /* La asociación no posee preguntas en particular */);
-  }
-
-  public static DarEnAdopcion getPublicacionDeDarEnAdopcionConNingunaPregunta(
-      Notificador notificador) {
-    return new DarEnAdopcion(DummyData.getDatosDeContacto(), DummyData.getUbicacion(), notificador,
-        DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()),
-        new RepositorioPublicaciones(), new ArrayList<>(),
-        null /* La asociación no posee preguntas en particular */);
-  }
-
-  /* PreguntasConRespuesta */
-  public static StubPreguntaConRespuesta getPreguntaConRespuesta(String pregunta,
-      String respuesta) {
-    return new StubPreguntaConRespuesta(pregunta, respuesta);
-  }
-
-  public static List<PreguntaConRespuesta> getListadoPreguntasConRespuesta(
-      PreguntaConRespuesta... preguntasConRespuestas) {
-    return Arrays.asList(preguntasConRespuestas);
-  }
-  
-  /**/
 
   public static List<Caracteristica> getCaracteristicasParaMascota(
       RepositorioCaracteristicas repo) {

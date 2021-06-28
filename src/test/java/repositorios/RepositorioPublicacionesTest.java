@@ -36,11 +36,7 @@ public class RepositorioPublicacionesTest {
   @DisplayName("Procesar una publicacion de dar en adopción no genera problemas")
   public void procesarUnaPublicacionDeDarEnAdopcionNoGeneraProblemas() {
     RepositorioPublicaciones repositorioPublicaciones = new RepositorioPublicaciones();
-    DarEnAdopcion publicacion =
-        DummyData.getPublicacionDeDarEnAdopcionCorrecta(new NotificadorCorreo(),
-            repositorioPublicaciones, DummyData.getListadoPreguntasConRespuesta(
-                DummyData.getPreguntaConRespuesta("unaPregunta", "unaRespuesta")),
-            null);
+    DarEnAdopcion publicacion = DummyData.getPublicacionDeDarEnAdopcionCorrecta(new NotificadorCorreo(), repositorioPublicaciones);
 
     assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 0);
     repositorioPublicaciones.agregarPublicacion(publicacion);
