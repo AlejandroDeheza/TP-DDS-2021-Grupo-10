@@ -51,11 +51,9 @@ public class PublicacionTest {
   @DisplayName("Si un usuario encuentra a su mascota en una publicacion, se envia una Notificacion al rescatista")
   public void encontrarUnaMascotaPerdidaEnviaUnaNotificacion() {
     NotificadorCorreo notificadorCorreo = mock(NotificadorCorreo.class);
-    // DummyData.getPublicacionDeRescate(notificadorCorreo, new
-    // RepositorioPublicaciones()).notificarEncuentroAlRescatista(DummyData.getUsuario());
     RepositorioPublicaciones repositorioPublicaciones = new RepositorioPublicaciones();
     Usuario rescatista = DummyData.getUsuario();
-    DummyData.getPublicacionDeRescate(notificadorCorreo, repositorioPublicaciones).notificarPosteador(rescatista);
+    DummyData.getPublicacionDeRescate(notificadorCorreo, repositorioPublicaciones).notificarAlPosteador(rescatista);
     verify(notificadorCorreo).notificar(any());
   }
 
@@ -80,7 +78,7 @@ public class PublicacionTest {
     assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 1);
     assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 0);
 
-    publicacionDarEnAdopcion.lograrObjetivoDeLaPublicacion(unUsuario);
+    publicacionDarEnAdopcion.notificarAlPosteador(unUsuario);
     assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 0);
     assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 1);
 
@@ -101,7 +99,7 @@ public class PublicacionTest {
     assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 1);
     assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 0);
 
-    publicacionRescate.lograrObjetivoDeLaPublicacion(unUsuario);
+    publicacionRescate.notificarAlPosteador(unUsuario);
     assertEquals(repositorioPublicaciones.getPublicacionesPendientes().size(), 0);
     assertEquals(repositorioPublicaciones.getPublicacionesProcesadas().size(), 1);
 
