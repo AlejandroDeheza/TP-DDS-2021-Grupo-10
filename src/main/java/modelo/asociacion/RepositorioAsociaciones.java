@@ -7,7 +7,6 @@ import java.util.List;
 
 public class RepositorioAsociaciones {
   private List<Asociacion> asociaciones = new ArrayList<>();
-  private List<ParDePreguntas> preguntasGeneralesParaTodasLasAsociaciones = new ArrayList<>();
   private static RepositorioAsociaciones repositorioAsociaciones = new RepositorioAsociaciones();
 
   public RepositorioAsociaciones() {
@@ -21,15 +20,12 @@ public class RepositorioAsociaciones {
     return asociaciones;
   }
 
-  public List<ParDePreguntas> getPreguntasGeneralesParaTodasLasAsociaciones() {
-    return preguntasGeneralesParaTodasLasAsociaciones;
+
+  public void agregarAsociaciones(Asociacion asociacion) {
+    asociaciones.add(asociacion);
   }
 
-  public void agregarPregunta(ParDePreguntas pregunta) {
-    preguntasGeneralesParaTodasLasAsociaciones.add(pregunta);
-  }
-
-  public void eliminarPregunta(ParDePreguntas pregunta) {
-    preguntasGeneralesParaTodasLasAsociaciones.remove(pregunta);
+  public void eliminarAsociaciones(Asociacion asociacion) {
+    asociaciones.remove(asociacion);
   }
 }
