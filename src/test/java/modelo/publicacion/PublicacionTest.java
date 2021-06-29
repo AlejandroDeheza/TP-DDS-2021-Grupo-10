@@ -56,6 +56,8 @@ public class PublicacionTest {
     RepositorioDarEnAdopcion repositorio = new RepositorioDarEnAdopcion();
     DarEnAdopcion publicacion =
         new DarEnAdopcion(this.unaPersona.getDatosDeContacto(), this.notificadorCorreo, this.unaMascotaRegistrada, repositorio);
+    repositorio.agregar(publicacion);
+    assertEquals(repositorio.getDarEnAdopcion().size(), 1);
   }
 
   @Test
