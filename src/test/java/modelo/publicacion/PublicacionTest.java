@@ -54,8 +54,8 @@ public class PublicacionTest {
   @Test
   public void sePuedeGenerarUnaPublicacionParaDarEnAdopcionAUnaMascota() {
     RepositorioDarEnAdopcion repositorio = new RepositorioDarEnAdopcion();
-    repositorio.agregar(publicacionDeDarEnAdopcionCorrecta);
-    assertEquals(repositorio.getDarEnAdopcion().size(), 1);
+    DarEnAdopcion publicacion =
+        new DarEnAdopcion(this.unaPersona.getDatosDeContacto(), this.notificadorCorreo, this.unaMascotaRegistrada, repositorio);
   }
 
   @Test
