@@ -9,7 +9,7 @@ import modelo.notificacion.Notificador;
 
 /**
  * Representa a Publicacion de la 2da entrega
- * 
+ *
  * @since Entrega 3
  */
 public class Rescate extends Publicacion {
@@ -19,29 +19,31 @@ public class Rescate extends Publicacion {
   private RepositorioRescates repositorioRescates;
 
   public Rescate(DatosDeContacto contactoRescatista, Notificador notificador, RepositorioRescates repositorioRescates,
-      MascotaEncontrada mascotaEncontrada) {
+                 MascotaEncontrada mascotaEncontrada) {
     super(contactoRescatista, notificador);
     this.mascotaEncontrada = mascotaEncontrada;
     this.repositorioRescates = repositorioRescates;
   }
 
   @Override
-  public void notificarAlPosteador(Usuario usuario) {
-    this.getRepositorioRescates().marcarComoProcesada(this);
-    super.notificarAlPosteador(usuario);
+  public void notificarAlPosteador(Usuario duenio) {
+    repositorioRescates.marcarComoProcesada(this);
+    super.notificarAlPosteador(duenio);
   }
 
   @Override
-  public Notificacion generarNotificacion(Usuario duenio) {
-    return new Notificacion(super.getContactoPosteador(), "Han Encontrado una mascota que rescataste!", null,
-        cuerpoMensaje.concat(duenio.getPersona().getDatosDeContacto().getEmail()), "Hogar de Patitas");
+  protected Notificacion generarNotificacion(Usuario duenio) {
+    return new Notificacion(
+        this.getContactoPosteador(),
+        "Han Encontrado una mascota que rescataste!",
+        "Hola, ",
+        cuerpoMensaje + duenio.getPersona().getDatosDeContacto().getEmail(),
+        "Hogar de Patitas"
+    );
   }
 
   public MascotaEncontrada getMascotaEncontrada() {
     return mascotaEncontrada;
   }
 
-  public RepositorioRescates getRepositorioRescates() {
-    return this.repositorioRescates;
-  }
 }

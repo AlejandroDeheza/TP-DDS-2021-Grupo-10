@@ -13,42 +13,41 @@ public class DarEnAdopcion extends Publicacion {
   // private List<Respuesta> respuestasDelDador;
   private MascotaRegistrada mascotaEnAdopcion;
   private RepositorioDarEnAdopcion repositorioDarEnAdopcion;
+  private String cuerpoMensaje;
 
   public DarEnAdopcion(DatosDeContacto contactoPosteador, Notificador notificador, MascotaRegistrada mascotaEnAdopcion,
-      RepositorioDarEnAdopcion repositorioDarEnAdopcion /* , List<Respuesta> respuestasDelDador */) {
+                       RepositorioDarEnAdopcion repositorioDarEnAdopcion /* , List<Respuesta> respuestasDelDador */) {
     super(contactoPosteador, notificador);
     this.mascotaEnAdopcion = mascotaEnAdopcion;
     this.repositorioDarEnAdopcion = repositorioDarEnAdopcion;
+    this.cuerpoMensaje = "Encontramos una persona que quiere adoptar a " + mascotaEnAdopcion.getNombre()
+        + ". Podes comunicarte con el adoptante por este mail: ";
     // this.respuestasDelDador = respuestasDelDador;
   }
 
   @Override
-  public void notificarAlPosteador(Usuario usuario) {
-    this.getRepositorioDarEnAdopcion().marcarComoProcesada(this);
-    super.notificarAlPosteador(usuario);
+  public void notificarAlPosteador(Usuario adoptante) {
+    repositorioDarEnAdopcion.marcarComoProcesada(this);
+    super.notificarAlPosteador(adoptante);
   }
 
-  /**
-   * @see Publicacion::notificarPosteador/2
-   */
   @Override
-  public Notificacion generarNotificacion(Usuario adoptante) {
-    DatosDeContacto datosDeContacto = adoptante.getPersona().getDatosDeContacto();
-    return new Notificacion(this.getContactoPosteador(), "Una persona quiere adoptar a tu mascota", "Hola, ",
-        "Encontramos una persona que quiere adoptar a" + mascotaEnAdopcion.getNombre()
-            + ". Podes comunicarte con el adoptante por este mail: " + datosDeContacto.getEmail(),
-        "Hogar de patitas");
+  protected Notificacion generarNotificacion(Usuario adoptante) {
+    return new Notificacion(
+        this.getContactoPosteador(),
+        "Una persona quiere adoptar a tu mascota",
+        "Hola, ",
+        cuerpoMensaje + adoptante.getPersona().getDatosDeContacto().getEmail(),
+        "Hogar de patitas"
+    );
+  }
+
+  public MascotaRegistrada getMascotaEnAdopcion() {
+    return mascotaEnAdopcion;
   }
 
   // public List<Respuesta> getRespuestasDelDador() {
   // return this.respuestasDelDador;
   // }
 
-  public MascotaRegistrada getMascotaEnAdopcion() {
-    return mascotaEnAdopcion;
-  }
-
-  public RepositorioDarEnAdopcion getRepositorioDarEnAdopcion() {
-    return this.repositorioDarEnAdopcion;
-  }
 }

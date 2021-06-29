@@ -2,6 +2,7 @@ package repositorios;
 
 import modelo.publicacion.DarEnAdopcion;
 import modelo.publicacion.Publicacion;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,6 @@ public class RepositorioDarEnAdopcion {
   // el repositorio, en codigo de produccion, lo inyectamos por constructor
   // usamos el constructor solo para tests
   public RepositorioDarEnAdopcion() {}
-
   // usamos el getInstance en Main
   public static RepositorioDarEnAdopcion getInstance() {
     return repositorioPublicaciones;

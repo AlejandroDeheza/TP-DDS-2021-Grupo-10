@@ -21,9 +21,9 @@ public class InformeSinQR extends InformeRescate {
   private NotificadorCorreo notificadorCorreo;
 
   public InformeSinQR(Persona rescatista, Ubicacion ubicacionRescatista, String direccionRescatista,
-      MascotaEncontrada mascotaEncontrada, RepositorioInformes repositorioInformes, ReceptorHogares receptorHogares,
-      Animal tipoAnimal, List<Caracteristica> caracteristicas, RepositorioRescates repositorioRescates,
-      NotificadorCorreo notificadorCorreo) {
+                      MascotaEncontrada mascotaEncontrada, RepositorioInformes repositorioInformes,
+                      ReceptorHogares receptorHogares, Animal tipoAnimal, List<Caracteristica> caracteristicas,
+                      RepositorioRescates repositorioRescates, NotificadorCorreo notificadorCorreo) {
     super(rescatista, ubicacionRescatista, direccionRescatista, mascotaEncontrada, repositorioInformes,
         receptorHogares);
     this.tipoAnimal = tipoAnimal;
@@ -33,8 +33,12 @@ public class InformeSinQR extends InformeRescate {
   }
 
   public List<Hogar> getHogaresCercanos(Integer radioCercania) {
-    return super.getHogaresCercanos(radioCercania, tipoAnimal, this.getMascotaEncontrada().getTamanio(),
-        caracteristicas);
+    return super.getHogaresCercanos(
+        radioCercania,
+        tipoAnimal,
+        this.getMascotaEncontrada().getTamanio(),
+        caracteristicas
+    );
   }
 
   @Override
@@ -44,7 +48,13 @@ public class InformeSinQR extends InformeRescate {
   }
 
   private void generarPublicacion() {
-    repositorioRescates.agregar(new Rescate(super.getRescatista().getDatosDeContacto(), this.notificadorCorreo,
-        this.repositorioRescates, super.getMascotaEncontrada()));
+    repositorioRescates.agregar(
+        new Rescate(
+            this.getRescatista().getDatosDeContacto(),
+            notificadorCorreo,
+            repositorioRescates,
+            this.getMascotaEncontrada()
+        )
+    );
   }
 }

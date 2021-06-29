@@ -34,7 +34,7 @@ public class InformeSinQRTest {
   }
 
   @Test
-  @DisplayName("Cuando Se se procesa un informe sin QR se agrega una publicación de rescate al RepositorioRescates")
+  @DisplayName("Cuando se procesa un informe sin QR se agrega una publicación de rescate al RepositorioRescates")
   public void procesarInformeGeneraPublicacionEnElRepo() {
     repositorioInformes.agregarInformeRescate(informeSinQR);
     assertTrue(repositorioInformes.getInformesPendientes().contains(informeSinQR));

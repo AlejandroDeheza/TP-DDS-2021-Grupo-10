@@ -16,25 +16,14 @@ public abstract class Publicacion {
     this.notificador = notificador;
   }
 
-  /**
-   * Marca la publicacion como publicacionProcesada y usa un Notificador
-   */
   public void notificarAlPosteador(Usuario usuario) {
     Notificacion notificacion = this.generarNotificacion(usuario);
-    this.notificador.notificar(notificacion);
+    notificador.notificar(notificacion);
   }
 
-  /**
-   * @return La notificación dependiendo del tipo de publicación. En caso de que no genere una
-   *         notificación devuelve null.
-   */
   protected abstract Notificacion generarNotificacion(Usuario usuario);
 
   public DatosDeContacto getContactoPosteador() {
     return this.contactoPosteador;
-  }
-
-  public Notificador getNotificador() {
-    return this.notificador;
   }
 }

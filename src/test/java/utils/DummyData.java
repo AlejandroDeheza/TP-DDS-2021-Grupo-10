@@ -68,13 +68,6 @@ public class DummyData {
     return new CaracteristicaConValoresPosibles("Comportamiento", Arrays.asList("Inquieto", "Tranquilo"));
   }
 
-  /* Publicaciones */
-  public static DarEnAdopcion getPublicacionDeDarEnAdopcionCorrecta(Notificador notificador,
-      RepositorioDarEnAdopcion repositorio) {
-    return new DarEnAdopcion(DummyData.getDatosDeContacto(), notificador,
-        DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()), repositorio);
-  }
-
   public static List<Caracteristica> getCaracteristicasParaMascota(RepositorioCaracteristicas repo) {
     repo.agregarCaracteristica(getCaracteristicaParaAdmin());
     List<Caracteristica> listaCaracteristica = new ArrayList<>();
@@ -97,6 +90,16 @@ public class DummyData {
         Animal.PERRO, getCaracteristicasParaMascota(RepositorioCaracteristicas), getFotos(), TamanioMascota.CHICO);
   }
 
+  public static DarEnAdopcion getPublicacionDeDarEnAdopcion(Notificador notificador,
+                                                            RepositorioDarEnAdopcion repositorio) {
+    return new DarEnAdopcion(
+        getDatosDeContacto(),
+        notificador,
+        getMascotaRegistrada(new RepositorioCaracteristicas()),
+        repositorio
+    );
+  }
+
   public static Rescate getPublicacionDeRescate(Notificador notificacionCorreo, RepositorioRescates repositorio) {
     return new Rescate(getDatosDeContacto(), notificacionCorreo, repositorio, getMascotaEncontrada(getFotos()));
   }
@@ -105,8 +108,7 @@ public class DummyData {
     return new Ubicacion(27.23, 25.78, null);
   }
 
-  public static String getJsonHogaresApi() { // Un response con un solo hogar en la lista de
-                                             // hogares.
+  public static String getJsonHogaresApi() { // Un response con un solo hogar en la lista de hogares.
     return "{\"total\":40,\"offset\":\"1\",\"hogares\":[{\"id\":\"eyJpdiI6IjV6OHZLa1pxK09KZHRkdEZpclBLUl"
         + "E9PSIsInZhbHVlIjoiY3JwNjZKQW1XcjRjaVBOQ3gxNVRjZz09IiwibWFjIjoiODgwODJhN2Y4YjA5MmNmNGE1MWU4NDY5ZWQ4MGZjMDRk"
         + "YjA0Yzg5MjJmMjQ4ODkzNGUxYzNmMjc1ZDBhMWI0MCJ9\",\"nombre\":\"Pensionado de mascotas \\\"Como en casa\\\"\","
