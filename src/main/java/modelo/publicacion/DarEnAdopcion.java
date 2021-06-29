@@ -32,8 +32,12 @@ public class DarEnAdopcion extends Publicacion {
    * @see Publicacion::notificarPosteador/2
    */
   @Override
-  public Notificacion generarNotificacion(Usuario usuario) {
-    return null;
+  public Notificacion generarNotificacion(Usuario adoptante) {
+    DatosDeContacto datosDeContacto = adoptante.getPersona().getDatosDeContacto();
+    return new Notificacion(
+        this.getContactoPosteador(), "Una persona quiere adoptar a tu mascota", "Hola, ", "Encontramos una persona que quiere adoptar a"
+            + mascotaEnAdopcion.getNombre() + ". Podes comunicarte con el adoptante por este mail: " + datosDeContacto.getEmail(),
+        "Hogar de patitas");
   }
 
   // public List<Respuesta> getRespuestasDelDador() {

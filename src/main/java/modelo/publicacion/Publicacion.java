@@ -21,9 +21,7 @@ public abstract class Publicacion {
    */
   public void notificarAlPosteador(Usuario usuario) {
     Notificacion notificacion = this.generarNotificacion(usuario);
-    if (notificacion != null) {
-      this.notificador.notificar(notificacion);
-    }
+    this.notificador.notificar(notificacion);
   }
 
   /**

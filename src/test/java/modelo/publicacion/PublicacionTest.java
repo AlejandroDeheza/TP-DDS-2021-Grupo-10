@@ -61,7 +61,7 @@ public class PublicacionTest {
   }
 
   @Test
-  public void procesarUnaPublicacionDeDarEnAdopcionProcesaNoEnviaUnaNotificacion() {
+  public void procesarUnaPublicacionDeDarEnAdopcionProcesaEnviaUnaNotificacion() {
     RepositorioDarEnAdopcion repositorio = new RepositorioDarEnAdopcion();
 
     DarEnAdopcion publicacion =
@@ -78,7 +78,7 @@ public class PublicacionTest {
     assertEquals(repositorio.getDarEnAdopcion().size(), 0);
     assertEquals(repositorio.getPublicacionesProcesadas().size(), 1);
 
-    verify(this.notificadorCorreo, times(0)).notificar(any());
+    verify(this.notificadorCorreo, times(1)).notificar(any());
   }
 
   @Test
