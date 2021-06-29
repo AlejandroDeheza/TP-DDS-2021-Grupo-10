@@ -33,7 +33,8 @@ public class PublicacionTest {
 
     this.notificadorCorreo = mock(NotificadorCorreo.class);
 
-    publicacionDeDarEnAdopcionCorrecta = DummyData.getPublicacionDeDarEnAdopcionCorrecta(this.notificadorCorreo, new RepositorioDarEnAdopcion());
+    publicacionDeDarEnAdopcionCorrecta =
+        DummyData.getPublicacionDeDarEnAdopcionCorrecta(this.notificadorCorreo, new RepositorioDarEnAdopcion());
 
     unUsuario = DummyData.getUsuario();
     unaPersona = this.unUsuario.getPersona();
@@ -54,8 +55,8 @@ public class PublicacionTest {
   @Test
   public void sePuedeGenerarUnaPublicacionParaDarEnAdopcionAUnaMascota() {
     RepositorioDarEnAdopcion repositorio = new RepositorioDarEnAdopcion();
-    DarEnAdopcion publicacion =
-        new DarEnAdopcion(this.unaPersona.getDatosDeContacto(), this.notificadorCorreo, this.unaMascotaRegistrada, repositorio);
+    DarEnAdopcion publicacion = new DarEnAdopcion(this.unaPersona.getDatosDeContacto(), this.notificadorCorreo,
+        this.unaMascotaRegistrada, repositorio);
     repositorio.agregar(publicacion);
     assertEquals(repositorio.getDarEnAdopcion().size(), 1);
   }
@@ -64,8 +65,8 @@ public class PublicacionTest {
   public void procesarUnaPublicacionDeDarEnAdopcionProcesaEnviaUnaNotificacion() {
     RepositorioDarEnAdopcion repositorio = new RepositorioDarEnAdopcion();
 
-    DarEnAdopcion publicacion =
-        new DarEnAdopcion(this.unaPersona.getDatosDeContacto(), this.notificadorCorreo, this.unaMascotaRegistrada, repositorio);
+    DarEnAdopcion publicacion = new DarEnAdopcion(this.unaPersona.getDatosDeContacto(), this.notificadorCorreo,
+        this.unaMascotaRegistrada, repositorio);
 
     assertEquals(repositorio.getDarEnAdopcion().size(), 0);
     assertEquals(repositorio.getPublicacionesProcesadas().size(), 0);
@@ -85,7 +86,8 @@ public class PublicacionTest {
   public void procesarUnaPublicacionDeRescateEnviaUnaNotificacion() {
     RepositorioRescates repositorio = new RepositorioRescates();
 
-    Rescate publicacion = new Rescate(this.unaPersona.getDatosDeContacto(), this.notificadorCorreo, repositorio, this.unaMascotaEncontrada);
+    Rescate publicacion = new Rescate(this.unaPersona.getDatosDeContacto(), this.notificadorCorreo, repositorio,
+        this.unaMascotaEncontrada);
 
     assertEquals(repositorio.getRescates().size(), 0);
     assertEquals(repositorio.getPublicacionesProcesadas().size(), 0);
