@@ -7,17 +7,13 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class UbicadorAsociaciones {
-  private RepositorioAsociaciones repositorioAsociaciones = RepositorioAsociaciones.getInstance();
-
-  public UbicadorAsociaciones() {
-  }
+  private RepositorioAsociaciones repositorioAsociaciones;
 
   public UbicadorAsociaciones(RepositorioAsociaciones repositorioAsociaciones) {
     this.repositorioAsociaciones = repositorioAsociaciones;
   }
 
-
-  public Asociacion getAsociacionMasCercana(Ubicacion ubicacion){
+  public Asociacion getAsociacionMasCercana(Ubicacion ubicacion) {
     List<Asociacion> asociacionesOrdenadasPorUbicacion = repositorioAsociaciones.getAsociaciones().stream().sorted().collect(Collectors.toList());
 
     return asociacionesOrdenadasPorUbicacion.get(0);
