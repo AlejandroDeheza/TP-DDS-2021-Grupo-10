@@ -7,7 +7,7 @@ import modelo.pregunta.ParDePreguntas;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Asociacion implements Comparable<Asociacion> {
+public class Asociacion{
   Ubicacion ubicacion;
   List<ParDePreguntas> preguntas = new ArrayList<>();
 
@@ -32,8 +32,4 @@ public class Asociacion implements Comparable<Asociacion> {
     preguntas.remove(pregunta);
   }
 
-  @Override
-  public int compareTo(Asociacion o) {
-    return ubicacion.getDistancia(o.getUbicacion()).intValue();
-  }
 }

@@ -1,6 +1,5 @@
 package modelo.asociacion;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import modelo.informe.Ubicacion;
 
 import java.util.*;
@@ -14,8 +13,12 @@ public class UbicadorAsociaciones {
   }
 
   public Asociacion getAsociacionMasCercana(Ubicacion ubicacion) {
-    List<Asociacion> asociacionesOrdenadasPorUbicacion = repositorioAsociaciones.getAsociaciones().stream().sorted().collect(Collectors.toList());
-
-    return asociacionesOrdenadasPorUbicacion.get(0);
+    Double minimaDistancia = repositorioAsociaciones
+                          .getAsociaciones().stream()
+                          .map(asociacion -> asociacion.getUbicacion().getDistancia(ubicacion))
+                          .mapToDouble(Double::doubleValue).min().getAsDouble();
+    List<Asociacion> asociacions =repositorioAsociaciones.getAsociaciones().stream().filter(asociacion -> asociacion.getUbicacion().getDistancia(ubicacion).equals(minimaDistancia)).collect(Collectors.toList());
+    Asociacion asociacionMasCercana = asociacions.stream().findFirst().orElse(null);
+    return asociacionMasCercana;
   }
 }
