@@ -26,7 +26,7 @@ public class Enunciado3Tests {
   }
 
   @Test
-  @DisplayName("Se puede agregar una pregunta al RepositorioPreguntas")
+  @DisplayName("Se puede agregar una ParDePreguntas al RepositorioPreguntas")
   public void agregarParDePreguntasAlRepositorioPreguntas() {
     parDePreguntas = getParDePreguntas();
     assertEquals(0, repositorioPreguntas.getPreguntasObligatorias().size());
@@ -55,12 +55,11 @@ public class Enunciado3Tests {
     ParDePreguntas preguntas = new ParDePreguntas("La mascota sufre si está mucho tiempo sola?", "Va a estar la mascota mucho tiempo sola?");
     ParDeRespuestas respuesta1 = new ParDeRespuestas("Si", "No");
     ParDeRespuestas respuesta2 = new ParDeRespuestas("No", "Si");
-    ParDeRespuestas respuesta3 = new ParDeRespuestas("Si", "Si");
-    ParDeRespuestas respuesta4 = new ParDeRespuestas("No", "No");
+    ParDeRespuestas respuesta3 = new ParDeRespuestas("No", "No");
     preguntas.agregarRespuesta(respuesta1);
     preguntas.agregarRespuesta(respuesta2);
     preguntas.agregarRespuesta(respuesta3);
-    preguntas.agregarRespuesta(respuesta4);
+
     return preguntas;
   }
 
