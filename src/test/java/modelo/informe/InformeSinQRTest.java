@@ -1,6 +1,5 @@
 package modelo.informe;
 
-import modelo.asociacion.Asociacion;
 import modelo.asociacion.RepositorioAsociaciones;
 import modelo.hogarDeTransito.Hogar;
 import modelo.hogarDeTransito.ReceptorHogares;
@@ -34,19 +33,14 @@ public class InformeSinQRTest {
     repositorioInformes = new RepositorioInformes();
     repositorioRescates = new RepositorioRescates();
     receptorHogaresMock = mock(ReceptorHogares.class);
-
     repositorioAsociaciones = new RepositorioAsociaciones();
-    repositorioAsociaciones.agregarAsociaciones(DummyData.getAsociacion());
-
+    repositorioAsociaciones.agregarAsociacion(DummyData.getAsociacion());
     informeSinQR = generarInforme();
   }
 
   @Test
   @DisplayName("Cuando se procesa un informe sin QR se agrega una publicación de rescate al RepositorioRescates")
   public void procesarInformeGeneraPublicacionEnElRepo() {
-
-
-
     repositorioInformes.agregarInformeRescate(informeSinQR);
     assertTrue(repositorioInformes.getInformesPendientes().contains(informeSinQR));
     informeSinQR.procesarInforme();
@@ -67,7 +61,8 @@ public class InformeSinQRTest {
   private InformeSinQR generarInforme() {
     return new InformeSinQR(DummyData.getPersona(), DummyData.getUbicacion(), null,
         DummyData.getMascotaEncontrada(DummyData.getFotos()), repositorioInformes, receptorHogaresMock, Animal.PERRO,
-        DummyData.getCaracteristicasParaMascota(new RepositorioCaracteristicas()), repositorioRescates, null, repositorioAsociaciones);
+        DummyData.getCaracteristicasParaMascota(new RepositorioCaracteristicas()), repositorioRescates, null,
+        repositorioAsociaciones);
   }
 
 }

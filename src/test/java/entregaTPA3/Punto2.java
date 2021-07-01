@@ -1,4 +1,4 @@
-package TestEnunciados;
+package entregaTPA3;
 
 import modelo.asociacion.Asociacion;
 import modelo.asociacion.RepositorioAsociaciones;

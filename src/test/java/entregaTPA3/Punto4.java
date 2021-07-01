@@ -3,7 +3,6 @@ package entregaTPA3;
 import modelo.asociacion.Asociacion;
 import modelo.mascota.Animal;
 import modelo.notificacion.NotificadorCorreo;
-import modelo.pregunta.ParDePreguntas;
 import modelo.pregunta.Respuesta;
 import modelo.publicacion.IntencionDeAdopcion;
 import modelo.publicacion.Preferencia;
@@ -14,33 +13,19 @@ import repositorios.RepositorioIntencionesDeAdopcion;
 import utils.DummyData;
 
 import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
-public class TestsEntrega3 {
+public class Punto4 {
 
   NotificadorCorreo notificadorCorreo;
-  List<Respuesta> listaRespuestas;
-
-  ParDePreguntas parDePreguntas1 = DummyData.getParDePreguntas1();
-  ParDePreguntas parDePreguntas2 = DummyData.getParDePreguntas2();
-
-  Respuesta respuestaDador1 = new Respuesta("Si", parDePreguntas1);
-  Respuesta respuestaAdoptante1 = new Respuesta("Si", parDePreguntas1);
-
-  Respuesta respuestaDador2 = new Respuesta("2", parDePreguntas2);
-  Respuesta respuestaAdoptante2 = new Respuesta("3", parDePreguntas2);
-
-  Asociacion asociacion = new Asociacion(DummyData.getUbicacion());
-
+  Respuesta respuestaAdoptante1 = new Respuesta("Si", DummyData.getParDePreguntas1());
+  Respuesta respuestaAdoptante2 = new Respuesta("3", DummyData.getParDePreguntas2());
 
   @BeforeEach
   public void contextLoad() {
     notificadorCorreo = mock(NotificadorCorreo.class);
-    asociacion.agregarPregunta(parDePreguntas1);
-    asociacion.agregarPregunta(parDePreguntas2);
   }
 
   @Test
@@ -52,7 +37,7 @@ public class TestsEntrega3 {
         notificadorCorreo,
         new Preferencia(DummyData.getCaracteristicasParaMascota(new RepositorioCaracteristicas()), Animal.PERRO),
         Arrays.asList(respuestaAdoptante1, respuestaAdoptante2),
-        asociacion
+        new Asociacion(DummyData.getUbicacion())
     );
 
     repositorio.agregar(publicacion);
