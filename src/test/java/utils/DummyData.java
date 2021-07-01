@@ -5,10 +5,13 @@ import modelo.mascota.*;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 import modelo.persona.*;
-import modelo.publicacion.Publicacion;
+import modelo.publicacion.DarEnAdopcion;
+import modelo.publicacion.Rescate;
 import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioCaracteristicas;
+import repositorios.RepositorioDarEnAdopcion;
+import repositorios.RepositorioRescates;
 import modelo.notificacion.Notificador;
 
 import java.time.LocalDate;
@@ -32,13 +35,11 @@ public class DummyData {
   }
 
   public static Persona getPersonaSinDatosDeContacto() {
-    return new Persona("PersonaNombre", "PersonaApellido", getDocumentoIdentidad(), null,
-        LocalDate.of(1995, 8, 7));
+    return new Persona("PersonaNombre", "PersonaApellido", getDocumentoIdentidad(), null, LocalDate.of(1995, 8, 7));
   }
 
   public static Persona getPersonaSinDatosDeContactoNiNombreNiApellido() {
-    return new Persona(null, null, getDocumentoIdentidad(), new DatosDeContacto(null, null),
-        LocalDate.of(1995, 8, 7));
+    return new Persona(null, null, getDocumentoIdentidad(), new DatosDeContacto(null, null), LocalDate.of(1995, 8, 7));
   }
 
   public static Persona getPersonaSinTelefono() {
@@ -64,8 +65,7 @@ public class DummyData {
   }
 
   public static CaracteristicaConValoresPosibles getCaracteristicaParaAdmin() {
-    return new CaracteristicaConValoresPosibles("Comportamiento",
-        Arrays.asList("Inquieto", "Tranquilo"));
+    return new CaracteristicaConValoresPosibles("Comportamiento", Arrays.asList("Inquieto", "Tranquilo"));
   }
 
   public static List<Caracteristica> getCaracteristicasParaMascota(RepositorioCaracteristicas repo) {
@@ -82,32 +82,40 @@ public class DummyData {
   }
 
   public static MascotaEncontrada getMascotaEncontrada(List<Foto> fotos) {
-    return new MascotaEncontrada(fotos, getUbicacion(), "Limpio y Sano", LocalDate.now(),
-        TamanioMascota.CHICO);
+    return new MascotaEncontrada(fotos, getUbicacion(), "Limpio y Sano", LocalDate.now(), TamanioMascota.CHICO);
   }
 
   public static MascotaRegistrada getMascotaRegistrada(RepositorioCaracteristicas RepositorioCaracteristicas) {
-    return new MascotaRegistrada(getUsuario(), "Felipe", "Panchito",
-        LocalDate.of(2018, 3, 4), "Pelo largo", Sexo.MACHO, Animal.PERRO,
-        getCaracteristicasParaMascota(RepositorioCaracteristicas), getFotos(), TamanioMascota.CHICO);
+    return new MascotaRegistrada(getUsuario(), "Felipe", "Panchito", LocalDate.of(2018, 3, 4), "Pelo largo", Sexo.MACHO,
+        Animal.PERRO, getCaracteristicasParaMascota(RepositorioCaracteristicas), getFotos(), TamanioMascota.CHICO);
   }
 
-  public static Publicacion getPublicacion(Notificador notificacionCorreo) {
-    return new Publicacion(getMascotaEncontrada(getFotos()), getDatosDeContacto(), notificacionCorreo);
+  public static DarEnAdopcion getPublicacionDeDarEnAdopcion(Notificador notificador,
+                                                            RepositorioDarEnAdopcion repositorio) {
+    return new DarEnAdopcion(
+        getDatosDeContacto(),
+        notificador,
+        getMascotaRegistrada(new RepositorioCaracteristicas()),
+        repositorio
+    );
+  }
+
+  public static Rescate getPublicacionDeRescate(Notificador notificacionCorreo, RepositorioRescates repositorio) {
+    return new Rescate(getDatosDeContacto(), notificacionCorreo, repositorio, getMascotaEncontrada(getFotos()));
   }
 
   public static Ubicacion getUbicacion() {
     return new Ubicacion(27.23, 25.78, null);
   }
 
-  public static String getJsonHogaresApi() { //Un response con un solo hogar en la lista de hogares.
-    return "{\"total\":40,\"offset\":\"1\",\"hogares\":[{\"id\":\"eyJpdiI6IjV6OHZLa1pxK09KZHRkdEZpclBLUl" +
-        "E9PSIsInZhbHVlIjoiY3JwNjZKQW1XcjRjaVBOQ3gxNVRjZz09IiwibWFjIjoiODgwODJhN2Y4YjA5MmNmNGE1MWU4NDY5ZWQ4MGZjMDRk" +
-        "YjA0Yzg5MjJmMjQ4ODkzNGUxYzNmMjc1ZDBhMWI0MCJ9\",\"nombre\":\"Pensionado de mascotas \\\"Como en casa\\\"\"," +
-        "\"ubicacion\":{\"direccion\":\"Av. Ing Eduardo Madero 2300, B1669BZQ Del Viso, Provincia de Buenos Aires\"," +
-        "\"lat\":-34.46013439745161,\"long\":-58.80857841888721},\"telefono\":\"+541164657462\",\"admisiones\":{\"" +
-        "perros\":false,\"gatos\":true},\"capacidad\":50,\"lugares_disponibles\":45,\"patio\":true,\"caracteristicas" +
-        "\":[\"Tranquilo\"]}]}";
+  public static String getJsonHogaresApi() { // Un response con un solo hogar en la lista de hogares.
+    return "{\"total\":40,\"offset\":\"1\",\"hogares\":[{\"id\":\"eyJpdiI6IjV6OHZLa1pxK09KZHRkdEZpclBLUl"
+        + "E9PSIsInZhbHVlIjoiY3JwNjZKQW1XcjRjaVBOQ3gxNVRjZz09IiwibWFjIjoiODgwODJhN2Y4YjA5MmNmNGE1MWU4NDY5ZWQ4MGZjMDRk"
+        + "YjA0Yzg5MjJmMjQ4ODkzNGUxYzNmMjc1ZDBhMWI0MCJ9\",\"nombre\":\"Pensionado de mascotas \\\"Como en casa\\\"\","
+        + "\"ubicacion\":{\"direccion\":\"Av. Ing Eduardo Madero 2300, B1669BZQ Del Viso, Provincia de Buenos Aires\","
+        + "\"lat\":-34.46013439745161,\"long\":-58.80857841888721},\"telefono\":\"+541164657462\",\"admisiones\":{\""
+        + "perros\":false,\"gatos\":true},\"capacidad\":50,\"lugares_disponibles\":45,\"patio\":true,\"caracteristicas"
+        + "\":[\"Tranquilo\"]}]}";
   }
 
 }

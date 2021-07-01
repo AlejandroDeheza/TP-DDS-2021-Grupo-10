@@ -6,9 +6,9 @@ import modelo.mascota.Animal;
 import modelo.mascota.MascotaEncontrada;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.Persona;
-import modelo.publicacion.Publicacion;
+import modelo.publicacion.Rescate;
 import repositorios.RepositorioInformes;
-import repositorios.RepositorioPublicaciones;
+import repositorios.RepositorioRescates;
 import modelo.notificacion.NotificadorCorreo;
 
 import java.util.List;
@@ -17,18 +17,18 @@ public class InformeSinQR extends InformeRescate {
 
   private Animal tipoAnimal;
   private List<Caracteristica> caracteristicas;
-  private RepositorioPublicaciones repositorioPublicaciones;
+  private RepositorioRescates repositorioRescates;
   private NotificadorCorreo notificadorCorreo;
 
   public InformeSinQR(Persona rescatista, Ubicacion ubicacionRescatista, String direccionRescatista,
                       MascotaEncontrada mascotaEncontrada, RepositorioInformes repositorioInformes,
                       ReceptorHogares receptorHogares, Animal tipoAnimal, List<Caracteristica> caracteristicas,
-                      RepositorioPublicaciones repositorioPublicaciones, NotificadorCorreo notificadorCorreo) {
+                      RepositorioRescates repositorioRescates, NotificadorCorreo notificadorCorreo) {
     super(rescatista, ubicacionRescatista, direccionRescatista, mascotaEncontrada, repositorioInformes,
         receptorHogares);
     this.tipoAnimal = tipoAnimal;
     this.caracteristicas = caracteristicas;
-    this.repositorioPublicaciones = repositorioPublicaciones;
+    this.repositorioRescates = repositorioRescates;
     this.notificadorCorreo = notificadorCorreo;
   }
 
@@ -37,7 +37,8 @@ public class InformeSinQR extends InformeRescate {
         radioCercania,
         tipoAnimal,
         this.getMascotaEncontrada().getTamanio(),
-        caracteristicas);
+        caracteristicas
+    );
   }
 
   @Override
@@ -47,12 +48,13 @@ public class InformeSinQR extends InformeRescate {
   }
 
   private void generarPublicacion() {
-    repositorioPublicaciones.agregarPublicacion(
-        new Publicacion(
-            this.getMascotaEncontrada(),
+    repositorioRescates.agregar(
+        new Rescate(
             this.getRescatista().getDatosDeContacto(),
-            notificadorCorreo)
+            notificadorCorreo,
+            repositorioRescates,
+            this.getMascotaEncontrada()
+        )
     );
   }
-
 }

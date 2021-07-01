@@ -1,36 +1,29 @@
 package modelo.publicacion;
 
-import modelo.mascota.MascotaEncontrada;
-import modelo.usuario.Usuario;
-import modelo.persona.DatosDeContacto;
 import modelo.notificacion.Notificacion;
 import modelo.notificacion.Notificador;
+import modelo.persona.DatosDeContacto;
+import modelo.usuario.Usuario;
 
-public class Publicacion {
-  private MascotaEncontrada mascotaEncontrada;
-  private DatosDeContacto contactoRescatista;
+public abstract class Publicacion {
+
+  private DatosDeContacto contactoPosteador;
   private Notificador notificador;
-  private String cuerpoMensaje = "El dueño encontro una mascota que vos rescataste. Por favor comunicarse al ";
+  // private Asociacion asociacion; // TODO: Integrar en futuras ocasiones
 
-  public Publicacion(MascotaEncontrada mascotaEncontrada, DatosDeContacto contactoRescatista,
-                     Notificador notificador) {
-    this.mascotaEncontrada = mascotaEncontrada;
-    this.contactoRescatista = contactoRescatista;
+  public Publicacion(DatosDeContacto contactoPosteador, Notificador notificador) {
+    this.contactoPosteador = contactoPosteador;
     this.notificador = notificador;
   }
 
-  public void notificarEncuentroAlRescatista(Usuario duenio) {
-    Notificacion notificacion = new Notificacion(
-        contactoRescatista,
-        "Han Encontrado una mascota que rescataste!",
-        null,
-        cuerpoMensaje.concat(duenio.getPersona().getDatosDeContacto().getEmail()),
-        "Hogar de Patitas"
-    );
+  public void notificarAlPosteador(Usuario usuario) {
+    Notificacion notificacion = this.generarNotificacion(usuario);
     notificador.notificar(notificacion);
   }
 
-  public MascotaEncontrada getMascotaEncontrada() {
-    return mascotaEncontrada;
+  protected abstract Notificacion generarNotificacion(Usuario usuario);
+
+  public DatosDeContacto getContactoPosteador() {
+    return this.contactoPosteador;
   }
 }

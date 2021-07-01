@@ -8,7 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioInformes;
-import repositorios.RepositorioPublicaciones;
+import repositorios.RepositorioRescates;
 import utils.DummyData;
 
 import java.util.ArrayList;
@@ -21,27 +21,27 @@ import static org.mockito.Mockito.*;
 public class InformeSinQRTest {
 
   RepositorioInformes repositorioInformes;
-  RepositorioPublicaciones repositorioPublicaciones;
+  RepositorioRescates repositorioRescates;
   ReceptorHogares receptorHogaresMock;
   InformeSinQR informeSinQR;
 
   @BeforeEach
   public void loadContext() {
     repositorioInformes = new RepositorioInformes();
-    repositorioPublicaciones = new RepositorioPublicaciones();
+    repositorioRescates = new RepositorioRescates();
     receptorHogaresMock = mock(ReceptorHogares.class);
     informeSinQR = generarInforme();
   }
 
   @Test
-  @DisplayName("Cuando Se se procesa un informe sin QR se agrega una publicacion al RepositorioPublicaciones")
+  @DisplayName("Cuando se procesa un informe sin QR se agrega una publicación de rescate al RepositorioRescates")
   public void procesarInformeGeneraPublicacionEnElRepo() {
     repositorioInformes.agregarInformeRescate(informeSinQR);
     assertTrue(repositorioInformes.getInformesPendientes().contains(informeSinQR));
     informeSinQR.procesarInforme();
     assertTrue(repositorioInformes.getInformesProcesados().contains(informeSinQR));
 
-    assertEquals(1, repositorioPublicaciones.getPublicaciones().size());
+    assertEquals(1, repositorioRescates.getRescates().size());
   }
 
   @Test
@@ -56,8 +56,7 @@ public class InformeSinQRTest {
   private InformeSinQR generarInforme() {
     return new InformeSinQR(DummyData.getPersona(), DummyData.getUbicacion(), null,
         DummyData.getMascotaEncontrada(DummyData.getFotos()), repositorioInformes, receptorHogaresMock, Animal.PERRO,
-        DummyData.getCaracteristicasParaMascota(new RepositorioCaracteristicas()), repositorioPublicaciones,
-        null);
+        DummyData.getCaracteristicasParaMascota(new RepositorioCaracteristicas()), repositorioRescates, null);
   }
 
 }
