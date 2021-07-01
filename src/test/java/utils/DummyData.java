@@ -1,10 +1,12 @@
 package utils;
 
+import modelo.asociacion.Asociacion;
 import modelo.informe.Ubicacion;
 import modelo.mascota.*;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 import modelo.persona.*;
+import modelo.pregunta.Respuesta;
 import modelo.publicacion.DarEnAdopcion;
 import modelo.publicacion.Rescate;
 import modelo.usuario.TipoUsuario;
@@ -91,21 +93,26 @@ public class DummyData {
   }
 
   public static DarEnAdopcion getPublicacionDeDarEnAdopcion(Notificador notificador,
-                                                            RepositorioDarEnAdopcion repositorio) {
+                                                            RepositorioDarEnAdopcion repositorio, List<Respuesta> listaRespuestas) {
     return new DarEnAdopcion(
         getDatosDeContacto(),
         notificador,
         getMascotaRegistrada(new RepositorioCaracteristicas()),
-        repositorio
+        repositorio,
+        getAsociacion()
     );
   }
 
   public static Rescate getPublicacionDeRescate(Notificador notificacionCorreo, RepositorioRescates repositorio) {
-    return new Rescate(getDatosDeContacto(), notificacionCorreo, repositorio, getMascotaEncontrada(getFotos()));
+    return new Rescate(getDatosDeContacto(), notificacionCorreo, repositorio, getMascotaEncontrada(getFotos()), getAsociacion());
   }
 
   public static Ubicacion getUbicacion() {
     return new Ubicacion(27.23, 25.78, null);
+  }
+
+  public static Asociacion getAsociacion(){
+    return new Asociacion(getUbicacion());
   }
 
   public static String getJsonHogaresApi() { // Un response con un solo hogar en la lista de hogares.

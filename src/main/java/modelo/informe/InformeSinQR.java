@@ -1,5 +1,7 @@
 package modelo.informe;
 
+import modelo.asociacion.RepositorioAsociaciones;
+import modelo.asociacion.UbicadorAsociaciones;
 import modelo.hogarDeTransito.Hogar;
 import modelo.hogarDeTransito.ReceptorHogares;
 import modelo.mascota.Animal;
@@ -48,12 +50,15 @@ public class InformeSinQR extends InformeRescate {
   }
 
   private void generarPublicacion() {
+    UbicadorAsociaciones ubicador = new UbicadorAsociaciones(new RepositorioAsociaciones()); //TODO agregar al cosntructor y añadirlo a los TESTS?
     repositorioRescates.agregar(
         new Rescate(
             this.getRescatista().getDatosDeContacto(),
             notificadorCorreo,
             repositorioRescates,
-            this.getMascotaEncontrada()
+            this.getMascotaEncontrada(),
+            ubicador.getAsociacionMasCercana(getUbicacionRescatista())
+
         )
     );
   }

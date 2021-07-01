@@ -1,25 +1,28 @@
 package modelo.publicacion;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import modelo.asociacion.Asociacion;
 import modelo.mascota.MascotaRegistrada;
 import modelo.notificacion.Notificacion;
 import modelo.notificacion.Notificador;
 import modelo.persona.DatosDeContacto;
+import modelo.pregunta.Respuesta;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioIntencionesDeAdopcion;
 
 public class IntencionDeAdopcion extends Publicacion {
 
-  // TODO: Descomentar ante implementación de Respuesta
-  // private List<Respuesta> comodidadesDelAdoptante;
+  private List<Respuesta> comodidadesDelAdoptante = new ArrayList<>();
   private Preferencia preferenciaDelAdoptante;
   private RepositorioIntencionesDeAdopcion repositorioIntencionesDeAdopcion;
   private String cuerpoMensaje;
 
   public IntencionDeAdopcion(DatosDeContacto contactoPosteador, Notificador notificador,
       RepositorioIntencionesDeAdopcion repositorioIntencionesDeAdopcion,
-      Preferencia preferenciaDelAdoptante /* , List<Respuesta> comodidadesDelAdoptante */) {
-    super(contactoPosteador, notificador);
+      Preferencia preferenciaDelAdoptante, Asociacion asociacion) {
+    super(contactoPosteador, notificador, asociacion);
     this.repositorioIntencionesDeAdopcion = repositorioIntencionesDeAdopcion;
     this.preferenciaDelAdoptante = preferenciaDelAdoptante;
     this.cuerpoMensaje =
@@ -46,5 +49,9 @@ public class IntencionDeAdopcion extends Publicacion {
 
   public RepositorioIntencionesDeAdopcion getRepositorioIntencionesDeAdopcion() {
     return this.repositorioIntencionesDeAdopcion;
+  }
+
+  public void addRespuesta(Respuesta rta){
+    comodidadesDelAdoptante.add(rta);
   }
 }
