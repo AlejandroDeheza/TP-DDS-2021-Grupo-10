@@ -1,15 +1,20 @@
 package entregaTPA3;
 
 import modelo.asociacion.Asociacion;
+import modelo.mascota.Animal;
 import modelo.notificacion.NotificadorCorreo;
+import modelo.persona.DatosDeContacto;
 import modelo.pregunta.ParDePreguntas;
 import modelo.pregunta.ParDeRespuestas;
 import modelo.pregunta.Respuesta;
 import modelo.publicacion.DarEnAdopcion;
+import modelo.publicacion.IntencionDeAdopcion;
+import modelo.publicacion.Preferencia;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioDarEnAdopcion;
+import repositorios.RepositorioIntencionesDeAdopcion;
 import utils.DummyData;
 
 import java.util.List;
@@ -52,10 +57,10 @@ public class TestsEntrega3 {
         repositorio,
         asociacion
     );
-    assertEquals(0, asociacion.getPreguntas().size());
+    assertEquals(0, publicacion.getRespuestasDelDador().size());
     publicacion.addRespuesta(respuestaAdoptante1);
     publicacion.addRespuesta(respuestaAdoptante2);
-    assertEquals(2, asociacion.getPreguntas().size());
+    assertEquals(2, publicacion.getRespuestasDelDador().size());
 
     repositorio.agregar(publicacion);
     assertEquals(repositorio.getDarEnAdopcion().size(), 1);
@@ -63,22 +68,23 @@ public class TestsEntrega3 {
 
   @Test
   public void sePuedeGenerarUnaPublicacionDeIntencionDeApcion() {
-    RepositorioDarEnAdopcion repositorio = new RepositorioDarEnAdopcion();
+    RepositorioIntencionesDeAdopcion repositorio = new RepositorioIntencionesDeAdopcion();
 
-    DarEnAdopcion publicacion = new DarEnAdopcion(
+
+    IntencionDeAdopcion publicacion = new IntencionDeAdopcion(
         DummyData.getDatosDeContacto(),
         notificadorCorreo,
-        DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()),
         repositorio,
+        new Preferencia(null, Animal.PERRO),
         asociacion
     );
-    assertEquals(0, asociacion.getPreguntas().size());
+    assertEquals(0, publicacion.getRespuestasDelAdoptante().size());
     publicacion.addRespuesta(respuestaAdoptante1);
     publicacion.addRespuesta(respuestaAdoptante2);
-    assertEquals(2, asociacion.getPreguntas().size());
+    assertEquals(2, publicacion.getRespuestasDelAdoptante().size());
 
     repositorio.agregar(publicacion);
-    assertEquals(repositorio.getDarEnAdopcion().size(), 1);
+    assertEquals(repositorio.getIntencionesDeAdopcion().size(), 1);
   }
 
   private ParDePreguntas getParDePreguntas1(){

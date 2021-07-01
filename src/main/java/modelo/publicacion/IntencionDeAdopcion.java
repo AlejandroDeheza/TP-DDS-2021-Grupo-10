@@ -51,6 +51,8 @@ public class IntencionDeAdopcion extends Publicacion {
     return this.repositorioIntencionesDeAdopcion;
   }
 
+  public List<Respuesta> getRespuestasDelAdoptante() { return this.comodidadesDelAdoptante; }
+
   public void addRespuesta(Respuesta rta){
     comodidadesDelAdoptante.add(rta);
   }
