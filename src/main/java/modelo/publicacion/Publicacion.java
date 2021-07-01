@@ -28,4 +28,12 @@ public abstract class Publicacion {
   public DatosDeContacto getContactoPosteador() {
     return this.contactoPosteador;
   }
+
+  public Notificador getNotificador() {
+    return notificador;
+  }
+
+  public Asociacion getAsociacion() {
+    return asociacion;
+  }
 }

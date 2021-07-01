@@ -1,6 +1,5 @@
 package modelo.asociacion;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import modelo.informe.Ubicacion;
 import modelo.pregunta.ParDePreguntas;
 

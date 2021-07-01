@@ -26,7 +26,8 @@ public class InformeSinQR extends InformeRescate {
   public InformeSinQR(Persona rescatista, Ubicacion ubicacionRescatista, String direccionRescatista,
                       MascotaEncontrada mascotaEncontrada, RepositorioInformes repositorioInformes,
                       ReceptorHogares receptorHogares, Animal tipoAnimal, List<Caracteristica> caracteristicas,
-                      RepositorioRescates repositorioRescates, NotificadorCorreo notificadorCorreo,RepositorioAsociaciones repositorioAsociaciones ) {
+                      RepositorioRescates repositorioRescates, NotificadorCorreo notificadorCorreo,
+                      RepositorioAsociaciones repositorioAsociaciones ) {
     super(rescatista, ubicacionRescatista, direccionRescatista, mascotaEncontrada, repositorioInformes,
         receptorHogares);
     this.tipoAnimal = tipoAnimal;
@@ -52,15 +53,14 @@ public class InformeSinQR extends InformeRescate {
   }
 
   private void generarPublicacion() {
-    UbicadorAsociaciones ubicador = new UbicadorAsociaciones(repositorioAsociaciones); //TODO agregar al cosntructor y añadirlo a los TESTS?
+    UbicadorAsociaciones ubicador = new UbicadorAsociaciones(repositorioAsociaciones);
     repositorioRescates.agregar(
         new Rescate(
             this.getRescatista().getDatosDeContacto(),
             notificadorCorreo,
             repositorioRescates,
             this.getMascotaEncontrada(),
-            ubicador.getAsociacionMasCercana(getUbicacionRescatista())
-
+            ubicador.getAsociacionMasCercana(getMascotaEncontrada().getUbicacion())
         )
     );
   }

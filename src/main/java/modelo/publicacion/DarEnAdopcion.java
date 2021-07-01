@@ -9,24 +9,24 @@ import modelo.pregunta.Respuesta;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioDarEnAdopcion;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DarEnAdopcion extends Publicacion {
 
-
-  private List<Respuesta> respuestasDelDador = new ArrayList<>();
+  private List<Respuesta> respuestasDelDador;
   private MascotaRegistrada mascotaEnAdopcion;
   private RepositorioDarEnAdopcion repositorioDarEnAdopcion;
   private String cuerpoMensaje;
 
   public DarEnAdopcion(DatosDeContacto contactoPosteador, Notificador notificador, MascotaRegistrada mascotaEnAdopcion,
-                       RepositorioDarEnAdopcion repositorioDarEnAdopcion, Asociacion asociacion) {
+                       RepositorioDarEnAdopcion repositorioDarEnAdopcion, List<Respuesta> respuestasDelDador,
+                       Asociacion asociacion) {
     super(contactoPosteador, notificador, asociacion);
     this.mascotaEnAdopcion = mascotaEnAdopcion;
     this.repositorioDarEnAdopcion = repositorioDarEnAdopcion;
     this.cuerpoMensaje = "Encontramos una persona que quiere adoptar a " + mascotaEnAdopcion.getNombre()
         + ". Podes comunicarte con el adoptante por este mail: ";
+    this.respuestasDelDador = respuestasDelDador;
   }
 
   @Override
@@ -50,10 +50,8 @@ public class DarEnAdopcion extends Publicacion {
     return mascotaEnAdopcion;
   }
 
-  public List<Respuesta> getRespuestasDelDador() { return this.respuestasDelDador; }
-
-  public void addRespuesta(Respuesta rta){
-    respuestasDelDador.add(rta);
+  public List<Respuesta> getRespuestasDelDador() {
+    return respuestasDelDador;
   }
 
 }

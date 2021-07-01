@@ -24,7 +24,7 @@ public class RepositorioAsociaciones {
   }
 
 
-  public void agregarAsociaciones(Asociacion asociacion) {
+  public void agregarAsociacion(Asociacion asociacion) {
     asociaciones.add(asociacion);
   }
 
