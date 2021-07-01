@@ -66,22 +66,8 @@ public class RespuestaDeHogar {
     return valoresCaracteristicas.containsAll(this.caracteristicas);
   }
 
-  private Boolean estaDentroDeRadio(Integer radioCercaniaEnKilometros, Ubicacion ubicacion) {
-    // https://www.geeksforgeeks.org/program-distance-two-points-earth/
-    double lonDireccionRescatista = Math.toRadians(ubicacion.getLongitud());
-    double lonHogar = Math.toRadians(this.ubicacion.getLongitud());
-    double latDireccionRescatista = Math.toRadians(ubicacion.getLatitud());
-    double latHogar = Math.toRadians(this.ubicacion.getLatitud());
-
-    // Haversine formula
-    double dlon = lonHogar - lonDireccionRescatista;
-    double dlat = latHogar - latDireccionRescatista;
-    double a = Math.pow(Math.sin(dlat / 2), 2)
-        + Math.cos(latDireccionRescatista) * Math.cos(latHogar) * Math.pow(Math.sin(dlon / 2), 2);
-
-    double c = 2 * Math.asin(Math.sqrt(a));
-    double r = 6371; // Radius of earth in kilometers. Use 3956 for miles
-    return (c * r) < radioCercaniaEnKilometros; // calculate the result
+  private Boolean estaDentroDeRadio(Integer radioCercaniaEnKilometros, Ubicacion ubicacionOrigen) {
+    return ubicacion.getDistancia(ubicacionOrigen) < radioCercaniaEnKilometros; // calculate the result
   }
 
   public String getNombre() {
