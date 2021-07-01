@@ -32,13 +32,11 @@ public class IntencionDeAdopcion extends Publicacion {
 
   @Override
   protected Notificacion generarNotificacion(Usuario usuario) {
-    // TODO: ¿Embeber link de baja en cuerpo de mensaje?
-    // String linkDeBaja = generarLinkDeBaja(); en vez de que sea enviarLinkDeBaja()
     return new Notificacion(
         this.getContactoPosteador(),
         "Publicación exitosa",
-        "Hola " + usuario.getPersona().getNombre() + ",",
-        cuerpoMensaje + ". Si deseas dar de baja tu publicación, lo podrás hacer clickeando el siguiente link: " /* + linkDeBaja */,
+        "Hola,",
+        cuerpoMensaje + ". Si deseas dar de baja tu publicación, lo podrás hacer clickeando el siguiente link: <Inserte Link Aqui>",
         "Hogar de patitas");
   }
 
