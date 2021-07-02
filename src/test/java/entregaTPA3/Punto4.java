@@ -4,12 +4,12 @@ import modelo.asociacion.Asociacion;
 import modelo.mascota.Animal;
 import modelo.notificacion.NotificadorCorreo;
 import modelo.pregunta.Respuesta;
-import modelo.suscripcion.SuscripcionAdopciones;
+import modelo.suscripcion.SuscripcionParaAdopcion;
 import modelo.suscripcion.Preferencia;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repositorios.RepositorioCaracteristicas;
-import repositorios.RepositorioSuscripcionesAdopcion;
+import repositorios.RepositorioSuscripcionesParaAdopciones;
 import utils.DummyData;
 
 import java.util.Arrays;
@@ -30,9 +30,9 @@ public class Punto4 {
 
   @Test
   public void sePuedeGenerarUnaPublicacionQueMuestraInteresDeAdopcion() {
-    RepositorioSuscripcionesAdopcion repositorio = new RepositorioSuscripcionesAdopcion();
+    RepositorioSuscripcionesParaAdopciones repositorio = new RepositorioSuscripcionesParaAdopciones();
 
-    SuscripcionAdopciones publicacion = new SuscripcionAdopciones(
+    SuscripcionParaAdopcion publicacion = new SuscripcionParaAdopcion(
         DummyData.getDatosDeContacto(),
         notificadorCorreo,
         new Asociacion(DummyData.getUbicacion()),

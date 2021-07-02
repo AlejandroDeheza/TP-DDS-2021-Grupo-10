@@ -11,7 +11,7 @@ import modelo.pregunta.ParDePreguntas;
 import modelo.pregunta.ParDeRespuestas;
 import modelo.pregunta.Respuesta;
 import modelo.publicacion.DarEnAdopcion;
-import modelo.suscripcion.SuscripcionAdopciones;
+import modelo.suscripcion.SuscripcionParaAdopcion;
 import modelo.suscripcion.Preferencia;
 import modelo.publicacion.Rescate;
 import modelo.usuario.TipoUsuario;
@@ -139,8 +139,8 @@ public class DummyData {
     return new Rescate(getDatosDeContacto(), notificacionCorreo, repositorio, getMascotaEncontrada(getFotos()), getAsociacion());
   }
 
-  public static SuscripcionAdopciones getSuscripcionAdopciones(NotificadorCorreo notificadorCorreo) {
-    return new SuscripcionAdopciones(
+  public static SuscripcionParaAdopcion getSuscripcionParaAdopcion(NotificadorCorreo notificadorCorreo) {
+    return new SuscripcionParaAdopcion(
         getDatosDeContacto(),
         notificadorCorreo,
         getAsociacion(),
