@@ -10,7 +10,7 @@ import modelo.persona.DatosDeContacto;
 import modelo.pregunta.Respuesta;
 import modelo.publicacion.DarEnAdopcion;
 
-public class SuscripcionAdopciones {
+public class SuscripcionParaAdopcion {
 
   private DatosDeContacto contactoSuscriptor;
   private Notificador notificador;
@@ -20,8 +20,8 @@ public class SuscripcionAdopciones {
   private String cuerpoMensajeConLinkDeBaja;
   private String cuerpoMensajeConRecomendacion;
 
-  public SuscripcionAdopciones(DatosDeContacto contactoSuscriptor, Notificador notificador, Asociacion asociacion,
-                               Preferencia preferenciaDelAdoptante, List<Respuesta> comodidadesDelAdoptante) {
+  public SuscripcionParaAdopcion(DatosDeContacto contactoSuscriptor, Notificador notificador, Asociacion asociacion,
+                                 Preferencia preferenciaDelAdoptante, List<Respuesta> comodidadesDelAdoptante) {
     this.contactoSuscriptor = contactoSuscriptor;
     this.notificador = notificador;
     this.asociacion = asociacion;

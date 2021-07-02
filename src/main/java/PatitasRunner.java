@@ -1,12 +1,16 @@
 import modelo.adopcion.RecomendadorDeAdopciones;
 import repositorios.RepositorioDarEnAdopcion;
-import repositorios.RepositorioSuscripcionesAdopcion;
+import repositorios.RepositorioSuscripcionesParaAdopciones;
 
 public class PatitasRunner {
-    public static void main(String[] args) {
-        RepositorioDarEnAdopcion repositorioDarEnAdopcion = new RepositorioDarEnAdopcion();
-        RepositorioSuscripcionesAdopcion repositorioSuscripcionesAdopcion = new RepositorioSuscripcionesAdopcion();
-        RecomendadorDeAdopciones recomendadorDeAdopciones = new RecomendadorDeAdopciones(3,repositorioSuscripcionesAdopcion,repositorioDarEnAdopcion);
-        recomendadorDeAdopciones.recomendarAdopciones();
-    }
+
+  public static void main(String[] args) {
+
+    RecomendadorDeAdopciones recomendadorDeAdopciones = new RecomendadorDeAdopciones(
+        3,
+        RepositorioDarEnAdopcion.getInstance(),
+        RepositorioSuscripcionesParaAdopciones.getInstance()
+    );
+    recomendadorDeAdopciones.recomendarAdopcionesASuscritos();
+  }
 }

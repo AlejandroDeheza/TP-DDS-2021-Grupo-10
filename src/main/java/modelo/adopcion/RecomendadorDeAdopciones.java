@@ -1,61 +1,49 @@
 package modelo.adopcion;
 
-import modelo.mascota.MascotaRegistrada;
-import modelo.pregunta.ParDeRespuestas;
+import modelo.mascota.Animal;
+import modelo.mascota.caracteristica.Caracteristica;
 import modelo.pregunta.Respuesta;
 import modelo.publicacion.DarEnAdopcion;
-import modelo.suscripcion.Preferencia;
-import modelo.suscripcion.SuscripcionAdopciones;
+import modelo.suscripcion.SuscripcionParaAdopcion;
 import repositorios.RepositorioDarEnAdopcion;
-import repositorios.RepositorioSuscripcionesAdopcion;
-
-import java.util.ArrayList;
+import repositorios.RepositorioSuscripcionesParaAdopciones;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class RecomendadorDeAdopciones {
-    private Integer limiteDeSugerencias;
-    private RepositorioSuscripcionesAdopcion repositorioSuscripcionesAdopcion;
-    private RepositorioDarEnAdopcion repositorioDarEnAdopcion;
+  private Integer limiteDeSugerencias;
+  private RepositorioSuscripcionesParaAdopciones repositorioSuscripcionesParaAdopciones;
+  private RepositorioDarEnAdopcion repositorioDarEnAdopcion;
 
-    public RecomendadorDeAdopciones(Integer limiteDeSugerencias, RepositorioSuscripcionesAdopcion repositorioSuscripcionesAdopcion, RepositorioDarEnAdopcion repositorioDarEnAdopcion) {
-        this.limiteDeSugerencias = limiteDeSugerencias;
-        this.repositorioSuscripcionesAdopcion = repositorioSuscripcionesAdopcion;
-        this.repositorioDarEnAdopcion = repositorioDarEnAdopcion;
-    }
+  public RecomendadorDeAdopciones(Integer limiteDeSugerencias, RepositorioDarEnAdopcion repositorioDarEnAdopcion,
+                                  RepositorioSuscripcionesParaAdopciones repositorioSuscripcionesParaAdopciones) {
+    this.limiteDeSugerencias = limiteDeSugerencias;
+    this.repositorioSuscripcionesParaAdopciones = repositorioSuscripcionesParaAdopciones;
+    this.repositorioDarEnAdopcion = repositorioDarEnAdopcion;
+  }
 
-    public void recomendarAdopciones() {
-        List<SuscripcionAdopciones> suscripcionAdopcionesList = repositorioSuscripcionesAdopcion.getSuscripciones();
-        suscripcionAdopcionesList.forEach(
-                suscripcion -> suscripcion.enviarRecomendaciones(obtenerMatchDeMascotas(suscripcion)));
-    }
+  public void recomendarAdopcionesASuscritos() {
+    repositorioSuscripcionesParaAdopciones.getSuscripciones().forEach(this::recomendarAdopciones);
+  }
 
-    public List<MascotaRegistrada> obtenerMatchDeMascotas(SuscripcionAdopciones suscripcionAdopciones){
-        List<Respuesta> comodidades = suscripcionAdopciones.getComodidadesDelAdoptante();
-        Preferencia preferencia = suscripcionAdopciones.getPreferenciaDelAdoptante();
-        List<DarEnAdopcion> adopcionesActivas = repositorioDarEnAdopcion.getDarEnAdopcion();
-        List<DarEnAdopcion> adopcionesMatch = adopcionesActivas.stream().filter(adopcion -> esMatch(adopcion,comodidades,preferencia)).collect(Collectors.toList());
-        List<MascotaRegistrada> mascotasQueMatchean = adopcionesMatch.stream().map(adopcion -> adopcion.getMascotaEnAdopcion()).collect(Collectors.toList());
-        if(mascotasQueMatchean.size() > limiteDeSugerencias) {
-            return mascotasQueMatchean.stream().limit(limiteDeSugerencias).collect(Collectors.toList());
-        }
-        return mascotasQueMatchean;
-    }
+  private void recomendarAdopciones(SuscripcionParaAdopcion suscripcion) {
+    List<Caracteristica> caracteristicas = suscripcion.getPreferenciaDelAdoptante().getCaracteristicas();
+    Animal animal = suscripcion.getPreferenciaDelAdoptante().getTipoAnimal();
+    suscripcion.enviarRecomendaciones(
+        repositorioDarEnAdopcion.getDarEnAdopcion()
+            .stream()
+            .filter(adopcion -> adopcion.getMascotaEnAdopcion().getAnimal().equals(animal))
+            .filter(adopcion -> adopcion.getMascotaEnAdopcion().cumpleConCaracteristicas(caracteristicas))
+            .sorted((a1, a2) -> elPrimeroMatcheaConMas(a1, a2, suscripcion.getComodidadesDelAdoptante()))
+            .limit(limiteDeSugerencias).collect(Collectors.toList())
+    );
+  }
 
-    private boolean esMatch(DarEnAdopcion adopcion, List<Respuesta> comodidades, Preferencia preferencia) {
-        return adopcion.getMascotaEnAdopcion().getCaracteristicas().contains(preferencia.getCaracteristicas());
-    //TODO MATCH DE PREGUNTAS Y RESPUESTAS
-    //comodidades.forEach(respuesta ->
-    //buscarRecomendaciones(respuesta));
-    }
-
-    private void buscarRecomendaciones(Respuesta respuesta) {
-        List<ParDeRespuestas> respuestasPosibles = new ArrayList<>();
-        respuestasPosibles = respuesta.getParDePreguntas()
-                .getParesDeRespuestas()
-                .stream()
-                .filter(parDeRespuestas -> parDeRespuestas.getDelAdoptante().equals(respuesta.getRespuesta()))
-                .collect(Collectors.toList());
-    }
+  private int elPrimeroMatcheaConMas(DarEnAdopcion a1, DarEnAdopcion a2, List<Respuesta> comodidades) {
+    return Integer.compare(
+        a1.cantidadConLasQueMatchea(comodidades),
+        a2.cantidadConLasQueMatchea(comodidades)
+    );
+  }
 }

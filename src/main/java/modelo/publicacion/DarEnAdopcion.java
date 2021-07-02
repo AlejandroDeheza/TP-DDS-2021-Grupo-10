@@ -54,4 +54,7 @@ public class DarEnAdopcion extends Publicacion {
     return respuestasDelDador;
   }
 
+  public int cantidadConLasQueMatchea(List<Respuesta> comodidades) {
+    return (int) comodidades.stream().filter(comodidad -> comodidad.matcheaConAlguna(respuestasDelDador)).count();
+  }
 }

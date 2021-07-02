@@ -1,19 +1,19 @@
 package modelo.pregunta;
 
 public class ParDeRespuestas {
-  String delDador;
-  String delAdoptante;
+  private String respuestaDelDador;
+  private String respuestaDelAdoptante;
 
-  public ParDeRespuestas(String delDador, String delAdoptante) {
-    this.delDador = delDador;
-    this.delAdoptante = delAdoptante;
+  public ParDeRespuestas(String respuestaDelDador, String respuestaDelAdoptante) {
+    this.respuestaDelDador = respuestaDelDador;
+    this.respuestaDelAdoptante = respuestaDelAdoptante;
   }
 
-  public String getDelDador() {
-    return delDador;
+  public String getRespuestaDelDador() {
+    return respuestaDelDador;
   }
 
-  public String getDelAdoptante() {
-    return delAdoptante;
+  public String getRespuestaDelAdoptante() {
+    return respuestaDelAdoptante;
   }
 }

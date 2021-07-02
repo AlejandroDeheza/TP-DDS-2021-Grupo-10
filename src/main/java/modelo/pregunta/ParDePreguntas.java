@@ -13,6 +13,11 @@ public class ParDePreguntas {
     this.preguntaDelAdoptante = preguntaDelAdoptante;
   }
 
+  public Boolean esIgualA(ParDePreguntas parDePreguntas) {
+    return parDePreguntas.getPreguntaDelAdoptante().equals(preguntaDelAdoptante)
+        && parDePreguntas.getPreguntaDelDador().equals(preguntaDelDador);
+  }
+
   public void agregarRespuesta(ParDeRespuestas parDeRespuestas) {
     paresDeRespuestas.add(parDeRespuestas);
   }
