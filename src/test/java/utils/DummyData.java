@@ -11,8 +11,8 @@ import modelo.pregunta.ParDePreguntas;
 import modelo.pregunta.ParDeRespuestas;
 import modelo.pregunta.Respuesta;
 import modelo.publicacion.DarEnAdopcion;
-import modelo.publicacion.SuscripcionAdopciones;
-import modelo.publicacion.Preferencia;
+import modelo.suscripcion.SuscripcionParaAdopcion;
+import modelo.suscripcion.Preferencia;
 import modelo.publicacion.Rescate;
 import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
@@ -92,9 +92,9 @@ public class DummyData {
     return new MascotaEncontrada(fotos, getUbicacion(), "Limpio y Sano", LocalDate.now(), TamanioMascota.CHICO);
   }
 
-  public static MascotaRegistrada getMascotaRegistrada(RepositorioCaracteristicas RepositorioCaracteristicas) {
+  public static MascotaRegistrada getMascotaRegistrada(RepositorioCaracteristicas repositorioCaracteristicas) {
     return new MascotaRegistrada(getUsuario(), "Felipe", "Panchito", LocalDate.of(2018, 3, 4), "Pelo largo", Sexo.MACHO,
-        Animal.PERRO, getCaracteristicasParaMascota(RepositorioCaracteristicas), getFotos(), TamanioMascota.CHICO);
+        Animal.PERRO, getCaracteristicasParaMascota(repositorioCaracteristicas), getFotos(), TamanioMascota.CHICO);
   }
 
   public static ParDePreguntas getParDePreguntas1(){
@@ -139,8 +139,8 @@ public class DummyData {
     return new Rescate(getDatosDeContacto(), notificacionCorreo, repositorio, getMascotaEncontrada(getFotos()), getAsociacion());
   }
 
-  public static SuscripcionAdopciones getPublicacionDeIntencionDeAdopcion(NotificadorCorreo notificadorCorreo) {
-    return new SuscripcionAdopciones(
+  public static SuscripcionParaAdopcion getSuscripcionParaAdopcion(NotificadorCorreo notificadorCorreo) {
+    return new SuscripcionParaAdopcion(
         getDatosDeContacto(),
         notificadorCorreo,
         getAsociacion(),

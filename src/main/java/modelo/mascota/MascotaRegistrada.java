@@ -34,6 +34,10 @@ public class MascotaRegistrada {
     this.tamanio = tamanio;
   }
 
+  public Boolean cumpleConCaracteristicas(List<Caracteristica> caracteristicas) {
+    return caracteristicas.stream().allMatch(caracteristica -> caracteristica.matcheaConAlgunaDe(this.caracteristicas));
+  }
+
   public Usuario getDuenio() {
     return duenio;
   }
