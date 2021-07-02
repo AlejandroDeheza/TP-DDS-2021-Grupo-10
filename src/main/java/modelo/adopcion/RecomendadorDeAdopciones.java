@@ -4,8 +4,8 @@ import modelo.mascota.MascotaRegistrada;
 import modelo.pregunta.ParDeRespuestas;
 import modelo.pregunta.Respuesta;
 import modelo.publicacion.DarEnAdopcion;
-import modelo.publicacion.Preferencia;
-import modelo.publicacion.SuscripcionAdopciones;
+import modelo.suscripcion.Preferencia;
+import modelo.suscripcion.SuscripcionAdopciones;
 import repositorios.RepositorioDarEnAdopcion;
 import repositorios.RepositorioSuscripcionesAdopcion;
 
@@ -26,7 +26,7 @@ public class RecomendadorDeAdopciones {
     }
 
     public void recomendarAdopciones() {
-        List<SuscripcionAdopciones> suscripcionAdopcionesList = repositorioSuscripcionesAdopcion.getIntencionesDeAdopcion();
+        List<SuscripcionAdopciones> suscripcionAdopcionesList = repositorioSuscripcionesAdopcion.getSuscripciones();
         suscripcionAdopcionesList.forEach(
                 suscripcion -> suscripcion.enviarRecomendaciones(obtenerMatchDeMascotas(suscripcion)));
     }

@@ -1,5 +1,6 @@
 package modelo.publicacion;
 
+import modelo.suscripcion.SuscripcionAdopciones;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

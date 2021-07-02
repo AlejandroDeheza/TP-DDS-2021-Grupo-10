@@ -1,4 +1,4 @@
-package modelo.publicacion;
+package modelo.suscripcion;
 
 import java.util.List;
 import modelo.mascota.Animal;

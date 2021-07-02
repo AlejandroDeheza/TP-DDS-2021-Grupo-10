@@ -4,8 +4,8 @@ import modelo.asociacion.Asociacion;
 import modelo.mascota.Animal;
 import modelo.notificacion.NotificadorCorreo;
 import modelo.pregunta.Respuesta;
-import modelo.publicacion.SuscripcionAdopciones;
-import modelo.publicacion.Preferencia;
+import modelo.suscripcion.SuscripcionAdopciones;
+import modelo.suscripcion.Preferencia;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repositorios.RepositorioCaracteristicas;
@@ -41,7 +41,7 @@ public class Punto4 {
     );
 
     repositorio.agregar(publicacion);
-    assertEquals(repositorio.getIntencionesDeAdopcion().size(), 1);
+    assertEquals(repositorio.getSuscripciones().size(), 1);
   }
 
 }

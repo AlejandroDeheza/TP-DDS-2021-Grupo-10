@@ -2,20 +2,20 @@ package repositorios;
 
 import java.util.ArrayList;
 import java.util.List;
-import modelo.publicacion.SuscripcionAdopciones;
+import modelo.suscripcion.SuscripcionAdopciones;
 
 public class RepositorioSuscripcionesAdopcion {
-  private static RepositorioSuscripcionesAdopcion RepositorioSuscripcionesAdopcion = new RepositorioSuscripcionesAdopcion();
-  private List<SuscripcionAdopciones> intencionesDeAdopcion = new ArrayList<>();
-  private List<SuscripcionAdopciones> publicacionesProcesadas = new ArrayList<>();
+  private static RepositorioSuscripcionesAdopcion repositorioSuscripcionesAdopcion = new RepositorioSuscripcionesAdopcion();
+  private List<SuscripcionAdopciones> suscripciones = new ArrayList<>();
+  private List<SuscripcionAdopciones> precesadas = new ArrayList<>();
 
   public void agregar(SuscripcionAdopciones publicacion) {
-    this.intencionesDeAdopcion.add(publicacion);
+    this.suscripciones.add(publicacion);
   }
 
   public void marcarComoProcesada(SuscripcionAdopciones publicacion) {
-    this.intencionesDeAdopcion.remove(publicacion);
-    this.publicacionesProcesadas.add(publicacion);
+    this.suscripciones.remove(publicacion);
+    this.precesadas.add(publicacion);
   }
 
   // el repositorio, en codigo de produccion, lo inyectamos por constructor
@@ -24,14 +24,14 @@ public class RepositorioSuscripcionesAdopcion {
 
   // usamos el getInstance en Main
   public static RepositorioSuscripcionesAdopcion getInstance() {
-    return RepositorioSuscripcionesAdopcion;
+    return repositorioSuscripcionesAdopcion;
   }
 
-  public List<SuscripcionAdopciones> getIntencionesDeAdopcion() {
-    return this.intencionesDeAdopcion;
+  public List<SuscripcionAdopciones> getSuscripciones() {
+    return this.suscripciones;
   }
 
-  public List<SuscripcionAdopciones> getPublicacionesProcesadas() {
-    return this.publicacionesProcesadas;
+  public List<SuscripcionAdopciones> getPrecesadas() {
+    return this.precesadas;
   }
 }

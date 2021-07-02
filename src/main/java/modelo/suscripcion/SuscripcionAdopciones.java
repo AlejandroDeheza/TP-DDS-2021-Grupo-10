@@ -1,4 +1,4 @@
-package modelo.publicacion;
+package modelo.suscripcion;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,7 +44,7 @@ public class SuscripcionAdopciones {
     notificarAlSuscriptor("Publicación exitosa", cuerpoMensajeConLinkDeBaja);
   }
 
-  public void notificarAlSuscriptor(String asunto, String cuerpoMensaje) {
+  private void notificarAlSuscriptor(String asunto, String cuerpoMensaje) {
     Notificacion notificacion = new Notificacion(
         contactoSuscriptor,
         asunto,
