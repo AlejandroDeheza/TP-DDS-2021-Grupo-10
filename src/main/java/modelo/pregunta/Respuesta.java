@@ -2,16 +2,16 @@ package modelo.pregunta;
 
 
 public class Respuesta {
-  private String Respuesta;
+  private String respuesta;
   private ParDePreguntas parDePreguntas;
 
   public Respuesta(String respuesta, ParDePreguntas parDePreguntas) {
-    Respuesta = respuesta;
+    this.respuesta = respuesta;
     this.parDePreguntas = parDePreguntas;
   }
 
   public String getRespuesta() {
-    return Respuesta;
+    return respuesta;
   }
 
   public ParDePreguntas getParDePreguntas() {
