@@ -29,7 +29,7 @@ public class Punto4 {
   }
 
   @Test
-  public void sePuedeGenerarUnaPublicacionDeIntencionDeApcion() {
+  public void sePuedeGenerarUnaPublicacionQueMuestraInteresDeAdopcion() {
     RepositorioSuscripcionesAdopcion repositorio = new RepositorioSuscripcionesAdopcion();
 
     SuscripcionAdopciones publicacion = new SuscripcionAdopciones(

@@ -139,7 +139,7 @@ public class DummyData {
     return new Rescate(getDatosDeContacto(), notificacionCorreo, repositorio, getMascotaEncontrada(getFotos()), getAsociacion());
   }
 
-  public static SuscripcionAdopciones getPublicacionDeIntencionDeAdopcion(NotificadorCorreo notificadorCorreo) {
+  public static SuscripcionAdopciones getSuscripcionAdopciones(NotificadorCorreo notificadorCorreo) {
     return new SuscripcionAdopciones(
         getDatosDeContacto(),
         notificadorCorreo,
