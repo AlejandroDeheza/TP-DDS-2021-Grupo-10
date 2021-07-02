@@ -29,6 +29,10 @@ public class DarEnAdopcion extends Publicacion {
     this.respuestasDelDador = respuestasDelDador;
   }
 
+  public int cantidadConLasQueMatchea(List<Respuesta> comodidades) {
+    return (int) comodidades.stream().filter(comodidad -> comodidad.matcheaConAlguna(respuestasDelDador)).count();
+  }
+
   @Override
   public void notificarAlPosteador(Usuario adoptante) {
     repositorio.marcarComoProcesada(this);
@@ -54,7 +58,4 @@ public class DarEnAdopcion extends Publicacion {
     return respuestasDelDador;
   }
 
-  public int cantidadConLasQueMatchea(List<Respuesta> comodidades) {
-    return (int) comodidades.stream().filter(comodidad -> comodidad.matcheaConAlguna(respuestasDelDador)).count();
-  }
 }

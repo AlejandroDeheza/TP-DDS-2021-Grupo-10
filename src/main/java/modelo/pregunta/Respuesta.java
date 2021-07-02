@@ -13,19 +13,19 @@ public class Respuesta {
     this.parDePreguntas = parDePreguntas;
   }
 
-  public List<String> getRespuestasDelAdoptanteRelacionadas() {
-    return parDePreguntas.getParesDeRespuestas()
-        .stream()
-        .filter(parDeRespuestas -> parDeRespuestas.getRespuestaDelDador().equals(respuesta))
-        .map(ParDeRespuestas::getRespuestaDelAdoptante)
-        .collect(Collectors.toList());
-  }
-
   public boolean matcheaConAlguna(List<Respuesta> respuestasDelDador) {
     return respuestasDelDador
         .stream()
         .filter(r -> r.getParDePreguntas().esIgualA(parDePreguntas))
         .anyMatch(r -> r.getRespuestasDelAdoptanteRelacionadas().contains(respuesta));
+  }
+
+  private List<String> getRespuestasDelAdoptanteRelacionadas() {
+    return parDePreguntas.getParesDeRespuestas()
+        .stream()
+        .filter(parDeRespuestas -> parDeRespuestas.getRespuestaDelDador().equals(respuesta))
+        .map(ParDeRespuestas::getRespuestaDelAdoptante)
+        .collect(Collectors.toList());
   }
 
   public String getRespuesta() {
