@@ -42,7 +42,7 @@ public class PublicacionTest {
   @Test
   @DisplayName("Si se envia el link de baja al posteador, se envia una Notificacion al posteador")
   public void enviarUnLinkDeBajaEnviaUnaNotificacion() {
-    IntencionDeAdopcion publicacion = DummyData.getPublicacionDeIntencionDeAdopcion(notificadorCorreo);
+    SuscripcionAdopciones publicacion = DummyData.getPublicacionDeIntencionDeAdopcion(notificadorCorreo);
     publicacion.enviarLinkDeBaja();
     verify(notificadorCorreo, times(1)).notificar(any());
   }
@@ -50,7 +50,7 @@ public class PublicacionTest {
   @Test
   @DisplayName("Si se envian recomendacion de adopcion, se envia una Notificacion al adoptante")
   public void enviarRecomendacionesEnviaUnaNotificacion() {
-    IntencionDeAdopcion publicacion = DummyData.getPublicacionDeIntencionDeAdopcion(notificadorCorreo);
+    SuscripcionAdopciones publicacion = DummyData.getPublicacionDeIntencionDeAdopcion(notificadorCorreo);
     publicacion.enviarRecomendaciones(
         Arrays.asList(
             DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()),

@@ -11,7 +11,7 @@ import modelo.pregunta.ParDePreguntas;
 import modelo.pregunta.ParDeRespuestas;
 import modelo.pregunta.Respuesta;
 import modelo.publicacion.DarEnAdopcion;
-import modelo.publicacion.IntencionDeAdopcion;
+import modelo.publicacion.SuscripcionAdopciones;
 import modelo.publicacion.Preferencia;
 import modelo.publicacion.Rescate;
 import modelo.usuario.TipoUsuario;
@@ -139,16 +139,17 @@ public class DummyData {
     return new Rescate(getDatosDeContacto(), notificacionCorreo, repositorio, getMascotaEncontrada(getFotos()), getAsociacion());
   }
 
-  public static IntencionDeAdopcion getPublicacionDeIntencionDeAdopcion(NotificadorCorreo notificadorCorreo) {
-    return new IntencionDeAdopcion(
+  public static SuscripcionAdopciones getPublicacionDeIntencionDeAdopcion(NotificadorCorreo notificadorCorreo) {
+    return new SuscripcionAdopciones(
         getDatosDeContacto(),
         notificadorCorreo,
+        getAsociacion(),
         new Preferencia(getCaracteristicasParaMascota(new RepositorioCaracteristicas()), Animal.PERRO),
         Arrays.asList(
             new Respuesta("Si", getParDePreguntas1()),
             new Respuesta("2", getParDePreguntas2())
-        ),
-        getAsociacion());
+        )
+    );
   }
 
   public static Ubicacion getUbicacion() {

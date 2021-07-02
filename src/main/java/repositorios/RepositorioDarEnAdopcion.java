@@ -1,7 +1,6 @@
 package repositorios;
 
 import modelo.publicacion.DarEnAdopcion;
-import modelo.publicacion.Publicacion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +8,7 @@ import java.util.List;
 public class RepositorioDarEnAdopcion {
   private static RepositorioDarEnAdopcion repositorioPublicaciones = new RepositorioDarEnAdopcion();
   private List<DarEnAdopcion> darEnAdopcion = new ArrayList<>();
-  private List<Publicacion> publicacionesProcesadas = new ArrayList<>();
+  private List<DarEnAdopcion> publicacionesProcesadas = new ArrayList<>();
 
   public void agregar(DarEnAdopcion publicacion) {
     this.darEnAdopcion.add(publicacion);
@@ -33,7 +32,7 @@ public class RepositorioDarEnAdopcion {
     return this.darEnAdopcion;
   }
 
-  public List<Publicacion> getPublicacionesProcesadas() {
+  public List<DarEnAdopcion> getPublicacionesProcesadas() {
     return this.publicacionesProcesadas;
   }
 }

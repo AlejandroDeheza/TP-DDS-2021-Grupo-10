@@ -15,15 +15,15 @@ public class DarEnAdopcion extends Publicacion {
 
   private List<Respuesta> respuestasDelDador;
   private MascotaRegistrada mascotaEnAdopcion;
-  private RepositorioDarEnAdopcion repositorioDarEnAdopcion;
+  private RepositorioDarEnAdopcion repositorio;
   private String cuerpoMensaje;
 
   public DarEnAdopcion(DatosDeContacto contactoPosteador, Notificador notificador, MascotaRegistrada mascotaEnAdopcion,
-                       RepositorioDarEnAdopcion repositorioDarEnAdopcion, List<Respuesta> respuestasDelDador,
+                       RepositorioDarEnAdopcion repositorio, List<Respuesta> respuestasDelDador,
                        Asociacion asociacion) {
     super(contactoPosteador, notificador, asociacion);
     this.mascotaEnAdopcion = mascotaEnAdopcion;
-    this.repositorioDarEnAdopcion = repositorioDarEnAdopcion;
+    this.repositorio = repositorio;
     this.cuerpoMensaje = "Encontramos una persona que quiere adoptar a " + mascotaEnAdopcion.getNombre()
         + ". Podes comunicarte con el adoptante por este mail: ";
     this.respuestasDelDador = respuestasDelDador;
@@ -31,7 +31,7 @@ public class DarEnAdopcion extends Publicacion {
 
   @Override
   public void notificarAlPosteador(Usuario adoptante) {
-    repositorioDarEnAdopcion.marcarComoProcesada(this);
+    repositorio.marcarComoProcesada(this);
     super.notificarAlPosteador(adoptante);
   }
 

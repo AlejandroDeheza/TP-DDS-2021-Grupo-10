@@ -4,12 +4,12 @@ import modelo.asociacion.Asociacion;
 import modelo.mascota.Animal;
 import modelo.notificacion.NotificadorCorreo;
 import modelo.pregunta.Respuesta;
-import modelo.publicacion.IntencionDeAdopcion;
+import modelo.publicacion.SuscripcionAdopciones;
 import modelo.publicacion.Preferencia;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repositorios.RepositorioCaracteristicas;
-import repositorios.RepositorioIntencionesDeAdopcion;
+import repositorios.RepositorioSuscripcionesAdopcion;
 import utils.DummyData;
 
 import java.util.Arrays;
@@ -30,14 +30,14 @@ public class Punto4 {
 
   @Test
   public void sePuedeGenerarUnaPublicacionDeIntencionDeApcion() {
-    RepositorioIntencionesDeAdopcion repositorio = new RepositorioIntencionesDeAdopcion();
+    RepositorioSuscripcionesAdopcion repositorio = new RepositorioSuscripcionesAdopcion();
 
-    IntencionDeAdopcion publicacion = new IntencionDeAdopcion(
+    SuscripcionAdopciones publicacion = new SuscripcionAdopciones(
         DummyData.getDatosDeContacto(),
         notificadorCorreo,
+        new Asociacion(DummyData.getUbicacion()),
         new Preferencia(DummyData.getCaracteristicasParaMascota(new RepositorioCaracteristicas()), Animal.PERRO),
-        Arrays.asList(respuestaAdoptante1, respuestaAdoptante2),
-        new Asociacion(DummyData.getUbicacion())
+        Arrays.asList(respuestaAdoptante1, respuestaAdoptante2)
     );
 
     repositorio.agregar(publicacion);
