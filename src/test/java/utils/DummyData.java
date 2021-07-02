@@ -92,9 +92,9 @@ public class DummyData {
     return new MascotaEncontrada(fotos, getUbicacion(), "Limpio y Sano", LocalDate.now(), TamanioMascota.CHICO);
   }
 
-  public static MascotaRegistrada getMascotaRegistrada(RepositorioCaracteristicas RepositorioCaracteristicas) {
+  public static MascotaRegistrada getMascotaRegistrada(RepositorioCaracteristicas repositorioCaracteristicas) {
     return new MascotaRegistrada(getUsuario(), "Felipe", "Panchito", LocalDate.of(2018, 3, 4), "Pelo largo", Sexo.MACHO,
-        Animal.PERRO, getCaracteristicasParaMascota(RepositorioCaracteristicas), getFotos(), TamanioMascota.CHICO);
+        Animal.PERRO, getCaracteristicasParaMascota(repositorioCaracteristicas), getFotos(), TamanioMascota.CHICO);
   }
 
   public static ParDePreguntas getParDePreguntas1(){
