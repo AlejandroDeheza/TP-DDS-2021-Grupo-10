@@ -12,5 +12,6 @@ public class PatitasRunner {
         RepositorioSuscripcionesParaAdopciones.getInstance()
     );
     recomendadorDeAdopciones.recomendarAdopcionesASuscritos();
+    System.out.println("Recomendando a los Suscriptores");
   }
 }
