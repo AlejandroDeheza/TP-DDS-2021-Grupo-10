@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import modelo.asociacion.Asociacion;
-import modelo.mascota.MascotaRegistrada;
 import modelo.notificacion.Notificacion;
 import modelo.notificacion.Notificador;
 import modelo.persona.DatosDeContacto;
 import modelo.pregunta.Respuesta;
+import modelo.publicacion.DarEnAdopcion;
 
 public class SuscripcionAdopciones {
 
@@ -35,8 +35,11 @@ public class SuscripcionAdopciones {
         "Encontramos las siguientes mascotas que creemos que pueden interesarte adoptar: ";
   }
   
-  public void enviarRecomendaciones(List<MascotaRegistrada> recomendaciones) {
-    String mascotas = recomendaciones.stream().map(MascotaRegistrada::getNombre).collect(Collectors.joining(","));
+  public void enviarRecomendaciones(List<DarEnAdopcion> recomendaciones) {
+    String mascotas = recomendaciones
+        .stream()
+        .map(recomendacion -> recomendacion.getMascotaEnAdopcion().getNombre())
+        .collect(Collectors.joining(","));
     notificarAlSuscriptor("Recomendaciones de adopcion", cuerpoMensajeConRecomendacion + mascotas);
   }
 
