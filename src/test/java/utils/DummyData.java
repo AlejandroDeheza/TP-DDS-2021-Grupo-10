@@ -1,11 +1,18 @@
 package utils;
 
+import modelo.asociacion.Asociacion;
 import modelo.informe.Ubicacion;
 import modelo.mascota.*;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
+import modelo.notificacion.NotificadorCorreo;
 import modelo.persona.*;
+import modelo.pregunta.ParDePreguntas;
+import modelo.pregunta.ParDeRespuestas;
+import modelo.pregunta.Respuesta;
 import modelo.publicacion.DarEnAdopcion;
+import modelo.publicacion.SuscripcionAdopciones;
+import modelo.publicacion.Preferencia;
 import modelo.publicacion.Rescate;
 import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
@@ -90,22 +97,67 @@ public class DummyData {
         Animal.PERRO, getCaracteristicasParaMascota(RepositorioCaracteristicas), getFotos(), TamanioMascota.CHICO);
   }
 
+  public static ParDePreguntas getParDePreguntas1(){
+    ParDePreguntas preguntas = new ParDePreguntas(
+        "La mascota sufre si está mucho tiempo sola?",
+        "Va a estar la mascota mucho tiempo sola?");
+    preguntas.agregarRespuesta(new ParDeRespuestas("Si", "No"));
+    preguntas.agregarRespuesta(new ParDeRespuestas("No", "Si"));
+    preguntas.agregarRespuesta(new ParDeRespuestas("No", "No"));
+    return preguntas;
+  }
+
+  public static ParDePreguntas getParDePreguntas2(){
+    ParDePreguntas preguntas = new ParDePreguntas(
+        "Cuantas veces necesita salir la mascota al dia?",
+        "Cuantas veces sacarás a pasear a tu mascota al dia?");
+    preguntas.agregarRespuesta(new ParDeRespuestas("1", "1"));
+    preguntas.agregarRespuesta(new ParDeRespuestas("1", "2"));
+    preguntas.agregarRespuesta(new ParDeRespuestas("2", "2"));
+    preguntas.agregarRespuesta(new ParDeRespuestas("1", "+2"));
+    preguntas.agregarRespuesta(new ParDeRespuestas("2", "+2"));
+    preguntas.agregarRespuesta(new ParDeRespuestas("+2", "+2"));
+    return preguntas;
+  }
+
   public static DarEnAdopcion getPublicacionDeDarEnAdopcion(Notificador notificador,
                                                             RepositorioDarEnAdopcion repositorio) {
     return new DarEnAdopcion(
         getDatosDeContacto(),
         notificador,
         getMascotaRegistrada(new RepositorioCaracteristicas()),
-        repositorio
+        repositorio,
+        Arrays.asList(
+            new Respuesta("Si", getParDePreguntas1()),
+            new Respuesta("2", getParDePreguntas2())
+        ),
+        getAsociacion()
     );
   }
 
   public static Rescate getPublicacionDeRescate(Notificador notificacionCorreo, RepositorioRescates repositorio) {
-    return new Rescate(getDatosDeContacto(), notificacionCorreo, repositorio, getMascotaEncontrada(getFotos()));
+    return new Rescate(getDatosDeContacto(), notificacionCorreo, repositorio, getMascotaEncontrada(getFotos()), getAsociacion());
+  }
+
+  public static SuscripcionAdopciones getPublicacionDeIntencionDeAdopcion(NotificadorCorreo notificadorCorreo) {
+    return new SuscripcionAdopciones(
+        getDatosDeContacto(),
+        notificadorCorreo,
+        getAsociacion(),
+        new Preferencia(getCaracteristicasParaMascota(new RepositorioCaracteristicas()), Animal.PERRO),
+        Arrays.asList(
+            new Respuesta("Si", getParDePreguntas1()),
+            new Respuesta("2", getParDePreguntas2())
+        )
+    );
   }
 
   public static Ubicacion getUbicacion() {
     return new Ubicacion(27.23, 25.78, null);
+  }
+
+  public static Asociacion getAsociacion(){
+    return new Asociacion(getUbicacion());
   }
 
   public static String getJsonHogaresApi() { // Un response con un solo hogar en la lista de hogares.

@@ -1,5 +1,6 @@
 package modelo.publicacion;
 
+import modelo.asociacion.Asociacion;
 import modelo.mascota.MascotaEncontrada;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioRescates;
@@ -10,7 +11,7 @@ import modelo.notificacion.Notificador;
 /**
  * Representa a Publicacion de la 2da entrega
  *
- * @since Entrega 3
+ * @since  Entrega 3
  */
 public class Rescate extends Publicacion {
 
@@ -19,8 +20,8 @@ public class Rescate extends Publicacion {
   private RepositorioRescates repositorioRescates;
 
   public Rescate(DatosDeContacto contactoRescatista, Notificador notificador, RepositorioRescates repositorioRescates,
-                 MascotaEncontrada mascotaEncontrada) {
-    super(contactoRescatista, notificador);
+                 MascotaEncontrada mascotaEncontrada, Asociacion asociacion) {
+    super(contactoRescatista, notificador, asociacion);
     this.mascotaEncontrada = mascotaEncontrada;
     this.repositorioRescates = repositorioRescates;
   }

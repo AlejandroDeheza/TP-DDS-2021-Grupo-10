@@ -9,7 +9,7 @@ import modelo.publicacion.Rescate;
 public class RepositorioRescates {
   private static RepositorioRescates repositorioRescates = new RepositorioRescates();
   private List<Rescate> rescates = new ArrayList<>();
-  private List<Publicacion> publicacionesProcesadas = new ArrayList<>();
+  private List<Rescate> publicacionesProcesadas = new ArrayList<>();
 
   public void agregar(Rescate publicacion) {
     this.rescates.add(publicacion);
@@ -33,7 +33,7 @@ public class RepositorioRescates {
     return this.rescates;
   }
 
-  public List<Publicacion> getPublicacionesProcesadas() {
+  public List<Rescate> getPublicacionesProcesadas() {
     return this.publicacionesProcesadas;
   }
 }

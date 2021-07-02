@@ -1,5 +1,6 @@
 package modelo.publicacion;
 
+import modelo.asociacion.Asociacion;
 import modelo.notificacion.Notificacion;
 import modelo.notificacion.Notificador;
 import modelo.persona.DatosDeContacto;
@@ -9,11 +10,12 @@ public abstract class Publicacion {
 
   private DatosDeContacto contactoPosteador;
   private Notificador notificador;
-  // private Asociacion asociacion; // TODO: Integrar en futuras ocasiones
+  private Asociacion asociacion;
 
-  public Publicacion(DatosDeContacto contactoPosteador, Notificador notificador) {
+  public Publicacion(DatosDeContacto contactoPosteador, Notificador notificador, Asociacion asociacion) {
     this.contactoPosteador = contactoPosteador;
     this.notificador = notificador;
+    this.asociacion = asociacion;
   }
 
   public void notificarAlPosteador(Usuario usuario) {
@@ -25,5 +27,13 @@ public abstract class Publicacion {
 
   public DatosDeContacto getContactoPosteador() {
     return this.contactoPosteador;
+  }
+
+  public Notificador getNotificador() {
+    return notificador;
+  }
+
+  public Asociacion getAsociacion() {
+    return asociacion;
   }
 }

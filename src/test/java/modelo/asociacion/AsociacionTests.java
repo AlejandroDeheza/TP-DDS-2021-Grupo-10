@@ -38,9 +38,9 @@ public class AsociacionTests {
   @Test
   @DisplayName("Se elije la asociacion más cercana")
   public void seleccionAsociacionMasCercana() {
-    repositorioAsociaciones.agregarAsociaciones(asociacion); //50
-    repositorioAsociaciones.agregarAsociaciones(asociacion2); //1
-    repositorioAsociaciones.agregarAsociaciones(asociacion3); //100
+    repositorioAsociaciones.agregarAsociacion(asociacion); //50
+    repositorioAsociaciones.agregarAsociacion(asociacion2); //1
+    repositorioAsociaciones.agregarAsociacion(asociacion3); //100
     Ubicacion ubicacionABuscar = new Ubicacion(0.01,0.01,null);
     assertEquals(asociacion2,ubicadorAsociaciones.getAsociacionMasCercana(ubicacionABuscar));
   }

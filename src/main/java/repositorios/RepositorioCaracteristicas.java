@@ -14,6 +14,7 @@ public class RepositorioCaracteristicas {
   private static RepositorioCaracteristicas repositorioCaracteristicas = new RepositorioCaracteristicas();
   private List<CaracteristicaConValoresPosibles> caracteristicas = new ArrayList<>();
 
+  //TODO: sacar el metodo, "confiar en el adentro"
   public void validarCaracteristica(String nombreCaracteristica, String valorCaracteristica) {
 
     List<CaracteristicaConValoresPosibles> listaCaracteristicasFiltered = caracteristicas
