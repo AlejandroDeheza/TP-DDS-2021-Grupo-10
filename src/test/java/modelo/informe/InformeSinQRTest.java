@@ -7,7 +7,6 @@ import modelo.mascota.Animal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioInformes;
 import repositorios.RepositorioRescates;
 import utils.DummyData;
@@ -61,7 +60,7 @@ public class InformeSinQRTest {
   private InformeSinQR generarInforme() {
     return new InformeSinQR(DummyData.getPersona(), DummyData.getUbicacion(), null,
         DummyData.getMascotaEncontrada(DummyData.getFotos()), repositorioInformes, receptorHogaresMock, Animal.PERRO,
-        DummyData.getCaracteristicasParaMascota(new RepositorioCaracteristicas()), repositorioRescates, null,
+        DummyData.getCaracteristicasParaMascota(), repositorioRescates, null,
         repositorioAsociaciones);
   }
 

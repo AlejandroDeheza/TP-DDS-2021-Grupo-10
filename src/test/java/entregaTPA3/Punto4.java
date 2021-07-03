@@ -8,7 +8,6 @@ import modelo.suscripcion.SuscripcionParaAdopcion;
 import modelo.suscripcion.Preferencia;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioSuscripcionesParaAdopciones;
 import utils.DummyData;
 
@@ -36,7 +35,7 @@ public class Punto4 {
         DummyData.getDatosDeContacto(),
         notificadorCorreo,
         new Asociacion(DummyData.getUbicacion()),
-        new Preferencia(DummyData.getCaracteristicasParaMascota(new RepositorioCaracteristicas()), Animal.PERRO),
+        new Preferencia(DummyData.getCaracteristicasParaMascota(), Animal.PERRO),
         Arrays.asList(respuestaAdoptante1, respuestaAdoptante2)
     );
 

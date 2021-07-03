@@ -52,7 +52,8 @@ public class ReceptorHogaresTest {
   public List<Hogar> obtenerHogaresDisponibles(ReceptorHogares receptorHogares) {
     return receptorHogares.getHogaresDisponibles(
         new Ubicacion(-34.46, -58.80, null), 1000, Animal.GATO, TamanioMascota.CHICO,
-        DummyData.getCaracteristicasParaMascota(new RepositorioCaracteristicas()));
+        DummyData.getCaracteristicasParaMascota()
+    );
   }
 
 }

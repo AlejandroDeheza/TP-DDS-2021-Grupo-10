@@ -20,7 +20,7 @@ public class MascotaRegistradaTest {
 
   @BeforeEach
   public void contextLoad() {
-    mascotaRegistrada = DummyData.getMascotaRegistrada(new RepositorioCaracteristicas());
+    mascotaRegistrada = DummyData.getMascotaRegistrada();
   }
 
   @Test
@@ -35,7 +35,7 @@ public class MascotaRegistradaTest {
     RepositorioCaracteristicas repo = new RepositorioCaracteristicas();
     repo.agregarCaracteristica(DummyData.getCaracteristicaParaAdmin());
     List<Caracteristica> listaCaracteristica = new ArrayList<>();
-    listaCaracteristica.add(new Caracteristica("Comportamiento", "Inquieto", repo));
+    listaCaracteristica.add(new Caracteristica("Comportamiento", "Inquieto"));
     assertFalse(mascotaRegistrada.cumpleConCaracteristicas(listaCaracteristica));
   }
 
@@ -48,7 +48,7 @@ public class MascotaRegistradaTest {
     repo.agregarCaracteristica(caracteristicaConValoresPosibles1);
     repo.agregarCaracteristica(caracteristicaConValoresPosibles2);
     List<Caracteristica> listaCaracteristica = new ArrayList<>();
-    listaCaracteristica.add(new Caracteristica("Comilon", "Si", repo));
+    listaCaracteristica.add(new Caracteristica("Comilon", "Si"));
     assertFalse(mascotaRegistrada.cumpleConCaracteristicas(listaCaracteristica));
   }
 }

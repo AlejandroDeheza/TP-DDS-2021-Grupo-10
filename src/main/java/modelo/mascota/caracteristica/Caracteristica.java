@@ -1,7 +1,5 @@
 package modelo.mascota.caracteristica;
 
-import repositorios.RepositorioCaracteristicas;
-
 import java.util.List;
 
 public class Caracteristica {
@@ -9,9 +7,7 @@ public class Caracteristica {
   private String nombreCaracteristica;
   private String valorCaracteristica;
 
-  public Caracteristica(String nombreCaracteristica, String valorCaracteristica,
-                        RepositorioCaracteristicas repositorioCaracteristicas) {
-    repositorioCaracteristicas.validarCaracteristica(nombreCaracteristica, valorCaracteristica);
+  public Caracteristica(String nombreCaracteristica, String valorCaracteristica) {
     this.nombreCaracteristica = nombreCaracteristica;
     this.valorCaracteristica = valorCaracteristica;
   }

@@ -6,7 +6,6 @@ import modelo.pregunta.Respuesta;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioDarEnAdopcion;
 import utils.DummyData;
 
@@ -29,7 +28,7 @@ public class DarEnAdopcionTest {
   public void contextLoad() {
     respuestas.add(new Respuesta("No",parDePreguntas));
     darEnAdopcion = new DarEnAdopcion(DummyData.getDatosDeContacto(),notificadorCorreo
-        ,DummyData.getMascotaRegistrada(new RepositorioCaracteristicas())
+        ,DummyData.getMascotaRegistrada()
         ,new RepositorioDarEnAdopcion(),respuestas,DummyData.getAsociacion());
   }
 

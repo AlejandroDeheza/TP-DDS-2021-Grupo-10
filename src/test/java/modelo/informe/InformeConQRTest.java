@@ -5,7 +5,6 @@ import modelo.hogarDeTransito.ReceptorHogares;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioInformes;
 import utils.ReceptorProperties;
 import modelo.notificacion.NotificadorCorreo;
@@ -55,7 +54,7 @@ public class InformeConQRTest {
 
   private InformeConQR generarInformeConQR() {
     return new InformeConQR(null, DummyData.getUbicacion(), null, null,
-        repositorioInformes, receptorHogaresMock, DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()),
+        repositorioInformes, receptorHogaresMock, DummyData.getMascotaRegistrada(),
         notificadorMockeado, new ReceptorProperties());
   }
 

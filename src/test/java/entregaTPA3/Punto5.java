@@ -10,7 +10,6 @@ import modelo.suscripcion.SuscripcionParaAdopcion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioDarEnAdopcion;
 import repositorios.RepositorioSuscripcionesParaAdopciones;
 import utils.DummyData;
@@ -36,7 +35,7 @@ public class Punto5 {
     notificadorCorreo = mock(NotificadorCorreo.class);
     SuscripcionParaAdopcion suscripcionParaAdopcion;
     suscripcionParaAdopcion = new SuscripcionParaAdopcion(DummyData.getDatosDeContacto(), mock(NotificadorCorreo.class), new Asociacion(DummyData.getUbicacion()),
-        new Preferencia(DummyData.getCaracteristicasParaMascota(new RepositorioCaracteristicas()), Animal.PERRO), Arrays.asList(respuestaAdoptante1, respuestaAdoptante2));
+        new Preferencia(DummyData.getCaracteristicasParaMascota(), Animal.PERRO), Arrays.asList(respuestaAdoptante1, respuestaAdoptante2));
     suscriptionSpy = Mockito.spy(suscripcionParaAdopcion);
     repositorioSuscripcionesParaAdopciones.agregar(suscriptionSpy);
     recomendador = new RecomendadorDeAdopciones(5, repositorioDarEnAdopcion, repositorioSuscripcionesParaAdopciones);

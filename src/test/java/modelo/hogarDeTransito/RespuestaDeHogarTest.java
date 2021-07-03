@@ -27,7 +27,7 @@ public class RespuestaDeHogarTest {
 
   @BeforeEach
   public void contextLoad() {
-    caracteristicas = DummyData.getCaracteristicasParaMascota(new RepositorioCaracteristicas());
+    caracteristicas = DummyData.getCaracteristicasParaMascota();
     ubicacionEncuentro = new Ubicacion(70.0, 70.0, null);
     animal = Animal.PERRO;
     tamanio = TamanioMascota.CHICO;

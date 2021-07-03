@@ -6,7 +6,6 @@ import modelo.pregunta.Respuesta;
 import modelo.publicacion.DarEnAdopcion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioDarEnAdopcion;
 import utils.DummyData;
 
@@ -33,7 +32,7 @@ public class Punto1 {
     DarEnAdopcion publicacion = new DarEnAdopcion(
         DummyData.getDatosDeContacto(),
         notificadorCorreo,
-        DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()),
+        DummyData.getMascotaRegistrada(),
         repositorio,
         Arrays.asList(respuestaDador1, respuestaDador2),
         new Asociacion(DummyData.getUbicacion())

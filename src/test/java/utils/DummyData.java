@@ -16,7 +16,6 @@ import modelo.suscripcion.Preferencia;
 import modelo.publicacion.Rescate;
 import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
-import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioDarEnAdopcion;
 import repositorios.RepositorioRescates;
 import modelo.notificacion.Notificador;
@@ -75,10 +74,9 @@ public class DummyData {
     return new CaracteristicaConValoresPosibles("Comportamiento", Arrays.asList("Inquieto", "Tranquilo"));
   }
 
-  public static List<Caracteristica> getCaracteristicasParaMascota(RepositorioCaracteristicas repo) {
-    repo.agregarCaracteristica(getCaracteristicaParaAdmin());
+  public static List<Caracteristica> getCaracteristicasParaMascota() {
     List<Caracteristica> listaCaracteristica = new ArrayList<>();
-    listaCaracteristica.add(new Caracteristica("Comportamiento", "Tranquilo", repo));
+    listaCaracteristica.add(new Caracteristica("Comportamiento", "Tranquilo"));
     return listaCaracteristica;
   }
 
@@ -92,9 +90,9 @@ public class DummyData {
     return new MascotaEncontrada(fotos, getUbicacion(), "Limpio y Sano", LocalDate.now(), TamanioMascota.CHICO);
   }
 
-  public static MascotaRegistrada getMascotaRegistrada(RepositorioCaracteristicas repositorioCaracteristicas) {
+  public static MascotaRegistrada getMascotaRegistrada() {
     return new MascotaRegistrada(getUsuario(), "Felipe", "Panchito", LocalDate.of(2018, 3, 4), "Pelo largo", Sexo.MACHO,
-        Animal.PERRO, getCaracteristicasParaMascota(repositorioCaracteristicas), getFotos(), TamanioMascota.CHICO);
+        Animal.PERRO, getCaracteristicasParaMascota(), getFotos(), TamanioMascota.CHICO);
   }
 
   public static ParDePreguntas getParDePreguntas1(){
@@ -125,7 +123,7 @@ public class DummyData {
     return new DarEnAdopcion(
         getDatosDeContacto(),
         notificador,
-        getMascotaRegistrada(new RepositorioCaracteristicas()),
+        getMascotaRegistrada(),
         repositorio,
         Arrays.asList(
             new Respuesta("Si", getParDePreguntas1()),
@@ -144,7 +142,7 @@ public class DummyData {
         getDatosDeContacto(),
         notificadorCorreo,
         getAsociacion(),
-        new Preferencia(getCaracteristicasParaMascota(new RepositorioCaracteristicas()), Animal.PERRO),
+        new Preferencia(getCaracteristicasParaMascota(), Animal.PERRO),
         Arrays.asList(
             new Respuesta("Si", getParDePreguntas1()),
             new Respuesta("2", getParDePreguntas2())
