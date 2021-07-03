@@ -20,7 +20,7 @@ public class MascotaRegistradaTest {
 
   @BeforeEach
   public void contextLoad() {
-    mascotaRegistrada = DummyData.getMascotaRegistrada();
+    mascotaRegistrada = DummyData.getMascotaRegistrada(null);
   }
 
   @Test

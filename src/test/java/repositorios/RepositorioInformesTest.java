@@ -21,7 +21,7 @@ public class RepositorioInformesTest {
   public void listarMascotasEncontradasEnLosUltimos10DiasTest() {
     InformeConQR informe = new InformeConQR(null, null, null,
         DummyData.getMascotaEncontrada(DummyData.getFotos()), repositorioInformes, null,
-        null, null, null);
+        null, null);
 
     assertEquals(repositorioInformes.informesDeUltimosNDias(10).size(), 0);
     repositorioInformes.agregarInformeRescate(informe);

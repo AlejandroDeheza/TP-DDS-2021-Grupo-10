@@ -39,7 +39,7 @@ public class InformeConQRTest {
     informeConQR.procesarInforme();
     assertTrue(repositorioInformes.getInformesProcesados().contains(informeConQR));
 
-    verify(notificadorMockeado, times(1)).notificar(any());
+    verify(notificadorMockeado, times(1)).notificarEncontramosTuMascota(any());
   }
 
   @Test
@@ -53,9 +53,8 @@ public class InformeConQRTest {
   }
 
   private InformeConQR generarInformeConQR() {
-    return new InformeConQR(null, DummyData.getUbicacion(), null, null,
-        repositorioInformes, receptorHogaresMock, DummyData.getMascotaRegistrada(),
-        notificadorMockeado, new ReceptorProperties());
+    return new InformeConQR(DummyData.getPersona(notificadorMockeado), DummyData.getUbicacion(), null, null,
+        repositorioInformes, receptorHogaresMock, DummyData.getMascotaRegistrada(notificadorMockeado), new ReceptorProperties());
   }
 
 }

@@ -13,7 +13,7 @@ public class PersonaTest {
   @Test
   @DisplayName("si se crea una Persona valida, no se generan problemas")
   public void personaValidaTest() {
-    assertDoesNotThrow(DummyData::getPersona);
+    assertDoesNotThrow(() -> DummyData.getPersona(null));
   }
 
   @Test

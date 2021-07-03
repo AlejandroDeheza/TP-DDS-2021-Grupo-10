@@ -21,15 +21,15 @@ public class DarEnAdopcionTest {
   List<Respuesta> respuestas = new ArrayList<>();
 
   Transport transportMockeado = mock(Transport.class);
-  NotificadorCorreo notificadorCorreo = new NotificadorCorreo(sesion -> transportMockeado);
+  NotificadorCorreo notificadorCorreo = new NotificadorCorreo("", sesion -> transportMockeado);
   DarEnAdopcion darEnAdopcion;
 
   @BeforeEach
   public void contextLoad() {
     respuestas.add(new Respuesta("No",parDePreguntas));
-    darEnAdopcion = new DarEnAdopcion(DummyData.getDatosDeContacto(),notificadorCorreo
-        ,DummyData.getMascotaRegistrada()
-        ,new RepositorioDarEnAdopcion(),respuestas,DummyData.getAsociacion());
+    darEnAdopcion = new DarEnAdopcion(DummyData.getDatosDeContacto(notificadorCorreo),
+        DummyData.getMascotaRegistrada(notificadorCorreo), new RepositorioDarEnAdopcion(), respuestas,
+        DummyData.getAsociacion());
   }
 
   @Test
@@ -37,6 +37,7 @@ public class DarEnAdopcionTest {
   public void laCantidadDePreguntasQueMatcheanConLasDeLaPublicacionSonIguales() {
     assertEquals(respuestas.size(),darEnAdopcion.cantidadConLasQueMatchea(respuestas));
   }
+
   @Test
   @DisplayName("Si hay una sola respuesta y es invalida la cantidad de Matches es cero")
   public void siEsUnaRespuestaInvalidaLaCantidadDePreguntasQueMatcheanEsCero() {

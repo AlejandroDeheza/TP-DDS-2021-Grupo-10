@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ValidadorAutenticacionTest {
 
-  Usuario usuario = DummyData.getUsuario();
+  Usuario usuario = DummyData.getUsuario(null);
 
   @Test
   @DisplayName("si un usuario dummy se autentica correctamente, no se genera ningun problema")

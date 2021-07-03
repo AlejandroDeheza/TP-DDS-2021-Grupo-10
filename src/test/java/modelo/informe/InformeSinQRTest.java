@@ -58,10 +58,9 @@ public class InformeSinQRTest {
   }
 
   private InformeSinQR generarInforme() {
-    return new InformeSinQR(DummyData.getPersona(), DummyData.getUbicacion(), null,
+    return new InformeSinQR(DummyData.getPersona(null), DummyData.getUbicacion(), null,
         DummyData.getMascotaEncontrada(DummyData.getFotos()), repositorioInformes, receptorHogaresMock, Animal.PERRO,
-        DummyData.getCaracteristicasParaMascota(), repositorioRescates, null,
-        repositorioAsociaciones);
+        DummyData.getCaracteristicasParaMascota(), repositorioRescates, repositorioAsociaciones);
   }
 
 }

@@ -26,8 +26,8 @@ public class Punto3 {
   public void procesarUnaPublicacionDeDarEnAdopcionEnviaUnaNotificacion() {
     DarEnAdopcion publicacion = DummyData.getPublicacionDeDarEnAdopcion(notificadorCorreo, new RepositorioDarEnAdopcion());
 
-    Usuario adoptante = DummyData.getUsuario();
+    Usuario adoptante = DummyData.getUsuario(notificadorCorreo);
     publicacion.notificarAlPosteador(adoptante);
-    verify(notificadorCorreo, times(1)).notificar(any());
+    verify(notificadorCorreo, times(1)).notificarQuierenAdoptarTuMascota(any(), any());
   }
 }

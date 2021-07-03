@@ -26,7 +26,7 @@ public class SuscripcionTest {
   public void enviarUnLinkDeBajaEnviaUnaNotificacion() {
     SuscripcionParaAdopcion suscripcion = DummyData.getSuscripcionParaAdopcion(notificadorCorreo);
     suscripcion.enviarLinkDeBaja();
-    verify(notificadorCorreo, times(1)).notificar(any());
+    verify(notificadorCorreo, times(1)).notificarLinkDeBajaSuscripcionAdopciones(any());
   }
 
   @Test
@@ -39,6 +39,6 @@ public class SuscripcionTest {
             DummyData.getPublicacionDeDarEnAdopcion(notificadorCorreo, new RepositorioDarEnAdopcion())
         )
     );
-    verify(notificadorCorreo, times(1)).notificar(any());
+    verify(notificadorCorreo, times(1)).notificarRecomendacionesDeAdopciones(any());
   }
 }
