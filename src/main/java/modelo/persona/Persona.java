@@ -1,6 +1,7 @@
 package modelo.persona;
 
 import excepciones.DatosDeContactoIncompletosException;
+import modelo.notificacion.Notificador;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -34,7 +35,11 @@ public class Persona {
     }
     if (datosDeContacto.noExisteCorreoAsociado()) {
       throw new DatosDeContactoIncompletosException("El dato de contacto debe tener un correo asociado");
-    } // deberiamos sacar esta validacion si usamos Twilio. Si no tiene email, usamos el telefono
+    } // TODO: deberiamos sacar esta validacion si usamos Twilio. Si no tiene email, usamos el telefono
+  }
+
+  public Notificador getNotificadorPreferido() {
+    return datosDeContacto.getNotificadorPreferido();
   }
 
   public String getNombre() {
