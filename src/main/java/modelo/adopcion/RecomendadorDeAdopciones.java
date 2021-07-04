@@ -2,7 +2,8 @@ package modelo.adopcion;
 
 import modelo.mascota.Animal;
 import modelo.mascota.caracteristica.Caracteristica;
-import modelo.pregunta.Respuesta;
+import modelo.pregunta.RespuestaDelAdoptante;
+import modelo.pregunta.RespuestaDelDador;
 import modelo.publicacion.DarEnAdopcion;
 import modelo.suscripcion.SuscripcionParaAdopcion;
 import repositorios.RepositorioDarEnAdopcion;
@@ -30,20 +31,20 @@ public class RecomendadorDeAdopciones {
   private void recomendarAdopciones(SuscripcionParaAdopcion suscripcion) {
     List<Caracteristica> caracteristicas = suscripcion.getPreferenciaDelAdoptante().getCaracteristicas();
     Animal animal = suscripcion.getPreferenciaDelAdoptante().getTipoAnimal();
+
     suscripcion.enviarRecomendaciones(
-        repositorioDarEnAdopcion.getDarEnAdopcion()
-            .stream()
-            .filter(adopcion -> adopcion.getMascotaEnAdopcion().getAnimal().equals(animal))
-            .filter(adopcion -> adopcion.getMascotaEnAdopcion().cumpleConCaracteristicas(caracteristicas))
-            .sorted((a1, a2) -> elPrimeroMatcheaConMas(a1, a2, suscripcion.getComodidadesDelAdoptante()))
+        repositorioDarEnAdopcion.getPublicaciones().stream()
+            .filter(publicacion -> publicacion.getMascotaEnAdopcion().getAnimal().equals(animal))
+            .filter(publicacion -> publicacion.getMascotaEnAdopcion().cumpleConCaracteristicas(caracteristicas))
+            .sorted((p1, p2) -> laPrimeraMatcheaConMas(p1, p2, suscripcion.getComodidadesDelAdoptante()))
             .limit(limiteDeSugerencias).collect(Collectors.toList())
     );
   }
 
-  private int elPrimeroMatcheaConMas(DarEnAdopcion a1, DarEnAdopcion a2, List<Respuesta> comodidades) {
+  private int laPrimeraMatcheaConMas(DarEnAdopcion p1, DarEnAdopcion p2, List<RespuestaDelAdoptante> comodidades) {
     return Integer.compare(
-        a1.cantidadConLasQueMatchea(comodidades),
-        a2.cantidadConLasQueMatchea(comodidades)
+        p1.cantidadConLasQueMatchea(comodidades),
+        p2.cantidadConLasQueMatchea(comodidades)
     );
   }
 }

@@ -6,16 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RepositorioDarEnAdopcion {
-  private static RepositorioDarEnAdopcion repositorioPublicaciones = new RepositorioDarEnAdopcion();
-  private List<DarEnAdopcion> darEnAdopcion = new ArrayList<>();
+  private static RepositorioDarEnAdopcion repo = new RepositorioDarEnAdopcion();
+  private List<DarEnAdopcion> publicaciones = new ArrayList<>();
   private List<DarEnAdopcion> procesadas = new ArrayList<>();
 
   public void agregar(DarEnAdopcion publicacion) {
-    this.darEnAdopcion.add(publicacion);
+    this.publicaciones.add(publicacion);
   }
 
   public void marcarComoProcesada(DarEnAdopcion publicacion) {
-    this.darEnAdopcion.remove(publicacion);
+    this.publicaciones.remove(publicacion);
     this.procesadas.add(publicacion);
   }
 
@@ -24,12 +24,12 @@ public class RepositorioDarEnAdopcion {
   public RepositorioDarEnAdopcion() {}
   // usamos el getInstance en Main
   public static RepositorioDarEnAdopcion getInstance() {
-    return repositorioPublicaciones;
+    return repo;
   }
 
   // GETTERS
-  public List<DarEnAdopcion> getDarEnAdopcion() {
-    return this.darEnAdopcion;
+  public List<DarEnAdopcion> getPublicaciones() {
+    return this.publicaciones;
   }
 
   public List<DarEnAdopcion> getProcesadas() {

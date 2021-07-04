@@ -25,13 +25,13 @@ public class RespuestaTest {
   @DisplayName("Una Respuesta matchea con alguna de las respuestas")
   public void respuestaMatcheaConAlgunaDeLasRespuestas() {
     Respuesta respuesta = new Respuesta("Si", parDePreguntas);
-    assertTrue(respuesta.matcheaConAlguna(respuestas));
+    assertTrue(respuesta.correspondeConAlguna(respuestas));
   }
 
   @Test
   @DisplayName("Una Respuesta no matchea con alguna de las respuestas")
   public void respuestaNoMatcheaConAlgunaDeLasRespuestas() {
     Respuesta respuesta = new Respuesta("Bla", parDePreguntas);
-    assertFalse(respuesta.matcheaConAlguna(respuestas));
+    assertFalse(respuesta.correspondeConAlguna(respuestas));
   }
 }

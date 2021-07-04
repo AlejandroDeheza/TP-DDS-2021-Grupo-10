@@ -35,7 +35,7 @@ public class MascotaRegistrada {
   }
 
   public Boolean cumpleConCaracteristicas(List<Caracteristica> caracteristicas) {
-    return caracteristicas.stream().allMatch(caracteristica -> caracteristica.matcheaConAlgunaDe(this.caracteristicas));
+    return this.caracteristicas.containsAll(caracteristicas);
   }
 
   public Usuario getDuenio() {

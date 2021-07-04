@@ -7,7 +7,7 @@ import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 
 public class RepositorioCaracteristicas {
 
-  private static RepositorioCaracteristicas repositorioCaracteristicas = new RepositorioCaracteristicas();
+  private static RepositorioCaracteristicas repo = new RepositorioCaracteristicas();
   private List<CaracteristicaConValoresPosibles> caracteristicas = new ArrayList<>();
 
   public void agregarCaracteristica(CaracteristicaConValoresPosibles caracteristica) {
@@ -28,6 +28,6 @@ public class RepositorioCaracteristicas {
   }
   //usamos el getInstance en Main
   public static RepositorioCaracteristicas getInstance() {
-    return repositorioCaracteristicas;
+    return repo;
   }
 }

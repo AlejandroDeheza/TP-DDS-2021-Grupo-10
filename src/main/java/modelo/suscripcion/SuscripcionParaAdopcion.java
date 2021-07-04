@@ -4,7 +4,7 @@ import java.util.List;
 
 import modelo.asociacion.Asociacion;
 import modelo.persona.DatosDeContacto;
-import modelo.pregunta.Respuesta;
+import modelo.pregunta.RespuestaDelAdoptante;
 import modelo.publicacion.DarEnAdopcion;
 
 public class SuscripcionParaAdopcion {
@@ -12,10 +12,11 @@ public class SuscripcionParaAdopcion {
   private DatosDeContacto contactoSuscriptor;
   private Asociacion asociacion;
   private Preferencia preferenciaDelAdoptante;
-  private List<Respuesta> comodidadesDelAdoptante;
+  private List<RespuestaDelAdoptante> comodidadesDelAdoptante;
 
   public SuscripcionParaAdopcion(DatosDeContacto contactoSuscriptor, Asociacion asociacion,
-                                 Preferencia preferenciaDelAdoptante, List<Respuesta> comodidadesDelAdoptante) {
+                                 Preferencia preferenciaDelAdoptante,
+                                 List<RespuestaDelAdoptante> comodidadesDelAdoptante) {
     this.contactoSuscriptor = contactoSuscriptor;
     this.asociacion = asociacion;
     this.preferenciaDelAdoptante = preferenciaDelAdoptante;
@@ -23,7 +24,8 @@ public class SuscripcionParaAdopcion {
   }
   
   public void enviarRecomendaciones(List<DarEnAdopcion> recomendaciones) {
-    contactoSuscriptor.getNotificadorPreferido().notificarRecomendacionesDeAdopciones(recomendaciones);
+    if (!recomendaciones.isEmpty())
+      contactoSuscriptor.getNotificadorPreferido().notificarRecomendacionesDeAdopciones(recomendaciones);
   }
 
   public void enviarLinkDeBaja() {
@@ -38,8 +40,8 @@ public class SuscripcionParaAdopcion {
     return preferenciaDelAdoptante;
   }
 
-  public List<Respuesta> getComodidadesDelAdoptante() {
-    return this.comodidadesDelAdoptante;
+  public List<RespuestaDelAdoptante> getComodidadesDelAdoptante() {
+    return comodidadesDelAdoptante;
   }
 
 }

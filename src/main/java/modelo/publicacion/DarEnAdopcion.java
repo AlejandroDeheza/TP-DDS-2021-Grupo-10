@@ -3,7 +3,8 @@ package modelo.publicacion;
 import modelo.asociacion.Asociacion;
 import modelo.mascota.MascotaRegistrada;
 import modelo.persona.DatosDeContacto;
-import modelo.pregunta.Respuesta;
+import modelo.pregunta.RespuestaDelAdoptante;
+import modelo.pregunta.RespuestaDelDador;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioDarEnAdopcion;
 
@@ -13,12 +14,12 @@ public class DarEnAdopcion implements Publicacion {
 
   private DatosDeContacto contactoPosteador;
   private Asociacion asociacion;
-  private List<Respuesta> respuestasDelDador;
+  private List<RespuestaDelDador> respuestasDelDador;
   private MascotaRegistrada mascotaEnAdopcion;
   private RepositorioDarEnAdopcion repositorio;
 
   public DarEnAdopcion(DatosDeContacto contactoPosteador, MascotaRegistrada mascotaEnAdopcion,
-                       RepositorioDarEnAdopcion repositorio, List<Respuesta> respuestasDelDador,
+                       RepositorioDarEnAdopcion repositorio, List<RespuestaDelDador> respuestasDelDador,
                        Asociacion asociacion) {
     this.contactoPosteador = contactoPosteador;
     this.asociacion = asociacion;
@@ -27,14 +28,14 @@ public class DarEnAdopcion implements Publicacion {
     this.respuestasDelDador = respuestasDelDador;
   }
 
-  public int cantidadConLasQueMatchea(List<Respuesta> comodidades) {
-    return (int) comodidades.stream().filter(comodidad -> comodidad.matcheaConAlguna(respuestasDelDador)).count();
-  }
-
   @Override
   public void notificarAlPosteador(Usuario adoptante) {
     contactoPosteador.getNotificadorPreferido().notificarQuierenAdoptarTuMascota(adoptante, mascotaEnAdopcion);
     repositorio.marcarComoProcesada(this);
+  }
+
+  public int cantidadConLasQueMatchea(List<RespuestaDelAdoptante> comodidades) {
+    return (int) respuestasDelDador.stream().filter(respuesta -> respuesta.correspondeConAlguna(comodidades)).count();
   }
 
   public Asociacion getAsociacion() {
@@ -45,7 +46,7 @@ public class DarEnAdopcion implements Publicacion {
     return mascotaEnAdopcion;
   }
 
-  public List<Respuesta> getRespuestasDelDador() {
+  public List<RespuestaDelDador> getRespuestasDelDador() {
     return respuestasDelDador;
   }
 
