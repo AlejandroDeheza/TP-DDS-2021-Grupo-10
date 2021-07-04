@@ -26,7 +26,7 @@ public class MascotaRegistradaTest {
   @Test
   @DisplayName("Una Mascota cumple con caracteristicas de la misma Caracterisca")
   public void cumpleConLasCaracteristicasDeLaMismaMascota() {
-    assertTrue(mascotaRegistrada.cumpleConCaracteristicas(mascotaRegistrada.getCaracteristicas()));
+    assertTrue(mascotaRegistrada.cumpleConCaracteristicas(DummyData.getCaracteristicasParaMascota()));
   }
 
   @Test

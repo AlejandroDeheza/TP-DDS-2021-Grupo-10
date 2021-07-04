@@ -2,7 +2,8 @@ package modelo.publicacion;
 
 import modelo.notificacion.NotificadorCorreo;
 import modelo.pregunta.ParDePreguntas;
-import modelo.pregunta.Respuesta;
+import modelo.pregunta.RespuestaDelAdoptante;
+import modelo.pregunta.RespuestaDelDador;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class DarEnAdopcionTest {
   ParDePreguntas parDePreguntas = DummyData.getParDePreguntas1();
-  List<Respuesta> respuestas = new ArrayList<>();
+  List<RespuestaDelDador> respuestasDelDador = new ArrayList<>();
 
   Transport transportMockeado = mock(Transport.class);
   NotificadorCorreo notificadorCorreo = new NotificadorCorreo("", sesion -> transportMockeado);
@@ -26,23 +27,17 @@ public class DarEnAdopcionTest {
 
   @BeforeEach
   public void contextLoad() {
-    respuestas.add(new Respuesta("No",parDePreguntas));
+    respuestasDelDador.add(new RespuestaDelDador("No",parDePreguntas));
     darEnAdopcion = new DarEnAdopcion(DummyData.getDatosDeContacto(notificadorCorreo),
-        DummyData.getMascotaRegistrada(notificadorCorreo), new RepositorioDarEnAdopcion(), respuestas,
+        DummyData.getMascotaRegistrada(notificadorCorreo), new RepositorioDarEnAdopcion(), respuestasDelDador,
         DummyData.getAsociacion());
-  }
-
-  @Test
-  @DisplayName("Las mismas preguntas matchean con las de la publicacion Dar en Adopcion")
-  public void laCantidadDePreguntasQueMatcheanConLasDeLaPublicacionSonIguales() {
-    assertEquals(respuestas.size(),darEnAdopcion.cantidadConLasQueMatchea(respuestas));
   }
 
   @Test
   @DisplayName("Si hay una sola respuesta y es invalida la cantidad de Matches es cero")
   public void siEsUnaRespuestaInvalidaLaCantidadDePreguntasQueMatcheanEsCero() {
-    List<Respuesta> respuestasIncorrecta = new ArrayList<>();
-    respuestasIncorrecta.add(new Respuesta("bla",parDePreguntas));
+    List<RespuestaDelAdoptante> respuestasIncorrecta = new ArrayList<>();
+    respuestasIncorrecta.add(new RespuestaDelAdoptante("bla",parDePreguntas));
     assertEquals(0,darEnAdopcion.cantidadConLasQueMatchea(respuestasIncorrecta));
   }
 }

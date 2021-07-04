@@ -2,7 +2,7 @@ package entregaTPA3;
 
 import modelo.asociacion.Asociacion;
 import modelo.notificacion.NotificadorCorreo;
-import modelo.pregunta.Respuesta;
+import modelo.pregunta.RespuestaDelDador;
 import modelo.publicacion.DarEnAdopcion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,8 +17,8 @@ import static org.mockito.Mockito.mock;
 public class Punto1 {
 
   NotificadorCorreo notificadorCorreo;
-  Respuesta respuestaDador1 = new Respuesta("Si", DummyData.getParDePreguntas1());
-  Respuesta respuestaDador2 = new Respuesta("2", DummyData.getParDePreguntas2());
+  RespuestaDelDador respuestaDelDadorDador1 = new RespuestaDelDador("Si", DummyData.getParDePreguntas1());
+  RespuestaDelDador respuestaDelDadorDador2 = new RespuestaDelDador("2", DummyData.getParDePreguntas2());
 
   @BeforeEach
   public void contextLoad() {
@@ -33,11 +33,11 @@ public class Punto1 {
         DummyData.getDatosDeContacto(notificadorCorreo),
         DummyData.getMascotaRegistrada(notificadorCorreo),
         repositorio,
-        Arrays.asList(respuestaDador1, respuestaDador2),
+        Arrays.asList(respuestaDelDadorDador1, respuestaDelDadorDador2),
         new Asociacion(DummyData.getUbicacion())
     );
 
     repositorio.agregar(publicacion);
-    assertEquals(repositorio.getDarEnAdopcion().size(), 1);
+    assertEquals(repositorio.getPublicaciones().size(), 1);
   }
 }

@@ -10,28 +10,27 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
-public class RespuestaTest {
+public class RespuestaDelDadorTest {
   ParDePreguntas parDePreguntas = DummyData.getParDePreguntas1();
-  List<Respuesta> respuestas = new ArrayList<>();
+  List<RespuestaDelAdoptante> respuestasDelAdoptante = new ArrayList<>();
 
 
   @BeforeEach
   public void contextLoad() {
-    respuestas.add(new Respuesta("No",parDePreguntas));
+    respuestasDelAdoptante.add(new RespuestaDelAdoptante("No",parDePreguntas));
   }
 
   @Test
   @DisplayName("Una Respuesta matchea con alguna de las respuestas")
   public void respuestaMatcheaConAlgunaDeLasRespuestas() {
-    Respuesta respuesta = new Respuesta("Si", parDePreguntas);
-    assertTrue(respuesta.correspondeConAlguna(respuestas));
+    RespuestaDelDador respuestaDelDador = new RespuestaDelDador("Si", parDePreguntas);
+    assertTrue(respuestaDelDador.correspondeConAlguna(respuestasDelAdoptante));
   }
 
   @Test
   @DisplayName("Una Respuesta no matchea con alguna de las respuestas")
   public void respuestaNoMatcheaConAlgunaDeLasRespuestas() {
-    Respuesta respuesta = new Respuesta("Bla", parDePreguntas);
-    assertFalse(respuesta.correspondeConAlguna(respuestas));
+    RespuestaDelDador respuestaDelDador = new RespuestaDelDador("Bla", parDePreguntas);
+    assertFalse(respuestaDelDador.correspondeConAlguna(respuestasDelAdoptante));
   }
 }

@@ -3,7 +3,8 @@ package entregaTPA3;
 import modelo.asociacion.Asociacion;
 import modelo.mascota.Animal;
 import modelo.notificacion.NotificadorCorreo;
-import modelo.pregunta.Respuesta;
+import modelo.pregunta.RespuestaDelAdoptante;
+import modelo.pregunta.RespuestaDelDador;
 import modelo.suscripcion.SuscripcionParaAdopcion;
 import modelo.suscripcion.Preferencia;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,8 +20,8 @@ import static org.mockito.Mockito.mock;
 public class Punto4 {
 
   NotificadorCorreo notificadorCorreo;
-  Respuesta respuestaAdoptante1 = new Respuesta("Si", DummyData.getParDePreguntas1());
-  Respuesta respuestaAdoptante2 = new Respuesta("3", DummyData.getParDePreguntas2());
+  RespuestaDelAdoptante respuestaAdoptante1 = new RespuestaDelAdoptante("Si", DummyData.getParDePreguntas1());
+  RespuestaDelAdoptante respuestaAdoptante2 = new RespuestaDelAdoptante("3", DummyData.getParDePreguntas2());
 
   @BeforeEach
   public void contextLoad() {

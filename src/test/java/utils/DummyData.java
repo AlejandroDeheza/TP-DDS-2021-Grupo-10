@@ -9,7 +9,8 @@ import modelo.notificacion.NotificadorCorreo;
 import modelo.persona.*;
 import modelo.pregunta.ParDePreguntas;
 import modelo.pregunta.ParDeRespuestas;
-import modelo.pregunta.Respuesta;
+import modelo.pregunta.RespuestaDelAdoptante;
+import modelo.pregunta.RespuestaDelDador;
 import modelo.publicacion.DarEnAdopcion;
 import modelo.suscripcion.SuscripcionParaAdopcion;
 import modelo.suscripcion.Preferencia;
@@ -125,8 +126,8 @@ public class DummyData {
         getMascotaRegistrada(notificador),
         repositorio,
         Arrays.asList(
-            new Respuesta("Si", getParDePreguntas1()),
-            new Respuesta("2", getParDePreguntas2())
+            new RespuestaDelDador("Si", getParDePreguntas1()),
+            new RespuestaDelDador("2", getParDePreguntas2())
         ),
         getAsociacion()
     );
@@ -142,8 +143,8 @@ public class DummyData {
         getAsociacion(),
         new Preferencia(getCaracteristicasParaMascota(), Animal.PERRO),
         Arrays.asList(
-            new Respuesta("Si", getParDePreguntas1()),
-            new Respuesta("2", getParDePreguntas2())
+            new RespuestaDelAdoptante("Si", getParDePreguntas1()),
+            new RespuestaDelAdoptante("2", getParDePreguntas2())
         )
     );
   }

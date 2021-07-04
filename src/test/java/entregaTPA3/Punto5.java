@@ -4,7 +4,8 @@ import modelo.adopcion.RecomendadorDeAdopciones;
 import modelo.asociacion.Asociacion;
 import modelo.mascota.Animal;
 import modelo.notificacion.NotificadorCorreo;
-import modelo.pregunta.Respuesta;
+import modelo.pregunta.RespuestaDelAdoptante;
+import modelo.pregunta.RespuestaDelDador;
 import modelo.suscripcion.Preferencia;
 import modelo.suscripcion.SuscripcionParaAdopcion;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,8 +27,8 @@ public class Punto5 {
   RecomendadorDeAdopciones recomendador;
   RepositorioSuscripcionesParaAdopciones repositorioSuscripcionesParaAdopciones = new RepositorioSuscripcionesParaAdopciones();
   RepositorioDarEnAdopcion repositorioDarEnAdopcion = new RepositorioDarEnAdopcion();
-  Respuesta respuestaAdoptante1 = new Respuesta("Si", DummyData.getParDePreguntas1());
-  Respuesta respuestaAdoptante2 = new Respuesta("3", DummyData.getParDePreguntas2());
+  RespuestaDelAdoptante respuestaAdoptante1 = new RespuestaDelAdoptante("Si", DummyData.getParDePreguntas1());
+  RespuestaDelAdoptante respuestaAdoptante2 = new RespuestaDelAdoptante("3", DummyData.getParDePreguntas2());
   SuscripcionParaAdopcion suscriptionSpy;
 
   @BeforeEach
