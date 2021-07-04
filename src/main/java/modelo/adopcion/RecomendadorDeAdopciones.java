@@ -29,22 +29,24 @@ public class RecomendadorDeAdopciones {
   }
 
   private void recomendarAdopciones(SuscripcionParaAdopcion suscripcion) {
+    suscripcion.enviarRecomendaciones( generarRecomendaciones(suscripcion) );
+  }
+
+  public List<DarEnAdopcion> generarRecomendaciones(SuscripcionParaAdopcion suscripcion) {
     List<Caracteristica> caracteristicas = suscripcion.getPreferenciaDelAdoptante().getCaracteristicas();
     Animal animal = suscripcion.getPreferenciaDelAdoptante().getTipoAnimal();
 
-    suscripcion.enviarRecomendaciones(
-        repositorioDarEnAdopcion.getPublicaciones().stream()
-            .filter(publicacion -> publicacion.getMascotaEnAdopcion().getAnimal().equals(animal))
-            .filter(publicacion -> publicacion.getMascotaEnAdopcion().cumpleConCaracteristicas(caracteristicas))
-            .sorted((p1, p2) -> laPrimeraMatcheaConMas(p1, p2, suscripcion.getComodidadesDelAdoptante()))
-            .limit(limiteDeSugerencias).collect(Collectors.toList())
-    );
+    return repositorioDarEnAdopcion.getPublicaciones().stream()
+        .filter(publicacion -> publicacion.getMascotaEnAdopcion().getAnimal().equals(animal))
+        .filter(publicacion -> publicacion.getMascotaEnAdopcion().cumpleConCaracteristicas(caracteristicas))
+        .sorted((p1, p2) -> laPrimeraMatcheaConMas(p1, p2, suscripcion.getComodidadesDelAdoptante()))
+        .limit(limiteDeSugerencias).collect(Collectors.toList());
   }
 
   private int laPrimeraMatcheaConMas(DarEnAdopcion p1, DarEnAdopcion p2, List<RespuestaDelAdoptante> comodidades) {
     return Integer.compare(
-        p1.cantidadConLasQueMatchea(comodidades),
-        p2.cantidadConLasQueMatchea(comodidades)
-    );
+        p2.cantidadConLasQueMatchea(comodidades),
+        p1.cantidadConLasQueMatchea(comodidades)
+    ); // lo invierto porque si no anda mal // p1 <--> p2
   }
 }

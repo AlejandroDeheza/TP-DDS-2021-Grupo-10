@@ -26,7 +26,6 @@ public class ReceptorHogaresTest {
   @DisplayName("Los Jsons se mapean correctamente con constructor para tests")
   public void losJsonSeMapeanCorrectamente() {
     List<Hogar> hogaresDisponibles = obtenerHogaresDisponibles(new ReceptorHogares(testJson));
-
     assertEquals(1, hogaresDisponibles.size());
     assertEquals("Pensionado de mascotas \"Como en casa\"", hogaresDisponibles.get(0).getNombre());
   }

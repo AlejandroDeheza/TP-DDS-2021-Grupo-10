@@ -26,7 +26,6 @@ public class InformeSinQRTest {
   ReceptorHogares receptorHogaresMock;
   InformeSinQR informeSinQR;
 
-
   @BeforeEach
   public void loadContext() {
     repositorioInformes = new RepositorioInformes();

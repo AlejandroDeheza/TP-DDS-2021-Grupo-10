@@ -14,7 +14,6 @@ public class RespuestaDelDadorTest {
   ParDePreguntas parDePreguntas = DummyData.getParDePreguntas1();
   List<RespuestaDelAdoptante> respuestasDelAdoptante = new ArrayList<>();
 
-
   @BeforeEach
   public void contextLoad() {
     respuestasDelAdoptante.add(new RespuestaDelAdoptante("No",parDePreguntas));

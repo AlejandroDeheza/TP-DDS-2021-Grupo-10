@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import repositorios.RepositorioCaracteristicas;
 import utils.DummyData;
 
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,14 +16,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class MascotaRegistradaTest {
   MascotaRegistrada mascotaRegistrada;
+  List<Caracteristica> listaCaracteristica;
 
   @BeforeEach
   public void contextLoad() {
     mascotaRegistrada = DummyData.getMascotaRegistrada(null);
+    listaCaracteristica = new ArrayList<>();
   }
 
   @Test
-  @DisplayName("Una Mascota cumple con caracteristicas de la misma Caracterisca")
+  @DisplayName("Una Mascota cumple con caracteristicas de la misma mascota")
   public void cumpleConLasCaracteristicasDeLaMismaMascota() {
     assertTrue(mascotaRegistrada.cumpleConCaracteristicas(DummyData.getCaracteristicasParaMascota()));
   }
@@ -32,22 +33,14 @@ public class MascotaRegistradaTest {
   @Test
   @DisplayName("Una Mascota no cumple con caracteristicas")
   public void noCumpleConLasCaracteristicas() {
-    RepositorioCaracteristicas repo = new RepositorioCaracteristicas();
-    repo.agregarCaracteristica(DummyData.getCaracteristicaParaAdmin());
-    List<Caracteristica> listaCaracteristica = new ArrayList<>();
     listaCaracteristica.add(new Caracteristica("Comportamiento", "Inquieto"));
     assertFalse(mascotaRegistrada.cumpleConCaracteristicas(listaCaracteristica));
   }
 
   @Test
   @DisplayName("Una Mascota no cumple con las caracteristicas si no matchean todas las caracteristicas")
-  public void nocumpleCaracteristicasSiNoMatcheanTodaslasCaracteristicas() {
-    RepositorioCaracteristicas repo = new RepositorioCaracteristicas();
-    CaracteristicaConValoresPosibles caracteristicaConValoresPosibles1 = new CaracteristicaConValoresPosibles("Comportamiento", Arrays.asList("Inquieto", "Tranquilo"));
-    CaracteristicaConValoresPosibles caracteristicaConValoresPosibles2 = new CaracteristicaConValoresPosibles("Comilon", Arrays.asList("Si", "No"));
-    repo.agregarCaracteristica(caracteristicaConValoresPosibles1);
-    repo.agregarCaracteristica(caracteristicaConValoresPosibles2);
-    List<Caracteristica> listaCaracteristica = new ArrayList<>();
+  public void noCumpleCaracteristicasSiNoMatcheanTodaslasCaracteristicas() {
+    listaCaracteristica.add(new Caracteristica("Comportamiento", "Tranquilo"));
     listaCaracteristica.add(new Caracteristica("Comilon", "Si"));
     assertFalse(mascotaRegistrada.cumpleConCaracteristicas(listaCaracteristica));
   }

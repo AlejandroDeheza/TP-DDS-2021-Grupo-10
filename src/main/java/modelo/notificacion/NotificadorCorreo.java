@@ -80,8 +80,7 @@ public class NotificadorCorreo implements Notificador {
 
   @Override
   public void notificarRecomendacionesDeAdopciones(List<DarEnAdopcion> recomendaciones) {
-    String mascotas = recomendaciones
-        .stream()
+    String mascotas = recomendaciones.stream()
         .map(recomendacion -> recomendacion.getMascotaEnAdopcion().getNombre())
         .collect(Collectors.joining(","));
     notificar(

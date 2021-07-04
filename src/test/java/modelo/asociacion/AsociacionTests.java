@@ -12,9 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AsociacionTests {
 
-  RepositorioAsociaciones repositorioAsociaciones;
-  ParDePreguntas parDePreguntas;
-
   Ubicacion ubicacion = new Ubicacion(50.01,50.01, null);
   Asociacion asociacion = new Asociacion(ubicacion);
 
@@ -24,23 +21,22 @@ public class AsociacionTests {
   Ubicacion ubicacion3 = new Ubicacion(100.01,100.01, null);
   Asociacion asociacion3 = new Asociacion(ubicacion3);
 
+  RepositorioAsociaciones repositorioAsociaciones;
   UbicadorAsociaciones ubicadorAsociaciones;
-
 
   @BeforeEach
   public void loadContext() {
     repositorioAsociaciones = new RepositorioAsociaciones();
+    repositorioAsociaciones.agregarAsociacion(asociacion); //50
+    repositorioAsociaciones.agregarAsociacion(asociacion2); //1
+    repositorioAsociaciones.agregarAsociacion(asociacion3); //100
     ubicadorAsociaciones = new UbicadorAsociaciones(repositorioAsociaciones);
   }
 
   @Test
   @DisplayName("Se elije la asociacion más cercana")
   public void seleccionAsociacionMasCercana() {
-    repositorioAsociaciones.agregarAsociacion(asociacion); //50
-    repositorioAsociaciones.agregarAsociacion(asociacion2); //1
-    repositorioAsociaciones.agregarAsociacion(asociacion3); //100
-    Ubicacion ubicacionABuscar = new Ubicacion(0.01,0.01,null);
-    assertEquals(asociacion2,ubicadorAsociaciones.getAsociacionMasCercana(ubicacionABuscar));
+    assertEquals(asociacion2, ubicadorAsociaciones.getAsociacionMasCercana(new Ubicacion(0.01,0.01,null)));
   }
 
 }
