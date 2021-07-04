@@ -29,7 +29,9 @@ public class RecomendadorDeAdopciones {
   }
 
   private void recomendarAdopciones(SuscripcionParaAdopcion suscripcion) {
-    suscripcion.enviarRecomendaciones( generarRecomendaciones(suscripcion) );
+    suscripcion.enviarRecomendaciones(
+        generarRecomendaciones(suscripcion)
+    );
   }
 
   public List<DarEnAdopcion> generarRecomendaciones(SuscripcionParaAdopcion suscripcion) {

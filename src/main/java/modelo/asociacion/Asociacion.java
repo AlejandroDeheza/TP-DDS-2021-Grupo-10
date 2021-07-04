@@ -6,7 +6,7 @@ import modelo.pregunta.ParDePreguntas;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Asociacion{
+public class Asociacion {
   private Ubicacion ubicacion;
   private List<ParDePreguntas> preguntas = new ArrayList<>();
 

@@ -2,6 +2,7 @@ package repositorios;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import modelo.suscripcion.SuscripcionParaAdopcion;
 
 public class RepositorioSuscripcionesParaAdopciones {
@@ -20,8 +21,9 @@ public class RepositorioSuscripcionesParaAdopciones {
 
   // el repositorio, en codigo de produccion, lo inyectamos por constructor
   // usamos el constructor solo para tests
-  public RepositorioSuscripcionesParaAdopciones() {}
+  public RepositorioSuscripcionesParaAdopciones() {
 
+  }
   // usamos el getInstance en Main
   public static RepositorioSuscripcionesParaAdopciones getInstance() {
     return repo;

@@ -9,7 +9,7 @@ import modelo.persona.DatosDeContacto;
 /**
  * Representa a Publicacion de la 2da entrega
  *
- * @since  Entrega 3
+ * @since Entrega 3
  */
 public class Rescate implements Publicacion {
 

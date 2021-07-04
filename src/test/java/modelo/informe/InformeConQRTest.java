@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import repositorios.RepositorioInformes;
-import utils.ReceptorProperties;
 import modelo.notificacion.NotificadorCorreo;
 import utils.DummyData;
 

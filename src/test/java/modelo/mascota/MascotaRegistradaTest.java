@@ -1,15 +1,12 @@
 package modelo.mascota;
 
 import modelo.mascota.caracteristica.Caracteristica;
-import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import repositorios.RepositorioCaracteristicas;
 import utils.DummyData;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;

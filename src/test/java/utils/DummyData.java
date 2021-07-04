@@ -96,7 +96,7 @@ public class DummyData {
         Animal.PERRO, getCaracteristicasParaMascota(), getFotos(), TamanioMascota.CHICO);
   }
 
-  public static ParDePreguntas getParDePreguntas1(){
+  public static ParDePreguntas getParDePreguntas1() {
     ParDePreguntas preguntas = new ParDePreguntas(
         "La mascota sufre si está mucho tiempo sola?",
         "Va a estar la mascota mucho tiempo sola?"
@@ -107,7 +107,7 @@ public class DummyData {
     return preguntas;
   }
 
-  public static ParDePreguntas getParDePreguntas2(){
+  public static ParDePreguntas getParDePreguntas2() {
     ParDePreguntas preguntas = new ParDePreguntas(
         "Cuantas veces necesita salir la mascota al dia?",
         "Cuantas veces sacarás a pasear a tu mascota al dia?"
@@ -155,7 +155,7 @@ public class DummyData {
     return new Ubicacion(27.23, 25.78, null);
   }
 
-  public static Asociacion getAsociacion(){
+  public static Asociacion getAsociacion() {
     return new Asociacion(getUbicacion());
   }
 

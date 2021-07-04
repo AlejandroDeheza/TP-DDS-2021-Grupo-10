@@ -21,7 +21,9 @@ public class RepositorioDarEnAdopcion {
 
   // el repositorio, en codigo de produccion, lo inyectamos por constructor
   // usamos el constructor solo para tests
-  public RepositorioDarEnAdopcion() {}
+  public RepositorioDarEnAdopcion() {
+
+  }
   // usamos el getInstance en Main
   public static RepositorioDarEnAdopcion getInstance() {
     return repo;

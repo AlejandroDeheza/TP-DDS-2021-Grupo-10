@@ -38,7 +38,7 @@ public class Punto2 {
     assertEquals(1, repositorioPreguntasObligatorias.getPreguntas().size());
   }
 
-  private ParDePreguntas getParDePreguntas(){
+  private ParDePreguntas getParDePreguntas() {
     ParDePreguntas preguntas = new ParDePreguntas(
         "La mascota sufre si está mucho tiempo sola?",
         "Va a estar la mascota mucho tiempo sola?");
@@ -52,4 +52,4 @@ public class Punto2 {
     return preguntas;
   }
 
-  }
+}

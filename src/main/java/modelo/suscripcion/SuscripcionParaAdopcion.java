@@ -22,7 +22,7 @@ public class SuscripcionParaAdopcion {
     this.preferenciaDelAdoptante = preferenciaDelAdoptante;
     this.comodidadesDelAdoptante = comodidadesDelAdoptante;
   }
-  
+
   public void enviarRecomendaciones(List<DarEnAdopcion> recomendaciones) {
     if (!recomendaciones.isEmpty())
       contactoSuscriptor.getNotificadorPreferido().notificarRecomendacionesDeAdopciones(recomendaciones);

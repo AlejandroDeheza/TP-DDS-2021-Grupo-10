@@ -4,7 +4,6 @@ import modelo.asociacion.Asociacion;
 import modelo.mascota.Animal;
 import modelo.notificacion.NotificadorCorreo;
 import modelo.pregunta.RespuestaDelAdoptante;
-import modelo.pregunta.RespuestaDelDador;
 import modelo.suscripcion.SuscripcionParaAdopcion;
 import modelo.suscripcion.Preferencia;
 import org.junit.jupiter.api.BeforeEach;

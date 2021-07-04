@@ -16,7 +16,7 @@ public class RespuestaDelDadorTest {
 
   @BeforeEach
   public void contextLoad() {
-    respuestasDelAdoptante.add(new RespuestaDelAdoptante("No",parDePreguntas));
+    respuestasDelAdoptante.add(new RespuestaDelAdoptante("No", parDePreguntas));
   }
 
   @Test

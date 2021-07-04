@@ -11,7 +11,6 @@ import modelo.persona.Persona;
 import modelo.publicacion.Rescate;
 import repositorios.RepositorioInformes;
 import repositorios.RepositorioRescates;
-import modelo.notificacion.NotificadorCorreo;
 
 import java.util.List;
 
@@ -25,7 +24,7 @@ public class InformeSinQR extends InformeRescate {
   public InformeSinQR(Persona rescatista, Ubicacion ubicacionRescatista, String direccionRescatista,
                       MascotaEncontrada mascotaEncontrada, RepositorioInformes repositorioInformes,
                       ReceptorHogares receptorHogares, Animal tipoAnimal, List<Caracteristica> caracteristicas,
-                      RepositorioRescates repositorioRescates, RepositorioAsociaciones repositorioAsociaciones ) {
+                      RepositorioRescates repositorioRescates, RepositorioAsociaciones repositorioAsociaciones) {
     super(rescatista, ubicacionRescatista, direccionRescatista, mascotaEncontrada, repositorioInformes,
         receptorHogares);
     this.tipoAnimal = tipoAnimal;
