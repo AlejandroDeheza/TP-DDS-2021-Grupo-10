@@ -5,7 +5,6 @@ import modelo.hogarDeTransito.ReceptorHogares;
 import modelo.mascota.MascotaEncontrada;
 import modelo.mascota.MascotaRegistrada;
 import modelo.persona.Persona;
-import utils.ReceptorProperties;
 import repositorios.RepositorioInformes;
 
 import java.util.List;
@@ -13,16 +12,13 @@ import java.util.List;
 public class InformeConQR extends InformeRescate {
 
   private MascotaRegistrada mascotaRegistrada;
-  private ReceptorProperties receptorProperties;
 
   public InformeConQR(Persona rescatista, Ubicacion ubicacionRescatista, String direccionRescatista,
                       MascotaEncontrada mascotaEncontrada, RepositorioInformes repositorioInformes,
-                      ReceptorHogares receptorHogares, MascotaRegistrada mascotaRegistrada,
-                      ReceptorProperties receptorProperties) {
+                      ReceptorHogares receptorHogares, MascotaRegistrada mascotaRegistrada) {
     super(rescatista, ubicacionRescatista, direccionRescatista, mascotaEncontrada, repositorioInformes,
         receptorHogares);
     this.mascotaRegistrada = mascotaRegistrada;
-    this.receptorProperties = receptorProperties;
   }
 
   public List<Hogar> getHogaresCercanos(Integer radioCercania) {

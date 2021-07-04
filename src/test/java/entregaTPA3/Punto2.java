@@ -4,7 +4,7 @@ import modelo.asociacion.Asociacion;
 import modelo.asociacion.RepositorioAsociaciones;
 import modelo.pregunta.ParDePreguntas;
 import modelo.pregunta.ParDeRespuestas;
-import modelo.pregunta.RepositorioPreguntas;
+import modelo.pregunta.RepositorioPreguntasObligatorias;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,14 +15,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Punto2 {
   RepositorioAsociaciones repositorioAsociaciones;
-  RepositorioPreguntas repositorioPreguntas;
+  RepositorioPreguntasObligatorias repositorioPreguntasObligatorias;
   ParDePreguntas parDePreguntas;
   Asociacion asociacion= new Asociacion(DummyData.getUbicacion());
 
   @BeforeEach
   public void loadContext() {
     repositorioAsociaciones = new RepositorioAsociaciones();
-    repositorioPreguntas = new RepositorioPreguntas();
+    repositorioPreguntasObligatorias = new RepositorioPreguntasObligatorias();
   }
 
   @Test
@@ -38,9 +38,9 @@ public class Punto2 {
   @DisplayName("Se puede agregar una ParDePreguntas al RepositorioPreguntas")
   public void agregarParDePreguntasAlRepositorioPreguntas() {
     parDePreguntas = getParDePreguntas();
-    assertEquals(0, repositorioPreguntas.getPreguntasObligatorias().size());
-    repositorioPreguntas.agregarPregunta(parDePreguntas);
-    assertEquals(1, repositorioPreguntas.getPreguntasObligatorias().size());
+    assertEquals(0, repositorioPreguntasObligatorias.getPreguntas().size());
+    repositorioPreguntasObligatorias.agregarPregunta(parDePreguntas);
+    assertEquals(1, repositorioPreguntasObligatorias.getPreguntas().size());
   }
 
   private ParDePreguntas getParDePreguntas(){

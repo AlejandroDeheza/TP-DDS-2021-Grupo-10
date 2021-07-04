@@ -3,11 +3,11 @@ package modelo.pregunta;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RepositorioPreguntas {
+public class RepositorioPreguntasObligatorias {
   private List<ParDePreguntas> preguntasObligatorias = new ArrayList<>();
-  private static RepositorioPreguntas repositorioPreguntas = new RepositorioPreguntas();
+  private static RepositorioPreguntasObligatorias repo = new RepositorioPreguntasObligatorias();
 
-  public List<ParDePreguntas> getPreguntasObligatorias() {
+  public List<ParDePreguntas> getPreguntas() {
     return preguntasObligatorias;
   }
 
@@ -22,10 +22,10 @@ public class RepositorioPreguntas {
 
   //el repositorio, en codigo de produccion, lo inyectamos por constructor
   //usamos el constructor solo para tests
-  public RepositorioPreguntas() {
+  public RepositorioPreguntasObligatorias() {
   }
   //usamos el getInstance en Main
-  public static RepositorioPreguntas getInstance() {
-    return repositorioPreguntas;
+  public static RepositorioPreguntasObligatorias getInstance() {
+    return repo;
   }
 }

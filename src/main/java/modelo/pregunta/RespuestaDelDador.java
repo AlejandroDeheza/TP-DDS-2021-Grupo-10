@@ -12,13 +12,13 @@ public class RespuestaDelDador {
     this.parDePreguntas = parDePreguntas;
   }
 
-  public boolean correspondeConAlguna(List<RespuestaDelAdoptante> comodidades) {
+  public Boolean correspondeConAlguna(List<RespuestaDelAdoptante> comodidades) {
     return comodidades.stream()
         .filter(respuestaDelAdoptante -> respuestaDelAdoptante.getParDePreguntas().esIgualA(parDePreguntas))
         .anyMatch(respuestaDelAdoptante -> this.correspondeCon(respuestaDelAdoptante.getRespuesta()));
   }
 
-  private boolean correspondeCon(String respuestaDelAdoptante) {
+  private Boolean correspondeCon(String respuestaDelAdoptante) {
     return parDePreguntas.getParesDeRespuestas().stream()
         .filter(parDeRespuestas -> parDeRespuestas.getRespuestaDelDador().equals(respuesta))
         .map(ParDeRespuestas::getRespuestaDelAdoptante)
