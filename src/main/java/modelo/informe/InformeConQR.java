@@ -13,10 +13,10 @@ public class InformeConQR extends InformeRescate {
 
   private MascotaRegistrada mascotaRegistrada;
 
-  public InformeConQR(Persona rescatista, Ubicacion ubicacionRescatista, String direccionRescatista,
-                      MascotaEncontrada mascotaEncontrada, RepositorioInformes repositorioInformes,
-                      ReceptorHogares receptorHogares, MascotaRegistrada mascotaRegistrada) {
-    super(rescatista, ubicacionRescatista, direccionRescatista, mascotaEncontrada, repositorioInformes,
+  public InformeConQR(Persona rescatista, Ubicacion ubicacionRescatista, MascotaEncontrada mascotaEncontrada,
+                      RepositorioInformes repositorioInformes, ReceptorHogares receptorHogares,
+                      MascotaRegistrada mascotaRegistrada) {
+    super(rescatista, ubicacionRescatista, mascotaEncontrada, repositorioInformes,
         receptorHogares);
     this.mascotaRegistrada = mascotaRegistrada;
   }

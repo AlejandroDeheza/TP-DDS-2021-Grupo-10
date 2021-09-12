@@ -52,7 +52,7 @@ public class InformeConQRTest {
   }
 
   private InformeConQR generarInformeConQR() {
-    return new InformeConQR(DummyData.getPersona(notificadorMockeado), DummyData.getUbicacion(), null, null,
+    return new InformeConQR(DummyData.getPersona(notificadorMockeado), DummyData.getUbicacion(), null,
         repositorioInformes, receptorHogaresMock, DummyData.getMascotaRegistrada(notificadorMockeado));
   }
 

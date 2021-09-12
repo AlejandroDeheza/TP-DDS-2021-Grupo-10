@@ -19,9 +19,8 @@ public class RepositorioInformesTest {
   @Test
   @DisplayName("si se utiliza informesDeUltimosNDias(), este devuelve un registro insertado previamente")
   public void listarMascotasEncontradasEnLosUltimos10DiasTest() {
-    InformeConQR informe = new InformeConQR(null, null, null,
-        DummyData.getMascotaEncontrada(DummyData.getFotos()), repositorioInformes, null,
-        null);
+    InformeConQR informe = new InformeConQR(null, null,
+        DummyData.getMascotaEncontrada(DummyData.getFotos()), repositorioInformes, null, null);
 
     assertEquals(repositorioInformes.informesDeUltimosNDias(10).size(), 0);
     repositorioInformes.agregarInformeRescate(informe);

@@ -21,12 +21,11 @@ public class InformeSinQR extends InformeRescate {
   private RepositorioRescates repositorioRescates;
   private RepositorioAsociaciones repositorioAsociaciones;
 
-  public InformeSinQR(Persona rescatista, Ubicacion ubicacionRescatista, String direccionRescatista,
-                      MascotaEncontrada mascotaEncontrada, RepositorioInformes repositorioInformes,
-                      ReceptorHogares receptorHogares, Animal tipoAnimal, List<Caracteristica> caracteristicas,
-                      RepositorioRescates repositorioRescates, RepositorioAsociaciones repositorioAsociaciones) {
-    super(rescatista, ubicacionRescatista, direccionRescatista, mascotaEncontrada, repositorioInformes,
-        receptorHogares);
+  public InformeSinQR(Persona rescatista, Ubicacion ubicacionRescatista, MascotaEncontrada mascotaEncontrada,
+                      RepositorioInformes repositorioInformes, ReceptorHogares receptorHogares, Animal tipoAnimal,
+                      List<Caracteristica> caracteristicas, RepositorioRescates repositorioRescates,
+                      RepositorioAsociaciones repositorioAsociaciones) {
+    super(rescatista, ubicacionRescatista, mascotaEncontrada, repositorioInformes, receptorHogares);
     this.tipoAnimal = tipoAnimal;
     this.caracteristicas = caracteristicas;
     this.repositorioRescates = repositorioRescates;
