@@ -49,6 +49,6 @@ public class RecomendadorDeAdopciones {
     return Integer.compare(
         p2.cantidadConLasQueMatchea(comodidades),
         p1.cantidadConLasQueMatchea(comodidades)
-    ); // lo invierto porque si no anda mal // p1 <--> p2
+    );
   }
 }
