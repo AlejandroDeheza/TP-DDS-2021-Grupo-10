@@ -1,5 +1,6 @@
 package modelo.usuario;
 
+import modelo.notificacion.Notificador;
 import modelo.persona.Persona;
 
 public class Usuario {
@@ -21,6 +22,10 @@ public class Usuario {
 
   public void autenticarUsuario(String contraseniaIngresada) {
     validadorAutenticacion.autenticarUsuario(contraseniaIngresada);
+  }
+
+  public Notificador getNotificadorPreferido() {
+    return persona.getNotificadorPreferido();
   }
 
   public String getUsuario() {

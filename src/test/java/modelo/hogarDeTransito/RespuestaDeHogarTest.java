@@ -9,7 +9,6 @@ import modelo.mascota.caracteristica.Caracteristica;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import repositorios.RepositorioCaracteristicas;
 import utils.DummyData;
 
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ public class RespuestaDeHogarTest {
 
   @BeforeEach
   public void contextLoad() {
-    caracteristicas = DummyData.getCaracteristicasParaMascota(new RepositorioCaracteristicas());
+    caracteristicas = DummyData.getCaracteristicasParaMascota();
     ubicacionEncuentro = new Ubicacion(70.0, 70.0, null);
     animal = Animal.PERRO;
     tamanio = TamanioMascota.CHICO;

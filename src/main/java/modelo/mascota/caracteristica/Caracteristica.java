@@ -1,27 +1,34 @@
 package modelo.mascota.caracteristica;
 
-import repositorios.RepositorioCaracteristicas;
-
-import java.util.List;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public class Caracteristica {
 
   private String nombreCaracteristica;
   private String valorCaracteristica;
 
-  public Caracteristica(String nombreCaracteristica, String valorCaracteristica,
-                        RepositorioCaracteristicas repositorioCaracteristicas) {
-    repositorioCaracteristicas.validarCaracteristica(nombreCaracteristica, valorCaracteristica);
+  public Caracteristica(String nombreCaracteristica, String valorCaracteristica) {
     this.nombreCaracteristica = nombreCaracteristica;
     this.valorCaracteristica = valorCaracteristica;
   }
 
-  public boolean matcheaConAlgunaDe(List<Caracteristica> caracteristicas) {
-    return caracteristicas
-        .stream()
-        .filter(caracteristica -> caracteristica.getNombreCaracteristica().equals(nombreCaracteristica))
-        .anyMatch(caracteristica -> caracteristica.getValorCaracteristica().equals(valorCaracteristica));
+  public int hashCode() {
+    return new HashCodeBuilder(17, 37)
+        .append(valorCaracteristica).toHashCode();
   }
+
+  public boolean equals(Object o) {
+    boolean equals = false;
+    if (o != null && Caracteristica.class.isAssignableFrom(o.getClass())) {
+      Caracteristica c = (Caracteristica) o;
+      equals = (new EqualsBuilder()
+          .append(nombreCaracteristica, c.nombreCaracteristica)
+          .append(valorCaracteristica, c.valorCaracteristica)).isEquals();
+    }
+    return equals;
+  }
+
 
   public String getNombreCaracteristica() {
     return nombreCaracteristica;

@@ -1,34 +1,30 @@
 package entregaTPA3;
 
 import modelo.asociacion.Asociacion;
-import modelo.asociacion.RepositorioAsociaciones;
 import modelo.pregunta.ParDePreguntas;
 import modelo.pregunta.ParDeRespuestas;
-import modelo.pregunta.RepositorioPreguntas;
+import repositorios.RepositorioPreguntasObligatorias;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import utils.DummyData;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Punto2 {
-  RepositorioAsociaciones repositorioAsociaciones;
-  RepositorioPreguntas repositorioPreguntas;
+  RepositorioPreguntasObligatorias repositorioPreguntasObligatorias;
   ParDePreguntas parDePreguntas;
-  Asociacion asociacion= new Asociacion(DummyData.getUbicacion());
+  Asociacion asociacion = new Asociacion(DummyData.getUbicacion());
 
   @BeforeEach
   public void loadContext() {
-    repositorioAsociaciones = new RepositorioAsociaciones();
-    repositorioPreguntas = new RepositorioPreguntas();
+    repositorioPreguntasObligatorias = new RepositorioPreguntasObligatorias();
+    parDePreguntas = getParDePreguntas();
   }
 
   @Test
   @DisplayName("Se puede definir un ParDePreguntas en una Asociacion")
   public void agregarParDePreguntasAAsociacion() {
-    parDePreguntas = getParDePreguntas();
     assertEquals(0, asociacion.getPreguntas().size());
     asociacion.agregarPregunta(parDePreguntas);
     assertEquals(1, asociacion.getPreguntas().size());
@@ -37,13 +33,12 @@ public class Punto2 {
   @Test
   @DisplayName("Se puede agregar una ParDePreguntas al RepositorioPreguntas")
   public void agregarParDePreguntasAlRepositorioPreguntas() {
-    parDePreguntas = getParDePreguntas();
-    assertEquals(0, repositorioPreguntas.getPreguntasObligatorias().size());
-    repositorioPreguntas.agregarPregunta(parDePreguntas);
-    assertEquals(1, repositorioPreguntas.getPreguntasObligatorias().size());
+    assertEquals(0, repositorioPreguntasObligatorias.getPreguntas().size());
+    repositorioPreguntasObligatorias.agregarPregunta(parDePreguntas);
+    assertEquals(1, repositorioPreguntasObligatorias.getPreguntas().size());
   }
 
-  private ParDePreguntas getParDePreguntas(){
+  private ParDePreguntas getParDePreguntas() {
     ParDePreguntas preguntas = new ParDePreguntas(
         "La mascota sufre si está mucho tiempo sola?",
         "Va a estar la mascota mucho tiempo sola?");
@@ -57,4 +52,4 @@ public class Punto2 {
     return preguntas;
   }
 
-  }
+}

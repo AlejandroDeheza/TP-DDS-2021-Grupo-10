@@ -27,7 +27,7 @@ public class Ubicacion {
     return direccion;
   }
 
-  public Double getDistancia(Ubicacion ubicacion){
+  public Double getDistancia(Ubicacion ubicacion) {
     // https://www.geeksforgeeks.org/program-distance-two-points-earth/
     double lonDireccionRescatista = Math.toRadians(ubicacion.getLongitud());
     double lonHogar = Math.toRadians(this.getLongitud());

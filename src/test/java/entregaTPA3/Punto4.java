@@ -3,12 +3,11 @@ package entregaTPA3;
 import modelo.asociacion.Asociacion;
 import modelo.mascota.Animal;
 import modelo.notificacion.NotificadorCorreo;
-import modelo.pregunta.Respuesta;
+import modelo.pregunta.RespuestaDelAdoptante;
 import modelo.suscripcion.SuscripcionParaAdopcion;
 import modelo.suscripcion.Preferencia;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioSuscripcionesParaAdopciones;
 import utils.DummyData;
 
@@ -20,8 +19,8 @@ import static org.mockito.Mockito.mock;
 public class Punto4 {
 
   NotificadorCorreo notificadorCorreo;
-  Respuesta respuestaAdoptante1 = new Respuesta("Si", DummyData.getParDePreguntas1());
-  Respuesta respuestaAdoptante2 = new Respuesta("3", DummyData.getParDePreguntas2());
+  RespuestaDelAdoptante respuestaAdoptante1 = new RespuestaDelAdoptante("Si", DummyData.getParDePreguntas1());
+  RespuestaDelAdoptante respuestaAdoptante2 = new RespuestaDelAdoptante("3", DummyData.getParDePreguntas2());
 
   @BeforeEach
   public void contextLoad() {
@@ -33,10 +32,9 @@ public class Punto4 {
     RepositorioSuscripcionesParaAdopciones repositorio = new RepositorioSuscripcionesParaAdopciones();
 
     SuscripcionParaAdopcion publicacion = new SuscripcionParaAdopcion(
-        DummyData.getDatosDeContacto(),
-        notificadorCorreo,
+        DummyData.getDatosDeContacto(notificadorCorreo),
         new Asociacion(DummyData.getUbicacion()),
-        new Preferencia(DummyData.getCaracteristicasParaMascota(new RepositorioCaracteristicas()), Animal.PERRO),
+        new Preferencia(DummyData.getCaracteristicasParaMascota(), Animal.PERRO),
         Arrays.asList(respuestaAdoptante1, respuestaAdoptante2)
     );
 

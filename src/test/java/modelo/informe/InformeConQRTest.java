@@ -5,9 +5,7 @@ import modelo.hogarDeTransito.ReceptorHogares;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioInformes;
-import utils.ReceptorProperties;
 import modelo.notificacion.NotificadorCorreo;
 import utils.DummyData;
 
@@ -40,7 +38,7 @@ public class InformeConQRTest {
     informeConQR.procesarInforme();
     assertTrue(repositorioInformes.getInformesProcesados().contains(informeConQR));
 
-    verify(notificadorMockeado, times(1)).notificar(any());
+    verify(notificadorMockeado, times(1)).notificarEncontramosTuMascota(any());
   }
 
   @Test
@@ -54,9 +52,8 @@ public class InformeConQRTest {
   }
 
   private InformeConQR generarInformeConQR() {
-    return new InformeConQR(null, DummyData.getUbicacion(), null, null,
-        repositorioInformes, receptorHogaresMock, DummyData.getMascotaRegistrada(new RepositorioCaracteristicas()),
-        notificadorMockeado, new ReceptorProperties());
+    return new InformeConQR(DummyData.getPersona(notificadorMockeado), DummyData.getUbicacion(), null,
+        repositorioInformes, receptorHogaresMock, DummyData.getMascotaRegistrada(notificadorMockeado));
   }
 
 }

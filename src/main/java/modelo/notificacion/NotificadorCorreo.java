@@ -1,16 +1,23 @@
 package modelo.notificacion;
 
 import excepciones.NotificacionCorreoException;
+import modelo.mascota.MascotaRegistrada;
+import modelo.publicacion.DarEnAdopcion;
+import modelo.usuario.Usuario;
+import utils.ReceptorProperties;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.util.List;
 import java.util.Properties;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class NotificadorCorreo implements Notificador {
 
-  Session session = configurarConexionCorreo();
+  private Session session = configurarConexionCorreo();
+  private String email;
 
   Function<Session, Transport> funcion = (sesion -> {
     Transport t = null;
@@ -23,18 +30,70 @@ public class NotificadorCorreo implements Notificador {
   });
 
   // el notificador, en codigo de produccion, lo inyectamos por constructor
+
   // solo para tests
-  public NotificadorCorreo(Function<Session, Transport> funcion) {
+  public NotificadorCorreo(String email, Function<Session, Transport> funcion) {
     this.funcion = funcion;
+    this.email = email;
   }
   // para Main
-  public NotificadorCorreo() {
+  public NotificadorCorreo(String email) {
+    this.email = email;
   }
 
   @Override
-  public void notificar(Notificacion notificacion) {
-    MimeMessage mensaje = this.crearMensaje(notificacion);
-    this.enviarMensaje(mensaje, funcion.apply(session));
+  public void notificarEncontramosTuMascota(MascotaRegistrada mascotaRegistrada) {
+    Properties properties = new ReceptorProperties().getProperties();
+    notificar(
+        properties.getProperty("asunto_InformeMascotaConDuenio"),
+        properties.getProperty("cuerpoMensaje_InformeMascotaConDuenio")
+    );
+  }
+
+  @Override
+  public void notificarQuierenAdoptarTuMascota(Usuario adoptante, MascotaRegistrada mascotaEnAdopcion) {
+    notificar(
+        "Una persona quiere adoptar a tu mascota",
+        "Encontramos una persona que quiere adoptar a " + mascotaEnAdopcion.getNombre() + ". Podes " +
+            "comunicarte con el adoptante por este mail: " + adoptante.getPersona().getDatosDeContacto().getEmail()
+    );
+  }
+
+  @Override
+  public void notificarDuenioReclamaSuMacota(Usuario duenio) {
+    notificar(
+        "Han Encontrado una mascota que rescataste!",
+        "El dueño encontro una mascota que vos rescataste. Por favor comunicarse al: "
+            + duenio.getPersona().getDatosDeContacto().getEmail()
+    );
+  }
+
+  @Override
+  public void notificarLinkDeBajaSuscripcionAdopciones(String linkDeBaja) {
+    notificar(
+        "Publicación exitosa",
+        "Tu intención de querer adoptar a una mascota se publicó exitosamente. " +
+            "¡Semanalmente recibirás recomendaciones de adopción que se ajusten a tus preferencias y comodidades! " +
+            "Si deseas dar de baja tu publicación, lo podrás hacer clickeando el siguiente link: " + linkDeBaja
+    );
+  }
+
+  @Override
+  public void notificarRecomendacionesDeAdopciones(List<DarEnAdopcion> recomendaciones) {
+    String mascotas = recomendaciones.stream()
+        .map(recomendacion -> recomendacion.getMascotaEnAdopcion().getNombre())
+        .collect(Collectors.joining(","));
+    notificar(
+        "Recomendaciones de adopcion",
+        "Encontramos las siguientes mascotas que creemos que pueden interesarte adoptar: " + mascotas
+    );
+  }
+
+  private void notificar(String asunto, String cuerpoMensaje) {
+    enviarMensaje(
+        crearMensaje(asunto, cuerpoMensaje),
+        funcion.apply(session)
+    );
   }
 
   private Session configurarConexionCorreo() {
@@ -49,6 +108,23 @@ public class NotificadorCorreo implements Notificador {
     return session;
   }
 
+  private MimeMessage crearMensaje(String asunto, String cuerpoMensaje) {
+    MimeMessage message = new MimeMessage(session);
+    try {
+      message.setFrom(new InternetAddress(email));
+      message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+      message.setSubject(asunto);
+      message.setText(getMensajeBody(cuerpoMensaje), "UTF-8", "html");
+    } catch (MessagingException e) {
+      throw new NotificacionCorreoException("Algo salio mal al crear el mensaje en NotificacionCorreo", e);
+    }
+    return message;
+  }
+
+  private String getMensajeBody(String cuerpoMensaje) {
+    return "<p> Hola, </p> </br></br> <p>" + cuerpoMensaje + "</p> </br></br> <p> Saludos, </br> Hogar de Patitas";
+  }
+
   private void enviarMensaje(MimeMessage mensaje, Transport t) {
     try {
       t.connect("rescatepatitasdds21@gmail.com", "viernesNoche21");
@@ -57,20 +133,6 @@ public class NotificadorCorreo implements Notificador {
     } catch (MessagingException e) {
       throw new NotificacionCorreoException("Algo salio mal al enviar el mensaje en NotificacionCorreo", e);
     }
-  }
-
-  private MimeMessage crearMensaje(Notificacion notificacion) {
-    MimeMessage message = new MimeMessage(session);
-    String email = notificacion.getDestinatario().getEmail();
-    try {
-      message.setFrom(new InternetAddress(email));
-      message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
-      message.setSubject(notificacion.getAsunto());
-      message.setText(notificacion.getMensajeBody(), "UTF-8", "html");
-    } catch (MessagingException e) {
-      throw new NotificacionCorreoException("Algo salio mal al crear el mensaje en NotificacionCorreo", e);
-    }
-    return message;
   }
 
 }

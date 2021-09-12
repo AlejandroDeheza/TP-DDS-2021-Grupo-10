@@ -8,6 +8,7 @@ import repositorios.RepositorioDarEnAdopcion;
 import utils.DummyData;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -26,7 +27,7 @@ public class SuscripcionTest {
   public void enviarUnLinkDeBajaEnviaUnaNotificacion() {
     SuscripcionParaAdopcion suscripcion = DummyData.getSuscripcionParaAdopcion(notificadorCorreo);
     suscripcion.enviarLinkDeBaja();
-    verify(notificadorCorreo, times(1)).notificar(any());
+    verify(notificadorCorreo, times(1)).notificarLinkDeBajaSuscripcionAdopciones(any());
   }
 
   @Test
@@ -39,6 +40,14 @@ public class SuscripcionTest {
             DummyData.getPublicacionDeDarEnAdopcion(notificadorCorreo, new RepositorioDarEnAdopcion())
         )
     );
-    verify(notificadorCorreo, times(1)).notificar(any());
+    verify(notificadorCorreo, times(1)).notificarRecomendacionesDeAdopciones(any());
+  }
+
+  @Test
+  @DisplayName("Si se envian recomendacion de adopcion con lista vacia, no se envia ninguna Notificacion")
+  public void enviarRecomendacionesConListaVaciaNoEnviaUnaNotificacion() {
+    SuscripcionParaAdopcion suscripcion = DummyData.getSuscripcionParaAdopcion(notificadorCorreo);
+    suscripcion.enviarRecomendaciones(Collections.emptyList());
+    verify(notificadorCorreo, times(0)).notificarRecomendacionesDeAdopciones(any());
   }
 }

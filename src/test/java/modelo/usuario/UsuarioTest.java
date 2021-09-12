@@ -12,7 +12,7 @@ public class UsuarioTest {
   @Test
   @DisplayName("Si se crea un usuario valido, no se genera ningun problema")
   public void usuarioValidoTest() {
-    assertDoesNotThrow(DummyData::getUsuario);
+    assertDoesNotThrow(() -> DummyData.getUsuario(null));
   }
 
   @Test

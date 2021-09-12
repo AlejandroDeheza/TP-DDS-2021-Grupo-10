@@ -7,6 +7,8 @@ public class ParDePreguntas {
   private String preguntaDelDador;
   private String preguntaDelAdoptante;
   List<ParDeRespuestas> paresDeRespuestas = new ArrayList<>();
+  List<String> respuestasPosiblesDelDador = new ArrayList<>();
+  List<String> respuestasPosiblesDelAdoptante = new ArrayList<>();
 
   public ParDePreguntas(String preguntaDelDador, String preguntaDelAdoptante) {
     this.preguntaDelDador = preguntaDelDador;
@@ -32,5 +34,13 @@ public class ParDePreguntas {
 
   public List<ParDeRespuestas> getParesDeRespuestas() {
     return paresDeRespuestas;
+  }
+
+  public List<String> getRespuestasPosiblesDelDador() {
+    return respuestasPosiblesDelDador;
+  }
+
+  public List<String> getRespuestasPosiblesDelAdoptante() {
+    return respuestasPosiblesDelAdoptante;
   }
 }

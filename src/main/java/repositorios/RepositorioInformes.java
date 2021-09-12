@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class RepositorioInformes {
-  private static RepositorioInformes repositorioInformes = new RepositorioInformes();
+  private static RepositorioInformes repo = new RepositorioInformes();
   private List<InformeRescate> informesPendientes = new ArrayList<>();
   private List<InformeRescate> informesProcesados = new ArrayList<>();
 
@@ -35,7 +35,7 @@ public class RepositorioInformes {
   }
   //usamos el getInstance en Main
   public static RepositorioInformes getInstance() {
-    return repositorioInformes;
+    return repo;
   }
 
   public List<InformeRescate> getInformesPendientes() {

@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import repositorios.RepositorioCaracteristicas;
 import utils.DummyData;
 
 import java.util.List;
@@ -27,7 +26,6 @@ public class ReceptorHogaresTest {
   @DisplayName("Los Jsons se mapean correctamente con constructor para tests")
   public void losJsonSeMapeanCorrectamente() {
     List<Hogar> hogaresDisponibles = obtenerHogaresDisponibles(new ReceptorHogares(testJson));
-
     assertEquals(1, hogaresDisponibles.size());
     assertEquals("Pensionado de mascotas \"Como en casa\"", hogaresDisponibles.get(0).getNombre());
   }
@@ -52,7 +50,8 @@ public class ReceptorHogaresTest {
   public List<Hogar> obtenerHogaresDisponibles(ReceptorHogares receptorHogares) {
     return receptorHogares.getHogaresDisponibles(
         new Ubicacion(-34.46, -58.80, null), 1000, Animal.GATO, TamanioMascota.CHICO,
-        DummyData.getCaracteristicasParaMascota(new RepositorioCaracteristicas()));
+        DummyData.getCaracteristicasParaMascota()
+    );
   }
 
 }

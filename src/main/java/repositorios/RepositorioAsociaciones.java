@@ -1,6 +1,6 @@
-package modelo.asociacion;
+package repositorios;
 
-import modelo.pregunta.ParDePreguntas;
+import modelo.asociacion.Asociacion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,20 +9,9 @@ public class RepositorioAsociaciones {
   private List<Asociacion> asociaciones = new ArrayList<>();
   private static RepositorioAsociaciones repositorioAsociaciones = new RepositorioAsociaciones();
 
-  //el repositorio, en codigo de produccion, lo inyectamos por constructor
-  //usamos el constructor solo para tests
-  public RepositorioAsociaciones() {
-  }
-
-  //usamos el getInstance en Main
-  public static RepositorioAsociaciones getInstance() {
-    return repositorioAsociaciones;
-  }
-
   public List<Asociacion> getAsociaciones() {
     return asociaciones;
   }
-
 
   public void agregarAsociacion(Asociacion asociacion) {
     asociaciones.add(asociacion);
@@ -30,5 +19,15 @@ public class RepositorioAsociaciones {
 
   public void eliminarAsociaciones(Asociacion asociacion) {
     asociaciones.remove(asociacion);
+  }
+
+
+  //el repositorio, en codigo de produccion, lo inyectamos por constructor
+  //usamos el constructor solo para tests
+  public RepositorioAsociaciones() {
+  }
+  //usamos el getInstance en Main
+  public static RepositorioAsociaciones getInstance() {
+    return repositorioAsociaciones;
   }
 }

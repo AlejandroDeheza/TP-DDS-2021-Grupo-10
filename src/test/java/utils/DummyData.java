@@ -9,14 +9,14 @@ import modelo.notificacion.NotificadorCorreo;
 import modelo.persona.*;
 import modelo.pregunta.ParDePreguntas;
 import modelo.pregunta.ParDeRespuestas;
-import modelo.pregunta.Respuesta;
+import modelo.pregunta.RespuestaDelAdoptante;
+import modelo.pregunta.RespuestaDelDador;
 import modelo.publicacion.DarEnAdopcion;
 import modelo.suscripcion.SuscripcionParaAdopcion;
 import modelo.suscripcion.Preferencia;
 import modelo.publicacion.Rescate;
 import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
-import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioDarEnAdopcion;
 import repositorios.RepositorioRescates;
 import modelo.notificacion.Notificador;
@@ -28,16 +28,16 @@ import java.util.List;
 
 public class DummyData {
 
-  public static DatosDeContacto getDatosDeContacto() {
-    return new DatosDeContacto("01147474747", "dds2021g10@gmail.com");
+  public static DatosDeContacto getDatosDeContacto(Notificador notificador) {
+    return new DatosDeContacto("01147474747", "dds2021g10@gmail.com", notificador);
   }
 
   public static DocumentoIdentidad getDocumentoIdentidad() {
     return new DocumentoIdentidad(TipoDocumento.DNI, "11111111");
   }
 
-  public static Persona getPersona() {
-    return new Persona("PersonaNombre", "PersonaApellido", getDocumentoIdentidad(), getDatosDeContacto(),
+  public static Persona getPersona(Notificador notificador) {
+    return new Persona("PersonaNombre", "PersonaApellido", getDocumentoIdentidad(), getDatosDeContacto(notificador),
         LocalDate.of(1995, 8, 7));
   }
 
@@ -46,39 +46,38 @@ public class DummyData {
   }
 
   public static Persona getPersonaSinDatosDeContactoNiNombreNiApellido() {
-    return new Persona(null, null, getDocumentoIdentidad(), new DatosDeContacto(null, null), LocalDate.of(1995, 8, 7));
+    return new Persona(null, null, getDocumentoIdentidad(), new DatosDeContacto(null, null, new NotificadorCorreo("dds2021g10@gmail.com")), LocalDate.of(1995, 8, 7));
   }
 
   public static Persona getPersonaSinTelefono() {
     return new Persona("PersonaNombre", "PersonaApellido", getDocumentoIdentidad(),
-        new DatosDeContacto(null, "dds2021g10@gmail.com"), LocalDate.of(1995, 8, 7));
+        new DatosDeContacto(null, "dds2021g10@gmail.com", new NotificadorCorreo("dds2021g10@gmail.com")), LocalDate.of(1995, 8, 7));
   }
 
   public static Persona getPersonaSinCorreo() {
     return new Persona("PersonaNombre", "PersonaApellido", getDocumentoIdentidad(),
-        new DatosDeContacto("01147474747", null), LocalDate.of(1995, 8, 7));
+        new DatosDeContacto("01147474747", null, new NotificadorCorreo("dds2021g10@gmail.com")), LocalDate.of(1995, 8, 7));
   }
 
-  public static Usuario getUsuario() {
-    return new Usuario("DuenioMascota", "Password1234", TipoUsuario.NORMAL, getPersona());
+  public static Usuario getUsuario(Notificador notificador) {
+    return new Usuario("DuenioMascota", "Password1234", TipoUsuario.NORMAL, getPersona(notificador));
   }
 
   public static Usuario getUsuarioVoluntario() {
-    return new Usuario("voluntario", "Password1234", TipoUsuario.VOLUNTARIO, getPersona());
+    return new Usuario("voluntario", "Password1234", TipoUsuario.VOLUNTARIO, getPersona(null));
   }
 
   public static Usuario getUsuarioAdministrador() {
-    return new Usuario("Admin", "Password1234", TipoUsuario.ADMIN, getPersona());
+    return new Usuario("Admin", "Password1234", TipoUsuario.ADMIN, getPersona(null));
   }
 
   public static CaracteristicaConValoresPosibles getCaracteristicaParaAdmin() {
     return new CaracteristicaConValoresPosibles("Comportamiento", Arrays.asList("Inquieto", "Tranquilo"));
   }
 
-  public static List<Caracteristica> getCaracteristicasParaMascota(RepositorioCaracteristicas repo) {
-    repo.agregarCaracteristica(getCaracteristicaParaAdmin());
+  public static List<Caracteristica> getCaracteristicasParaMascota() {
     List<Caracteristica> listaCaracteristica = new ArrayList<>();
-    listaCaracteristica.add(new Caracteristica("Comportamiento", "Tranquilo", repo));
+    listaCaracteristica.add(new Caracteristica("Comportamiento", "Tranquilo"));
     return listaCaracteristica;
   }
 
@@ -92,25 +91,27 @@ public class DummyData {
     return new MascotaEncontrada(fotos, getUbicacion(), "Limpio y Sano", LocalDate.now(), TamanioMascota.CHICO);
   }
 
-  public static MascotaRegistrada getMascotaRegistrada(RepositorioCaracteristicas repositorioCaracteristicas) {
-    return new MascotaRegistrada(getUsuario(), "Felipe", "Panchito", LocalDate.of(2018, 3, 4), "Pelo largo", Sexo.MACHO,
-        Animal.PERRO, getCaracteristicasParaMascota(repositorioCaracteristicas), getFotos(), TamanioMascota.CHICO);
+  public static MascotaRegistrada getMascotaRegistrada(Notificador notificador) {
+    return new MascotaRegistrada(getUsuario(notificador), "Felipe", "Panchito", LocalDate.of(2018, 3, 4), "Pelo largo", Sexo.MACHO,
+        Animal.PERRO, getCaracteristicasParaMascota(), getFotos(), TamanioMascota.CHICO);
   }
 
-  public static ParDePreguntas getParDePreguntas1(){
+  public static ParDePreguntas getParDePreguntas1() {
     ParDePreguntas preguntas = new ParDePreguntas(
         "La mascota sufre si está mucho tiempo sola?",
-        "Va a estar la mascota mucho tiempo sola?");
+        "Va a estar la mascota mucho tiempo sola?"
+    );
     preguntas.agregarRespuesta(new ParDeRespuestas("Si", "No"));
     preguntas.agregarRespuesta(new ParDeRespuestas("No", "Si"));
     preguntas.agregarRespuesta(new ParDeRespuestas("No", "No"));
     return preguntas;
   }
 
-  public static ParDePreguntas getParDePreguntas2(){
+  public static ParDePreguntas getParDePreguntas2() {
     ParDePreguntas preguntas = new ParDePreguntas(
         "Cuantas veces necesita salir la mascota al dia?",
-        "Cuantas veces sacarás a pasear a tu mascota al dia?");
+        "Cuantas veces sacarás a pasear a tu mascota al dia?"
+    );
     preguntas.agregarRespuesta(new ParDeRespuestas("1", "1"));
     preguntas.agregarRespuesta(new ParDeRespuestas("1", "2"));
     preguntas.agregarRespuesta(new ParDeRespuestas("2", "2"));
@@ -123,31 +124,29 @@ public class DummyData {
   public static DarEnAdopcion getPublicacionDeDarEnAdopcion(Notificador notificador,
                                                             RepositorioDarEnAdopcion repositorio) {
     return new DarEnAdopcion(
-        getDatosDeContacto(),
-        notificador,
-        getMascotaRegistrada(new RepositorioCaracteristicas()),
+        getDatosDeContacto(notificador),
+        getMascotaRegistrada(notificador),
         repositorio,
         Arrays.asList(
-            new Respuesta("Si", getParDePreguntas1()),
-            new Respuesta("2", getParDePreguntas2())
+            new RespuestaDelDador("Si", getParDePreguntas1()),
+            new RespuestaDelDador("2", getParDePreguntas2())
         ),
         getAsociacion()
     );
   }
 
-  public static Rescate getPublicacionDeRescate(Notificador notificacionCorreo, RepositorioRescates repositorio) {
-    return new Rescate(getDatosDeContacto(), notificacionCorreo, repositorio, getMascotaEncontrada(getFotos()), getAsociacion());
+  public static Rescate getPublicacionDeRescate(Notificador notificador, RepositorioRescates repositorio) {
+    return new Rescate(getDatosDeContacto(notificador), repositorio, getMascotaEncontrada(getFotos()), getAsociacion());
   }
 
-  public static SuscripcionParaAdopcion getSuscripcionParaAdopcion(NotificadorCorreo notificadorCorreo) {
+  public static SuscripcionParaAdopcion getSuscripcionParaAdopcion(Notificador notificador) {
     return new SuscripcionParaAdopcion(
-        getDatosDeContacto(),
-        notificadorCorreo,
+        getDatosDeContacto(notificador),
         getAsociacion(),
-        new Preferencia(getCaracteristicasParaMascota(new RepositorioCaracteristicas()), Animal.PERRO),
+        new Preferencia(getCaracteristicasParaMascota(), Animal.PERRO),
         Arrays.asList(
-            new Respuesta("Si", getParDePreguntas1()),
-            new Respuesta("2", getParDePreguntas2())
+            new RespuestaDelAdoptante("Si", getParDePreguntas1()),
+            new RespuestaDelAdoptante("2", getParDePreguntas2())
         )
     );
   }
@@ -156,7 +155,7 @@ public class DummyData {
     return new Ubicacion(27.23, 25.78, null);
   }
 
-  public static Asociacion getAsociacion(){
+  public static Asociacion getAsociacion() {
     return new Asociacion(getUbicacion());
   }
 

@@ -1,6 +1,6 @@
 package modelo.informe;
 
-import modelo.asociacion.RepositorioAsociaciones;
+import repositorios.RepositorioAsociaciones;
 import modelo.asociacion.UbicadorAsociaciones;
 import modelo.hogarDeTransito.Hogar;
 import modelo.hogarDeTransito.ReceptorHogares;
@@ -11,7 +11,6 @@ import modelo.persona.Persona;
 import modelo.publicacion.Rescate;
 import repositorios.RepositorioInformes;
 import repositorios.RepositorioRescates;
-import modelo.notificacion.NotificadorCorreo;
 
 import java.util.List;
 
@@ -20,20 +19,16 @@ public class InformeSinQR extends InformeRescate {
   private Animal tipoAnimal;
   private List<Caracteristica> caracteristicas;
   private RepositorioRescates repositorioRescates;
-  private NotificadorCorreo notificadorCorreo;
   private RepositorioAsociaciones repositorioAsociaciones;
 
-  public InformeSinQR(Persona rescatista, Ubicacion ubicacionRescatista, String direccionRescatista,
-                      MascotaEncontrada mascotaEncontrada, RepositorioInformes repositorioInformes,
-                      ReceptorHogares receptorHogares, Animal tipoAnimal, List<Caracteristica> caracteristicas,
-                      RepositorioRescates repositorioRescates, NotificadorCorreo notificadorCorreo,
-                      RepositorioAsociaciones repositorioAsociaciones ) {
-    super(rescatista, ubicacionRescatista, direccionRescatista, mascotaEncontrada, repositorioInformes,
-        receptorHogares);
+  public InformeSinQR(Persona rescatista, Ubicacion ubicacionRescatista, MascotaEncontrada mascotaEncontrada,
+                      RepositorioInformes repositorioInformes, ReceptorHogares receptorHogares, Animal tipoAnimal,
+                      List<Caracteristica> caracteristicas, RepositorioRescates repositorioRescates,
+                      RepositorioAsociaciones repositorioAsociaciones) {
+    super(rescatista, ubicacionRescatista, mascotaEncontrada, repositorioInformes, receptorHogares);
     this.tipoAnimal = tipoAnimal;
     this.caracteristicas = caracteristicas;
     this.repositorioRescates = repositorioRescates;
-    this.notificadorCorreo = notificadorCorreo;
     this.repositorioAsociaciones = repositorioAsociaciones;
   }
 
@@ -57,7 +52,6 @@ public class InformeSinQR extends InformeRescate {
     repositorioRescates.agregar(
         new Rescate(
             this.getRescatista().getDatosDeContacto(),
-            notificadorCorreo,
             repositorioRescates,
             this.getMascotaEncontrada(),
             ubicador.getAsociacionMasCercana(getMascotaEncontrada().getUbicacion())

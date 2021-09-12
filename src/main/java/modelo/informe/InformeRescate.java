@@ -16,17 +16,14 @@ public abstract class InformeRescate {
 
   private Persona rescatista;
   private Ubicacion ubicacionRescatista;
-  private String direccionRescatista;
   private MascotaEncontrada mascotaEncontrada;
   private RepositorioInformes repositorioInformes;
   private ReceptorHogares receptorHogares;
 
-  public InformeRescate(Persona rescatista, Ubicacion ubicacionRescatista, String direccionRescatista,
-                        MascotaEncontrada mascotaEncontrada, RepositorioInformes repositorioInformes,
-                        ReceptorHogares receptorHogares) {
+  public InformeRescate(Persona rescatista, Ubicacion ubicacionRescatista, MascotaEncontrada mascotaEncontrada,
+                        RepositorioInformes repositorioInformes, ReceptorHogares receptorHogares) {
     this.rescatista = rescatista;
     this.ubicacionRescatista = ubicacionRescatista;
-    this.direccionRescatista = direccionRescatista;
     this.mascotaEncontrada = mascotaEncontrada;
     this.repositorioInformes = repositorioInformes;
     this.receptorHogares = receptorHogares;
@@ -56,7 +53,7 @@ public abstract class InformeRescate {
   }
 
   public String getDireccionRescatista() {
-    return direccionRescatista;
+    return ubicacionRescatista.getDireccion();
   }
 
   public Ubicacion getUbicacionRescatista() {

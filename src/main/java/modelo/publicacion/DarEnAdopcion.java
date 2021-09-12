@@ -2,59 +2,51 @@ package modelo.publicacion;
 
 import modelo.asociacion.Asociacion;
 import modelo.mascota.MascotaRegistrada;
-import modelo.notificacion.Notificacion;
-import modelo.notificacion.Notificador;
 import modelo.persona.DatosDeContacto;
-import modelo.pregunta.Respuesta;
+import modelo.pregunta.RespuestaDelAdoptante;
+import modelo.pregunta.RespuestaDelDador;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioDarEnAdopcion;
 
 import java.util.List;
 
-public class DarEnAdopcion extends Publicacion {
+public class DarEnAdopcion implements Publicacion {
 
-  private List<Respuesta> respuestasDelDador;
+  private DatosDeContacto contactoPosteador;
+  private Asociacion asociacion;
+  private List<RespuestaDelDador> respuestasDelDador;
   private MascotaRegistrada mascotaEnAdopcion;
   private RepositorioDarEnAdopcion repositorio;
-  private String cuerpoMensaje;
 
-  public DarEnAdopcion(DatosDeContacto contactoPosteador, Notificador notificador, MascotaRegistrada mascotaEnAdopcion,
-                       RepositorioDarEnAdopcion repositorio, List<Respuesta> respuestasDelDador,
+  public DarEnAdopcion(DatosDeContacto contactoPosteador, MascotaRegistrada mascotaEnAdopcion,
+                       RepositorioDarEnAdopcion repositorio, List<RespuestaDelDador> respuestasDelDador,
                        Asociacion asociacion) {
-    super(contactoPosteador, notificador, asociacion);
+    this.contactoPosteador = contactoPosteador;
+    this.asociacion = asociacion;
     this.mascotaEnAdopcion = mascotaEnAdopcion;
     this.repositorio = repositorio;
-    this.cuerpoMensaje = "Encontramos una persona que quiere adoptar a " + mascotaEnAdopcion.getNombre()
-        + ". Podes comunicarte con el adoptante por este mail: ";
     this.respuestasDelDador = respuestasDelDador;
-  }
-
-  public int cantidadConLasQueMatchea(List<Respuesta> comodidades) {
-    return (int) comodidades.stream().filter(comodidad -> comodidad.matcheaConAlguna(respuestasDelDador)).count();
   }
 
   @Override
   public void notificarAlPosteador(Usuario adoptante) {
+    contactoPosteador.getNotificadorPreferido().notificarQuierenAdoptarTuMascota(adoptante, mascotaEnAdopcion);
     repositorio.marcarComoProcesada(this);
-    super.notificarAlPosteador(adoptante);
   }
 
-  @Override
-  protected Notificacion generarNotificacion(Usuario adoptante) {
-    return new Notificacion(
-        this.getContactoPosteador(),
-        "Una persona quiere adoptar a tu mascota",
-        "Hola, ",
-        cuerpoMensaje + adoptante.getPersona().getDatosDeContacto().getEmail(),
-        "Hogar de patitas"
-    );
+  public int cantidadConLasQueMatchea(List<RespuestaDelAdoptante> comodidades) {
+    return (int) respuestasDelDador.stream().filter(respuesta -> respuesta.correspondeConAlguna(comodidades)).count();
+  }
+
+  public Asociacion getAsociacion() {
+    return asociacion;
   }
 
   public MascotaRegistrada getMascotaEnAdopcion() {
     return mascotaEnAdopcion;
   }
 
-  public List<Respuesta> getRespuestasDelDador() {
+  public List<RespuestaDelDador> getRespuestasDelDador() {
     return respuestasDelDador;
   }
 

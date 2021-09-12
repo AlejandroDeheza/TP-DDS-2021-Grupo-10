@@ -1,6 +1,7 @@
 package modelo.suscripcion;
 
 import java.util.List;
+
 import modelo.mascota.Animal;
 import modelo.mascota.caracteristica.Caracteristica;
 

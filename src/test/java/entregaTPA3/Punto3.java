@@ -24,10 +24,12 @@ public class Punto3 {
   @Test
   @DisplayName("Si un interesado desea adoptar una mascota de una publicacion, se envia una Notificacion al duenio")
   public void procesarUnaPublicacionDeDarEnAdopcionEnviaUnaNotificacion() {
-    DarEnAdopcion publicacion = DummyData.getPublicacionDeDarEnAdopcion(notificadorCorreo, new RepositorioDarEnAdopcion());
-
-    Usuario adoptante = DummyData.getUsuario();
+    DarEnAdopcion publicacion = DummyData.getPublicacionDeDarEnAdopcion(
+        notificadorCorreo,
+        new RepositorioDarEnAdopcion()
+    );
+    Usuario adoptante = DummyData.getUsuario(notificadorCorreo);
     publicacion.notificarAlPosteador(adoptante);
-    verify(notificadorCorreo, times(1)).notificar(any());
+    verify(notificadorCorreo, times(1)).notificarQuierenAdoptarTuMascota(any(), any());
   }
 }
