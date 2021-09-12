@@ -1,4 +1,6 @@
-package modelo.pregunta;
+package repositorios;
+
+import modelo.pregunta.ParDePreguntas;
 
 import java.util.ArrayList;
 import java.util.List;

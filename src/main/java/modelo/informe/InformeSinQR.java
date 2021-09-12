@@ -1,6 +1,6 @@
 package modelo.informe;
 
-import modelo.asociacion.RepositorioAsociaciones;
+import repositorios.RepositorioAsociaciones;
 import modelo.asociacion.UbicadorAsociaciones;
 import modelo.hogarDeTransito.Hogar;
 import modelo.hogarDeTransito.ReceptorHogares;

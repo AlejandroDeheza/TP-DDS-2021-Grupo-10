@@ -3,7 +3,7 @@ package entregaTPA3;
 import modelo.asociacion.Asociacion;
 import modelo.pregunta.ParDePreguntas;
 import modelo.pregunta.ParDeRespuestas;
-import modelo.pregunta.RepositorioPreguntasObligatorias;
+import repositorios.RepositorioPreguntasObligatorias;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

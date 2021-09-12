@@ -1,4 +1,6 @@
-package modelo.asociacion;
+package repositorios;
+
+import modelo.asociacion.Asociacion;
 
 import java.util.ArrayList;
 import java.util.List;

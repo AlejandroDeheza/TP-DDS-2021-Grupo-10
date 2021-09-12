@@ -1,6 +1,7 @@
 package modelo.asociacion;
 
 import modelo.informe.Ubicacion;
+import repositorios.RepositorioAsociaciones;
 
 public class UbicadorAsociaciones {
   private RepositorioAsociaciones repositorioAsociaciones;
