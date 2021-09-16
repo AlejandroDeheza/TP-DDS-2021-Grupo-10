@@ -9,24 +9,18 @@ import static java.time.temporal.ChronoUnit.MINUTES;
 
 public class ValidadorAutenticacion {
 
-  private String contraseniaCorrecta;
   private LocalTime ultimoIntentoDeSesionFallido = LocalTime.now();
-  private Long contadorIntentosDeSesionFallidos = 0L;
+  private Integer contadorIntentosDeSesionFallidos = 0;
 
-  public ValidadorAutenticacion(String contraseniaCorrecta) {
-    this.contraseniaCorrecta = contraseniaCorrecta;
+  public void autenticarUsuario(Usuario usuario, String contraseniaIngresada) {
+    validarCantidadDeIntentosFallidos();
+    validarContraseniaIngresada(usuario, contraseniaIngresada);
+    this.contadorIntentosDeSesionFallidos = 0;
   }
 
-  public void autenticarUsuario(String contraseniaIngresada) {
-    validarCantidadDeIntentosFallidosDeAutenticacion();
-    validarQueContraseniaIngresadaSeaCorrecta(contraseniaIngresada);
-    this.contadorIntentosDeSesionFallidos = 0L;
-    concederPermisos();
-  }
-
-  private void validarCantidadDeIntentosFallidosDeAutenticacion() {
+  private void validarCantidadDeIntentosFallidos() {
     if (falloLaAutenticacionHacePoco()) {
-      long tiempoEsperaMaximo = 60L;
+      int tiempoEsperaMaximo = 60;
       if (tiempoQueEstaEsperandoUsuario() > tiempoEsperaMaximo) {
         throw new AutenticacionConsecutivaException(
             "Debe esperar " + tiempoEsperaMaximo + " minutos para intentar iniciar sesion");
@@ -37,8 +31,8 @@ public class ValidadorAutenticacion {
     }
   }
 
-  private void validarQueContraseniaIngresadaSeaCorrecta(String contraseniaIngresada) {
-    if (laContraseniaEsIncorrecta(contraseniaIngresada)) {
+  private void validarContraseniaIngresada(Usuario usuario, String contraseniaIngresada) {
+    if (laContraseniaEsIncorrecta(usuario, contraseniaIngresada)) {
       ultimoIntentoDeSesionFallido = LocalTime.now();
       this.contadorIntentosDeSesionFallidos = contadorIntentosDeSesionFallidos + 1;
       throw new AutenticacionInvalidaException("La contraseña ingresada es incorrecta");
@@ -47,18 +41,15 @@ public class ValidadorAutenticacion {
 
   // el tiempo de espera aumenta si la cantidad de sesiones fallidas aumenta
   private boolean falloLaAutenticacionHacePoco() {
-    return MINUTES.between(LocalTime.now(), this.ultimoIntentoDeSesionFallido) < contadorIntentosDeSesionFallidos;
+    return ((int) MINUTES.between(LocalTime.now(), this.ultimoIntentoDeSesionFallido)) < contadorIntentosDeSesionFallidos;
   }
 
   private Long tiempoQueEstaEsperandoUsuario() {
     return MINUTES.between(LocalTime.now(), ultimoIntentoDeSesionFallido);
   }
 
-  private boolean laContraseniaEsIncorrecta(String contraseniaIngresada) {
-    return !this.contraseniaCorrecta.equals(contraseniaIngresada);
+  private boolean laContraseniaEsIncorrecta(Usuario usuario, String contraseniaIngresada) {
+    return !usuario.getContrasenia().equals(contraseniaIngresada);
   }
 
-  private void concederPermisos() {
-    // TODO
-  }
 }
