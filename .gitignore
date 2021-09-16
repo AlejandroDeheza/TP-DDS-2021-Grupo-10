@@ -37,3 +37,6 @@ target/**
 .classpath
 .project
 .settings/
+
+# Schema
+*.sql

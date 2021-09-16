@@ -3,12 +3,22 @@ package modelo.usuario;
 import modelo.notificacion.Notificador;
 import modelo.persona.Persona;
 
+import javax.persistence.*;
+
+@Entity
 public class Usuario {
+
+  @Id
+  @GeneratedValue
+  private Long id;
 
   private String usuario;
   private String contrasenia;
+  @Transient
   private TipoUsuario tipo;
+  @Transient
   private Persona persona;
+  @Transient
   private ValidadorAutenticacion validadorAutenticacion;
 
   public Usuario(String usuario, String contrasenia, TipoUsuario tipo, Persona persona) {
