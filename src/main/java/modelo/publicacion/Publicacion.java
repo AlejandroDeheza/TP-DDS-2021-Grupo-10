@@ -4,6 +4,6 @@ import modelo.usuario.Usuario;
 
 public interface Publicacion {
 
-  void notificarAlPosteador(Usuario usuario);
+  void notificarAlPublicador(Usuario usuario);
 
 }

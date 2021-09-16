@@ -12,16 +12,17 @@ import java.util.List;
 
 public class DarEnAdopcion implements Publicacion {
 
-  private DatosDeContacto contactoPosteador;
+  private Usuario publicador;
   private Asociacion asociacion;
   private List<RespuestaDelDador> respuestasDelDador;
   private MascotaRegistrada mascotaEnAdopcion;
   private RepositorioDarEnAdopcion repositorio;
+  private Boolean estaActiva = true;
 
-  public DarEnAdopcion(DatosDeContacto contactoPosteador, MascotaRegistrada mascotaEnAdopcion,
+  public DarEnAdopcion(Usuario publicador, MascotaRegistrada mascotaEnAdopcion,
                        RepositorioDarEnAdopcion repositorio, List<RespuestaDelDador> respuestasDelDador,
                        Asociacion asociacion) {
-    this.contactoPosteador = contactoPosteador;
+    this.publicador = publicador;
     this.asociacion = asociacion;
     this.mascotaEnAdopcion = mascotaEnAdopcion;
     this.repositorio = repositorio;
@@ -29,9 +30,10 @@ public class DarEnAdopcion implements Publicacion {
   }
 
   @Override
-  public void notificarAlPosteador(Usuario adoptante) {
-    contactoPosteador.getNotificadorPreferido().notificarQuierenAdoptarTuMascota(adoptante, mascotaEnAdopcion);
+  public void notificarAlPublicador(Usuario adoptante) {
+    publicador.getNotificadorPreferido().notificarQuierenAdoptarTuMascota(adoptante, mascotaEnAdopcion);
     repositorio.marcarComoProcesada(this);
+    estaActiva = false;
   }
 
   public int cantidadConLasQueMatchea(List<RespuestaDelAdoptante> comodidades) {
@@ -50,4 +52,7 @@ public class DarEnAdopcion implements Publicacion {
     return respuestasDelDador;
   }
 
+  public Boolean estaActiva() {
+    return estaActiva;
+  }
 }

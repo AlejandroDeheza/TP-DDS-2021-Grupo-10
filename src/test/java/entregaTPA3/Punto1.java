@@ -30,11 +30,11 @@ public class Punto1 {
     RepositorioDarEnAdopcion repositorio = new RepositorioDarEnAdopcion();
 
     DarEnAdopcion publicacion = new DarEnAdopcion(
-        DummyData.getDatosDeContacto(notificadorCorreo),
+        DummyData.getUsuario(notificadorCorreo),
         DummyData.getMascotaRegistrada(notificadorCorreo),
         repositorio,
         Arrays.asList(respuestaDelDadorDador1, respuestaDelDadorDador2),
-        new Asociacion(DummyData.getUbicacion())
+        new Asociacion("", DummyData.getUbicacion())
     );
 
     repositorio.agregar(publicacion);

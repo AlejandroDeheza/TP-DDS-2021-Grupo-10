@@ -124,7 +124,7 @@ public class DummyData {
   public static DarEnAdopcion getPublicacionDeDarEnAdopcion(Notificador notificador,
                                                             RepositorioDarEnAdopcion repositorio) {
     return new DarEnAdopcion(
-        getDatosDeContacto(notificador),
+        getUsuario(notificador),
         getMascotaRegistrada(notificador),
         repositorio,
         Arrays.asList(
@@ -136,12 +136,12 @@ public class DummyData {
   }
 
   public static Rescate getPublicacionDeRescate(Notificador notificador, RepositorioRescates repositorio) {
-    return new Rescate(getDatosDeContacto(notificador), repositorio, getMascotaEncontrada(getFotos()), getAsociacion());
+    return new Rescate(getPersona(notificador), repositorio, getMascotaEncontrada(getFotos()), getAsociacion());
   }
 
   public static SuscripcionParaAdopcion getSuscripcionParaAdopcion(Notificador notificador) {
     return new SuscripcionParaAdopcion(
-        getDatosDeContacto(notificador),
+        getUsuario(notificador),
         getAsociacion(),
         new Preferencia(getCaracteristicasParaMascota(), Animal.PERRO),
         Arrays.asList(
@@ -156,7 +156,7 @@ public class DummyData {
   }
 
   public static Asociacion getAsociacion() {
-    return new Asociacion(getUbicacion());
+    return new Asociacion("unNombre", getUbicacion());
   }
 
   public static String getJsonHogaresApi() { // Un response con un solo hogar en la lista de hogares.

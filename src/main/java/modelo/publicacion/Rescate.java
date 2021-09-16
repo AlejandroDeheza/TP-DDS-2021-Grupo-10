@@ -2,6 +2,7 @@ package modelo.publicacion;
 
 import modelo.asociacion.Asociacion;
 import modelo.mascota.MascotaEncontrada;
+import modelo.persona.Persona;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioRescates;
 import modelo.persona.DatosDeContacto;
@@ -13,23 +14,25 @@ import modelo.persona.DatosDeContacto;
  */
 public class Rescate implements Publicacion {
 
-  private DatosDeContacto contactoPosteador;
+  private Persona rescatista;
   private Asociacion asociacion;
   private MascotaEncontrada mascotaEncontrada;
   private RepositorioRescates repositorioRescates;
+  private Boolean estaActiva = true;
 
-  public Rescate(DatosDeContacto contactoPosteador, RepositorioRescates repositorioRescates,
+  public Rescate(Persona rescatista, RepositorioRescates repositorioRescates,
                  MascotaEncontrada mascotaEncontrada, Asociacion asociacion) {
-    this.contactoPosteador = contactoPosteador;
+    this.rescatista = rescatista;
     this.asociacion = asociacion;
     this.mascotaEncontrada = mascotaEncontrada;
     this.repositorioRescates = repositorioRescates;
   }
 
   @Override
-  public void notificarAlPosteador(Usuario duenio) {
-    contactoPosteador.getNotificadorPreferido().notificarDuenioReclamaSuMacota(duenio);
+  public void notificarAlPublicador(Usuario duenio) {
+    rescatista.getNotificadorPreferido().notificarDuenioReclamaSuMacota(duenio);
     repositorioRescates.marcarComoProcesada(this);
+    estaActiva = false;
   }
 
   public Asociacion getAsociacion() {
@@ -38,6 +41,10 @@ public class Rescate implements Publicacion {
 
   public MascotaEncontrada getMascotaEncontrada() {
     return mascotaEncontrada;
+  }
+
+  public Boolean estaActiva() {
+    return estaActiva;
   }
 
 }

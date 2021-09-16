@@ -11,13 +11,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class AsociacionTests {
 
   Ubicacion ubicacion = new Ubicacion(50.01, 50.01, null);
-  Asociacion asociacion = new Asociacion(ubicacion);
+  Asociacion asociacion = new Asociacion("", ubicacion);
 
   Ubicacion ubicacion2 = new Ubicacion(1.01, 1.01, null);
-  Asociacion asociacion2 = new Asociacion(ubicacion2);
+  Asociacion asociacion2 = new Asociacion("", ubicacion2);
 
   Ubicacion ubicacion3 = new Ubicacion(100.01, 100.01, null);
-  Asociacion asociacion3 = new Asociacion(ubicacion3);
+  Asociacion asociacion3 = new Asociacion("", ubicacion3);
 
   RepositorioAsociaciones repositorioAsociaciones;
   UbicadorAsociaciones ubicadorAsociaciones;

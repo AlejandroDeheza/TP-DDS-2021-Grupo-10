@@ -29,7 +29,7 @@ public class Punto3 {
         new RepositorioDarEnAdopcion()
     );
     Usuario adoptante = DummyData.getUsuario(notificadorCorreo);
-    publicacion.notificarAlPosteador(adoptante);
+    publicacion.notificarAlPublicador(adoptante);
     verify(notificadorCorreo, times(1)).notificarQuierenAdoptarTuMascota(any(), any());
   }
 }
