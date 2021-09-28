@@ -32,8 +32,8 @@ public class Punto4 {
     RepositorioSuscripcionesParaAdopciones repositorio = new RepositorioSuscripcionesParaAdopciones();
 
     SuscripcionParaAdopcion publicacion = new SuscripcionParaAdopcion(
-        DummyData.getDatosDeContacto(notificadorCorreo),
-        new Asociacion(DummyData.getUbicacion()),
+        DummyData.getUsuario(notificadorCorreo),
+        new Asociacion("", DummyData.getUbicacion()),
         new Preferencia(DummyData.getCaracteristicasParaMascota(), Animal.PERRO),
         Arrays.asList(respuestaAdoptante1, respuestaAdoptante2)
     );

@@ -38,7 +38,7 @@ public class RecomendadorDeAdopcionesTest {
     publicacion1 = DummyData.getPublicacionDeDarEnAdopcion(notificadorMockeado, repositorioDarEnAdopcion);
     repositorioDarEnAdopcion.agregar(publicacion1);
     publicacion2 = new DarEnAdopcion(
-        DummyData.getDatosDeContacto(notificadorMockeado),
+        DummyData.getUsuario(notificadorMockeado),
         DummyData.getMascotaRegistrada(notificadorMockeado),
         repositorioDarEnAdopcion,
         Arrays.asList(
@@ -80,7 +80,7 @@ public class RecomendadorDeAdopcionesTest {
 
     repositorioDarEnAdopcion.agregar(
         new DarEnAdopcion(
-            DummyData.getDatosDeContacto(notificadorMockeado),
+            DummyData.getUsuario(notificadorMockeado),
             mascotaRegistrada,
             repositorioDarEnAdopcion,
             Arrays.asList(
@@ -106,7 +106,7 @@ public class RecomendadorDeAdopcionesTest {
 
     repositorioDarEnAdopcion.agregar(
         new DarEnAdopcion(
-            DummyData.getDatosDeContacto(notificadorMockeado),
+            DummyData.getUsuario(notificadorMockeado),
             mascotaRegistrada,
             repositorioDarEnAdopcion,
             Arrays.asList(

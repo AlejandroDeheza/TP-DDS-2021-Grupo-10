@@ -51,7 +51,7 @@ public class InformeSinQR extends InformeRescate {
     UbicadorAsociaciones ubicador = new UbicadorAsociaciones(repositorioAsociaciones);
     repositorioRescates.agregar(
         new Rescate(
-            this.getRescatista().getDatosDeContacto(),
+            this.getRescatista(),
             repositorioRescates,
             this.getMascotaEncontrada(),
             ubicador.getAsociacionMasCercana(getMascotaEncontrada().getUbicacion())

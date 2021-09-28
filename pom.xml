@@ -67,6 +67,21 @@
           <artifactId>commons-lang3</artifactId>
           <version>3.11</version>
       </dependency>
+
+    <!-- JPA Persistence Dependencies -->
+    <dependency>
+      <groupId>org.uqbar-project</groupId>
+      <artifactId>jpa-java8-extras</artifactId>
+      <version>1.0-alpha-1</version>
+    </dependency>
+
+    <!-- hsqldb -->
+    <dependency>
+      <groupId>org.hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <version>2.4.0</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>

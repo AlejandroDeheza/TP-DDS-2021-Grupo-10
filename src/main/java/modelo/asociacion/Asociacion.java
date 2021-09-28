@@ -7,10 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Asociacion {
+  private String nombre;
   private Ubicacion ubicacion;
   private List<ParDePreguntas> preguntas = new ArrayList<>();
 
-  public Asociacion(Ubicacion ubicacion) {
+  public Asociacion(String nombre, Ubicacion ubicacion) {
+    this.nombre = nombre;
     this.ubicacion = ubicacion;
   }
 
@@ -22,6 +24,9 @@ public class Asociacion {
     preguntas.remove(pregunta);
   }
 
+  public String getNombre() {
+    return nombre;
+  }
 
   public Ubicacion getUbicacion() {
     return ubicacion;

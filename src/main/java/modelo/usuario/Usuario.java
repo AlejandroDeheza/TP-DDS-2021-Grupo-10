@@ -3,12 +3,22 @@ package modelo.usuario;
 import modelo.notificacion.Notificador;
 import modelo.persona.Persona;
 
+import javax.persistence.*;
+
+@Entity
 public class Usuario {
+
+  @Id
+  @GeneratedValue
+  private Long id;
 
   private String usuario;
   private String contrasenia;
+  @Transient
   private TipoUsuario tipo;
+  @Transient
   private Persona persona;
+  @Transient
   private ValidadorAutenticacion validadorAutenticacion;
 
   public Usuario(String usuario, String contrasenia, TipoUsuario tipo, Persona persona) {
@@ -17,11 +27,11 @@ public class Usuario {
     this.contrasenia = contrasenia;
     this.tipo = tipo;
     this.persona = persona;
-    this.validadorAutenticacion = new ValidadorAutenticacion(this.contrasenia);
+    this.validadorAutenticacion = new ValidadorAutenticacion();
   }
 
   public void autenticarUsuario(String contraseniaIngresada) {
-    validadorAutenticacion.autenticarUsuario(contraseniaIngresada);
+    validadorAutenticacion.autenticarUsuario(this, contraseniaIngresada);
   }
 
   public Notificador getNotificadorPreferido() {
@@ -30,6 +40,10 @@ public class Usuario {
 
   public String getUsuario() {
     return usuario;
+  }
+
+  public String getContrasenia() {
+    return contrasenia;
   }
 
   public TipoUsuario getTipo() {

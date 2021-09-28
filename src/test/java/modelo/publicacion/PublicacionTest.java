@@ -24,7 +24,7 @@ public class PublicacionTest {
   @DisplayName("Si un usuario encuentra a su mascota en una publicacion, se envia una Notificacion al rescatista")
   public void encontrarUnaMascotaPerdidaEnviaUnaNotificacion() {
     Rescate publicacion = DummyData.getPublicacionDeRescate(notificadorCorreo, new RepositorioRescates());
-    publicacion.notificarAlPosteador(DummyData.getUsuario(notificadorCorreo));
+    publicacion.notificarAlPublicador(DummyData.getUsuario(notificadorCorreo));
     verify(notificadorCorreo, times(1)).notificarDuenioReclamaSuMacota(any());
   }
 
@@ -32,7 +32,7 @@ public class PublicacionTest {
   @DisplayName("Si un adoptante desea adoptar una mascota de una publicacion, se envia una Notificacion al duenio")
   public void procesarUnaPublicacionDeDarEnAdopcionEnviaUnaNotificacion() {
     DarEnAdopcion publicacion = DummyData.getPublicacionDeDarEnAdopcion(notificadorCorreo, new RepositorioDarEnAdopcion());
-    publicacion.notificarAlPosteador(DummyData.getUsuario(notificadorCorreo));
+    publicacion.notificarAlPublicador(DummyData.getUsuario(notificadorCorreo));
     verify(notificadorCorreo, times(1)).notificarQuierenAdoptarTuMascota(any(), any());
   }
 

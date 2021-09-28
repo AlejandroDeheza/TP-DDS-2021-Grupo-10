@@ -25,7 +25,7 @@ public class DarEnAdopcionTest {
   public void contextLoad() {
     List<RespuestaDelDador> respuestasDelDador = new ArrayList<>();
     respuestasDelDador.add(new RespuestaDelDador("No", parDePreguntas));
-    darEnAdopcion = new DarEnAdopcion(DummyData.getDatosDeContacto(notificadorCorreo),
+    darEnAdopcion = new DarEnAdopcion(DummyData.getUsuario(notificadorCorreo),
         DummyData.getMascotaRegistrada(notificadorCorreo), new RepositorioDarEnAdopcion(), respuestasDelDador,
         DummyData.getAsociacion());
   }

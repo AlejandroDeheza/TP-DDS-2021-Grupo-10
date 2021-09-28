@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class Punto2 {
   RepositorioPreguntasObligatorias repositorioPreguntasObligatorias;
   ParDePreguntas parDePreguntas;
-  Asociacion asociacion = new Asociacion(DummyData.getUbicacion());
+  Asociacion asociacion = new Asociacion("", DummyData.getUbicacion());
 
   @BeforeEach
   public void loadContext() {

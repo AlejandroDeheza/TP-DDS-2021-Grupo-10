@@ -6,18 +6,20 @@ import modelo.asociacion.Asociacion;
 import modelo.persona.DatosDeContacto;
 import modelo.pregunta.RespuestaDelAdoptante;
 import modelo.publicacion.DarEnAdopcion;
+import modelo.usuario.Usuario;
 
 public class SuscripcionParaAdopcion {
 
-  private DatosDeContacto contactoSuscriptor;
+  private Usuario suscriptor;
   private Asociacion asociacion;
   private Preferencia preferenciaDelAdoptante;
   private List<RespuestaDelAdoptante> comodidadesDelAdoptante;
+  private Boolean estaActiva = true;
 
-  public SuscripcionParaAdopcion(DatosDeContacto contactoSuscriptor, Asociacion asociacion,
+  public SuscripcionParaAdopcion(Usuario suscriptor, Asociacion asociacion,
                                  Preferencia preferenciaDelAdoptante,
                                  List<RespuestaDelAdoptante> comodidadesDelAdoptante) {
-    this.contactoSuscriptor = contactoSuscriptor;
+    this.suscriptor = suscriptor;
     this.asociacion = asociacion;
     this.preferenciaDelAdoptante = preferenciaDelAdoptante;
     this.comodidadesDelAdoptante = comodidadesDelAdoptante;
@@ -25,11 +27,12 @@ public class SuscripcionParaAdopcion {
 
   public void enviarRecomendaciones(List<DarEnAdopcion> recomendaciones) {
     if (!recomendaciones.isEmpty())
-      contactoSuscriptor.getNotificadorPreferido().notificarRecomendacionesDeAdopciones(recomendaciones);
+      suscriptor.getNotificadorPreferido().notificarRecomendacionesDeAdopciones(recomendaciones);
   }
 
   public void enviarLinkDeBaja() {
-    contactoSuscriptor.getNotificadorPreferido().notificarLinkDeBajaSuscripcionAdopciones("<inserte link de baja>");
+    suscriptor.getNotificadorPreferido().notificarLinkDeBajaSuscripcionAdopciones("<inserte link de baja>");
+    estaActiva = false;
   } // TODO: revisar cuando podamos
 
   public Asociacion getAsociacion() {
@@ -44,4 +47,7 @@ public class SuscripcionParaAdopcion {
     return comodidadesDelAdoptante;
   }
 
+  public Boolean estaActiva() {
+    return estaActiva;
+  }
 }
