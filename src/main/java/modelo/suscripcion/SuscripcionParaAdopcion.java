@@ -8,9 +8,19 @@ import modelo.pregunta.RespuestaDelAdoptante;
 import modelo.publicacion.DarEnAdopcion;
 import modelo.usuario.Usuario;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity(name = "suscripcion_adopcion")
+@Table(name = "suscripcion_adopcion")
 public class SuscripcionParaAdopcion {
 
+  @ManyToOne
   private Usuario suscriptor;
+
+  @ManyToOne
   private Asociacion asociacion;
   private Preferencia preferenciaDelAdoptante;
   private List<RespuestaDelAdoptante> comodidadesDelAdoptante;

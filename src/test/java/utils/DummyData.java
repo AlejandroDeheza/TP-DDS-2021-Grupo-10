@@ -99,7 +99,7 @@ public class DummyData {
   public static ParDePreguntas getParDePreguntas1() {
     ParDePreguntas preguntas = new ParDePreguntas(
         "La mascota sufre si está mucho tiempo sola?",
-        "Va a estar la mascota mucho tiempo sola?"
+        "Va a estar la mascota mucho tiempo sola?",true
     );
     preguntas.agregarRespuesta(new ParDeRespuestas("Si", "No"));
     preguntas.agregarRespuesta(new ParDeRespuestas("No", "Si"));
@@ -110,7 +110,8 @@ public class DummyData {
   public static ParDePreguntas getParDePreguntas2() {
     ParDePreguntas preguntas = new ParDePreguntas(
         "Cuantas veces necesita salir la mascota al dia?",
-        "Cuantas veces sacarás a pasear a tu mascota al dia?"
+        "Cuantas veces sacarás a pasear a tu mascota al dia?",
+            true
     );
     preguntas.agregarRespuesta(new ParDeRespuestas("1", "1"));
     preguntas.agregarRespuesta(new ParDeRespuestas("1", "2"));

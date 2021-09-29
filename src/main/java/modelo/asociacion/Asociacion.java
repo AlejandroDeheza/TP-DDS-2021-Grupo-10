@@ -1,14 +1,24 @@
 package modelo.asociacion;
 
+import modelo.EntitidadPersistente;
 import modelo.informe.Ubicacion;
 import modelo.pregunta.ParDePreguntas;
 
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Asociacion {
+@Entity
+public class Asociacion extends EntitidadPersistente {
   private String nombre;
+  @Embedded
   private Ubicacion ubicacion;
+
+  @OneToMany
+  @JoinColumn
   private List<ParDePreguntas> preguntas = new ArrayList<>();
 
   public Asociacion(String nombre, Ubicacion ubicacion) {

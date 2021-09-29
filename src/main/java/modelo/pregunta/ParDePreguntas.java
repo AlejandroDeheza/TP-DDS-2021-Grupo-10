@@ -1,18 +1,34 @@
 package modelo.pregunta;
 
+import modelo.EntitidadPersistente;
+
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParDePreguntas {
+@Entity
+@Table(name = "par_de_preguntas" )
+public class ParDePreguntas extends EntitidadPersistente {
   private String preguntaDelDador;
   private String preguntaDelAdoptante;
-  List<ParDeRespuestas> paresDeRespuestas = new ArrayList<>();
-  List<String> respuestasPosiblesDelDador = new ArrayList<>();
-  List<String> respuestasPosiblesDelAdoptante = new ArrayList<>();
+  private Boolean esObligatoria = true;
 
-  public ParDePreguntas(String preguntaDelDador, String preguntaDelAdoptante) {
+  @ElementCollection
+  private List<ParDeRespuestas> paresDeRespuestas = new ArrayList<>();
+
+  @ElementCollection
+  private List<String> respuestasPosiblesDelDador = new ArrayList<>();
+
+  @ElementCollection
+  private List<String> respuestasPosiblesDelAdoptante = new ArrayList<>();
+
+  public ParDePreguntas(String preguntaDelDador, String preguntaDelAdoptante, Boolean esObligatoria) {
     this.preguntaDelDador = preguntaDelDador;
     this.preguntaDelAdoptante = preguntaDelAdoptante;
+    this.esObligatoria = esObligatoria;
   }
 
   public Boolean esIgualA(ParDePreguntas parDePreguntas) {
@@ -43,4 +59,9 @@ public class ParDePreguntas {
   public List<String> getRespuestasPosiblesDelAdoptante() {
     return respuestasPosiblesDelAdoptante;
   }
+
+  public Boolean getEsObligatoria() {
+    return esObligatoria;
+  }
+
 }

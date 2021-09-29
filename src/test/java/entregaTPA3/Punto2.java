@@ -41,7 +41,7 @@ public class Punto2 {
   private ParDePreguntas getParDePreguntas() {
     ParDePreguntas preguntas = new ParDePreguntas(
         "La mascota sufre si está mucho tiempo sola?",
-        "Va a estar la mascota mucho tiempo sola?");
+        "Va a estar la mascota mucho tiempo sola?",true);
     ParDeRespuestas respuesta1 = new ParDeRespuestas("Si", "No");
     ParDeRespuestas respuesta2 = new ParDeRespuestas("No", "Si");
     ParDeRespuestas respuesta3 = new ParDeRespuestas("No", "No");

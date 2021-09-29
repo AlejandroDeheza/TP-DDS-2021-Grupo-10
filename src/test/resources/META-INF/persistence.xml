@@ -17,6 +17,11 @@
         <class>modelo.informe.InformeRescate</class>
         <class>modelo.informe.InformeConQR</class>
         <class>modelo.informe.InformeSinQR</class>
+        <class>modelo.asociacion.Asociacion</class>
+        <class>modelo.pregunta.ParDePreguntas</class>
+        <class>modelo.pregunta.ParDeRespuestas</class>
+        <class>modelo.pregunta.SuscripcionParaAdopcion</class>
+
 
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>

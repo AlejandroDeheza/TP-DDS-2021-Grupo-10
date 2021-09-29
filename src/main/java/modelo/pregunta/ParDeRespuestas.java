@@ -1,5 +1,8 @@
 package modelo.pregunta;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class ParDeRespuestas {
   private String respuestaDelDador;
   private String respuestaDelAdoptante;
