@@ -16,4 +16,5 @@ public class ParDeRespuestas {
   public String getRespuestaDelAdoptante() {
     return respuestaDelAdoptante;
   }
+
 }

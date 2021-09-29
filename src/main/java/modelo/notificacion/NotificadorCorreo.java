@@ -9,17 +9,26 @@ import utils.ReceptorProperties;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 import java.util.List;
 import java.util.Properties;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class NotificadorCorreo implements Notificador {
+@Entity
+@DiscriminatorValue(value = "Correo")
+public class NotificadorCorreo extends Notificador {
 
+  @Transient
   private Session session = configurarConexionCorreo();
+  @Transient
   private String email;
 
-  Function<Session, Transport> funcion = (sesion -> {
+  @Transient
+  private Function<Session, Transport> funcion = (sesion -> {
     Transport t = null;
     try {
       t = sesion.getTransport("smtp");

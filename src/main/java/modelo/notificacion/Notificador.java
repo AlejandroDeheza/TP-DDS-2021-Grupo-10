@@ -1,20 +1,29 @@
 package modelo.notificacion;
 
+import modelo.EntitidadPersistente;
 import modelo.mascota.MascotaRegistrada;
 import modelo.publicacion.DarEnAdopcion;
 import modelo.usuario.Usuario;
 
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import java.util.List;
 
-public interface Notificador {
 
-  void notificarEncontramosTuMascota(MascotaRegistrada mascotaRegistrada);
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "Tipo")
+@Entity
+public abstract class Notificador extends EntitidadPersistente {
 
-  void notificarQuierenAdoptarTuMascota(Usuario adoptante, MascotaRegistrada mascotaEnAdopcion);
+  public abstract void notificarEncontramosTuMascota(MascotaRegistrada mascotaRegistrada);
 
-  void notificarDuenioReclamaSuMacota(Usuario duenio);
+  public abstract void notificarQuierenAdoptarTuMascota(Usuario adoptante, MascotaRegistrada mascotaEnAdopcion);
 
-  void notificarLinkDeBajaSuscripcionAdopciones(String linkDeBaja);
+  public abstract void notificarDuenioReclamaSuMacota(Usuario duenio);
 
-  void notificarRecomendacionesDeAdopciones(List<DarEnAdopcion> recomendaciones);
+  public abstract void notificarLinkDeBajaSuscripcionAdopciones(String linkDeBaja);
+
+  public abstract void notificarRecomendacionesDeAdopciones(List<DarEnAdopcion> recomendaciones);
 }

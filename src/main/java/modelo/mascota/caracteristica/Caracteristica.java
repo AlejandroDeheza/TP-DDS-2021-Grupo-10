@@ -1,9 +1,13 @@
 package modelo.mascota.caracteristica;
 
+import modelo.EntitidadPersistente;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public class Caracteristica {
+import javax.persistence.Entity;
+
+@Entity
+public class Caracteristica extends EntitidadPersistente {
 
   private String nombreCaracteristica;
   private String valorCaracteristica;
@@ -28,7 +32,6 @@ public class Caracteristica {
     }
     return equals;
   }
-
 
   public String getNombreCaracteristica() {
     return nombreCaracteristica;

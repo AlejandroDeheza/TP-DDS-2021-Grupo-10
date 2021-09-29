@@ -1,22 +1,40 @@
 package modelo.mascota;
 
+import modelo.EntitidadPersistente;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.usuario.Usuario;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-public class MascotaRegistrada {
+@Entity
+public class MascotaRegistrada extends EntitidadPersistente {
 
+  @ManyToOne
   private Usuario duenio;
+
   private String nombre;
+
   private String apodo;
+
   private LocalDate fechaNacimiento;
+
   private String descripcionFisica;
+
+  @Enumerated
   private Sexo sexo;
+
+  @Enumerated
   private Animal animal;
+
+  @ManyToMany
   private List<Caracteristica> caracteristicas;
+
+  @ElementCollection
   private List<Foto> fotos;
+
+  @Enumerated
   private TamanioMascota tamanio;
 
   public MascotaRegistrada(Usuario duenio, String nombre, String apodo, LocalDate fechaNacimiento,

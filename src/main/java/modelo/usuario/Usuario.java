@@ -1,23 +1,24 @@
 package modelo.usuario;
 
+import modelo.EntitidadPersistente;
 import modelo.notificacion.Notificador;
 import modelo.persona.Persona;
 
 import javax.persistence.*;
 
 @Entity
-public class Usuario {
-
-  @Id
-  @GeneratedValue
-  private Long id;
+public class Usuario extends EntitidadPersistente {
 
   private String usuario;
+
   private String contrasenia;
-  @Transient
+
+  @Enumerated
   private TipoUsuario tipo;
-  @Transient
+
+  @OneToOne
   private Persona persona;
+
   @Transient
   private ValidadorAutenticacion validadorAutenticacion;
 
