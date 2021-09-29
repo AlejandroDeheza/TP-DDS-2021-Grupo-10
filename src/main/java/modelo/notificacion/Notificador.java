@@ -1,6 +1,6 @@
 package modelo.notificacion;
 
-import modelo.EntitidadPersistente;
+import modelo.EntidadPersistente;
 import modelo.mascota.MascotaRegistrada;
 import modelo.publicacion.DarEnAdopcion;
 import modelo.usuario.Usuario;
@@ -15,7 +15,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "Tipo")
 @Entity
-public abstract class Notificador extends EntitidadPersistente {
+public abstract class Notificador extends EntidadPersistente {
 
   public abstract void notificarEncontramosTuMascota(MascotaRegistrada mascotaRegistrada);
 

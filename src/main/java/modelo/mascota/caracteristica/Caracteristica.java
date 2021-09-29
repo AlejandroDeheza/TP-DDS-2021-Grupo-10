@@ -1,13 +1,13 @@
 package modelo.mascota.caracteristica;
 
-import modelo.EntitidadPersistente;
+import modelo.EntidadPersistente;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.Entity;
 
 @Entity
-public class Caracteristica extends EntitidadPersistente {
+public class Caracteristica extends EntidadPersistente {
 
   private String nombreCaracteristica;
   private String valorCaracteristica;

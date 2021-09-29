@@ -1,6 +1,6 @@
 package modelo.asociacion;
 
-import modelo.EntitidadPersistente;
+import modelo.EntidadPersistente;
 import modelo.informe.Ubicacion;
 import modelo.pregunta.ParDePreguntas;
 
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Asociacion extends EntitidadPersistente {
+public class Asociacion extends EntidadPersistente {
   private String nombre;
   @Embedded
   private Ubicacion ubicacion;

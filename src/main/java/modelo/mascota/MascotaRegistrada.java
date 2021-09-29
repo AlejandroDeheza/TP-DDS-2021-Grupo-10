@@ -1,6 +1,6 @@
 package modelo.mascota;
 
-import modelo.EntitidadPersistente;
+import modelo.EntidadPersistente;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.usuario.Usuario;
 
@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-public class MascotaRegistrada extends EntitidadPersistente {
+public class MascotaRegistrada extends EntidadPersistente {
 
   @ManyToOne
   private Usuario duenio;

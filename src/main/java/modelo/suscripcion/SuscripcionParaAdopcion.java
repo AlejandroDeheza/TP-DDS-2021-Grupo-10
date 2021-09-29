@@ -2,27 +2,28 @@ package modelo.suscripcion;
 
 import java.util.List;
 
+import modelo.EntidadPersistente;
 import modelo.asociacion.Asociacion;
-import modelo.persona.DatosDeContacto;
 import modelo.pregunta.RespuestaDelAdoptante;
 import modelo.publicacion.DarEnAdopcion;
 import modelo.usuario.Usuario;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity(name = "suscripcion_adopcion")
 @Table(name = "suscripcion_adopcion")
-public class SuscripcionParaAdopcion {
+public class SuscripcionParaAdopcion extends EntidadPersistente {
 
   @ManyToOne
   private Usuario suscriptor;
 
   @ManyToOne
   private Asociacion asociacion;
+
+  @Transient // TODO: No olvidar sacar el transient Falta poner en el DER
   private Preferencia preferenciaDelAdoptante;
+
+  @OneToMany
   private List<RespuestaDelAdoptante> comodidadesDelAdoptante;
   private Boolean estaActiva = true;
 

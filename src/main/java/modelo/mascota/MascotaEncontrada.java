@@ -1,7 +1,7 @@
 package modelo.mascota;
 
 import excepciones.FotosMascotaException;
-import modelo.EntitidadPersistente;
+import modelo.EntidadPersistente;
 import modelo.informe.Ubicacion;
 
 import javax.persistence.*;
@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "mascota_encontrada")
-public class MascotaEncontrada extends EntitidadPersistente {
+public class MascotaEncontrada extends EntidadPersistente {
 
   @ElementCollection
   private List<Foto> fotos;

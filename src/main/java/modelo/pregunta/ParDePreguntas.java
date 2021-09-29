@@ -1,17 +1,16 @@
 package modelo.pregunta;
 
-import modelo.EntitidadPersistente;
+import modelo.EntidadPersistente;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "par_de_preguntas" )
-public class ParDePreguntas extends EntitidadPersistente {
+public class ParDePreguntas extends EntidadPersistente {
   private String preguntaDelDador;
   private String preguntaDelAdoptante;
   private Boolean esObligatoria = true;

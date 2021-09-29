@@ -1,7 +1,7 @@
 package modelo.persona;
 
 import excepciones.DatosDeContactoIncompletosException;
-import modelo.EntitidadPersistente;
+import modelo.EntidadPersistente;
 import modelo.notificacion.Notificador;
 
 import javax.persistence.*;
@@ -10,7 +10,7 @@ import java.util.Objects;
 
 
 @Entity
-public class Persona extends EntitidadPersistente {
+public class Persona extends EntidadPersistente {
 
   private String nombre;
   private String apellido;

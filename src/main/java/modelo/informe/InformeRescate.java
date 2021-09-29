@@ -1,6 +1,6 @@
 package modelo.informe;
 
-import modelo.EntitidadPersistente;
+import modelo.EntidadPersistente;
 import modelo.hogarDeTransito.Hogar;
 import modelo.hogarDeTransito.ReceptorHogares;
 import modelo.mascota.Animal;
@@ -18,7 +18,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 @Table(name = "informe")
-public abstract class InformeRescate extends EntitidadPersistente {
+public abstract class InformeRescate extends EntidadPersistente {
 
   @OneToOne
   private Persona rescatista;

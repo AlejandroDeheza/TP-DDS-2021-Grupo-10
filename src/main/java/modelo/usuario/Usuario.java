@@ -1,13 +1,13 @@
 package modelo.usuario;
 
-import modelo.EntitidadPersistente;
+import modelo.EntidadPersistente;
 import modelo.notificacion.Notificador;
 import modelo.persona.Persona;
 
 import javax.persistence.*;
 
 @Entity
-public class Usuario extends EntitidadPersistente {
+public class Usuario extends EntidadPersistente {
 
   private String usuario;
 
