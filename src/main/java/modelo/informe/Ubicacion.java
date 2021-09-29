@@ -2,6 +2,9 @@ package modelo.informe;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class Ubicacion {
 
   private Double latitud;

@@ -1,5 +1,6 @@
 package modelo.informe;
 
+import modelo.EntitidadPersistente;
 import modelo.hogarDeTransito.Hogar;
 import modelo.hogarDeTransito.ReceptorHogares;
 import modelo.mascota.Animal;
@@ -9,15 +10,29 @@ import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.Persona;
 import repositorios.RepositorioInformes;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-public abstract class InformeRescate {
 
+@Inheritance(strategy = InheritanceType.JOINED)
+@Entity
+@Table(name = "informe")
+public abstract class InformeRescate extends EntitidadPersistente {
+
+  @OneToOne
   private Persona rescatista;
+
+  @Embedded
   private Ubicacion ubicacionRescatista;
+
+  @OneToOne
   private MascotaEncontrada mascotaEncontrada;
+
+  @Transient
   private RepositorioInformes repositorioInformes;
+
+  @Transient
   private ReceptorHogares receptorHogares;
 
   public InformeRescate(Persona rescatista, Ubicacion ubicacionRescatista, MascotaEncontrada mascotaEncontrada,

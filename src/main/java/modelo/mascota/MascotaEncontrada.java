@@ -1,17 +1,25 @@
 package modelo.mascota;
 
 import excepciones.FotosMascotaException;
+import modelo.EntitidadPersistente;
 import modelo.informe.Ubicacion;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-public class MascotaEncontrada {
+@Entity
+@Table(name = "mascota_encontrada")
+public class MascotaEncontrada extends EntitidadPersistente {
 
+  @ElementCollection
   private List<Foto> fotos;
+
+  @Embedded
   private Ubicacion ubicacion;
   private String estadoActual;
   private LocalDate fechaEncuentro;
+  @Enumerated
   private TamanioMascota tamanio;
 
   public MascotaEncontrada(List<Foto> fotos, Ubicacion ubicacion, String estadoActual, LocalDate fechaEncuentro,

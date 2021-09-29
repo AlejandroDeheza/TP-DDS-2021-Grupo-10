@@ -7,10 +7,16 @@ import modelo.mascota.MascotaRegistrada;
 import modelo.persona.Persona;
 import repositorios.RepositorioInformes;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.util.List;
 
+@Entity
+@Table(name = "informe_con_QR")
 public class InformeConQR extends InformeRescate {
 
+  @ManyToOne
   private MascotaRegistrada mascotaRegistrada;
 
   public InformeConQR(Persona rescatista, Ubicacion ubicacionRescatista, MascotaEncontrada mascotaEncontrada,
