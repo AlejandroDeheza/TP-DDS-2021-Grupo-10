@@ -1,40 +1,32 @@
 package repositorios;
 
 import modelo.publicacion.DarEnAdopcion;
-
-import java.util.ArrayList;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class RepositorioDarEnAdopcion {
-  private static RepositorioDarEnAdopcion repo = new RepositorioDarEnAdopcion();
-  private List<DarEnAdopcion> publicaciones = new ArrayList<>();
-  private List<DarEnAdopcion> procesadas = new ArrayList<>();
+public class RepositorioDarEnAdopcion implements WithGlobalEntityManager  {
 
   public void agregar(DarEnAdopcion publicacion) {
-    this.publicaciones.add(publicacion);
+    entityManager().persist(publicacion);
   }
 
   public void marcarComoProcesada(DarEnAdopcion publicacion) {
-    this.publicaciones.remove(publicacion);
-    this.procesadas.add(publicacion);
+    entityManager().remove(publicacion);
+    entityManager().persist(publicacion);
   }
 
-  // el repositorio, en codigo de produccion, lo inyectamos por constructor
-  // usamos el constructor solo para tests
-  public RepositorioDarEnAdopcion() {
-
-  }
-  // usamos el getInstance en Main
-  public static RepositorioDarEnAdopcion getInstance() {
-    return repo;
-  }
-
-  // GETTERS
   public List<DarEnAdopcion> getPublicaciones() {
-    return this.publicaciones;
+    return entityManager()
+        .createQuery("from DarEnAdopcion", DarEnAdopcion.class)
+        .getResultList().stream()
+        .filter(DarEnAdopcion::estaActiva).collect(Collectors.toList());
   }
 
   public List<DarEnAdopcion> getProcesadas() {
-    return this.procesadas;
+    return entityManager()
+        .createQuery("from DarEnAdopcion", DarEnAdopcion.class)
+        .getResultList().stream()
+        .filter(p -> !p.estaActiva()).collect(Collectors.toList());
   }
 }

@@ -1,39 +1,32 @@
 package repositorios;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import modelo.suscripcion.SuscripcionParaAdopcion;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+import java.util.List;
+import java.util.stream.Collectors;
 
-public class RepositorioSuscripcionesParaAdopciones {
-  private static RepositorioSuscripcionesParaAdopciones repo = new RepositorioSuscripcionesParaAdopciones();
-  private List<SuscripcionParaAdopcion> suscripciones = new ArrayList<>();
-  private List<SuscripcionParaAdopcion> suscripcionesDeBaja = new ArrayList<>();
+public class RepositorioSuscripcionesParaAdopciones implements WithGlobalEntityManager  {
 
   public void agregar(SuscripcionParaAdopcion publicacion) {
-    suscripciones.add(publicacion);
+    entityManager().persist(publicacion);
   }
 
   public void darDeBaja(SuscripcionParaAdopcion publicacion) {
-    suscripciones.remove(publicacion);
-    suscripcionesDeBaja.add(publicacion);
-  }
-
-  // el repositorio, en codigo de produccion, lo inyectamos por constructor
-  // usamos el constructor solo para tests
-  public RepositorioSuscripcionesParaAdopciones() {
-
-  }
-  // usamos el getInstance en Main
-  public static RepositorioSuscripcionesParaAdopciones getInstance() {
-    return repo;
+    entityManager().remove(publicacion);
+    entityManager().persist(publicacion);
   }
 
   public List<SuscripcionParaAdopcion> getSuscripciones() {
-    return suscripciones;
+    return entityManager()
+        .createQuery("from SuscripcionParaAdopcion", SuscripcionParaAdopcion.class)
+        .getResultList().stream()
+        .filter(SuscripcionParaAdopcion::estaActiva).collect(Collectors.toList());
   }
 
   public List<SuscripcionParaAdopcion> getSuscripcionesDeBaja() {
-    return suscripcionesDeBaja;
+    return entityManager()
+        .createQuery("from SuscripcionParaAdopcion", SuscripcionParaAdopcion.class)
+        .getResultList().stream()
+        .filter(s -> !s.estaActiva()).collect(Collectors.toList());
   }
 }
