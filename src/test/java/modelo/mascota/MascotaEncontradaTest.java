@@ -1,14 +1,13 @@
 package modelo.mascota;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import excepciones.FotosMascotaException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import utils.DummyData;
-
 import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class MascotaEncontradaTest {
 

@@ -1,13 +1,12 @@
 package repositorios;
 
+import static org.junit.jupiter.api.Assertions.*;
 import modelo.informe.InformeConQR;
 import org.junit.jupiter.api.*;
-
-import static org.junit.jupiter.api.Assertions.*;
-
+import persistencia.NuestraAbstractPersistenceTest;
 import utils.DummyData;
 
-public class RepositorioInformesTest {
+public class RepositorioInformesTest extends NuestraAbstractPersistenceTest {
 
   RepositorioInformes repositorioInformes;
 

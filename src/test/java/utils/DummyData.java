@@ -20,7 +20,7 @@ import modelo.usuario.Usuario;
 import repositorios.RepositorioDarEnAdopcion;
 import repositorios.RepositorioRescates;
 import modelo.notificacion.Notificador;
-
+import repositorios.RepositorioSuscripcionesParaAdopciones;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -140,7 +140,8 @@ public class DummyData {
     return new Rescate(getPersona(notificador), repositorio, getMascotaEncontrada(getFotos()), getAsociacion());
   }
 
-  public static SuscripcionParaAdopcion getSuscripcionParaAdopcion(Notificador notificador) {
+  public static SuscripcionParaAdopcion getSuscripcionParaAdopcion(Notificador notificador,
+                                                                   RepositorioSuscripcionesParaAdopciones repo) {
     return new SuscripcionParaAdopcion(
         getUsuario(notificador),
         getAsociacion(),
@@ -148,7 +149,8 @@ public class DummyData {
         Arrays.asList(
             new RespuestaDelAdoptante("Si", getParDePreguntas1()),
             new RespuestaDelAdoptante("2", getParDePreguntas2())
-        )
+        ),
+        repo
     );
   }
 

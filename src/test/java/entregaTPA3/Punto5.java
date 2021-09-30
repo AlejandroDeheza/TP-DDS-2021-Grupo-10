@@ -1,5 +1,8 @@
 package entregaTPA3;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
 import modelo.adopcion.RecomendadorDeAdopciones;
 import modelo.notificacion.Notificador;
 import modelo.notificacion.NotificadorCorreo;
@@ -8,9 +11,7 @@ import org.junit.jupiter.api.Test;
 import repositorios.RepositorioDarEnAdopcion;
 import repositorios.RepositorioSuscripcionesParaAdopciones;
 import utils.DummyData;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import java.util.Collections;
 
 public class Punto5 {
 
@@ -22,13 +23,15 @@ public class Punto5 {
   @BeforeEach
   public void contextLoad() {
     notificadorMockeado = mock(NotificadorCorreo.class);
+    repositorioDarEnAdopcion = mock(RepositorioDarEnAdopcion.class);
+    repositorioSuscripcionesParaAdopciones = mock(RepositorioSuscripcionesParaAdopciones.class);
 
-    repositorioDarEnAdopcion = new RepositorioDarEnAdopcion();
-    repositorioDarEnAdopcion.agregar(DummyData.getPublicacionDeDarEnAdopcion(
-        notificadorMockeado, repositorioDarEnAdopcion));
-
-    repositorioSuscripcionesParaAdopciones = new RepositorioSuscripcionesParaAdopciones();
-    repositorioSuscripcionesParaAdopciones.agregar(DummyData.getSuscripcionParaAdopcion(notificadorMockeado));
+    when(repositorioDarEnAdopcion.getPublicaciones()).thenReturn(Collections.singletonList(
+        DummyData.getPublicacionDeDarEnAdopcion(notificadorMockeado, repositorioDarEnAdopcion))
+    );
+    when(repositorioSuscripcionesParaAdopciones.getSuscripciones()).thenReturn(Collections.singletonList(
+        DummyData.getSuscripcionParaAdopcion(notificadorMockeado, repositorioSuscripcionesParaAdopciones)
+    ));
 
     recomendadorDeAdopciones = new RecomendadorDeAdopciones(5,
         repositorioDarEnAdopcion, repositorioSuscripcionesParaAdopciones);

@@ -1,10 +1,10 @@
 package modelo.usuario;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import excepciones.ContraseniaInvalidaException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class ValidadorContraseniasTest {
 

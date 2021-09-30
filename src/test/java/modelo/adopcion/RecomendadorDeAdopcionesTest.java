@@ -1,5 +1,9 @@
 package modelo.adopcion;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
 import modelo.mascota.Animal;
 import modelo.mascota.MascotaRegistrada;
 import modelo.mascota.caracteristica.Caracteristica;
@@ -12,14 +16,10 @@ import org.junit.jupiter.api.Test;
 import repositorios.RepositorioDarEnAdopcion;
 import repositorios.RepositorioSuscripcionesParaAdopciones;
 import utils.DummyData;
-
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 public class RecomendadorDeAdopcionesTest {
 
@@ -33,10 +33,10 @@ public class RecomendadorDeAdopcionesTest {
   @BeforeEach
   public void contextLoad() {
     notificadorMockeado = mock(NotificadorCorreo.class);
+    repositorioDarEnAdopcion = mock(RepositorioDarEnAdopcion.class);
+    repositorioSuscripcionesParaAdopciones = mock(RepositorioSuscripcionesParaAdopciones.class);
 
-    repositorioDarEnAdopcion = new RepositorioDarEnAdopcion();
     publicacion1 = DummyData.getPublicacionDeDarEnAdopcion(notificadorMockeado, repositorioDarEnAdopcion);
-    repositorioDarEnAdopcion.agregar(publicacion1);
     publicacion2 = new DarEnAdopcion(
         DummyData.getUsuario(notificadorMockeado),
         DummyData.getMascotaRegistrada(notificadorMockeado),
@@ -47,11 +47,12 @@ public class RecomendadorDeAdopcionesTest {
         ),
         DummyData.getAsociacion()
     );
-    repositorioDarEnAdopcion.agregar(publicacion2);
 
-    repositorioSuscripcionesParaAdopciones = new RepositorioSuscripcionesParaAdopciones();
-    repositorioSuscripcionesParaAdopciones.agregar(DummyData.getSuscripcionParaAdopcion(notificadorMockeado));
-    repositorioSuscripcionesParaAdopciones.agregar(DummyData.getSuscripcionParaAdopcion(notificadorMockeado));
+    when(repositorioDarEnAdopcion.getPublicaciones()).thenReturn(Arrays.asList(publicacion1, publicacion2));
+    when(repositorioSuscripcionesParaAdopciones.getSuscripciones()).thenReturn(Arrays.asList(
+        DummyData.getSuscripcionParaAdopcion(notificadorMockeado, repositorioSuscripcionesParaAdopciones),
+        DummyData.getSuscripcionParaAdopcion(notificadorMockeado, repositorioSuscripcionesParaAdopciones)
+    ));
 
     recomendadorDeAdopciones = new RecomendadorDeAdopciones(2,
         repositorioDarEnAdopcion, repositorioSuscripcionesParaAdopciones);
@@ -65,20 +66,17 @@ public class RecomendadorDeAdopcionesTest {
 
   @Test
   public void noSeEnvianRecomendacionesSiNoHay() {
-    repositorioDarEnAdopcion.marcarComoProcesada(publicacion1);
-    repositorioDarEnAdopcion.marcarComoProcesada(publicacion2);
+    when(repositorioDarEnAdopcion.getPublicaciones()).thenReturn(Collections.emptyList());
     recomendadorDeAdopciones.recomendarAdopcionesASuscritos();
     verify(notificadorMockeado, times(0)).notificarRecomendacionesDeAdopciones(any());
   }
 
   @Test
   public void noSeEnvianRecomendacionesSiNoHayTipoDeMascota() {
-    repositorioDarEnAdopcion.marcarComoProcesada(publicacion1);
-    repositorioDarEnAdopcion.marcarComoProcesada(publicacion2);
     MascotaRegistrada mascotaRegistrada = new MascotaRegistrada(null, null, null, null,
         null, null, Animal.GATO, DummyData.getCaracteristicasParaMascota(), null, null);
 
-    repositorioDarEnAdopcion.agregar(
+    when(repositorioDarEnAdopcion.getPublicaciones()).thenReturn(Collections.singletonList(
         new DarEnAdopcion(
             DummyData.getUsuario(notificadorMockeado),
             mascotaRegistrada,
@@ -89,22 +87,21 @@ public class RecomendadorDeAdopcionesTest {
             ),
             DummyData.getAsociacion()
         )
-    );
+    ));
+
     recomendadorDeAdopciones.recomendarAdopcionesASuscritos();
     verify(notificadorMockeado, times(0)).notificarRecomendacionesDeAdopciones(any());
   }
 
   @Test
   public void noSeEnvianRecomendacionesSiNoSeCumplenCaracteristicas() {
-    repositorioDarEnAdopcion.marcarComoProcesada(publicacion1);
-    repositorioDarEnAdopcion.marcarComoProcesada(publicacion2);
     List<Caracteristica> listaCaracteristica = new ArrayList<>();
     listaCaracteristica.add(new Caracteristica("Comportamiento", "Inquieto"));
 
     MascotaRegistrada mascotaRegistrada = new MascotaRegistrada(null, null, null, null,
         null, null, Animal.PERRO, listaCaracteristica, null, null);
 
-    repositorioDarEnAdopcion.agregar(
+    when(repositorioDarEnAdopcion.getPublicaciones()).thenReturn(Collections.singletonList(
         new DarEnAdopcion(
             DummyData.getUsuario(notificadorMockeado),
             mascotaRegistrada,
@@ -115,7 +112,8 @@ public class RecomendadorDeAdopcionesTest {
             ),
             DummyData.getAsociacion()
         )
-    );
+    ));
+
     recomendadorDeAdopciones.recomendarAdopcionesASuscritos();
     verify(notificadorMockeado, times(0)).notificarRecomendacionesDeAdopciones(any());
   }
@@ -123,7 +121,7 @@ public class RecomendadorDeAdopcionesTest {
   @Test
   public void lasRecomendacionesSeOrdenanCorrectamente() {
     List<DarEnAdopcion> recomendaciones = recomendadorDeAdopciones.generarRecomendaciones(
-        DummyData.getSuscripcionParaAdopcion(notificadorMockeado)
+        DummyData.getSuscripcionParaAdopcion(notificadorMockeado, repositorioSuscripcionesParaAdopciones)
     );
     assertEquals(2, recomendaciones.size());
     assertEquals(publicacion1, recomendaciones.get(0));
@@ -136,7 +134,7 @@ public class RecomendadorDeAdopcionesTest {
         repositorioDarEnAdopcion, repositorioSuscripcionesParaAdopciones);
 
     List<DarEnAdopcion> recomendaciones = recomendadorDeAdopciones.generarRecomendaciones(
-        DummyData.getSuscripcionParaAdopcion(notificadorMockeado)
+        DummyData.getSuscripcionParaAdopcion(notificadorMockeado, repositorioSuscripcionesParaAdopciones)
     );
     assertEquals(1, recomendaciones.size());
     assertEquals(publicacion1, recomendaciones.get(0));
