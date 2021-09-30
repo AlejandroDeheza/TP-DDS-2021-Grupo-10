@@ -22,7 +22,7 @@ public class Persona extends EntidadPersistente {
 
   private LocalDate fechaNacimiento;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   private Notificador notificadorPreferido;
 
   // para hibernate
