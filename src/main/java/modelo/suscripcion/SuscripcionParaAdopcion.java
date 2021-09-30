@@ -20,10 +20,11 @@ public class SuscripcionParaAdopcion extends EntidadPersistente {
   @ManyToOne
   private Asociacion asociacion;
 
-  @Transient // TODO: No olvidar sacar el transient Falta poner en el DER
+  @Embedded
   private Preferencia preferenciaDelAdoptante;
 
   @OneToMany
+  @JoinColumn(name = "Id_suscripcion_para_adopcion")
   private List<RespuestaDelAdoptante> comodidadesDelAdoptante;
   private Boolean estaActiva = true;
 

@@ -8,15 +8,25 @@ import modelo.pregunta.RespuestaDelDador;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioDarEnAdopcion;
 
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import java.util.List;
 
-public class DarEnAdopcion implements Publicacion {
-
+public class DarEnAdopcion extends Publicacion {
+  @ManyToOne
   private Usuario publicador;
+  @ManyToOne
   private Asociacion asociacion;
+  @OneToMany
+  @JoinColumn(name = "Id_publicacion_dar_adopcion")
   private List<RespuestaDelDador> respuestasDelDador;
+  @ManyToOne
   private MascotaRegistrada mascotaEnAdopcion;
+  @Transient
   private RepositorioDarEnAdopcion repositorio;
+
   private Boolean estaActiva = true;
 
   public DarEnAdopcion(Usuario publicador, MascotaRegistrada mascotaEnAdopcion,

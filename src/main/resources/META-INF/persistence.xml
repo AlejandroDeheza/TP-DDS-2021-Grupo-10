@@ -8,6 +8,24 @@
     <persistence-unit name="db" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>modelo.usuario.Usuario</class>
+        <class>modelo.persona.Persona</class>
+        <class>modelo.notificacion.Notificador</class>
+        <class>modelo.notificacion.NotificadorCorreo</class>
+        <class>modelo.mascota.MascotaRegistrada</class>
+        <class>modelo.mascota.caracteristica.Caracteristica</class>
+        <class>modelo.mascota.MascotaEncontrada</class>
+        <class>modelo.informe.InformeRescate</class>
+        <class>modelo.informe.InformeConQR</class>
+        <class>modelo.informe.InformeSinQR</class>
+        <class>modelo.asociacion.Asociacion</class>
+        <class>modelo.pregunta.ParDePreguntas</class>
+        <class>modelo.pregunta.RespuestaDelAdoptante</class>
+        <class>modelo.pregunta.RespuestaDelDador</class>
+        <class>modelo.suscripcion.SuscripcionParaAdopcion</class>
+        <class>modelo.publicacion.DarEnAdopcion</class>
+        <class>modelo.publicacion.Publicacion</class>
+        <class>modelo.publicacion.Rescate</class>
+        <class>modelo.EntidadPersistente</class>
 
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>

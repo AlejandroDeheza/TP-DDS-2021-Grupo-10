@@ -18,7 +18,7 @@ public class Asociacion extends EntidadPersistente {
   private Ubicacion ubicacion;
 
   @OneToMany
-  @JoinColumn
+  @JoinColumn(name = "asociacion_id")
   private List<ParDePreguntas> preguntas = new ArrayList<>();
 
   public Asociacion(String nombre, Ubicacion ubicacion) {

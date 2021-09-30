@@ -1,5 +1,6 @@
 package modelo.informe;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import modelo.EntidadPersistente;
 import modelo.hogarDeTransito.Hogar;
 import modelo.hogarDeTransito.ReceptorHogares;
@@ -35,6 +36,8 @@ public abstract class InformeRescate extends EntidadPersistente {
   @Transient
   private ReceptorHogares receptorHogares;
 
+  private Boolean esta_procesado = false;
+
   public InformeRescate(Persona rescatista, Ubicacion ubicacionRescatista, MascotaEncontrada mascotaEncontrada,
                         RepositorioInformes repositorioInformes, ReceptorHogares receptorHogares) {
     this.rescatista = rescatista;
@@ -57,6 +60,7 @@ public abstract class InformeRescate extends EntidadPersistente {
 
   public void procesarInforme() {
     repositorioInformes.marcarInformeComoProcesado(this);
+    this.esta_procesado = true;
   }
 
   public MascotaEncontrada getMascotaEncontrada() {
@@ -77,6 +81,10 @@ public abstract class InformeRescate extends EntidadPersistente {
 
   public LocalDate getFechaEncuentro() {
     return mascotaEncontrada.getFechaEncuentro();
+  }
+
+  public Boolean getEsta_procesado(){
+    return this.esta_procesado;
   }
 
 }

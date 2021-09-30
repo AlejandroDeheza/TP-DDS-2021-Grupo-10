@@ -19,9 +19,13 @@
         <class>modelo.informe.InformeSinQR</class>
         <class>modelo.asociacion.Asociacion</class>
         <class>modelo.pregunta.ParDePreguntas</class>
-        <class>modelo.pregunta.ParDeRespuestas</class>
-        <class>modelo.suscripcion.SuscripcionParaAdopcion</class>
         <class>modelo.pregunta.RespuestaDelAdoptante</class>
+        <class>modelo.pregunta.RespuestaDelDador</class>
+        <class>modelo.suscripcion.SuscripcionParaAdopcion</class>
+        <class>modelo.publicacion.DarEnAdopcion</class>
+        <class>modelo.publicacion.Publicacion</class>
+        <class>modelo.publicacion.Rescate</class>
+        <class>modelo.EntidadPersistente</class>
 
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>

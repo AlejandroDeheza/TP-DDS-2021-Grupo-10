@@ -1,9 +1,16 @@
 package modelo.publicacion;
 
+import modelo.EntidadPersistente;
 import modelo.usuario.Usuario;
 
-public interface Publicacion {
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
-  void notificarAlPublicador(Usuario usuario);
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Entity
+public abstract class Publicacion extends EntidadPersistente {
+
+  abstract void notificarAlPublicador(Usuario usuario);
 
 }
