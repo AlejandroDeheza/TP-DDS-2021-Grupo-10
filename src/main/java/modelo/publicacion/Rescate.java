@@ -7,7 +7,9 @@ import modelo.usuario.Usuario;
 import repositorios.RepositorioRescates;
 import modelo.persona.DatosDeContacto;
 
+import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 /**
@@ -15,6 +17,7 @@ import javax.persistence.Transient;
  *
  * @since Entrega 3
  */
+@Entity
 public class Rescate extends Publicacion {
   @ManyToOne
   private Persona rescatista;
