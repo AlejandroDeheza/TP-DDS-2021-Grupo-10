@@ -1,6 +1,5 @@
 package modelo.informe;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import modelo.EntidadPersistente;
 import modelo.hogarDeTransito.Hogar;
 import modelo.hogarDeTransito.ReceptorHogares;
@@ -10,24 +9,22 @@ import modelo.mascota.TamanioMascota;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.Persona;
 import repositorios.RepositorioInformes;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-
-@Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 @Table(name = "informe")
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class InformeRescate extends EntidadPersistente {
 
-  @OneToOne
+  @OneToOne(cascade = CascadeType.ALL)
   private Persona rescatista;
 
   @Embedded
   private Ubicacion ubicacionRescatista;
 
-  @OneToOne
+  @OneToOne(cascade = CascadeType.ALL)
   private MascotaEncontrada mascotaEncontrada;
 
   @Transient
@@ -37,6 +34,11 @@ public abstract class InformeRescate extends EntidadPersistente {
   private ReceptorHogares receptorHogares;
 
   private Boolean esta_procesado = false;
+
+  // para hibernate
+  protected InformeRescate() {
+
+  }
 
   public InformeRescate(Persona rescatista, Ubicacion ubicacionRescatista, MascotaEncontrada mascotaEncontrada,
                         RepositorioInformes repositorioInformes, ReceptorHogares receptorHogares) {
@@ -59,8 +61,8 @@ public abstract class InformeRescate extends EntidadPersistente {
   }
 
   public void procesarInforme() {
-    repositorioInformes.marcarInformeComoProcesado(this);
     this.esta_procesado = true;
+    repositorioInformes.marcarInformeComoProcesado(this);
   }
 
   public MascotaEncontrada getMascotaEncontrada() {

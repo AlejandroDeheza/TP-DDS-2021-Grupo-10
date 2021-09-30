@@ -3,7 +3,6 @@ package modelo.mascota;
 import modelo.EntidadPersistente;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.usuario.Usuario;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.List;
 @Entity
 public class MascotaRegistrada extends EntidadPersistente {
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   private Usuario duenio;
 
   private String nombre;
@@ -36,6 +35,11 @@ public class MascotaRegistrada extends EntidadPersistente {
 
   @Enumerated
   private TamanioMascota tamanio;
+
+  // para hibernate
+  private MascotaRegistrada() {
+
+  }
 
   public MascotaRegistrada(Usuario duenio, String nombre, String apodo, LocalDate fechaNacimiento,
                            String descripcionFisica, Sexo sexo, Animal animal, List<Caracteristica> caracteristicas,

@@ -1,7 +1,6 @@
 package modelo.pregunta;
 
 import modelo.EntidadPersistente;
-
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -11,8 +10,14 @@ import javax.persistence.Table;
 public class RespuestaDelAdoptante extends EntidadPersistente {
 
   private String respuesta;
+
   @ManyToOne
   private ParDePreguntas parDePreguntas;
+
+  // para hibernate
+  private RespuestaDelAdoptante() {
+
+  }
 
   public RespuestaDelAdoptante(String respuesta, ParDePreguntas parDePreguntas) {
     this.respuesta = respuesta;

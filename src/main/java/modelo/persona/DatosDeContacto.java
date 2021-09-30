@@ -1,13 +1,18 @@
 package modelo.persona;
 
 import modelo.notificacion.Notificador;
-
 import javax.persistence.Embeddable;
 
 @Embeddable
 public class DatosDeContacto {
+
   private String telefono;
   private String email;
+
+  // para hibernate
+  private DatosDeContacto() {
+
+  }
 
   public DatosDeContacto(String telefono, String email, Notificador notificadorPreferido) {
     this.telefono = telefono;

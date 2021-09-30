@@ -5,7 +5,6 @@ import modelo.informe.Ubicacion;
 import modelo.mascota.Animal;
 import modelo.mascota.TamanioMascota;
 import modelo.mascota.caracteristica.Caracteristica;
-
 import java.util.List;
 import java.util.stream.Collectors;
 

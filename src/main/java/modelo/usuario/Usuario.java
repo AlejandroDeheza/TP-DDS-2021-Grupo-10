@@ -3,7 +3,6 @@ package modelo.usuario;
 import modelo.EntidadPersistente;
 import modelo.notificacion.Notificador;
 import modelo.persona.Persona;
-
 import javax.persistence.*;
 
 @Entity
@@ -16,7 +15,7 @@ public class Usuario extends EntidadPersistente {
   @Enumerated
   private TipoUsuario tipo;
 
-  @OneToOne
+  @OneToOne(cascade = CascadeType.ALL)
   private Persona persona;
 
   @Transient

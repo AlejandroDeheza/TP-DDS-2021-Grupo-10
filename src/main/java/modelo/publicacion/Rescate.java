@@ -5,11 +5,8 @@ import modelo.mascota.MascotaEncontrada;
 import modelo.persona.Persona;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioRescates;
-import modelo.persona.DatosDeContacto;
-
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 
 /**
@@ -17,17 +14,28 @@ import javax.persistence.Transient;
  *
  * @since Entrega 3
  */
+
 @Entity
 public class Rescate extends Publicacion {
+
   @ManyToOne
   private Persona rescatista;
+
   @ManyToOne
   private Asociacion asociacion;
+
   @ManyToOne
   private MascotaEncontrada mascotaEncontrada;
+
   @Transient
   private RepositorioRescates repositorioRescates;
+
   private Boolean estaActiva = true;
+
+  // para hibernate
+  private Rescate() {
+
+  }
 
   public Rescate(Persona rescatista, RepositorioRescates repositorioRescates,
                  MascotaEncontrada mascotaEncontrada, Asociacion asociacion) {
@@ -40,8 +48,8 @@ public class Rescate extends Publicacion {
   @Override
   public void notificarAlPublicador(Usuario duenio) {
     rescatista.getNotificadorPreferido().notificarDuenioReclamaSuMacota(duenio);
-    repositorioRescates.marcarComoProcesada(this);
     estaActiva = false;
+    repositorioRescates.marcarComoProcesada(this);
   }
 
   public Asociacion getAsociacion() {

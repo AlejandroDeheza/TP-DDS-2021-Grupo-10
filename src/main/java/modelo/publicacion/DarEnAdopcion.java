@@ -2,30 +2,38 @@ package modelo.publicacion;
 
 import modelo.asociacion.Asociacion;
 import modelo.mascota.MascotaRegistrada;
-import modelo.persona.DatosDeContacto;
 import modelo.pregunta.RespuestaDelAdoptante;
 import modelo.pregunta.RespuestaDelDador;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioDarEnAdopcion;
-
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 public class DarEnAdopcion extends Publicacion {
+
   @ManyToOne
   private Usuario publicador;
-  @ManyToOne
+
+  @ManyToOne(cascade = CascadeType.ALL)
   private Asociacion asociacion;
+
   @OneToMany
   @JoinColumn(name = "Id_publicacion_dar_adopcion")
   private List<RespuestaDelDador> respuestasDelDador;
-  @ManyToOne
+
+  @ManyToOne(cascade = CascadeType.ALL)
   private MascotaRegistrada mascotaEnAdopcion;
+
   @Transient
   private RepositorioDarEnAdopcion repositorio;
 
   private Boolean estaActiva = true;
+
+  // para hibernate
+  private DarEnAdopcion() {
+
+  }
 
   public DarEnAdopcion(Usuario publicador, MascotaRegistrada mascotaEnAdopcion,
                        RepositorioDarEnAdopcion repositorio, List<RespuestaDelDador> respuestasDelDador,
@@ -40,8 +48,8 @@ public class DarEnAdopcion extends Publicacion {
   @Override
   public void notificarAlPublicador(Usuario adoptante) {
     publicador.getNotificadorPreferido().notificarQuierenAdoptarTuMascota(adoptante, mascotaEnAdopcion);
-    repositorio.marcarComoProcesada(this);
     estaActiva = false;
+    repositorio.marcarComoProcesada(this);
   }
 
   public int cantidadConLasQueMatchea(List<RespuestaDelAdoptante> comodidades) {

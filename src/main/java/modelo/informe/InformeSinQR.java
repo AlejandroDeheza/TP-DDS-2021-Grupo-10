@@ -11,7 +11,6 @@ import modelo.persona.Persona;
 import modelo.publicacion.Rescate;
 import repositorios.RepositorioInformes;
 import repositorios.RepositorioRescates;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class InformeSinQR extends InformeRescate {
   @Enumerated
   private Animal tipoAnimal;
 
-  @ManyToMany
+  @ManyToMany(cascade = CascadeType.ALL)
   private List<Caracteristica> caracteristicas;
 
   @Transient
@@ -30,6 +29,11 @@ public class InformeSinQR extends InformeRescate {
 
   @Transient
   private RepositorioAsociaciones repositorioAsociaciones;
+
+  // para hibernate
+  private InformeSinQR() {
+
+  }
 
   public InformeSinQR(Persona rescatista, Ubicacion ubicacionRescatista, MascotaEncontrada mascotaEncontrada,
                       RepositorioInformes repositorioInformes, ReceptorHogares receptorHogares, Animal tipoAnimal,

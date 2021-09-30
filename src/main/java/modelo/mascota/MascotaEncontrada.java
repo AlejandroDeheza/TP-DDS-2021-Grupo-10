@@ -3,7 +3,6 @@ package modelo.mascota;
 import excepciones.FotosMascotaException;
 import modelo.EntidadPersistente;
 import modelo.informe.Ubicacion;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -17,10 +16,18 @@ public class MascotaEncontrada extends EntidadPersistente {
 
   @Embedded
   private Ubicacion ubicacion;
+
   private String estadoActual;
+
   private LocalDate fechaEncuentro;
+
   @Enumerated
   private TamanioMascota tamanio;
+
+  // para hibernate
+  private MascotaEncontrada() {
+
+  }
 
   public MascotaEncontrada(List<Foto> fotos, Ubicacion ubicacion, String estadoActual, LocalDate fechaEncuentro,
                            TamanioMascota tamanio) {

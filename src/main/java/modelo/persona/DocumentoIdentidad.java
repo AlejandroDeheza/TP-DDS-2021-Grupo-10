@@ -10,8 +10,14 @@ public class DocumentoIdentidad {
   @Enumerated
   @Column(name = "tipo_documento")
   private TipoDocumento tipoDocumento;
+
   @Column(name = "num_documento")
   private String numeroDocumento;
+
+  // para hibernate
+  private DocumentoIdentidad() {
+
+  }
 
   public DocumentoIdentidad(TipoDocumento tipoDocumento, String numeroDocumento) {
     this.tipoDocumento = tipoDocumento;

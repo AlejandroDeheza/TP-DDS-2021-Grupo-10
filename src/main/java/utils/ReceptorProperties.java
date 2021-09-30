@@ -1,7 +1,6 @@
 package utils;
 
 import excepciones.RepositorioPropertiesException;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;

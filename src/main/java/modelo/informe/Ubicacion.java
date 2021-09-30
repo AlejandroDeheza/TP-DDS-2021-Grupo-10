@@ -1,7 +1,6 @@
 package modelo.informe;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.persistence.Embeddable;
 
 @Embeddable
@@ -10,6 +9,11 @@ public class Ubicacion {
   private Double latitud;
   private Double longitud;
   private String direccion;
+
+  // para hibernate
+  private Ubicacion() {
+
+  }
 
   public Ubicacion(@JsonProperty("lat") Double latitud, @JsonProperty("long") Double longitud,
                    @JsonProperty("direccion") String direccion) {
