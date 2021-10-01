@@ -33,7 +33,7 @@ public abstract class InformeRescate extends EntidadPersistente {
   @Transient
   private ReceptorHogares receptorHogares;
 
-  private Boolean esta_procesado = false;
+  private Boolean estaProcesado = false;
 
   // para hibernate
   protected InformeRescate() {
@@ -61,7 +61,7 @@ public abstract class InformeRescate extends EntidadPersistente {
   }
 
   public void procesarInforme() {
-    this.esta_procesado = true;
+    this.estaProcesado = true;
     repositorioInformes.marcarInformeComoProcesado(this);
   }
 
@@ -85,8 +85,8 @@ public abstract class InformeRescate extends EntidadPersistente {
     return mascotaEncontrada.getFechaEncuentro();
   }
 
-  public Boolean getEsta_procesado(){
-    return this.esta_procesado;
+  public Boolean getEstaProcesado(){
+    return this.estaProcesado;
   }
 
 }
