@@ -3,6 +3,8 @@ package modelo.suscripcion;
 import java.util.List;
 import modelo.mascota.Animal;
 import modelo.mascota.caracteristica.Caracteristica;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToMany;
@@ -10,7 +12,7 @@ import javax.persistence.ManyToMany;
 @Embeddable
 public class Preferencia {
 
-  @ManyToMany
+  @ManyToMany(cascade = CascadeType.ALL)
   private List<Caracteristica> caracteristicas;
 
   @Enumerated

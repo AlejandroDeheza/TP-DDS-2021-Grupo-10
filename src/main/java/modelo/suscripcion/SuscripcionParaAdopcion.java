@@ -23,7 +23,7 @@ public class SuscripcionParaAdopcion extends EntidadPersistente {
   @Embedded
   private Preferencia preferenciaDelAdoptante;
 
-  @OneToMany
+  @OneToMany(cascade = CascadeType.ALL)
   @JoinColumn(name = "Id_suscripcion_para_adopcion")
   private List<RespuestaDelAdoptante> comodidadesDelAdoptante;
 
@@ -73,5 +73,9 @@ public class SuscripcionParaAdopcion extends EntidadPersistente {
 
   public Boolean estaActiva() {
     return estaActiva;
+  }
+
+  public void desactivar(){
+    this.estaActiva = false;
   }
 }

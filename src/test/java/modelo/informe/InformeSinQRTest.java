@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-import persistencia.NuestraAbstractPersistenceTest;
+import entregaTPA4.persistencia.NuestraAbstractPersistenceTest;
 import repositorios.RepositorioAsociaciones;
 import modelo.hogarDeTransito.Hogar;
 import modelo.hogarDeTransito.ReceptorHogares;

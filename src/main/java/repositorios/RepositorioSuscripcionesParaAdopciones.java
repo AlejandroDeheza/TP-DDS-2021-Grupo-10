@@ -2,6 +2,8 @@ package repositorios;
 
 import modelo.suscripcion.SuscripcionParaAdopcion;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+
+import javax.persistence.Query;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,8 +14,9 @@ public class RepositorioSuscripcionesParaAdopciones implements WithGlobalEntityM
   }
 
   public void darDeBaja(SuscripcionParaAdopcion publicacion) {
-    entityManager().remove(publicacion);
-    entityManager().persist(publicacion);
+    publicacion.desactivar();
+    Query query = entityManager().createQuery("UPDATE FROM SuscripcionParaAdopcion s SET s.estaActiva=false WHERE id=:id");
+    query.setParameter("id",publicacion.getId()).executeUpdate();
   }
 
   public List<SuscripcionParaAdopcion> getSuscripciones() {

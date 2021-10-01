@@ -3,7 +3,7 @@ package repositorios;
 import static org.junit.jupiter.api.Assertions.*;
 import modelo.informe.InformeConQR;
 import org.junit.jupiter.api.*;
-import persistencia.NuestraAbstractPersistenceTest;
+import entregaTPA4.persistencia.NuestraAbstractPersistenceTest;
 import utils.DummyData;
 
 public class RepositorioInformesTest extends NuestraAbstractPersistenceTest {

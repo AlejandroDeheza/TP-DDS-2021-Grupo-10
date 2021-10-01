@@ -7,7 +7,7 @@ import modelo.notificacion.NotificadorCorreo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import persistencia.NuestraAbstractPersistenceTest;
+import entregaTPA4.persistencia.NuestraAbstractPersistenceTest;
 import repositorios.RepositorioInformes;
 import utils.DummyData;
 
