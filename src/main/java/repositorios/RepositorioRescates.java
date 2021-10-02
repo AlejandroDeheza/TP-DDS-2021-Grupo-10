@@ -7,15 +7,6 @@ import java.util.stream.Collectors;
 
 public class RepositorioRescates implements WithGlobalEntityManager  {
 
-  public void agregar(Rescate publicacion) {
-    entityManager().persist(publicacion);
-  }
-
-  public void marcarComoProcesada(Rescate publicacion) {
-    entityManager().remove(publicacion);
-    entityManager().persist(publicacion);
-  }
-
   public List<Rescate> getRescates() {
     return entityManager()
         .createQuery("from Rescate", Rescate.class)
