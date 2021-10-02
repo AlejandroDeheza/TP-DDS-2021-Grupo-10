@@ -28,9 +28,6 @@ public abstract class InformeRescate extends EntidadPersistente {
   private MascotaEncontrada mascotaEncontrada;
 
   @Transient
-  private RepositorioInformes repositorioInformes;
-
-  @Transient
   private ReceptorHogares receptorHogares;
 
   private Boolean estaProcesado = false;
@@ -41,11 +38,10 @@ public abstract class InformeRescate extends EntidadPersistente {
   }
 
   public InformeRescate(Persona rescatista, Ubicacion ubicacionRescatista, MascotaEncontrada mascotaEncontrada,
-                        RepositorioInformes repositorioInformes, ReceptorHogares receptorHogares) {
+                        ReceptorHogares receptorHogares) {
     this.rescatista = rescatista;
     this.ubicacionRescatista = ubicacionRescatista;
     this.mascotaEncontrada = mascotaEncontrada;
-    this.repositorioInformes = repositorioInformes;
     this.receptorHogares = receptorHogares;
   }
 
@@ -62,7 +58,6 @@ public abstract class InformeRescate extends EntidadPersistente {
 
   public void procesarInforme() {
     this.estaProcesado = true;
-    repositorioInformes.marcarInformeComoProcesado(this);
   }
 
   public MascotaEncontrada getMascotaEncontrada() {

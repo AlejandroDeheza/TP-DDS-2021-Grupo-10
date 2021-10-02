@@ -1,5 +1,6 @@
 package modelo.informe;
 
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import repositorios.RepositorioAsociaciones;
 import modelo.asociacion.UbicadorAsociaciones;
 import modelo.hogarDeTransito.Hogar;
@@ -9,23 +10,19 @@ import modelo.mascota.MascotaEncontrada;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.Persona;
 import modelo.publicacion.Rescate;
-import repositorios.RepositorioInformes;
 import repositorios.RepositorioRescates;
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "informe_sin_QR")
-public class InformeSinQR extends InformeRescate {
+public class InformeSinQR extends InformeRescate implements WithGlobalEntityManager {
 
   @Enumerated
   private Animal tipoAnimal;
 
   @ManyToMany(cascade = CascadeType.ALL)
   private List<Caracteristica> caracteristicas;
-
-  @Transient
-  private RepositorioRescates repositorioRescates;
 
   @Transient
   private RepositorioAsociaciones repositorioAsociaciones;
@@ -36,13 +33,11 @@ public class InformeSinQR extends InformeRescate {
   }
 
   public InformeSinQR(Persona rescatista, Ubicacion ubicacionRescatista, MascotaEncontrada mascotaEncontrada,
-                      RepositorioInformes repositorioInformes, ReceptorHogares receptorHogares, Animal tipoAnimal,
-                      List<Caracteristica> caracteristicas, RepositorioRescates repositorioRescates,
+                      ReceptorHogares receptorHogares, Animal tipoAnimal, List<Caracteristica> caracteristicas,
                       RepositorioAsociaciones repositorioAsociaciones) {
-    super(rescatista, ubicacionRescatista, mascotaEncontrada, repositorioInformes, receptorHogares);
+    super(rescatista, ubicacionRescatista, mascotaEncontrada, receptorHogares);
     this.tipoAnimal = tipoAnimal;
     this.caracteristicas = caracteristicas;
-    this.repositorioRescates = repositorioRescates;
     this.repositorioAsociaciones = repositorioAsociaciones;
   }
 
@@ -63,10 +58,9 @@ public class InformeSinQR extends InformeRescate {
 
   private void generarPublicacion() {
     UbicadorAsociaciones ubicador = new UbicadorAsociaciones(repositorioAsociaciones);
-    repositorioRescates.agregar(
+    entityManager().persist(
         new Rescate(
             this.getRescatista(),
-            repositorioRescates,
             this.getMascotaEncontrada(),
             ubicador.getAsociacionMasCercana(getMascotaEncontrada().getUbicacion())
         )

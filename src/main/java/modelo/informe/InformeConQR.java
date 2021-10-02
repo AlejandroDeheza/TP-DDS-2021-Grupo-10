@@ -24,10 +24,8 @@ public class InformeConQR extends InformeRescate {
   }
 
   public InformeConQR(Persona rescatista, Ubicacion ubicacionRescatista, MascotaEncontrada mascotaEncontrada,
-                      RepositorioInformes repositorioInformes, ReceptorHogares receptorHogares,
-                      MascotaRegistrada mascotaRegistrada) {
-    super(rescatista, ubicacionRescatista, mascotaEncontrada, repositorioInformes,
-        receptorHogares);
+                      ReceptorHogares receptorHogares, MascotaRegistrada mascotaRegistrada) {
+    super(rescatista, ubicacionRescatista, mascotaEncontrada, receptorHogares);
     this.mascotaRegistrada = mascotaRegistrada;
   }
 
