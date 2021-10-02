@@ -26,9 +26,9 @@ public class AsociacionTests extends NuestraAbstractPersistenceTest {
   @BeforeEach
   public void loadContext() {
     repositorioAsociaciones = new RepositorioAsociaciones();
-    repositorioAsociaciones.agregarAsociacion(asociacion); //50
-    repositorioAsociaciones.agregarAsociacion(asociacion2); //1
-    repositorioAsociaciones.agregarAsociacion(asociacion3); //100
+    entityManager().persist(asociacion); //50
+    entityManager().persist(asociacion2); //1
+    entityManager().persist(asociacion3); //100
     ubicadorAsociaciones = new UbicadorAsociaciones(repositorioAsociaciones);
   }
 

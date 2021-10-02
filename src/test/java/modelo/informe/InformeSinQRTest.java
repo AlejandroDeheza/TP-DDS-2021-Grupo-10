@@ -32,14 +32,14 @@ public class InformeSinQRTest extends NuestraAbstractPersistenceTest {
     repositorioRescates = new RepositorioRescates();
     receptorHogaresMock = mock(ReceptorHogares.class);
     repositorioAsociaciones = new RepositorioAsociaciones();
-    repositorioAsociaciones.agregarAsociacion(DummyData.getAsociacion());
+    entityManager().persist(DummyData.getAsociacion());
     informeSinQR = generarInforme();
   }
 
   @Test
   @DisplayName("Cuando se procesa un informe sin QR se agrega una publicación de rescate al RepositorioRescates")
   public void procesarInformeGeneraPublicacionEnElRepo() {
-    repositorioInformes.agregarInformeRescate(informeSinQR);
+    entityManager().persist(informeSinQR);
     assertTrue(repositorioInformes.getInformesPendientes().contains(informeSinQR));
     informeSinQR.procesarInforme();
     assertTrue(repositorioInformes.getInformesProcesados().contains(informeSinQR));
@@ -58,8 +58,8 @@ public class InformeSinQRTest extends NuestraAbstractPersistenceTest {
 
   private InformeSinQR generarInforme() {
     return new InformeSinQR(DummyData.getPersona(null), DummyData.getUbicacion(),
-        DummyData.getMascotaEncontrada(DummyData.getFotos()), repositorioInformes, receptorHogaresMock, Animal.PERRO,
-        DummyData.getCaracteristicasParaMascota(), repositorioRescates, repositorioAsociaciones);
+        DummyData.getMascotaEncontrada(DummyData.getFotos()), receptorHogaresMock, Animal.PERRO,
+        DummyData.getCaracteristicasParaMascota(), repositorioAsociaciones);
   }
 
 }

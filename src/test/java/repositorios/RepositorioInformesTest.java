@@ -19,10 +19,10 @@ public class RepositorioInformesTest extends NuestraAbstractPersistenceTest {
   @DisplayName("si se utiliza informesDeUltimosNDias(), este devuelve un registro insertado previamente")
   public void listarMascotasEncontradasEnLosUltimos10DiasTest() {
     InformeConQR informe = new InformeConQR(null, null,
-        DummyData.getMascotaEncontrada(DummyData.getFotos()), repositorioInformes, null, null);
+        DummyData.getMascotaEncontrada(DummyData.getFotos()), null, null);
 
     assertEquals(repositorioInformes.informesDeUltimosNDias(10).size(), 0);
-    repositorioInformes.agregarInformeRescate(informe);
+    entityManager().persist(informe);
     assertEquals(repositorioInformes.informesDeUltimosNDias(10).size(), 1);
     assertEquals(informe, repositorioInformes.informesDeUltimosNDias(10).get(0));
   }

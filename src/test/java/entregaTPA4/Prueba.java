@@ -26,11 +26,11 @@ public class Prueba extends NuestraAbstractPersistenceTest {
     NotificadorCorreo notificadorCorreo = new NotificadorCorreo("un_email");
 
     InformeConQR informe = new InformeConQR(DummyData.getPersona(notificadorCorreo), DummyData.getUbicacion(),
-        DummyData.getMascotaEncontrada(DummyData.getFotos()), repositorioInformes, null,
+        DummyData.getMascotaEncontrada(DummyData.getFotos()), null,
         DummyData.getMascotaRegistrada(notificadorCorreo));
 
     assertEquals(repositorioInformes.informesDeUltimosNDias(10).size(), 0);
-    repositorioInformes.agregarInformeRescate(informe);
+    entityManager().persist(informe);
     assertEquals(repositorioInformes.informesDeUltimosNDias(10).size(), 1);
     assertEquals(informe.getId(), repositorioInformes.informesDeUltimosNDias(10).get(0).getId());
   }

@@ -29,7 +29,6 @@ public class Punto1 {
         () -> new DarEnAdopcion(
             DummyData.getUsuario(notificadorCorreo),
             DummyData.getMascotaRegistrada(notificadorCorreo),
-            null,
             Arrays.asList(respuestaDelDadorDador1, respuestaDelDadorDador2),
             new Asociacion("", DummyData.getUbicacion())
     ));

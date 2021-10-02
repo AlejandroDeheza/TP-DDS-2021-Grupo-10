@@ -36,11 +36,10 @@ public class RecomendadorDeAdopcionesTest {
     repositorioDarEnAdopcion = mock(RepositorioDarEnAdopcion.class);
     repositorioSuscripcionesParaAdopciones = mock(RepositorioSuscripcionesParaAdopciones.class);
 
-    publicacion1 = DummyData.getPublicacionDeDarEnAdopcion(notificadorMockeado, repositorioDarEnAdopcion);
+    publicacion1 = DummyData.getPublicacionDeDarEnAdopcion(notificadorMockeado);
     publicacion2 = new DarEnAdopcion(
         DummyData.getUsuario(notificadorMockeado),
         DummyData.getMascotaRegistrada(notificadorMockeado),
-        repositorioDarEnAdopcion,
         Arrays.asList(
             new RespuestaDelDador("bla", DummyData.getParDePreguntas1()),
             new RespuestaDelDador("bla", DummyData.getParDePreguntas2())
@@ -50,8 +49,8 @@ public class RecomendadorDeAdopcionesTest {
 
     when(repositorioDarEnAdopcion.getPublicaciones()).thenReturn(Arrays.asList(publicacion1, publicacion2));
     when(repositorioSuscripcionesParaAdopciones.getSuscripciones()).thenReturn(Arrays.asList(
-        DummyData.getSuscripcionParaAdopcion(notificadorMockeado, repositorioSuscripcionesParaAdopciones),
-        DummyData.getSuscripcionParaAdopcion(notificadorMockeado, repositorioSuscripcionesParaAdopciones)
+        DummyData.getSuscripcionParaAdopcion(notificadorMockeado),
+        DummyData.getSuscripcionParaAdopcion(notificadorMockeado)
     ));
 
     recomendadorDeAdopciones = new RecomendadorDeAdopciones(2,
@@ -80,7 +79,6 @@ public class RecomendadorDeAdopcionesTest {
         new DarEnAdopcion(
             DummyData.getUsuario(notificadorMockeado),
             mascotaRegistrada,
-            repositorioDarEnAdopcion,
             Arrays.asList(
                 new RespuestaDelDador("Si", DummyData.getParDePreguntas1()),
                 new RespuestaDelDador("2", DummyData.getParDePreguntas2())
@@ -105,7 +103,6 @@ public class RecomendadorDeAdopcionesTest {
         new DarEnAdopcion(
             DummyData.getUsuario(notificadorMockeado),
             mascotaRegistrada,
-            repositorioDarEnAdopcion,
             Arrays.asList(
                 new RespuestaDelDador("Si", DummyData.getParDePreguntas1()),
                 new RespuestaDelDador("2", DummyData.getParDePreguntas2())
@@ -121,7 +118,7 @@ public class RecomendadorDeAdopcionesTest {
   @Test
   public void lasRecomendacionesSeOrdenanCorrectamente() {
     List<DarEnAdopcion> recomendaciones = recomendadorDeAdopciones.generarRecomendaciones(
-        DummyData.getSuscripcionParaAdopcion(notificadorMockeado, repositorioSuscripcionesParaAdopciones)
+        DummyData.getSuscripcionParaAdopcion(notificadorMockeado)
     );
     assertEquals(2, recomendaciones.size());
     assertEquals(publicacion1, recomendaciones.get(0));
@@ -134,7 +131,7 @@ public class RecomendadorDeAdopcionesTest {
         repositorioDarEnAdopcion, repositorioSuscripcionesParaAdopciones);
 
     List<DarEnAdopcion> recomendaciones = recomendadorDeAdopciones.generarRecomendaciones(
-        DummyData.getSuscripcionParaAdopcion(notificadorMockeado, repositorioSuscripcionesParaAdopciones)
+        DummyData.getSuscripcionParaAdopcion(notificadorMockeado)
     );
     assertEquals(1, recomendaciones.size());
     assertEquals(publicacion1, recomendaciones.get(0));

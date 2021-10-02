@@ -13,7 +13,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
 public class RepositorioCaracteristicasTest extends NuestraAbstractPersistenceTest {
 
   RepositorioCaracteristicas repository;
@@ -46,15 +45,17 @@ public class RepositorioCaracteristicasTest extends NuestraAbstractPersistenceTe
     CaracteristicaConValoresPosibles unaCaracteristicaConDosValoresPosibles = DummyData.getCaracteristicaParaAdmin();
     repository.agregarCaracteristicasConValoresPosibles(unaCaracteristicaConDosValoresPosibles);
     assertEquals(1,  repository.getCaracteristicasConValoresPosibles().size());
-    assertEquals(unaCaracteristicaConDosValoresPosibles.getValoresCaracteristicas().get(0),repository.getCaracteristicas().get(0).getValorCaracteristica());
-    assertEquals(unaCaracteristicaConDosValoresPosibles.getValoresCaracteristicas().get(1),repository.getCaracteristicas().get(1).getValorCaracteristica());
+    assertEquals(unaCaracteristicaConDosValoresPosibles.getValoresCaracteristicas().get(0),
+        repository.getCaracteristicas().get(0).getValorCaracteristica());
+    assertEquals(unaCaracteristicaConDosValoresPosibles.getValoresCaracteristicas().get(1),
+        repository.getCaracteristicas().get(1).getValorCaracteristica());
   }
 
   @Test
   @DisplayName("Agregar una caracteristica en un repositorio, aumenta el numero de caracteristicas en dos")
   public void agregarCaracteristicaTest(){
     Caracteristica unaCaracteristica = DummyData.getCaracteristicasParaMascota().get(0);
-    repository.agregarCaracteristica(unaCaracteristica); //Esto agrega una caracteristicas a la DB.
+    entityManager().persist(unaCaracteristica);
     assertEquals(1,  repository.getCaracteristicas().size());
   }
 
@@ -62,8 +63,8 @@ public class RepositorioCaracteristicasTest extends NuestraAbstractPersistenceTe
   @DisplayName("Eliminar una caracteristica en un repositorio, decrementa el numero de caracteristicas en dos")
   public void eliminarCaracteristicaTest(){
     Caracteristica unaCaracteristica = DummyData.getCaracteristicasParaMascota().get(0);
-    repository.agregarCaracteristica(unaCaracteristica); //Esto agrega una caracteristicas a la DB.
-    repository.eliminarCaracteristica(unaCaracteristica);
+    entityManager().persist(unaCaracteristica);
+    entityManager().remove(unaCaracteristica);
     assertEquals(0,  repository.getCaracteristicas().size());
   }
 
@@ -71,7 +72,7 @@ public class RepositorioCaracteristicasTest extends NuestraAbstractPersistenceTe
   @DisplayName("Listar caracteristicas me devuelve una lista con las caractersiticas agregadas")
   public void listarCaracteristicaTest(){
     Caracteristica unaCaracteristica = DummyData.getCaracteristicasParaMascota().get(0);
-    repository.agregarCaracteristica(unaCaracteristica); //Esto agrega una caracteristicas a la DB.
+    entityManager().persist(unaCaracteristica);
     List<Caracteristica> listaFromRepo = repository.getCaracteristicas();
     assertEquals(listaFromRepo.get(0),  unaCaracteristica);
     assertEquals(1,  repository.getCaracteristicas().size());
