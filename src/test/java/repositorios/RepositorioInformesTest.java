@@ -8,12 +8,7 @@ import utils.DummyData;
 
 public class RepositorioInformesTest extends NuestraAbstractPersistenceTest {
 
-  RepositorioInformes repositorioInformes;
-
-  @BeforeEach
-  public void contextLoad() {
-    repositorioInformes = new RepositorioInformes();
-  }
+  RepositorioInformes repositorioInformes = new RepositorioInformes();
 
   @Test
   @DisplayName("si se utiliza informesDeUltimosNDias(), este devuelve un registro insertado previamente")

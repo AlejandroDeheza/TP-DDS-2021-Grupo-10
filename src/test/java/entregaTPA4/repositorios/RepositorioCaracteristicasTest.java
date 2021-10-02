@@ -15,12 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RepositorioCaracteristicasTest extends NuestraAbstractPersistenceTest {
 
-  RepositorioCaracteristicas repository;
-
-  @BeforeEach
-  public void contextLoad() {
-    repository = new RepositorioCaracteristicas();
-  }
+  RepositorioCaracteristicas repository = new RepositorioCaracteristicas();
 
   @Test
   @DisplayName("Agregar una caractersitica con dos valores posibles en un repositorio, aumenta el numero de caracteristicas en dos")

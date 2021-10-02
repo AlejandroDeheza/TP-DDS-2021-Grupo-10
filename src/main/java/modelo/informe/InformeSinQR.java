@@ -10,7 +10,6 @@ import modelo.mascota.MascotaEncontrada;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.Persona;
 import modelo.publicacion.Rescate;
-import repositorios.RepositorioRescates;
 import javax.persistence.*;
 import java.util.List;
 

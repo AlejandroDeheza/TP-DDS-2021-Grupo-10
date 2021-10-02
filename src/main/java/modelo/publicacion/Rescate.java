@@ -4,10 +4,8 @@ import modelo.asociacion.Asociacion;
 import modelo.mascota.MascotaEncontrada;
 import modelo.persona.Persona;
 import modelo.usuario.Usuario;
-import repositorios.RepositorioRescates;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
 
 /**
  * Representa a Publicacion de la 2da entrega

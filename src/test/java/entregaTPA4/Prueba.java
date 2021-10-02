@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import modelo.informe.InformeConQR;
 import modelo.notificacion.NotificadorCorreo;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import entregaTPA4.persistencia.NuestraAbstractPersistenceTest;
@@ -13,12 +12,7 @@ import utils.DummyData;
 
 public class Prueba extends NuestraAbstractPersistenceTest {
 
-  RepositorioInformes repositorioInformes;
-
-  @BeforeEach
-  public void contextLoad() {
-    repositorioInformes = new RepositorioInformes();
-  }
+  RepositorioInformes repositorioInformes = new RepositorioInformes();
 
   @Test
   @DisplayName("si se utiliza informesDeUltimosNDias(), este devuelve un registro insertado previamente")

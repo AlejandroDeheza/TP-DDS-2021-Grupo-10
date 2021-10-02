@@ -20,18 +20,14 @@ import java.util.List;
 
 public class InformeSinQRTest extends NuestraAbstractPersistenceTest {
 
-  RepositorioInformes repositorioInformes;
-  RepositorioRescates repositorioRescates;
-  RepositorioAsociaciones repositorioAsociaciones;
+  RepositorioInformes repositorioInformes = new RepositorioInformes();
+  RepositorioAsociaciones repositorioAsociaciones = new RepositorioAsociaciones();
   ReceptorHogares receptorHogaresMock;
   InformeSinQR informeSinQR;
 
   @BeforeEach
   public void loadContext() {
-    repositorioInformes = new RepositorioInformes();
-    repositorioRescates = new RepositorioRescates();
     receptorHogaresMock = mock(ReceptorHogares.class);
-    repositorioAsociaciones = new RepositorioAsociaciones();
     entityManager().persist(DummyData.getAsociacion());
     informeSinQR = generarInforme();
   }
@@ -44,7 +40,7 @@ public class InformeSinQRTest extends NuestraAbstractPersistenceTest {
     informeSinQR.procesarInforme();
     assertTrue(repositorioInformes.getInformesProcesados().contains(informeSinQR));
 
-    assertEquals(1, repositorioRescates.getRescates().size());
+    assertEquals(1, new RepositorioRescates().getRescates().size());
   }
 
   @Test

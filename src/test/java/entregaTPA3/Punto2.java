@@ -13,13 +13,12 @@ import org.junit.jupiter.api.Test;
 import utils.DummyData;
 
 public class Punto2 extends NuestraAbstractPersistenceTest {
-  RepositorioPreguntasObligatorias repositorioPreguntasObligatorias;
+  RepositorioPreguntasObligatorias repositorioPreguntasObligatorias = new RepositorioPreguntasObligatorias();
   ParDePreguntas parDePreguntas;
   Asociacion asociacion = new Asociacion("", DummyData.getUbicacion());
 
   @BeforeEach
   public void loadContext() {
-    repositorioPreguntasObligatorias = new RepositorioPreguntasObligatorias();
     parDePreguntas = getParDePreguntas();
   }
 

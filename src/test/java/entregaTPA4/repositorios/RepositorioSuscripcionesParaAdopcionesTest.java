@@ -3,7 +3,6 @@ package entregaTPA4.repositorios;
 import entregaTPA4.persistencia.NuestraAbstractPersistenceTest;
 import modelo.notificacion.NotificadorCorreo;
 import modelo.suscripcion.SuscripcionParaAdopcion;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import repositorios.RepositorioSuscripcionesParaAdopciones;
@@ -13,12 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RepositorioSuscripcionesParaAdopcionesTest extends NuestraAbstractPersistenceTest {
 
-  RepositorioSuscripcionesParaAdopciones repository;
-
-  @BeforeEach
-  public void contextLoad() {
-    repository = new RepositorioSuscripcionesParaAdopciones();
-  }
+  RepositorioSuscripcionesParaAdopciones repository = new RepositorioSuscripcionesParaAdopciones();
 
   @Test
   @DisplayName("Agregar una suscripcion aumenta el numero de suscripciones en una")
