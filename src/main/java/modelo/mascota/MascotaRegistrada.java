@@ -27,7 +27,7 @@ public class MascotaRegistrada extends EntidadPersistente {
   @Enumerated
   private Animal animal;
 
-  @ManyToMany
+  @ManyToMany(cascade = CascadeType.ALL)
   private List<Caracteristica> caracteristicas;
 
   @ElementCollection

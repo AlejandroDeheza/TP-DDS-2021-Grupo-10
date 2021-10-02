@@ -12,13 +12,13 @@ import java.util.List;
 @Entity
 public class DarEnAdopcion extends Publicacion {
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   private Usuario publicador;
 
   @ManyToOne(cascade = CascadeType.ALL)
   private Asociacion asociacion;
 
-  @OneToMany
+  @OneToMany(cascade = CascadeType.ALL)
   @JoinColumn(name = "Id_publicacion_dar_adopcion")
   private List<RespuestaDelDador> respuestasDelDador;
 
@@ -49,7 +49,7 @@ public class DarEnAdopcion extends Publicacion {
   public void notificarAlPublicador(Usuario adoptante) {
     publicador.getNotificadorPreferido().notificarQuierenAdoptarTuMascota(adoptante, mascotaEnAdopcion);
     estaActiva = false;
-    repositorio.marcarComoProcesada(this);
+    repositorio.actualizar(this);
   }
 
   public int cantidadConLasQueMatchea(List<RespuestaDelAdoptante> comodidades) {

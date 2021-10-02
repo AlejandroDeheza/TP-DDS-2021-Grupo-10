@@ -1,6 +1,8 @@
 package modelo.pregunta;
 
 import modelo.EntidadPersistente;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -13,7 +15,7 @@ public class RespuestaDelDador extends EntidadPersistente {
 
   private String respuesta;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   private ParDePreguntas parDePreguntas;
 
   // para hibernate

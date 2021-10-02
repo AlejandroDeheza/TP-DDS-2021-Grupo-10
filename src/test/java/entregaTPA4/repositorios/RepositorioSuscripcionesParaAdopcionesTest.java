@@ -43,42 +43,5 @@ public class RepositorioSuscripcionesParaAdopcionesTest extends NuestraAbstractP
     repository.darDeBaja(suscripcionParaAdopcion);
     assertEquals(1,  repository.getSuscripcionesDeBaja().size());
   }
-//
-//  @Test
-//  @DisplayName("Si agrego una caracteristica con dos valores posibles la cantidad de caractersiticas que devuelve el repo es una")
-//  public void listarCaracteristicasConDosValoresPosiblesTest(){
-//    CaracteristicaConValoresPosibles unaCaracteristicaConDosValoresPosibles = DummyData.getCaracteristicaParaAdmin();
-//    repository.agregarCaracteristicasConValoresPosibles(unaCaracteristicaConDosValoresPosibles);
-//    assertEquals(1,  repository.getCaracteristicasConValoresPosibles().size());
-//    assertEquals(unaCaracteristicaConDosValoresPosibles.getValoresCaracteristicas().get(0),repository.getCaracteristicas().get(0).getValorCaracteristica());
-//    assertEquals(unaCaracteristicaConDosValoresPosibles.getValoresCaracteristicas().get(1),repository.getCaracteristicas().get(1).getValorCaracteristica());
-//  }
-//
-//  @Test
-//  @DisplayName("Agregar una caracteristica en un repositorio, aumenta el numero de caracteristicas en dos")
-//  public void agregarCaracteristicaTest(){
-//    Caracteristica unaCaracteristica = DummyData.getCaracteristicasParaMascota().get(0);
-//    repository.agregarCaracteristica(unaCaracteristica); //Esto agrega una caracteristicas a la DB.
-//    assertEquals(1,  repository.getCaracteristicas().size());
-//  }
-//
-//  @Test
-//  @DisplayName("Eliminar una caracteristica en un repositorio, decrementa el numero de caracteristicas en dos")
-//  public void eliminarCaracteristicaTest(){
-//    Caracteristica unaCaracteristica = DummyData.getCaracteristicasParaMascota().get(0);
-//    repository.agregarCaracteristica(unaCaracteristica); //Esto agrega una caracteristicas a la DB.
-//    repository.eliminarCaracteristica(unaCaracteristica);
-//    assertEquals(0,  repository.getCaracteristicas().size());
-//  }
-//
-//  @Test
-//  @DisplayName("Listar caracteristicas me devuelve una lista con las caractersiticas agregadas")
-//  public void listarCaracteristicaTest(){
-//    Caracteristica unaCaracteristica = DummyData.getCaracteristicasParaMascota().get(0);
-//    repository.agregarCaracteristica(unaCaracteristica); //Esto agrega una caracteristicas a la DB.
-//    List<Caracteristica> listaFromRepo = repository.getCaracteristicas();
-//    assertEquals(listaFromRepo.get(0),  unaCaracteristica);
-//    assertEquals(1,  repository.getCaracteristicas().size());
-//  }
 
 }
