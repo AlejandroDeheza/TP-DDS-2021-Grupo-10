@@ -1,4 +1,4 @@
-package persistencia;
+package entregaTPA4.persistencia;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

@@ -1,19 +1,18 @@
 package modelo.informe;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+
 import modelo.hogarDeTransito.Hogar;
 import modelo.hogarDeTransito.ReceptorHogares;
+import modelo.notificacion.NotificadorCorreo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import repositorios.RepositorioInformes;
-import modelo.notificacion.NotificadorCorreo;
 import utils.DummyData;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 public class InformeConQRTest {
 
@@ -24,7 +23,7 @@ public class InformeConQRTest {
 
   @BeforeEach
   public void contextLoad() {
-    repositorioInformes = new RepositorioInformes();
+    repositorioInformes = mock(RepositorioInformes.class);
     receptorHogaresMock = mock(ReceptorHogares.class);
     notificadorMockeado = mock(NotificadorCorreo.class);
     informeConQR = generarInformeConQR();
@@ -33,11 +32,7 @@ public class InformeConQRTest {
   @Test
   @DisplayName("Al procesar un informe con QR, se envia una notificacion y se marca el informe como procesado")
   public void MascotaConDuenioNotificarTest() {
-    repositorioInformes.agregarInformeRescate(informeConQR);
-    assertTrue(repositorioInformes.getInformesPendientes().contains(informeConQR));
     informeConQR.procesarInforme();
-    assertTrue(repositorioInformes.getInformesProcesados().contains(informeConQR));
-
     verify(notificadorMockeado, times(1)).notificarEncontramosTuMascota(any());
   }
 

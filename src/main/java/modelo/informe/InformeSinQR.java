@@ -11,15 +11,29 @@ import modelo.persona.Persona;
 import modelo.publicacion.Rescate;
 import repositorios.RepositorioInformes;
 import repositorios.RepositorioRescates;
-
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Table(name = "informe_sin_QR")
 public class InformeSinQR extends InformeRescate {
 
+  @Enumerated
   private Animal tipoAnimal;
+
+  @ManyToMany(cascade = CascadeType.ALL)
   private List<Caracteristica> caracteristicas;
+
+  @Transient
   private RepositorioRescates repositorioRescates;
+
+  @Transient
   private RepositorioAsociaciones repositorioAsociaciones;
+
+  // para hibernate
+  private InformeSinQR() {
+
+  }
 
   public InformeSinQR(Persona rescatista, Ubicacion ubicacionRescatista, MascotaEncontrada mascotaEncontrada,
                       RepositorioInformes repositorioInformes, ReceptorHogares receptorHogares, Animal tipoAnimal,

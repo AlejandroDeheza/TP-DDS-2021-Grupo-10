@@ -1,5 +1,8 @@
 package entregaTPA3;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
 import modelo.notificacion.NotificadorCorreo;
 import modelo.publicacion.DarEnAdopcion;
 import modelo.usuario.Usuario;
@@ -9,16 +12,15 @@ import org.junit.jupiter.api.Test;
 import repositorios.RepositorioDarEnAdopcion;
 import utils.DummyData;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-
 public class Punto3 {
 
   NotificadorCorreo notificadorCorreo;
+  RepositorioDarEnAdopcion repositorioDarEnAdopcion;
 
   @BeforeEach
   public void contextLoad() {
     notificadorCorreo = mock(NotificadorCorreo.class);
+    repositorioDarEnAdopcion = mock(RepositorioDarEnAdopcion.class);
   }
 
   @Test
@@ -26,7 +28,7 @@ public class Punto3 {
   public void procesarUnaPublicacionDeDarEnAdopcionEnviaUnaNotificacion() {
     DarEnAdopcion publicacion = DummyData.getPublicacionDeDarEnAdopcion(
         notificadorCorreo,
-        new RepositorioDarEnAdopcion()
+        repositorioDarEnAdopcion
     );
     Usuario adoptante = DummyData.getUsuario(notificadorCorreo);
     publicacion.notificarAlPublicador(adoptante);

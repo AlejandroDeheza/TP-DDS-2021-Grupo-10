@@ -1,20 +1,18 @@
 package entregaTPA3;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.Mockito.mock;
+
 import modelo.asociacion.Asociacion;
 import modelo.mascota.Animal;
 import modelo.notificacion.NotificadorCorreo;
 import modelo.pregunta.RespuestaDelAdoptante;
-import modelo.suscripcion.SuscripcionParaAdopcion;
 import modelo.suscripcion.Preferencia;
+import modelo.suscripcion.SuscripcionParaAdopcion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import repositorios.RepositorioSuscripcionesParaAdopciones;
 import utils.DummyData;
-
 import java.util.Arrays;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
 
 public class Punto4 {
 
@@ -29,17 +27,13 @@ public class Punto4 {
 
   @Test
   public void sePuedeGenerarUnaPublicacionQueMuestraInteresDeAdopcion() {
-    RepositorioSuscripcionesParaAdopciones repositorio = new RepositorioSuscripcionesParaAdopciones();
-
-    SuscripcionParaAdopcion publicacion = new SuscripcionParaAdopcion(
+    assertDoesNotThrow(() -> new SuscripcionParaAdopcion(
         DummyData.getUsuario(notificadorCorreo),
         new Asociacion("", DummyData.getUbicacion()),
         new Preferencia(DummyData.getCaracteristicasParaMascota(), Animal.PERRO),
-        Arrays.asList(respuestaAdoptante1, respuestaAdoptante2)
-    );
-
-    repositorio.agregar(publicacion);
-    assertEquals(repositorio.getSuscripciones().size(), 1);
+        Arrays.asList(respuestaAdoptante1, respuestaAdoptante2),
+        null
+    ));
   }
 
 }

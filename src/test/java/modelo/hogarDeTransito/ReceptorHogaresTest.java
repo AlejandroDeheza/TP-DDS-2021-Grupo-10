@@ -1,5 +1,8 @@
 package modelo.hogarDeTransito;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
 import modelo.informe.Ubicacion;
 import modelo.mascota.Animal;
 import modelo.mascota.TamanioMascota;
@@ -8,11 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import utils.DummyData;
-
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 public class ReceptorHogaresTest {
 

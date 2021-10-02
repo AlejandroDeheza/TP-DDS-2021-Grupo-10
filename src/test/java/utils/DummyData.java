@@ -20,7 +20,7 @@ import modelo.usuario.Usuario;
 import repositorios.RepositorioDarEnAdopcion;
 import repositorios.RepositorioRescates;
 import modelo.notificacion.Notificador;
-
+import repositorios.RepositorioSuscripcionesParaAdopciones;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,25 +38,25 @@ public class DummyData {
 
   public static Persona getPersona(Notificador notificador) {
     return new Persona("PersonaNombre", "PersonaApellido", getDocumentoIdentidad(), getDatosDeContacto(notificador),
-        LocalDate.of(1995, 8, 7));
+        LocalDate.of(1995, 8, 7), notificador);
   }
 
   public static Persona getPersonaSinDatosDeContacto() {
-    return new Persona("PersonaNombre", "PersonaApellido", getDocumentoIdentidad(), null, LocalDate.of(1995, 8, 7));
+    return new Persona("PersonaNombre", "PersonaApellido", getDocumentoIdentidad(), null, LocalDate.of(1995, 8, 7),null);
   }
 
   public static Persona getPersonaSinDatosDeContactoNiNombreNiApellido() {
-    return new Persona(null, null, getDocumentoIdentidad(), new DatosDeContacto(null, null, new NotificadorCorreo("dds2021g10@gmail.com")), LocalDate.of(1995, 8, 7));
+    return new Persona(null, null, getDocumentoIdentidad(), new DatosDeContacto(null, null, new NotificadorCorreo("dds2021g10@gmail.com")), LocalDate.of(1995, 8, 7),null);
   }
 
   public static Persona getPersonaSinTelefono() {
     return new Persona("PersonaNombre", "PersonaApellido", getDocumentoIdentidad(),
-        new DatosDeContacto(null, "dds2021g10@gmail.com", new NotificadorCorreo("dds2021g10@gmail.com")), LocalDate.of(1995, 8, 7));
+        new DatosDeContacto(null, "dds2021g10@gmail.com", new NotificadorCorreo("dds2021g10@gmail.com")), LocalDate.of(1995, 8, 7), null);
   }
 
   public static Persona getPersonaSinCorreo() {
     return new Persona("PersonaNombre", "PersonaApellido", getDocumentoIdentidad(),
-        new DatosDeContacto("01147474747", null, new NotificadorCorreo("dds2021g10@gmail.com")), LocalDate.of(1995, 8, 7));
+        new DatosDeContacto("01147474747", null, new NotificadorCorreo("dds2021g10@gmail.com")), LocalDate.of(1995, 8, 7),null);
   }
 
   public static Usuario getUsuario(Notificador notificador) {
@@ -99,7 +99,7 @@ public class DummyData {
   public static ParDePreguntas getParDePreguntas1() {
     ParDePreguntas preguntas = new ParDePreguntas(
         "La mascota sufre si está mucho tiempo sola?",
-        "Va a estar la mascota mucho tiempo sola?"
+        "Va a estar la mascota mucho tiempo sola?",true
     );
     preguntas.agregarRespuesta(new ParDeRespuestas("Si", "No"));
     preguntas.agregarRespuesta(new ParDeRespuestas("No", "Si"));
@@ -110,7 +110,8 @@ public class DummyData {
   public static ParDePreguntas getParDePreguntas2() {
     ParDePreguntas preguntas = new ParDePreguntas(
         "Cuantas veces necesita salir la mascota al dia?",
-        "Cuantas veces sacarás a pasear a tu mascota al dia?"
+        "Cuantas veces sacarás a pasear a tu mascota al dia?",
+            true
     );
     preguntas.agregarRespuesta(new ParDeRespuestas("1", "1"));
     preguntas.agregarRespuesta(new ParDeRespuestas("1", "2"));
@@ -139,7 +140,8 @@ public class DummyData {
     return new Rescate(getPersona(notificador), repositorio, getMascotaEncontrada(getFotos()), getAsociacion());
   }
 
-  public static SuscripcionParaAdopcion getSuscripcionParaAdopcion(Notificador notificador) {
+  public static SuscripcionParaAdopcion getSuscripcionParaAdopcion(Notificador notificador,
+                                                                   RepositorioSuscripcionesParaAdopciones repo) {
     return new SuscripcionParaAdopcion(
         getUsuario(notificador),
         getAsociacion(),
@@ -147,7 +149,8 @@ public class DummyData {
         Arrays.asList(
             new RespuestaDelAdoptante("Si", getParDePreguntas1()),
             new RespuestaDelAdoptante("2", getParDePreguntas2())
-        )
+        ),
+        repo
     );
   }
 

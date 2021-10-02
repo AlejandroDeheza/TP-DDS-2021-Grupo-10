@@ -1,15 +1,14 @@
 package modelo.mascota;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import modelo.mascota.caracteristica.Caracteristica;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import utils.DummyData;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class MascotaRegistradaTest {
   MascotaRegistrada mascotaRegistrada;

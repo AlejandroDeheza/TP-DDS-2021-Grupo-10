@@ -12,7 +12,6 @@ import modelo.mascota.Animal;
 import modelo.mascota.TamanioMascota;
 import modelo.mascota.caracteristica.Caracteristica;
 import utils.ReceptorProperties;
-
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;

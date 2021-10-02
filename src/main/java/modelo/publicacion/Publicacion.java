@@ -1,9 +1,20 @@
 package modelo.publicacion;
 
 import modelo.usuario.Usuario;
+import javax.persistence.*;
 
-public interface Publicacion {
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class Publicacion {
 
-  void notificarAlPublicador(Usuario usuario);
+  @Id
+  @GeneratedValue(strategy = GenerationType.TABLE)
+  private Long id;
+
+  public Long getId() {
+    return id;
+  }
+
+  abstract void notificarAlPublicador(Usuario usuario);
 
 }

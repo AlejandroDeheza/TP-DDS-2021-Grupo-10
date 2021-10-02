@@ -1,5 +1,10 @@
 package modelo.informe;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
+import entregaTPA4.persistencia.NuestraAbstractPersistenceTest;
 import repositorios.RepositorioAsociaciones;
 import modelo.hogarDeTransito.Hogar;
 import modelo.hogarDeTransito.ReceptorHogares;
@@ -10,15 +15,10 @@ import org.junit.jupiter.api.Test;
 import repositorios.RepositorioInformes;
 import repositorios.RepositorioRescates;
 import utils.DummyData;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-
-public class InformeSinQRTest {
+public class InformeSinQRTest extends NuestraAbstractPersistenceTest {
 
   RepositorioInformes repositorioInformes;
   RepositorioRescates repositorioRescates;

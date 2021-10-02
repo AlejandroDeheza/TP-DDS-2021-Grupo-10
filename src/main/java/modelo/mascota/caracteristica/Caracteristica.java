@@ -1,12 +1,20 @@
 package modelo.mascota.caracteristica;
 
+import modelo.EntidadPersistente;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import javax.persistence.Entity;
 
-public class Caracteristica {
+@Entity
+public class Caracteristica extends EntidadPersistente {
 
   private String nombreCaracteristica;
   private String valorCaracteristica;
+
+  // para hibernate
+  private Caracteristica() {
+
+  }
 
   public Caracteristica(String nombreCaracteristica, String valorCaracteristica) {
     this.nombreCaracteristica = nombreCaracteristica;
@@ -28,7 +36,6 @@ public class Caracteristica {
     }
     return equals;
   }
-
 
   public String getNombreCaracteristica() {
     return nombreCaracteristica;

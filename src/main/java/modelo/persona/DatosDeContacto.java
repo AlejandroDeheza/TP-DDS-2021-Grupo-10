@@ -1,16 +1,23 @@
 package modelo.persona;
 
 import modelo.notificacion.Notificador;
+import javax.persistence.Embeddable;
 
+@Embeddable
 public class DatosDeContacto {
+
   private String telefono;
   private String email;
-  private Notificador notificadorPreferido;
+
+  // para hibernate
+  private DatosDeContacto() {
+
+  }
 
   public DatosDeContacto(String telefono, String email, Notificador notificadorPreferido) {
     this.telefono = telefono;
     this.email = email;
-    this.notificadorPreferido = notificadorPreferido;
+
   }
 
   public Boolean noHayDatosDeContacto() {
@@ -28,10 +35,6 @@ public class DatosDeContacto {
 
   public String getEmail() {
     return email;
-  }
-
-  public Notificador getNotificadorPreferido() {
-    return notificadorPreferido;
   }
 
 }

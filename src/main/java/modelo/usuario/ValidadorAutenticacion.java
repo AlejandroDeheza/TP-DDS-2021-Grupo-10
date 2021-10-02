@@ -2,7 +2,6 @@ package modelo.usuario;
 
 import excepciones.AutenticacionConsecutivaException;
 import excepciones.AutenticacionInvalidaException;
-
 import java.time.LocalTime;
 
 import static java.time.temporal.ChronoUnit.MINUTES;

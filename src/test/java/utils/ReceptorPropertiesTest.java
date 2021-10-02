@@ -1,10 +1,9 @@
 package utils;
 
-import excepciones.RepositorioPropertiesException;
-
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
+
+import excepciones.RepositorioPropertiesException;
+import org.junit.jupiter.api.Test;
 
 public class ReceptorPropertiesTest {
   String pathTest = "src/test/resources/app.properties";

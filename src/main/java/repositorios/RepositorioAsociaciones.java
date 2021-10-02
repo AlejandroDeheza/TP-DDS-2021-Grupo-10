@@ -1,33 +1,22 @@
 package repositorios;
 
 import modelo.asociacion.Asociacion;
-
-import java.util.ArrayList;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import java.util.List;
 
-public class RepositorioAsociaciones {
-  private List<Asociacion> asociaciones = new ArrayList<>();
-  private static RepositorioAsociaciones repositorioAsociaciones = new RepositorioAsociaciones();
-
-  public List<Asociacion> getAsociaciones() {
-    return asociaciones;
-  }
+public class RepositorioAsociaciones implements WithGlobalEntityManager {
 
   public void agregarAsociacion(Asociacion asociacion) {
-    asociaciones.add(asociacion);
+    entityManager().persist(asociacion);
+  }
+
+  public List<Asociacion> getAsociaciones() {
+    return entityManager()
+        .createQuery("from Asociacion", Asociacion.class)
+        .getResultList();
   }
 
   public void eliminarAsociaciones(Asociacion asociacion) {
-    asociaciones.remove(asociacion);
-  }
-
-
-  //el repositorio, en codigo de produccion, lo inyectamos por constructor
-  //usamos el constructor solo para tests
-  public RepositorioAsociaciones() {
-  }
-  //usamos el getInstance en Main
-  public static RepositorioAsociaciones getInstance() {
-    return repositorioAsociaciones;
+    entityManager().remove(asociacion);
   }
 }

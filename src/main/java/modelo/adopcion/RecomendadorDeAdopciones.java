@@ -3,12 +3,10 @@ package modelo.adopcion;
 import modelo.mascota.Animal;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.pregunta.RespuestaDelAdoptante;
-import modelo.pregunta.RespuestaDelDador;
 import modelo.publicacion.DarEnAdopcion;
 import modelo.suscripcion.SuscripcionParaAdopcion;
 import repositorios.RepositorioDarEnAdopcion;
 import repositorios.RepositorioSuscripcionesParaAdopciones;
-
 import java.util.List;
 import java.util.stream.Collectors;
 

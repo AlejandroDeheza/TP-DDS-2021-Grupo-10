@@ -1,23 +1,23 @@
 package modelo.usuario;
 
+import modelo.EntidadPersistente;
 import modelo.notificacion.Notificador;
 import modelo.persona.Persona;
-
 import javax.persistence.*;
 
 @Entity
-public class Usuario {
-
-  @Id
-  @GeneratedValue
-  private Long id;
+public class Usuario extends EntidadPersistente {
 
   private String usuario;
+
   private String contrasenia;
-  @Transient
+
+  @Enumerated
   private TipoUsuario tipo;
-  @Transient
+
+  @OneToOne(cascade = CascadeType.ALL)
   private Persona persona;
+
   @Transient
   private ValidadorAutenticacion validadorAutenticacion;
 

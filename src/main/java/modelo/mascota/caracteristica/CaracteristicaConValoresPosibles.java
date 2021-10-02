@@ -1,6 +1,7 @@
 package modelo.mascota.caracteristica;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CaracteristicaConValoresPosibles {
 
@@ -20,4 +21,9 @@ public class CaracteristicaConValoresPosibles {
     return valoresCaracteristicas;
   }
 
+  public List<Caracteristica> listarCaracteristicas() {
+    return valoresCaracteristicas.stream()
+        .map(v -> new Caracteristica(nombreCaracteristica, v))
+        .collect(Collectors.toList());
+  }
 }

@@ -5,11 +5,14 @@ import repositorios.RepositorioSuscripcionesParaAdopciones;
 public class PatitasRunner {
 
   public static void main(String[] args) {
+    RepositorioDarEnAdopcion repositorioDarEnAdopcion = new RepositorioDarEnAdopcion();
+    RepositorioSuscripcionesParaAdopciones repositorioSuscripcionesParaAdopciones =
+        new RepositorioSuscripcionesParaAdopciones();
 
     RecomendadorDeAdopciones recomendadorDeAdopciones = new RecomendadorDeAdopciones(
         3,
-        RepositorioDarEnAdopcion.getInstance(),
-        RepositorioSuscripcionesParaAdopciones.getInstance()
+        repositorioDarEnAdopcion,
+        repositorioSuscripcionesParaAdopciones
     );
     recomendadorDeAdopciones.recomendarAdopcionesASuscritos();
     System.out.println("Recomendando a los Suscriptores");

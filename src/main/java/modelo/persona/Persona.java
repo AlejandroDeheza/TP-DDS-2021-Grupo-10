@@ -1,21 +1,37 @@
 package modelo.persona;
 
 import excepciones.DatosDeContactoIncompletosException;
+import modelo.EntidadPersistente;
 import modelo.notificacion.Notificador;
-
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Persona {
+@Entity
+public class Persona extends EntidadPersistente {
 
   private String nombre;
+
   private String apellido;
+
+  @Embedded
   private DocumentoIdentidad documentoIdentidad;
+
+  @Embedded
   private DatosDeContacto datosDeContacto;
+
   private LocalDate fechaNacimiento;
 
+  @ManyToOne(cascade = CascadeType.ALL)
+  private Notificador notificadorPreferido;
+
+  // para hibernate
+  private Persona() {
+
+  }
+
   public Persona(String nombre, String apellido, DocumentoIdentidad documentoIdentidad, DatosDeContacto datosDeContacto,
-                 LocalDate fechaNacimiento) {
+                 LocalDate fechaNacimiento, Notificador notificadorPreferido) {
     validarQueTengaDatosDeContacto(
         nombre,
         apellido,
@@ -26,6 +42,7 @@ public class Persona {
     this.documentoIdentidad = documentoIdentidad;
     this.datosDeContacto = datosDeContacto;
     this.fechaNacimiento = fechaNacimiento;
+    this.notificadorPreferido = notificadorPreferido;
   }
 
   private void validarQueTengaDatosDeContacto(String nombre, String apellido, DatosDeContacto datosDeContacto) {
@@ -39,7 +56,7 @@ public class Persona {
   }
 
   public Notificador getNotificadorPreferido() {
-    return datosDeContacto.getNotificadorPreferido();
+    return this.notificadorPreferido;
   }
 
   public String getNombre() {

@@ -1,49 +1,43 @@
 package repositorios;
 
 import modelo.informe.InformeRescate;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
+import javax.persistence.Query;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class RepositorioInformes {
-  private static RepositorioInformes repo = new RepositorioInformes();
-  private List<InformeRescate> informesPendientes = new ArrayList<>();
-  private List<InformeRescate> informesProcesados = new ArrayList<>();
+public class RepositorioInformes implements WithGlobalEntityManager {
 
   public void agregarInformeRescate(InformeRescate informe) {
-    informesPendientes.add(informe);
+    entityManager().persist(informe);
   }
 
   public List<InformeRescate> informesDeUltimosNDias(Integer diasPreviosABuscar) {
     LocalDate fechaFiltro = LocalDate.now().minusDays(diasPreviosABuscar);
-    return informesPendientes.stream()
+    return getInformesPendientes().stream()
         .filter(informe -> informe.getFechaEncuentro().isAfter(fechaFiltro))
         .collect(Collectors.toList());
   }
 
-  public void marcarInformeComoProcesado(InformeRescate informeAProcesar) {
-    this.informesPendientes.remove(informeAProcesar);
-    this.informesProcesados.add(informeAProcesar);
-  }
-
-
-  //el repositorio, en codigo de produccion, lo inyectamos por constructor
-  //usamos el constructor solo para tests
-  public RepositorioInformes() {
-  }
-  //usamos el getInstance en Main
-  public static RepositorioInformes getInstance() {
-    return repo;
+  public void marcarInformeComoProcesado(InformeRescate informeAProcesar) { // TODO Esto viene con el booleano modificado
+    Query query = entityManager().createQuery("UPDATE FROM InformeRescate i SET i.estaProcesado=true WHERE id=:id");
+    query.setParameter("id",informeAProcesar.getId()).executeUpdate();
   }
 
   public List<InformeRescate> getInformesPendientes() {
-    return informesPendientes;
+    return entityManager()
+        .createQuery("from InformeRescate", InformeRescate.class)
+        .getResultList().stream()
+        .filter(i -> !i.getEstaProcesado()).collect(Collectors.toList());
   }
 
   public List<InformeRescate> getInformesProcesados() {
-    return informesProcesados;
+    return entityManager()
+        .createQuery("from InformeRescate", InformeRescate.class)
+        .getResultList().stream()
+        .filter(InformeRescate::getEstaProcesado).collect(Collectors.toList());
   }
 
 }

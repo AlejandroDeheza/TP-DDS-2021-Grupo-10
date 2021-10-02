@@ -1,11 +1,27 @@
 package modelo.pregunta;
 
+import modelo.EntidadPersistente;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class RespuestaDelDador {
+@Entity
+@Table(name = "respuesta_del_dador")
+public class RespuestaDelDador extends EntidadPersistente {
+
   private String respuesta;
+
+  @ManyToOne(cascade = CascadeType.ALL)
   private ParDePreguntas parDePreguntas;
+
+  // para hibernate
+  private RespuestaDelDador() {
+
+  }
 
   public RespuestaDelDador(String respuesta, ParDePreguntas parDePreguntas) {
     this.respuesta = respuesta;

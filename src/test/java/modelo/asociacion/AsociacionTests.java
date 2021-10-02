@@ -1,14 +1,15 @@
 package modelo.asociacion;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import modelo.informe.Ubicacion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import entregaTPA4.persistencia.NuestraAbstractPersistenceTest;
 import repositorios.RepositorioAsociaciones;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-public class AsociacionTests {
+public class AsociacionTests extends NuestraAbstractPersistenceTest {
 
   Ubicacion ubicacion = new Ubicacion(50.01, 50.01, null);
   Asociacion asociacion = new Asociacion("", ubicacion);

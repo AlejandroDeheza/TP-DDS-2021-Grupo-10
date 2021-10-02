@@ -1,5 +1,8 @@
 package modelo.publicacion;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+
 import modelo.notificacion.NotificadorCorreo;
 import modelo.pregunta.ParDePreguntas;
 import modelo.pregunta.RespuestaDelAdoptante;
@@ -9,14 +12,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import repositorios.RepositorioDarEnAdopcion;
 import utils.DummyData;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.mock;
-import static org.junit.jupiter.api.Assertions.*;
-
 public class DarEnAdopcionTest {
+
   ParDePreguntas parDePreguntas = DummyData.getParDePreguntas1();
   NotificadorCorreo notificadorCorreo = mock(NotificadorCorreo.class);
   DarEnAdopcion darEnAdopcion;

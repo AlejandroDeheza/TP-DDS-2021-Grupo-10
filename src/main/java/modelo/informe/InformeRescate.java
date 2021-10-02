@@ -1,5 +1,6 @@
 package modelo.informe;
 
+import modelo.EntidadPersistente;
 import modelo.hogarDeTransito.Hogar;
 import modelo.hogarDeTransito.ReceptorHogares;
 import modelo.mascota.Animal;
@@ -8,17 +9,36 @@ import modelo.mascota.TamanioMascota;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.Persona;
 import repositorios.RepositorioInformes;
-
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-public abstract class InformeRescate {
+@Entity
+@Table(name = "informe")
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class InformeRescate extends EntidadPersistente {
 
+  @OneToOne(cascade = CascadeType.ALL)
   private Persona rescatista;
+
+  @Embedded
   private Ubicacion ubicacionRescatista;
+
+  @OneToOne(cascade = CascadeType.ALL)
   private MascotaEncontrada mascotaEncontrada;
+
+  @Transient
   private RepositorioInformes repositorioInformes;
+
+  @Transient
   private ReceptorHogares receptorHogares;
+
+  private Boolean estaProcesado = false;
+
+  // para hibernate
+  protected InformeRescate() {
+
+  }
 
   public InformeRescate(Persona rescatista, Ubicacion ubicacionRescatista, MascotaEncontrada mascotaEncontrada,
                         RepositorioInformes repositorioInformes, ReceptorHogares receptorHogares) {
@@ -41,6 +61,7 @@ public abstract class InformeRescate {
   }
 
   public void procesarInforme() {
+    this.estaProcesado = true;
     repositorioInformes.marcarInformeComoProcesado(this);
   }
 
@@ -62,6 +83,10 @@ public abstract class InformeRescate {
 
   public LocalDate getFechaEncuentro() {
     return mascotaEncontrada.getFechaEncuentro();
+  }
+
+  public Boolean getEstaProcesado(){
+    return this.estaProcesado;
   }
 
 }

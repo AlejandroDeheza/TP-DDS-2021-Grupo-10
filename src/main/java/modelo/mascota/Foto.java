@@ -1,17 +1,25 @@
 package modelo.mascota;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class Foto {
 
-  private String fotoB64Encoded;
+  private String link;
   private String metadata; //TODO Que va a tener la metadata? Por ahora la dejo en String
 
-  public Foto(String fotoB64Encoded, String metadata) {
-    this.fotoB64Encoded = fotoB64Encoded;
+  // para hibernate
+  private Foto() {
+
+  }
+
+  public Foto(String link, String metadata) {
+    this.link = link;
     this.metadata = metadata;
   }
 
-  public String getFotoB64Encoded() {
-    return fotoB64Encoded;
+  public String getLink() {
+    return link;
   }
 
   public String getMetadata() {

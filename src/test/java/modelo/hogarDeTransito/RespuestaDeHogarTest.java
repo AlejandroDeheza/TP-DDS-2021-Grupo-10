@@ -1,5 +1,7 @@
 package modelo.hogarDeTransito;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import modelo.hogarDeTransito.respuestas.RespuestaDeAdmision;
 import modelo.hogarDeTransito.respuestas.RespuestaDeHogar;
 import modelo.informe.Ubicacion;
@@ -10,12 +12,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import utils.DummyData;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class RespuestaDeHogarTest {
   Ubicacion ubicacionEncuentro;

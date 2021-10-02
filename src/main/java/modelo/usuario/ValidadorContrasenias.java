@@ -2,7 +2,6 @@ package modelo.usuario;
 
 import excepciones.ContraseniaInvalidaException;
 import utils.GestorArchivos;
-
 import java.util.List;
 
 public class ValidadorContrasenias {

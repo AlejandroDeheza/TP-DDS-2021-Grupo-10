@@ -1,17 +1,18 @@
 package entregaTPA3;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import modelo.asociacion.Asociacion;
 import modelo.pregunta.ParDePreguntas;
 import modelo.pregunta.ParDeRespuestas;
+import entregaTPA4.persistencia.NuestraAbstractPersistenceTest;
 import repositorios.RepositorioPreguntasObligatorias;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import utils.DummyData;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-public class Punto2 {
+public class Punto2 extends NuestraAbstractPersistenceTest {
   RepositorioPreguntasObligatorias repositorioPreguntasObligatorias;
   ParDePreguntas parDePreguntas;
   Asociacion asociacion = new Asociacion("", DummyData.getUbicacion());
@@ -41,7 +42,7 @@ public class Punto2 {
   private ParDePreguntas getParDePreguntas() {
     ParDePreguntas preguntas = new ParDePreguntas(
         "La mascota sufre si está mucho tiempo sola?",
-        "Va a estar la mascota mucho tiempo sola?");
+        "Va a estar la mascota mucho tiempo sola?",true);
     ParDeRespuestas respuesta1 = new ParDeRespuestas("Si", "No");
     ParDeRespuestas respuesta2 = new ParDeRespuestas("No", "Si");
     ParDeRespuestas respuesta3 = new ParDeRespuestas("No", "No");

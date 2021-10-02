@@ -1,23 +1,45 @@
 package modelo.mascota;
 
+import modelo.EntidadPersistente;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.usuario.Usuario;
-
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-public class MascotaRegistrada {
+@Entity
+public class MascotaRegistrada extends EntidadPersistente {
 
+  @ManyToOne(cascade = CascadeType.ALL)
   private Usuario duenio;
+
   private String nombre;
+
   private String apodo;
+
   private LocalDate fechaNacimiento;
+
   private String descripcionFisica;
+
+  @Enumerated
   private Sexo sexo;
+
+  @Enumerated
   private Animal animal;
+
+  @ManyToMany(cascade = CascadeType.ALL)
   private List<Caracteristica> caracteristicas;
+
+  @ElementCollection
   private List<Foto> fotos;
+
+  @Enumerated
   private TamanioMascota tamanio;
+
+  // para hibernate
+  private MascotaRegistrada() {
+
+  }
 
   public MascotaRegistrada(Usuario duenio, String nombre, String apodo, LocalDate fechaNacimiento,
                            String descripcionFisica, Sexo sexo, Animal animal, List<Caracteristica> caracteristicas,
