@@ -78,4 +78,5 @@ public class SuscripcionParaAdopcion extends EntidadPersistente {
   public void desactivar(){
     this.estaActiva = false;
   }
+  
 }
