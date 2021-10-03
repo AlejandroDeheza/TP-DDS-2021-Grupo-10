@@ -27,7 +27,7 @@ public class NotificadorCorreo extends Notificador {
   private Session session = configurarConexionCorreo();
 
   @Transient
-  private String email;
+  private String email; // TODO Recibir el email por parametro y agregar el enum notificador en la persona.
 
   @Transient
   private Function<Session, Transport> funcion = (sesion -> {

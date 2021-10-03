@@ -19,7 +19,7 @@ public class Usuario extends EntidadPersistente {
   private Persona persona;
 
   @Transient
-  private ValidadorAutenticacion validadorAutenticacion;
+  private ValidadorAutenticacion validadorAutenticacion; //TODO setear el validador para cuando vuelve desde la DB.
 
   public Usuario(String usuario, String contrasenia, TipoUsuario tipo, Persona persona) {
     new ValidadorContrasenias().correrValidaciones(contrasenia);
@@ -27,6 +27,10 @@ public class Usuario extends EntidadPersistente {
     this.contrasenia = contrasenia;
     this.tipo = tipo;
     this.persona = persona;
+    this.validadorAutenticacion = new ValidadorAutenticacion();
+  }
+
+  public Usuario(){
     this.validadorAutenticacion = new ValidadorAutenticacion();
   }
 

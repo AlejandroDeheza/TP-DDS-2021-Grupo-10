@@ -28,7 +28,7 @@ public class Rescate extends Publicacion {
   private MascotaEncontrada mascotaEncontrada;
 
   @Transient
-  private RepositorioRescates repositorioRescates;
+  private RepositorioRescates repositorioRescates; // TODO ver como instanciamos este objeto cuando lo devolvemos de la db.
 
   private Boolean estaActiva = true;
 

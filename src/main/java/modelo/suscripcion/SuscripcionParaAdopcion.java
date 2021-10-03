@@ -30,7 +30,7 @@ public class SuscripcionParaAdopcion extends EntidadPersistente {
   private Boolean estaActiva = true;
 
   @Transient
-  private RepositorioSuscripcionesParaAdopciones repositorioSuscripciones;
+  private RepositorioSuscripcionesParaAdopciones repositorioSuscripciones; //TODO ver como instanciamos este objeto cuando lo devolvemos de la db.
 
   // para hibernate
   private SuscripcionParaAdopcion() {

@@ -26,7 +26,7 @@ public class DarEnAdopcion extends Publicacion {
   private MascotaRegistrada mascotaEnAdopcion;
 
   @Transient
-  private RepositorioDarEnAdopcion repositorio;
+  private RepositorioDarEnAdopcion repositorio; //TODO ver como instanciamos este objeto cuando lo devolvemos de la db.
 
   private Boolean estaActiva = true;
 
