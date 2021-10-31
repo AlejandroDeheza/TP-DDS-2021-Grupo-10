@@ -31,8 +31,7 @@ public class Punto4 {
         DummyData.getUsuario(notificadorCorreo),
         new Asociacion("", DummyData.getUbicacion()),
         new Preferencia(DummyData.getCaracteristicasParaMascota(), Animal.PERRO),
-        Arrays.asList(respuestaAdoptante1, respuestaAdoptante2),
-        null
+        Arrays.asList(respuestaAdoptante1, respuestaAdoptante2)
     ));
   }
 

@@ -29,9 +29,6 @@ public class SuscripcionParaAdopcion extends EntidadPersistente {
 
   private Boolean estaActiva = true;
 
-  @Transient
-  private RepositorioSuscripcionesParaAdopciones repositorioSuscripciones;
-
   // para hibernate
   private SuscripcionParaAdopcion() {
 
@@ -39,13 +36,11 @@ public class SuscripcionParaAdopcion extends EntidadPersistente {
 
   public SuscripcionParaAdopcion(Usuario suscriptor, Asociacion asociacion,
                                  Preferencia preferenciaDelAdoptante,
-                                 List<RespuestaDelAdoptante> comodidadesDelAdoptante,
-                                 RepositorioSuscripcionesParaAdopciones repositorioSuscripciones) {
+                                 List<RespuestaDelAdoptante> comodidadesDelAdoptante) {
     this.suscriptor = suscriptor;
     this.asociacion = asociacion;
     this.preferenciaDelAdoptante = preferenciaDelAdoptante;
     this.comodidadesDelAdoptante = comodidadesDelAdoptante;
-    this.repositorioSuscripciones = repositorioSuscripciones;
   }
 
   public void enviarRecomendaciones(List<DarEnAdopcion> recomendaciones) {
@@ -56,7 +51,6 @@ public class SuscripcionParaAdopcion extends EntidadPersistente {
   public void enviarLinkDeBaja() {
     suscriptor.getNotificadorPreferido().notificarLinkDeBajaSuscripcionAdopciones("<inserte link de baja>");
     estaActiva = false;
-    repositorioSuscripciones.darDeBaja(this);
   } // TODO: revisar cuando podamos
 
   public Asociacion getAsociacion() {
@@ -78,4 +72,5 @@ public class SuscripcionParaAdopcion extends EntidadPersistente {
   public void desactivar(){
     this.estaActiva = false;
   }
+  
 }

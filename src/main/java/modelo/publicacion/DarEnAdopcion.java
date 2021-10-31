@@ -25,9 +25,6 @@ public class DarEnAdopcion extends Publicacion {
   @ManyToOne(cascade = CascadeType.ALL)
   private MascotaRegistrada mascotaEnAdopcion;
 
-  @Transient
-  private RepositorioDarEnAdopcion repositorio;
-
   private Boolean estaActiva = true;
 
   // para hibernate
@@ -36,12 +33,10 @@ public class DarEnAdopcion extends Publicacion {
   }
 
   public DarEnAdopcion(Usuario publicador, MascotaRegistrada mascotaEnAdopcion,
-                       RepositorioDarEnAdopcion repositorio, List<RespuestaDelDador> respuestasDelDador,
-                       Asociacion asociacion) {
+                       List<RespuestaDelDador> respuestasDelDador, Asociacion asociacion) {
     this.publicador = publicador;
     this.asociacion = asociacion;
     this.mascotaEnAdopcion = mascotaEnAdopcion;
-    this.repositorio = repositorio;
     this.respuestasDelDador = respuestasDelDador;
   }
 
@@ -49,7 +44,6 @@ public class DarEnAdopcion extends Publicacion {
   public void notificarAlPublicador(Usuario adoptante) {
     publicador.getNotificadorPreferido().notificarQuierenAdoptarTuMascota(adoptante, mascotaEnAdopcion);
     estaActiva = false;
-    repositorio.actualizar(this);
   }
 
   public int cantidadConLasQueMatchea(List<RespuestaDelAdoptante> comodidades) {

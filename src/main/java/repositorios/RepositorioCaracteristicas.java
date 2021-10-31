@@ -3,21 +3,11 @@ package repositorios;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
-
-import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class RepositorioCaracteristicas implements WithGlobalEntityManager {
-
-  public void agregarCaracteristica(Caracteristica caracteristica) {
-    entityManager().persist(caracteristica);
-  }
-
-  public void eliminarCaracteristica(Caracteristica caracteristica) {
-    entityManager().remove(caracteristica);
-  }
 
   public List<Caracteristica> getCaracteristicas() {
     return entityManager()
@@ -30,9 +20,10 @@ public class RepositorioCaracteristicas implements WithGlobalEntityManager {
   }
 
   public void eliminarCaracteristicasConValoresPosibles(CaracteristicaConValoresPosibles caracteristica) {
-    String nombre = caracteristica.getNombreCaracteristica();
-    Query query = entityManager().createQuery("DELETE FROM Caracteristica c WHERE c.nombreCaracteristica = :nombre");
-    query.setParameter("nombre",nombre).executeUpdate();
+    entityManager()
+        .createQuery("DELETE FROM Caracteristica c WHERE c.nombreCaracteristica = :nombre")
+        .setParameter("nombre", caracteristica.getNombreCaracteristica())
+        .executeUpdate();
   }
 
   public List<CaracteristicaConValoresPosibles> getCaracteristicasConValoresPosibles() {

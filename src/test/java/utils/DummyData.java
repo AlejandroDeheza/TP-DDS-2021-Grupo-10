@@ -17,10 +17,7 @@ import modelo.suscripcion.Preferencia;
 import modelo.publicacion.Rescate;
 import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
-import repositorios.RepositorioDarEnAdopcion;
-import repositorios.RepositorioRescates;
 import modelo.notificacion.Notificador;
-import repositorios.RepositorioSuscripcionesParaAdopciones;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -122,12 +119,10 @@ public class DummyData {
     return preguntas;
   }
 
-  public static DarEnAdopcion getPublicacionDeDarEnAdopcion(Notificador notificador,
-                                                            RepositorioDarEnAdopcion repositorio) {
+  public static DarEnAdopcion getPublicacionDeDarEnAdopcion(Notificador notificador) {
     return new DarEnAdopcion(
         getUsuario(notificador),
         getMascotaRegistrada(notificador),
-        repositorio,
         Arrays.asList(
             new RespuestaDelDador("Si", getParDePreguntas1()),
             new RespuestaDelDador("2", getParDePreguntas2())
@@ -136,12 +131,11 @@ public class DummyData {
     );
   }
 
-  public static Rescate getPublicacionDeRescate(Notificador notificador, RepositorioRescates repositorio) {
-    return new Rescate(getPersona(notificador), repositorio, getMascotaEncontrada(getFotos()), getAsociacion());
+  public static Rescate getPublicacionDeRescate(Notificador notificador) {
+    return new Rescate(getPersona(notificador), getMascotaEncontrada(getFotos()), getAsociacion());
   }
 
-  public static SuscripcionParaAdopcion getSuscripcionParaAdopcion(Notificador notificador,
-                                                                   RepositorioSuscripcionesParaAdopciones repo) {
+  public static SuscripcionParaAdopcion getSuscripcionParaAdopcion(Notificador notificador) {
     return new SuscripcionParaAdopcion(
         getUsuario(notificador),
         getAsociacion(),
@@ -149,8 +143,7 @@ public class DummyData {
         Arrays.asList(
             new RespuestaDelAdoptante("Si", getParDePreguntas1()),
             new RespuestaDelAdoptante("2", getParDePreguntas2())
-        ),
-        repo
+        )
     );
   }
 

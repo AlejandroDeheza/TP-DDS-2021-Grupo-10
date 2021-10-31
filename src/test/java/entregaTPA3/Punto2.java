@@ -13,13 +13,12 @@ import org.junit.jupiter.api.Test;
 import utils.DummyData;
 
 public class Punto2 extends NuestraAbstractPersistenceTest {
-  RepositorioPreguntasObligatorias repositorioPreguntasObligatorias;
+  RepositorioPreguntasObligatorias repositorioPreguntasObligatorias = new RepositorioPreguntasObligatorias();
   ParDePreguntas parDePreguntas;
   Asociacion asociacion = new Asociacion("", DummyData.getUbicacion());
 
   @BeforeEach
   public void loadContext() {
-    repositorioPreguntasObligatorias = new RepositorioPreguntasObligatorias();
     parDePreguntas = getParDePreguntas();
   }
 
@@ -35,7 +34,7 @@ public class Punto2 extends NuestraAbstractPersistenceTest {
   @DisplayName("Se puede agregar una ParDePreguntas al RepositorioPreguntas")
   public void agregarParDePreguntasAlRepositorioPreguntas() {
     assertEquals(0, repositorioPreguntasObligatorias.getPreguntas().size());
-    repositorioPreguntasObligatorias.agregarPregunta(parDePreguntas);
+    entityManager().persist(parDePreguntas);
     assertEquals(1, repositorioPreguntasObligatorias.getPreguntas().size());
   }
 

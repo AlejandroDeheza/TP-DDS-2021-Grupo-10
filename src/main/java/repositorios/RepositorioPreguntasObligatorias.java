@@ -12,11 +12,4 @@ public class RepositorioPreguntasObligatorias implements WithGlobalEntityManager
         .getResultList();
   }
 
-  public void agregarPregunta(ParDePreguntas pregunta) {
-    entityManager().persist(pregunta);
-  }
-
-  public void eliminarPregunta(ParDePreguntas pregunta) {
-    entityManager().remove(pregunta);
-  }
 }

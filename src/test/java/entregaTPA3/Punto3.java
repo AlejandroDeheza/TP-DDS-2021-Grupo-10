@@ -9,27 +9,21 @@ import modelo.usuario.Usuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import repositorios.RepositorioDarEnAdopcion;
 import utils.DummyData;
 
 public class Punto3 {
 
   NotificadorCorreo notificadorCorreo;
-  RepositorioDarEnAdopcion repositorioDarEnAdopcion;
 
   @BeforeEach
   public void contextLoad() {
     notificadorCorreo = mock(NotificadorCorreo.class);
-    repositorioDarEnAdopcion = mock(RepositorioDarEnAdopcion.class);
   }
 
   @Test
   @DisplayName("Si un interesado desea adoptar una mascota de una publicacion, se envia una Notificacion al duenio")
   public void procesarUnaPublicacionDeDarEnAdopcionEnviaUnaNotificacion() {
-    DarEnAdopcion publicacion = DummyData.getPublicacionDeDarEnAdopcion(
-        notificadorCorreo,
-        repositorioDarEnAdopcion
-    );
+    DarEnAdopcion publicacion = DummyData.getPublicacionDeDarEnAdopcion(notificadorCorreo);
     Usuario adoptante = DummyData.getUsuario(notificadorCorreo);
     publicacion.notificarAlPublicador(adoptante);
     verify(notificadorCorreo, times(1)).notificarQuierenAdoptarTuMascota(any(), any());

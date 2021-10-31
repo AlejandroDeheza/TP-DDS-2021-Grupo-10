@@ -27,10 +27,10 @@ public class Punto5 {
     repositorioSuscripcionesParaAdopciones = mock(RepositorioSuscripcionesParaAdopciones.class);
 
     when(repositorioDarEnAdopcion.getPublicaciones()).thenReturn(Collections.singletonList(
-        DummyData.getPublicacionDeDarEnAdopcion(notificadorMockeado, repositorioDarEnAdopcion))
+        DummyData.getPublicacionDeDarEnAdopcion(notificadorMockeado))
     );
     when(repositorioSuscripcionesParaAdopciones.getSuscripciones()).thenReturn(Collections.singletonList(
-        DummyData.getSuscripcionParaAdopcion(notificadorMockeado, repositorioSuscripcionesParaAdopciones)
+        DummyData.getSuscripcionParaAdopcion(notificadorMockeado)
     ));
 
     recomendadorDeAdopciones = new RecomendadorDeAdopciones(5,

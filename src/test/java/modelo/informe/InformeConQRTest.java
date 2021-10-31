@@ -9,21 +9,18 @@ import modelo.notificacion.NotificadorCorreo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import repositorios.RepositorioInformes;
 import utils.DummyData;
 import java.util.ArrayList;
 import java.util.List;
 
 public class InformeConQRTest {
 
-  RepositorioInformes repositorioInformes;
   ReceptorHogares receptorHogaresMock;
   NotificadorCorreo notificadorMockeado;
   InformeConQR informeConQR;
 
   @BeforeEach
   public void contextLoad() {
-    repositorioInformes = mock(RepositorioInformes.class);
     receptorHogaresMock = mock(ReceptorHogares.class);
     notificadorMockeado = mock(NotificadorCorreo.class);
     informeConQR = generarInformeConQR();
@@ -48,7 +45,7 @@ public class InformeConQRTest {
 
   private InformeConQR generarInformeConQR() {
     return new InformeConQR(DummyData.getPersona(notificadorMockeado), DummyData.getUbicacion(), null,
-        repositorioInformes, receptorHogaresMock, DummyData.getMascotaRegistrada(notificadorMockeado));
+        receptorHogaresMock, DummyData.getMascotaRegistrada(notificadorMockeado));
   }
 
 }
