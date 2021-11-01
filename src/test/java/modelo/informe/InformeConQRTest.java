@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 import modelo.hogarDeTransito.Hogar;
 import modelo.hogarDeTransito.ReceptorHogares;
 import modelo.notificacion.NotificadorCorreo;
+import modelo.notificacion.TipoNotificadorPreferido;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,12 +18,15 @@ public class InformeConQRTest {
 
   ReceptorHogares receptorHogaresMock;
   NotificadorCorreo notificadorMockeado;
+  TipoNotificadorPreferido tipoNotificador;
   InformeConQR informeConQR;
 
   @BeforeEach
   public void contextLoad() {
     receptorHogaresMock = mock(ReceptorHogares.class);
     notificadorMockeado = mock(NotificadorCorreo.class);
+    tipoNotificador = mock(TipoNotificadorPreferido.class);
+    when(tipoNotificador.getNotificador(any())).thenReturn(notificadorMockeado);
     informeConQR = generarInformeConQR();
   }
 
@@ -44,8 +48,8 @@ public class InformeConQRTest {
   }
 
   private InformeConQR generarInformeConQR() {
-    return new InformeConQR(DummyData.getPersona(notificadorMockeado), DummyData.getUbicacion(), null,
-        receptorHogaresMock, DummyData.getMascotaRegistrada(notificadorMockeado));
+    return new InformeConQR(DummyData.getPersona(tipoNotificador), DummyData.getUbicacion(), null,
+        receptorHogaresMock, DummyData.getMascotaRegistrada(tipoNotificador));
   }
 
 }

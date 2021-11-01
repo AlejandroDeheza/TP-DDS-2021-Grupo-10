@@ -11,25 +11,17 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.Transient;
 import java.util.List;
 import java.util.Properties;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@Entity
-@DiscriminatorValue(value = "Correo")
-public class NotificadorCorreo extends Notificador {
+public class NotificadorCorreo implements Notificador {
 
-  @Transient
   private Session session = configurarConexionCorreo();
 
-  @Transient
   private String email;
 
-  @Transient
   private Function<Session, Transport> funcion = (sesion -> {
     Transport t = null;
     try {
@@ -43,19 +35,15 @@ public class NotificadorCorreo extends Notificador {
   // el notificador, en codigo de produccion, lo inyectamos por constructor
 
   // solo para tests
-  public NotificadorCorreo(String email, Function<Session, Transport> funcion) {
+  public NotificadorCorreo(Function<Session, Transport> funcion) {
     this.funcion = funcion;
-    this.email = email;
   }
   // para Main
   public NotificadorCorreo(String email) {
     this.email = email;
   }
-
   // para hibernate
-  private NotificadorCorreo() {
-
-  }
+  private NotificadorCorreo() { }
 
   @Override
   public void notificarEncontramosTuMascota(MascotaRegistrada mascotaRegistrada) {
