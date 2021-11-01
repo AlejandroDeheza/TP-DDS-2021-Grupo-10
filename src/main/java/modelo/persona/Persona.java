@@ -53,7 +53,7 @@ public class Persona extends EntidadPersistente {
     }
     if (datosDeContacto.noExisteCorreoAsociado()) {
       throw new DatosDeContactoIncompletosException("El dato de contacto debe tener un correo asociado");
-    } // TODO: deberiamos sacar esta validacion si usamos Twilio. Si no tiene email, usamos el telefono
+    }
   }
 
   public Notificador getNotificadorPreferido() {

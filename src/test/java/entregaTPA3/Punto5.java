@@ -28,6 +28,9 @@ public class Punto5 {
     repositorioDarEnAdopcion = mock(RepositorioDarEnAdopcion.class);
     repositorioSuscripcionesParaAdopciones = mock(RepositorioSuscripcionesParaAdopciones.class);
 
+    tipoNotificadorPreferido = mock(TipoNotificadorPreferido.class);
+    when(tipoNotificadorPreferido.getNotificador(any())).thenReturn(notificadorMockeado);
+
     when(repositorioDarEnAdopcion.getPublicaciones()).thenReturn(Collections.singletonList(
         DummyData.getPublicacionDeDarEnAdopcion(tipoNotificadorPreferido))
     );
@@ -35,8 +38,6 @@ public class Punto5 {
         DummyData.getSuscripcionParaAdopcion(tipoNotificadorPreferido)
     ));
 
-    tipoNotificadorPreferido = mock(TipoNotificadorPreferido.class);
-    when(tipoNotificadorPreferido.getNotificador(any())).thenReturn(notificadorMockeado);
 
     recomendadorDeAdopciones = new RecomendadorDeAdopciones(5,
         repositorioDarEnAdopcion, repositorioSuscripcionesParaAdopciones);
