@@ -1,9 +1,12 @@
 package modelo.publicacion;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import modelo.notificacion.NotificadorCorreo;
+import modelo.notificacion.TipoNotificadorPreferido;
 import modelo.pregunta.ParDePreguntas;
 import modelo.pregunta.RespuestaDelAdoptante;
 import modelo.pregunta.RespuestaDelDador;
@@ -18,15 +21,19 @@ import java.util.List;
 public class DarEnAdopcionTest {
 
   ParDePreguntas parDePreguntas = DummyData.getParDePreguntas1();
-  NotificadorCorreo notificadorCorreo = mock(NotificadorCorreo.class);
+  NotificadorCorreo notificadorCorreo;
+  TipoNotificadorPreferido tipoNotificadorPreferido;
   DarEnAdopcion darEnAdopcion;
 
   @BeforeEach
   public void contextLoad() {
     List<RespuestaDelDador> respuestasDelDador = new ArrayList<>();
+    notificadorCorreo = mock(NotificadorCorreo.class);
     respuestasDelDador.add(new RespuestaDelDador("No", parDePreguntas));
-    darEnAdopcion = new DarEnAdopcion(DummyData.getUsuario(notificadorCorreo),
-        DummyData.getMascotaRegistrada(notificadorCorreo), respuestasDelDador, DummyData.getAsociacion());
+    darEnAdopcion = new DarEnAdopcion(DummyData.getUsuario(tipoNotificadorPreferido),
+        DummyData.getMascotaRegistrada(tipoNotificadorPreferido), respuestasDelDador, DummyData.getAsociacion());
+    tipoNotificadorPreferido = mock(TipoNotificadorPreferido.class);
+    when(tipoNotificadorPreferido.getNotificador(any())).thenReturn(notificadorCorreo);
   }
 
   @Test

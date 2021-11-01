@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 import modelo.adopcion.RecomendadorDeAdopciones;
 import modelo.notificacion.Notificador;
 import modelo.notificacion.NotificadorCorreo;
+import modelo.notificacion.TipoNotificadorPreferido;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repositorios.RepositorioDarEnAdopcion;
@@ -15,6 +16,7 @@ import java.util.Collections;
 
 public class Punto5 {
 
+  TipoNotificadorPreferido tipoNotificadorPreferido;
   Notificador notificadorMockeado;
   RepositorioDarEnAdopcion repositorioDarEnAdopcion;
   RepositorioSuscripcionesParaAdopciones repositorioSuscripcionesParaAdopciones;
@@ -27,11 +29,14 @@ public class Punto5 {
     repositorioSuscripcionesParaAdopciones = mock(RepositorioSuscripcionesParaAdopciones.class);
 
     when(repositorioDarEnAdopcion.getPublicaciones()).thenReturn(Collections.singletonList(
-        DummyData.getPublicacionDeDarEnAdopcion(notificadorMockeado))
+        DummyData.getPublicacionDeDarEnAdopcion(tipoNotificadorPreferido))
     );
     when(repositorioSuscripcionesParaAdopciones.getSuscripciones()).thenReturn(Collections.singletonList(
-        DummyData.getSuscripcionParaAdopcion(notificadorMockeado)
+        DummyData.getSuscripcionParaAdopcion(tipoNotificadorPreferido)
     ));
+
+    tipoNotificadorPreferido = mock(TipoNotificadorPreferido.class);
+    when(tipoNotificadorPreferido.getNotificador(any())).thenReturn(notificadorMockeado);
 
     recomendadorDeAdopciones = new RecomendadorDeAdopciones(5,
         repositorioDarEnAdopcion, repositorioSuscripcionesParaAdopciones);

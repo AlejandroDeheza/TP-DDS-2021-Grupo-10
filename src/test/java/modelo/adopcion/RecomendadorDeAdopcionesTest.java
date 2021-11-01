@@ -9,6 +9,7 @@ import modelo.mascota.MascotaRegistrada;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.notificacion.Notificador;
 import modelo.notificacion.NotificadorCorreo;
+import modelo.notificacion.TipoNotificadorPreferido;
 import modelo.pregunta.RespuestaDelDador;
 import modelo.publicacion.DarEnAdopcion;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,17 +30,22 @@ public class RecomendadorDeAdopcionesTest {
   RepositorioDarEnAdopcion repositorioDarEnAdopcion;
   RepositorioSuscripcionesParaAdopciones repositorioSuscripcionesParaAdopciones;
   RecomendadorDeAdopciones recomendadorDeAdopciones;
+  TipoNotificadorPreferido tipoNotificadorPreferido;
+
+
 
   @BeforeEach
   public void contextLoad() {
     notificadorMockeado = mock(NotificadorCorreo.class);
     repositorioDarEnAdopcion = mock(RepositorioDarEnAdopcion.class);
     repositorioSuscripcionesParaAdopciones = mock(RepositorioSuscripcionesParaAdopciones.class);
+    tipoNotificadorPreferido = mock(TipoNotificadorPreferido.class);
+    when(tipoNotificadorPreferido.getNotificador(any())).thenReturn(notificadorMockeado);
 
-    publicacion1 = DummyData.getPublicacionDeDarEnAdopcion(notificadorMockeado);
+    publicacion1 = DummyData.getPublicacionDeDarEnAdopcion(tipoNotificadorPreferido);
     publicacion2 = new DarEnAdopcion(
-        DummyData.getUsuario(notificadorMockeado),
-        DummyData.getMascotaRegistrada(notificadorMockeado),
+        DummyData.getUsuario(tipoNotificadorPreferido),
+        DummyData.getMascotaRegistrada(tipoNotificadorPreferido),
         Arrays.asList(
             new RespuestaDelDador("bla", DummyData.getParDePreguntas1()),
             new RespuestaDelDador("bla", DummyData.getParDePreguntas2())
@@ -49,8 +55,8 @@ public class RecomendadorDeAdopcionesTest {
 
     when(repositorioDarEnAdopcion.getPublicaciones()).thenReturn(Arrays.asList(publicacion1, publicacion2));
     when(repositorioSuscripcionesParaAdopciones.getSuscripciones()).thenReturn(Arrays.asList(
-        DummyData.getSuscripcionParaAdopcion(notificadorMockeado),
-        DummyData.getSuscripcionParaAdopcion(notificadorMockeado)
+        DummyData.getSuscripcionParaAdopcion(tipoNotificadorPreferido),
+        DummyData.getSuscripcionParaAdopcion(tipoNotificadorPreferido)
     ));
 
     recomendadorDeAdopciones = new RecomendadorDeAdopciones(2,
@@ -77,7 +83,7 @@ public class RecomendadorDeAdopcionesTest {
 
     when(repositorioDarEnAdopcion.getPublicaciones()).thenReturn(Collections.singletonList(
         new DarEnAdopcion(
-            DummyData.getUsuario(notificadorMockeado),
+            DummyData.getUsuario(tipoNotificadorPreferido),
             mascotaRegistrada,
             Arrays.asList(
                 new RespuestaDelDador("Si", DummyData.getParDePreguntas1()),
@@ -101,7 +107,7 @@ public class RecomendadorDeAdopcionesTest {
 
     when(repositorioDarEnAdopcion.getPublicaciones()).thenReturn(Collections.singletonList(
         new DarEnAdopcion(
-            DummyData.getUsuario(notificadorMockeado),
+            DummyData.getUsuario(tipoNotificadorPreferido),
             mascotaRegistrada,
             Arrays.asList(
                 new RespuestaDelDador("Si", DummyData.getParDePreguntas1()),
@@ -118,7 +124,7 @@ public class RecomendadorDeAdopcionesTest {
   @Test
   public void lasRecomendacionesSeOrdenanCorrectamente() {
     List<DarEnAdopcion> recomendaciones = recomendadorDeAdopciones.generarRecomendaciones(
-        DummyData.getSuscripcionParaAdopcion(notificadorMockeado)
+        DummyData.getSuscripcionParaAdopcion(tipoNotificadorPreferido)
     );
     assertEquals(2, recomendaciones.size());
     assertEquals(publicacion1, recomendaciones.get(0));
@@ -131,7 +137,7 @@ public class RecomendadorDeAdopcionesTest {
         repositorioDarEnAdopcion, repositorioSuscripcionesParaAdopciones);
 
     List<DarEnAdopcion> recomendaciones = recomendadorDeAdopciones.generarRecomendaciones(
-        DummyData.getSuscripcionParaAdopcion(notificadorMockeado)
+        DummyData.getSuscripcionParaAdopcion(tipoNotificadorPreferido)
     );
     assertEquals(1, recomendaciones.size());
     assertEquals(publicacion1, recomendaciones.get(0));

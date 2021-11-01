@@ -35,7 +35,8 @@ public class NotificadorCorreo implements Notificador {
   // el notificador, en codigo de produccion, lo inyectamos por constructor
 
   // solo para tests
-  public NotificadorCorreo(Function<Session, Transport> funcion) {
+  public NotificadorCorreo(String email, Function<Session, Transport> funcion) {
+    this.email = email;
     this.funcion = funcion;
   }
   // para Main
