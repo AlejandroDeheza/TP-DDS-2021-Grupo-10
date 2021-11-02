@@ -27,7 +27,7 @@ public class AsociacionTests extends NuestraAbstractPersistenceTest {
     entityManager().persist(asociacion); //50
     entityManager().persist(asociacion2); //1
     entityManager().persist(asociacion3); //100
-    ubicadorAsociaciones = new UbicadorAsociaciones(new RepositorioAsociaciones());
+    ubicadorAsociaciones = new UbicadorAsociaciones();
   }
 
   @Test

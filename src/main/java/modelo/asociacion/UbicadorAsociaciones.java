@@ -4,10 +4,9 @@ import modelo.informe.Ubicacion;
 import repositorios.RepositorioAsociaciones;
 
 public class UbicadorAsociaciones {
-  private RepositorioAsociaciones repositorioAsociaciones;
+  private RepositorioAsociaciones repositorioAsociaciones = RepositorioAsociaciones.instancia;
 
-  public UbicadorAsociaciones(RepositorioAsociaciones repositorioAsociaciones) {
-    this.repositorioAsociaciones = repositorioAsociaciones;
+  public UbicadorAsociaciones() {
   }
 
   public Asociacion getAsociacionMasCercana(Ubicacion ubicacion) {

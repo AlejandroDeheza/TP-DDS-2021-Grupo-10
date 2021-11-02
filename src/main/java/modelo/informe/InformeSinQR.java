@@ -23,11 +23,8 @@ public class InformeSinQR extends InformeRescate implements WithGlobalEntityMana
   @ManyToMany(cascade = CascadeType.ALL)
   private List<Caracteristica> caracteristicas;
 
-  @Transient // TODO: Revisar RepositorioAsociaciones
-  private RepositorioAsociaciones repositorioAsociaciones;
-
   // para hibernate
-  private InformeSinQR() {
+  public InformeSinQR() {
 
   }
 
@@ -37,7 +34,7 @@ public class InformeSinQR extends InformeRescate implements WithGlobalEntityMana
     super(rescatista, ubicacionRescatista, mascotaEncontrada, receptorHogares);
     this.tipoAnimal = tipoAnimal;
     this.caracteristicas = caracteristicas;
-    this.repositorioAsociaciones = repositorioAsociaciones;
+
   }
 
   public List<Hogar> getHogaresCercanos(Integer radioCercania) {
@@ -56,7 +53,7 @@ public class InformeSinQR extends InformeRescate implements WithGlobalEntityMana
   }
 
   private void generarPublicacion() {
-    UbicadorAsociaciones ubicador = new UbicadorAsociaciones(repositorioAsociaciones);
+    UbicadorAsociaciones ubicador = new UbicadorAsociaciones();
     entityManager().persist(
         new Rescate(
             this.getRescatista(),
