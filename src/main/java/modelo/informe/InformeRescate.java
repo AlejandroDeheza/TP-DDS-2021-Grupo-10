@@ -27,7 +27,7 @@ public abstract class InformeRescate extends EntidadPersistente {
   @OneToOne(cascade = CascadeType.ALL)
   private MascotaEncontrada mascotaEncontrada;
 
-  @Transient
+  @Transient // TODO: Revisar ReceptorHogares
   private ReceptorHogares receptorHogares;
 
   private Boolean estaProcesado = false;
@@ -80,7 +80,7 @@ public abstract class InformeRescate extends EntidadPersistente {
     return mascotaEncontrada.getFechaEncuentro();
   }
 
-  public Boolean getEstaProcesado(){
+  public Boolean getEstaProcesado() {
     return this.estaProcesado;
   }
 

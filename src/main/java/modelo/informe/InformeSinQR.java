@@ -23,7 +23,7 @@ public class InformeSinQR extends InformeRescate implements WithGlobalEntityMana
   @ManyToMany(cascade = CascadeType.ALL)
   private List<Caracteristica> caracteristicas;
 
-  @Transient
+  @Transient // TODO: Revisar RepositorioAsociaciones
   private RepositorioAsociaciones repositorioAsociaciones;
 
   // para hibernate
