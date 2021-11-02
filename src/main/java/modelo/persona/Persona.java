@@ -3,6 +3,7 @@ package modelo.persona;
 import excepciones.DatosDeContactoIncompletosException;
 import modelo.EntidadPersistente;
 import modelo.notificacion.Notificador;
+import modelo.notificacion.TipoNotificadorPreferido;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -22,8 +23,8 @@ public class Persona extends EntidadPersistente {
 
   private LocalDate fechaNacimiento;
 
-  @ManyToOne(cascade = CascadeType.ALL)
-  private Notificador notificadorPreferido;
+  @Embedded
+  private TipoNotificadorPreferido notificadorPreferido;
 
   // para hibernate
   private Persona() {
@@ -31,7 +32,7 @@ public class Persona extends EntidadPersistente {
   }
 
   public Persona(String nombre, String apellido, DocumentoIdentidad documentoIdentidad, DatosDeContacto datosDeContacto,
-                 LocalDate fechaNacimiento, Notificador notificadorPreferido) {
+                 LocalDate fechaNacimiento, TipoNotificadorPreferido notificadorPreferido) {
     validarQueTengaDatosDeContacto(
         nombre,
         apellido,
@@ -52,11 +53,11 @@ public class Persona extends EntidadPersistente {
     }
     if (datosDeContacto.noExisteCorreoAsociado()) {
       throw new DatosDeContactoIncompletosException("El dato de contacto debe tener un correo asociado");
-    } // TODO: deberiamos sacar esta validacion si usamos Twilio. Si no tiene email, usamos el telefono
+    }
   }
 
   public Notificador getNotificadorPreferido() {
-    return this.notificadorPreferido;
+    return this.notificadorPreferido.getNotificador(datosDeContacto);
   }
 
   public String getNombre() {

@@ -1,6 +1,5 @@
 package modelo.persona;
 
-import modelo.notificacion.Notificador;
 import javax.persistence.Embeddable;
 
 @Embeddable
@@ -14,10 +13,9 @@ public class DatosDeContacto {
 
   }
 
-  public DatosDeContacto(String telefono, String email, Notificador notificadorPreferido) {
+  public DatosDeContacto(String telefono, String email) {
     this.telefono = telefono;
     this.email = email;
-
   }
 
   public Boolean noHayDatosDeContacto() {
