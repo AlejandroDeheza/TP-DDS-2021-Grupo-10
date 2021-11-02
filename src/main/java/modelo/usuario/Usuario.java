@@ -18,7 +18,7 @@ public class Usuario extends EntidadPersistente {
   @OneToOne(cascade = CascadeType.ALL)
   private Persona persona;
 
-  @Transient // TODO: Revisar  ValidadorAutenticacion
+  @Transient
   private ValidadorAutenticacion validadorAutenticacion = new ValidadorAutenticacion();
 
   public Usuario(String usuario, String contrasenia, TipoUsuario tipo, Persona persona) {
