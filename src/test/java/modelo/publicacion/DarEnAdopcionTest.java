@@ -1,39 +1,31 @@
 package modelo.publicacion;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import modelo.notificacion.NotificadorCorreo;
-import modelo.notificacion.TipoNotificadorPreferido;
 import modelo.pregunta.ParDePreguntas;
 import modelo.pregunta.RespuestaDelAdoptante;
 import modelo.pregunta.RespuestaDelDador;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import repositorios.RepositorioDarEnAdopcion;
 import utils.DummyData;
+import utils.MockNotificador;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class DarEnAdopcionTest {
 
+  MockNotificador mockNotificador;
   ParDePreguntas parDePreguntas = DummyData.getParDePreguntas1();
-  NotificadorCorreo notificadorCorreo;
-  TipoNotificadorPreferido tipoNotificadorPreferido;
   DarEnAdopcion darEnAdopcion;
 
   @BeforeEach
   public void contextLoad() {
+    mockNotificador = DummyData.getMockNotificador();
     List<RespuestaDelDador> respuestasDelDador = new ArrayList<>();
-    notificadorCorreo = mock(NotificadorCorreo.class);
     respuestasDelDador.add(new RespuestaDelDador("No", parDePreguntas));
-    darEnAdopcion = new DarEnAdopcion(DummyData.getUsuario(tipoNotificadorPreferido),
-        DummyData.getMascotaRegistrada(tipoNotificadorPreferido), respuestasDelDador, DummyData.getAsociacion());
-    tipoNotificadorPreferido = mock(TipoNotificadorPreferido.class);
-    when(tipoNotificadorPreferido.getNotificador(any())).thenReturn(notificadorCorreo);
+    darEnAdopcion = new DarEnAdopcion(DummyData.getUsuario(mockNotificador.getTipo()),
+        DummyData.getMascotaRegistrada(mockNotificador.getTipo()), respuestasDelDador, DummyData.getAsociacion());
   }
 
   @Test

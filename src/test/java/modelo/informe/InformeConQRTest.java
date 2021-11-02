@@ -1,32 +1,28 @@
 package modelo.informe;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
-
 import modelo.hogarDeTransito.Hogar;
 import modelo.hogarDeTransito.ReceptorHogares;
-import modelo.notificacion.NotificadorCorreo;
-import modelo.notificacion.TipoNotificadorPreferido;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import utils.DummyData;
+import utils.MockNotificador;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 public class InformeConQRTest {
 
   ReceptorHogares receptorHogaresMock;
-  NotificadorCorreo notificadorMockeado;
-  TipoNotificadorPreferido tipoNotificador;
+  MockNotificador mockNotificador;
   InformeConQR informeConQR;
 
   @BeforeEach
   public void contextLoad() {
     receptorHogaresMock = mock(ReceptorHogares.class);
-    notificadorMockeado = mock(NotificadorCorreo.class);
-    tipoNotificador = mock(TipoNotificadorPreferido.class);
-    when(tipoNotificador.getNotificador(any())).thenReturn(notificadorMockeado);
+    mockNotificador = DummyData.getMockNotificador();
     informeConQR = generarInformeConQR();
   }
 
@@ -34,7 +30,7 @@ public class InformeConQRTest {
   @DisplayName("Al procesar un informe con QR, se envia una notificacion y se marca el informe como procesado")
   public void MascotaConDuenioNotificarTest() {
     informeConQR.procesarInforme();
-    verify(notificadorMockeado, times(1)).notificarEncontramosTuMascota(any());
+    verify(mockNotificador.getNotificador(), times(1)).notificarEncontramosTuMascota(any());
   }
 
   @Test
@@ -48,8 +44,8 @@ public class InformeConQRTest {
   }
 
   private InformeConQR generarInformeConQR() {
-    return new InformeConQR(DummyData.getPersona(tipoNotificador), DummyData.getUbicacion(), null,
-        receptorHogaresMock, DummyData.getMascotaRegistrada(tipoNotificador));
+    return new InformeConQR(DummyData.getPersona(mockNotificador.getTipo()), DummyData.getUbicacion(), null,
+        receptorHogaresMock, DummyData.getMascotaRegistrada(mockNotificador.getTipo()));
   }
 
 }

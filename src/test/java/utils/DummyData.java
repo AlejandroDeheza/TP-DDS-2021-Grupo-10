@@ -5,6 +5,7 @@ import modelo.informe.Ubicacion;
 import modelo.mascota.*;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
+import modelo.notificacion.NotificadorCorreo;
 import modelo.notificacion.TipoNotificadorPreferido;
 import modelo.persona.DatosDeContacto;
 import modelo.persona.DocumentoIdentidad;
@@ -22,9 +23,11 @@ import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class DummyData {
 
@@ -166,6 +169,13 @@ public class DummyData {
         + "\"lat\":-34.46013439745161,\"long\":-58.80857841888721},\"telefono\":\"+541164657462\",\"admisiones\":{\""
         + "perros\":false,\"gatos\":true},\"capacidad\":50,\"lugares_disponibles\":45,\"patio\":true,\"caracteristicas"
         + "\":[\"Tranquilo\"]}]}";
+  }
+
+  public static MockNotificador getMockNotificador() {
+    NotificadorCorreo notificadorMockeado = mock(NotificadorCorreo.class);
+    TipoNotificadorPreferido tipoNotificadorMockeado = mock(TipoNotificadorPreferido.class);
+    when(tipoNotificadorMockeado.getNotificador(any())).thenReturn(notificadorMockeado);
+    return new MockNotificador(tipoNotificadorMockeado, notificadorMockeado);
   }
 
 }

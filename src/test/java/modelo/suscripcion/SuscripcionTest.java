@@ -1,60 +1,55 @@
 package modelo.suscripcion;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-
-import modelo.notificacion.NotificadorCorreo;
-import modelo.notificacion.TipoNotificadorPreferido;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import repositorios.RepositorioDarEnAdopcion;
-import repositorios.RepositorioSuscripcionesParaAdopciones;
 import utils.DummyData;
+import utils.MockNotificador;
 import java.util.Arrays;
 import java.util.Collections;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 public class SuscripcionTest {
 
-  NotificadorCorreo notificadorCorreo;
-  TipoNotificadorPreferido tipoNotificadorPreferido;
+  MockNotificador mockNotificador;
 
   @BeforeEach
   public void contextLoad() {
-    notificadorCorreo = mock(NotificadorCorreo.class);
-    tipoNotificadorPreferido = mock(TipoNotificadorPreferido.class);
-    when(tipoNotificadorPreferido.getNotificador(any())).thenReturn(notificadorCorreo);
+    mockNotificador = DummyData.getMockNotificador();
   }
 
   @Test
   @DisplayName("Si se envia el link de baja al posteador, se envia una Notificacion al posteador")
   public void enviarUnLinkDeBajaEnviaUnaNotificacion() {
     SuscripcionParaAdopcion suscripcion =
-        DummyData.getSuscripcionParaAdopcion(tipoNotificadorPreferido);
+        DummyData.getSuscripcionParaAdopcion(mockNotificador.getTipo());
     suscripcion.enviarLinkDeBaja();
-    verify(notificadorCorreo, times(1)).notificarLinkDeBajaSuscripcionAdopciones(any());
+    verify(mockNotificador.getNotificador(), times(1)).notificarLinkDeBajaSuscripcionAdopciones(any());
   }
 
   @Test
   @DisplayName("Si se envian recomendacion de adopcion, se envia una Notificacion al adoptante")
   public void enviarRecomendacionesEnviaUnaNotificacion() {
     SuscripcionParaAdopcion suscripcion =
-        DummyData.getSuscripcionParaAdopcion(tipoNotificadorPreferido);
+        DummyData.getSuscripcionParaAdopcion(mockNotificador.getTipo());
     suscripcion.enviarRecomendaciones(
         Arrays.asList(
-            DummyData.getPublicacionDeDarEnAdopcion(tipoNotificadorPreferido),
-            DummyData.getPublicacionDeDarEnAdopcion(tipoNotificadorPreferido)
+            DummyData.getPublicacionDeDarEnAdopcion(mockNotificador.getTipo()),
+            DummyData.getPublicacionDeDarEnAdopcion(mockNotificador.getTipo())
         )
     );
-    verify(notificadorCorreo, times(1)).notificarRecomendacionesDeAdopciones(any());
+    verify(mockNotificador.getNotificador(), times(1)).notificarRecomendacionesDeAdopciones(any());
   }
 
   @Test
   @DisplayName("Si se envian recomendacion de adopcion con lista vacia, no se envia ninguna Notificacion")
   public void enviarRecomendacionesConListaVaciaNoEnviaUnaNotificacion() {
     SuscripcionParaAdopcion suscripcion =
-        DummyData.getSuscripcionParaAdopcion(tipoNotificadorPreferido);
+        DummyData.getSuscripcionParaAdopcion(mockNotificador.getTipo());
     suscripcion.enviarRecomendaciones(Collections.emptyList());
-    verify(notificadorCorreo, times(0)).notificarRecomendacionesDeAdopciones(any());
+    verify(mockNotificador.getNotificador(), times(0)).notificarRecomendacionesDeAdopciones(any());
   }
 }
