@@ -22,7 +22,7 @@ public class Persona extends EntidadPersistente {
 
   private LocalDate fechaNacimiento;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne(cascade = CascadeType.ALL) //Chequear - Por qué no sería un One to One Persona-Notificador? Por qué DER aparece TipoNotif y no una relacion entre 2 tablas
   private Notificador notificadorPreferido;
 
   // para hibernate

@@ -12,7 +12,7 @@ import javax.persistence.ManyToMany;
 @Embeddable
 public class Preferencia {
 
-  @ManyToMany(cascade = CascadeType.ALL)
+  @ManyToMany(cascade = CascadeType.ALL) //Correcto
   private List<Caracteristica> caracteristicas;
 
   @Enumerated

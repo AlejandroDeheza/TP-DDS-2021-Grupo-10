@@ -15,7 +15,7 @@ public class Usuario extends EntidadPersistente {
   @Enumerated
   private TipoUsuario tipo;
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @OneToOne(cascade = CascadeType.ALL) //Correcto - orphanRemoval = true ?
   private Persona persona;
 
   @Transient

@@ -18,13 +18,13 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class InformeRescate extends EntidadPersistente {
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}) //Correcto - OneToOne? o ManyToOne?
   private Persona rescatista;
 
   @Embedded
   private Ubicacion ubicacionRescatista;
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @OneToOne(cascade = CascadeType.ALL) //Chequear - Tiene sentido una mascotaEncontrada sin su Informe?
   private MascotaEncontrada mascotaEncontrada;
 
   @Transient

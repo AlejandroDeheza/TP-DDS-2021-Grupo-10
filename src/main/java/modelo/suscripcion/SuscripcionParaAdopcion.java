@@ -14,16 +14,16 @@ import javax.persistence.*;
 @Table(name = "suscripcion_adopcion")
 public class SuscripcionParaAdopcion extends EntidadPersistente {
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}) //Correcto
   private Usuario suscriptor;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}) //Correcto
   private Asociacion asociacion;
 
   @Embedded
   private Preferencia preferenciaDelAdoptante;
 
-  @OneToMany(cascade = CascadeType.ALL)
+  @OneToMany(cascade = CascadeType.ALL) //Correcto
   @JoinColumn(name = "Id_suscripcion_para_adopcion")
   private List<RespuestaDelAdoptante> comodidadesDelAdoptante;
 

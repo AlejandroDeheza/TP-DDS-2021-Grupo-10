@@ -13,7 +13,7 @@ public class RespuestaDelAdoptante extends EntidadPersistente {
 
   private String respuesta;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}) //Correcto
   private ParDePreguntas parDePreguntas;
 
   // para hibernate

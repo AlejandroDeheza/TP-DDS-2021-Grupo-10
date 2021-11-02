@@ -20,7 +20,7 @@ public class InformeSinQR extends InformeRescate implements WithGlobalEntityMana
   @Enumerated
   private Animal tipoAnimal;
 
-  @ManyToMany(cascade = CascadeType.ALL)
+  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}) //Correcto
   private List<Caracteristica> caracteristicas;
 
   @Transient

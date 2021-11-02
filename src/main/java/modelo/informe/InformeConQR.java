@@ -16,7 +16,7 @@ import java.util.List;
 @Table(name = "informe_con_QR")
 public class InformeConQR extends InformeRescate {
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}) //Correcto
   private MascotaRegistrada mascotaRegistrada;
 
   // para hibernate
