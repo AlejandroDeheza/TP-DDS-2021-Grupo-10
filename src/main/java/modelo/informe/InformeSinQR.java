@@ -29,21 +29,19 @@ public class InformeSinQR extends InformeRescate implements WithGlobalEntityMana
   }
 
   public InformeSinQR(Persona rescatista, Ubicacion ubicacionRescatista, MascotaEncontrada mascotaEncontrada,
-                      ReceptorHogares receptorHogares, Animal tipoAnimal, List<Caracteristica> caracteristicas,
-                      RepositorioAsociaciones repositorioAsociaciones) {
+                      ReceptorHogares receptorHogares, Animal tipoAnimal, List<Caracteristica> caracteristicas) {
     super(rescatista, ubicacionRescatista, mascotaEncontrada, receptorHogares);
     this.tipoAnimal = tipoAnimal;
     this.caracteristicas = caracteristicas;
 
   }
 
-  public List<Hogar> getHogaresCercanos(Integer radioCercania) {
-    return super.getHogaresCercanos(
-        radioCercania,
-        tipoAnimal,
-        this.getMascotaEncontrada().getTamanio(),
-        caracteristicas
-    );
+  public Animal getTipoAnimal() {
+    return tipoAnimal;
+  }
+
+  public List<Caracteristica> getCaracteristicas() {
+    return caracteristicas;
   }
 
   @Override

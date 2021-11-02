@@ -20,7 +20,7 @@ public class InformeConQR extends InformeRescate {
   private MascotaRegistrada mascotaRegistrada;
 
   // para hibernate
-  private InformeConQR() {
+  public InformeConQR() {
   }
 
   public InformeConQR(Persona rescatista, Ubicacion ubicacionRescatista, MascotaEncontrada mascotaEncontrada,
@@ -29,14 +29,10 @@ public class InformeConQR extends InformeRescate {
     this.mascotaRegistrada = mascotaRegistrada;
   }
 
-  public List<Hogar> getHogaresCercanos(Integer radioCercania) {
-    return super.getHogaresCercanos(
-        radioCercania,
-        mascotaRegistrada.getAnimal(),
-        mascotaRegistrada.getTamanio(),
-        mascotaRegistrada.getCaracteristicas()
-    );
+  public MascotaRegistrada getMascotaRegistrada() {
+    return mascotaRegistrada;
   }
+
 
   @Override
   public void procesarInforme() {

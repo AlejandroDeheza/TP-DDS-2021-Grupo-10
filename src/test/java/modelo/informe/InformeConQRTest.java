@@ -38,7 +38,11 @@ public class InformeConQRTest {
   public void obtenerHogaresDisponiblesParaElInforme() {
     List<Hogar> hogares = new ArrayList<>();
     when(receptorHogaresMock.getHogaresDisponibles(any(), any(), any(), any(), any())).thenReturn(hogares);
-    assertEquals(hogares, informeConQR.getHogaresCercanos(1000));
+    assertEquals(hogares,
+        receptorHogaresMock.getHogaresDisponibles(informeConQR.getUbicacionRescatista(), 1000,
+            informeConQR.getMascotaRegistrada().getAnimal(),
+            informeConQR.getMascotaRegistrada().getTamanio(),
+            informeConQR.getMascotaRegistrada().getCaracteristicas()));
     verify(receptorHogaresMock,
         times(1)).getHogaresDisponibles(any(), any(), any(), any(), any());
   }

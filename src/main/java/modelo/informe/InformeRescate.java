@@ -27,9 +27,7 @@ public abstract class InformeRescate extends EntidadPersistente {
   @OneToOne(cascade = CascadeType.ALL)
   private MascotaEncontrada mascotaEncontrada;
 
-  @Transient // TODO: Revisar ReceptorHogares
-  private ReceptorHogares receptorHogares;
-
+  @Column
   private Boolean estaProcesado = false;
 
   // para hibernate
@@ -42,19 +40,9 @@ public abstract class InformeRescate extends EntidadPersistente {
     this.rescatista = rescatista;
     this.ubicacionRescatista = ubicacionRescatista;
     this.mascotaEncontrada = mascotaEncontrada;
-    this.receptorHogares = receptorHogares;
+
   }
 
-  public List<Hogar> getHogaresCercanos(Integer radioCercania, Animal tipoAnimal, TamanioMascota tamanioMascota,
-                                        List<Caracteristica> caracteristicas) {
-    return receptorHogares.getHogaresDisponibles(
-        ubicacionRescatista,
-        radioCercania,
-        tipoAnimal,
-        tamanioMascota,
-        caracteristicas
-    );
-  }
 
   public void procesarInforme() {
     this.estaProcesado = true;

@@ -21,7 +21,6 @@ import java.util.List;
 public class InformeSinQRTest extends NuestraAbstractPersistenceTest {
 
   RepositorioInformes repositorioInformes = new RepositorioInformes();
-  RepositorioAsociaciones repositorioAsociaciones = new RepositorioAsociaciones();
   ReceptorHogares receptorHogaresMock;
   InformeSinQR informeSinQR;
 
@@ -48,14 +47,17 @@ public class InformeSinQRTest extends NuestraAbstractPersistenceTest {
   public void obtenerHogaresDisponiblesParaElInforme() {
     List<Hogar> hogares = new ArrayList<>();
     when(receptorHogaresMock.getHogaresDisponibles(any(), any(), any(), any(), any())).thenReturn(hogares);
-    assertEquals(hogares, informeSinQR.getHogaresCercanos(1000));
+    assertEquals(hogares,
+        receptorHogaresMock.getHogaresDisponibles(informeSinQR.getUbicacionRescatista(), 1000,
+            informeSinQR.getTipoAnimal(), informeSinQR.getMascotaEncontrada().getTamanio(),
+            informeSinQR.getCaracteristicas()));
     verify(receptorHogaresMock, times(1)).getHogaresDisponibles(any(), any(), any(), any(), any());
   }
 
   private InformeSinQR generarInforme() {
     return new InformeSinQR(DummyData.getPersona(null), DummyData.getUbicacion(),
         DummyData.getMascotaEncontrada(DummyData.getFotos()), receptorHogaresMock, Animal.PERRO,
-        DummyData.getCaracteristicasParaMascota(), repositorioAsociaciones);
+        DummyData.getCaracteristicasParaMascota());
   }
 
 }
