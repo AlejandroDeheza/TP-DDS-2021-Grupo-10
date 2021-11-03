@@ -1,14 +1,14 @@
 package entregaTPA4;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import entregaTPA4.persistencia.NuestraAbstractPersistenceTest;
 import modelo.informe.InformeConQR;
-import modelo.notificacion.NotificadorCorreo;
+import modelo.notificacion.TipoNotificadorPreferido;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import entregaTPA4.persistencia.NuestraAbstractPersistenceTest;
 import repositorios.RepositorioInformes;
 import utils.DummyData;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Prueba extends NuestraAbstractPersistenceTest {
 
@@ -17,7 +17,7 @@ public class Prueba extends NuestraAbstractPersistenceTest {
   @Test
   @DisplayName("si se utiliza informesDeUltimosNDias(), este devuelve un registro insertado previamente")
   public void listarMascotasEncontradasEnLosUltimos10DiasTest() {
-    NotificadorCorreo notificadorCorreo = new NotificadorCorreo("un_email");
+    TipoNotificadorPreferido notificadorCorreo = TipoNotificadorPreferido.CORREO;
 
     InformeConQR informe = new InformeConQR(DummyData.getPersona(notificadorCorreo), DummyData.getUbicacion(),
         DummyData.getMascotaEncontrada(DummyData.getFotos()), null,

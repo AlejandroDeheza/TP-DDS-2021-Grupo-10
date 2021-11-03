@@ -1,7 +1,7 @@
 package entregaTPA4.repositorios;
 
 import entregaTPA4.persistencia.NuestraAbstractPersistenceTest;
-import modelo.notificacion.NotificadorCorreo;
+import modelo.notificacion.TipoNotificadorPreferido;
 import modelo.publicacion.DarEnAdopcion;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ public class RepositorioDarEnAdopcionTest extends NuestraAbstractPersistenceTest
   @DisplayName("Agregar una publicacion de adopcion, aumenta el numero de publicaciones en uno")
   public void agregarPublicacionDeAdopcionTest(){
     DarEnAdopcion publicacionDeDarEnAdopcion =
-        DummyData.getPublicacionDeDarEnAdopcion(new NotificadorCorreo("hola@gmail.com"));
+        DummyData.getPublicacionDeDarEnAdopcion(TipoNotificadorPreferido.CORREO);
     entityManager().persist(publicacionDeDarEnAdopcion);
     assertEquals(1,  repository.getPublicaciones().size());
   }

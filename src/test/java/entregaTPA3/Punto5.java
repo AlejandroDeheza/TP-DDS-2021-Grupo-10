@@ -1,36 +1,35 @@
 package entregaTPA3;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-
 import modelo.adopcion.RecomendadorDeAdopciones;
-import modelo.notificacion.Notificador;
-import modelo.notificacion.NotificadorCorreo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repositorios.RepositorioDarEnAdopcion;
 import repositorios.RepositorioSuscripcionesParaAdopciones;
 import utils.DummyData;
+import utils.MockNotificador;
 import java.util.Collections;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 public class Punto5 {
 
-  Notificador notificadorMockeado;
+  MockNotificador mockNotificador;
   RepositorioDarEnAdopcion repositorioDarEnAdopcion;
   RepositorioSuscripcionesParaAdopciones repositorioSuscripcionesParaAdopciones;
   RecomendadorDeAdopciones recomendadorDeAdopciones;
 
   @BeforeEach
   public void contextLoad() {
-    notificadorMockeado = mock(NotificadorCorreo.class);
+    mockNotificador = DummyData.getMockNotificador();
     repositorioDarEnAdopcion = mock(RepositorioDarEnAdopcion.class);
     repositorioSuscripcionesParaAdopciones = mock(RepositorioSuscripcionesParaAdopciones.class);
 
     when(repositorioDarEnAdopcion.getPublicaciones()).thenReturn(Collections.singletonList(
-        DummyData.getPublicacionDeDarEnAdopcion(notificadorMockeado))
+        DummyData.getPublicacionDeDarEnAdopcion(mockNotificador.getTipo()))
     );
     when(repositorioSuscripcionesParaAdopciones.getSuscripciones()).thenReturn(Collections.singletonList(
-        DummyData.getSuscripcionParaAdopcion(notificadorMockeado)
+        DummyData.getSuscripcionParaAdopcion(mockNotificador.getTipo())
     ));
 
     recomendadorDeAdopciones = new RecomendadorDeAdopciones(5,
@@ -40,7 +39,7 @@ public class Punto5 {
   @Test
   public void seGeneranYEnvianRecomendacionesCorrectamente() {
     recomendadorDeAdopciones.recomendarAdopcionesASuscritos();
-    verify(notificadorMockeado, times(1)).notificarRecomendacionesDeAdopciones(any());
+    verify(mockNotificador.getNotificador(), times(1)).notificarRecomendacionesDeAdopciones(any());
   }
 
 }

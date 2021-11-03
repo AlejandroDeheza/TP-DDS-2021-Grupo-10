@@ -6,35 +6,41 @@ import modelo.mascota.*;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 import modelo.notificacion.NotificadorCorreo;
-import modelo.persona.*;
+import modelo.notificacion.TipoNotificadorPreferido;
+import modelo.persona.DatosDeContacto;
+import modelo.persona.DocumentoIdentidad;
+import modelo.persona.Persona;
+import modelo.persona.TipoDocumento;
 import modelo.pregunta.ParDePreguntas;
 import modelo.pregunta.ParDeRespuestas;
 import modelo.pregunta.RespuestaDelAdoptante;
 import modelo.pregunta.RespuestaDelDador;
 import modelo.publicacion.DarEnAdopcion;
-import modelo.suscripcion.SuscripcionParaAdopcion;
-import modelo.suscripcion.Preferencia;
 import modelo.publicacion.Rescate;
+import modelo.suscripcion.Preferencia;
+import modelo.suscripcion.SuscripcionParaAdopcion;
 import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
-import modelo.notificacion.Notificador;
+
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class DummyData {
 
-  public static DatosDeContacto getDatosDeContacto(Notificador notificador) {
-    return new DatosDeContacto("01147474747", "dds2021g10@gmail.com", notificador);
+  public static DatosDeContacto getDatosDeContacto() {
+    return new DatosDeContacto("01147474747", "dds2021g10@gmail.com");
   }
 
   public static DocumentoIdentidad getDocumentoIdentidad() {
     return new DocumentoIdentidad(TipoDocumento.DNI, "11111111");
   }
 
-  public static Persona getPersona(Notificador notificador) {
-    return new Persona("PersonaNombre", "PersonaApellido", getDocumentoIdentidad(), getDatosDeContacto(notificador),
+  public static Persona getPersona(TipoNotificadorPreferido notificador) {
+    return new Persona("PersonaNombre", "PersonaApellido", getDocumentoIdentidad(), getDatosDeContacto(),
         LocalDate.of(1995, 8, 7), notificador);
   }
 
@@ -43,20 +49,20 @@ public class DummyData {
   }
 
   public static Persona getPersonaSinDatosDeContactoNiNombreNiApellido() {
-    return new Persona(null, null, getDocumentoIdentidad(), new DatosDeContacto(null, null, new NotificadorCorreo("dds2021g10@gmail.com")), LocalDate.of(1995, 8, 7),null);
+    return new Persona(null, null, getDocumentoIdentidad(), new DatosDeContacto(null, null), LocalDate.of(1995, 8, 7), null);
   }
 
   public static Persona getPersonaSinTelefono() {
     return new Persona("PersonaNombre", "PersonaApellido", getDocumentoIdentidad(),
-        new DatosDeContacto(null, "dds2021g10@gmail.com", new NotificadorCorreo("dds2021g10@gmail.com")), LocalDate.of(1995, 8, 7), null);
+        new DatosDeContacto(null, "dds2021g10@gmail.com"), LocalDate.of(1995, 8, 7), null);
   }
 
   public static Persona getPersonaSinCorreo() {
     return new Persona("PersonaNombre", "PersonaApellido", getDocumentoIdentidad(),
-        new DatosDeContacto("01147474747", null, new NotificadorCorreo("dds2021g10@gmail.com")), LocalDate.of(1995, 8, 7),null);
+        new DatosDeContacto("01147474747", null), LocalDate.of(1995, 8, 7), null);
   }
 
-  public static Usuario getUsuario(Notificador notificador) {
+  public static Usuario getUsuario(TipoNotificadorPreferido notificador) {
     return new Usuario("DuenioMascota", "Password1234", TipoUsuario.NORMAL, getPersona(notificador));
   }
 
@@ -88,7 +94,7 @@ public class DummyData {
     return new MascotaEncontrada(fotos, getUbicacion(), "Limpio y Sano", LocalDate.now(), TamanioMascota.CHICO);
   }
 
-  public static MascotaRegistrada getMascotaRegistrada(Notificador notificador) {
+  public static MascotaRegistrada getMascotaRegistrada(TipoNotificadorPreferido notificador) {
     return new MascotaRegistrada(getUsuario(notificador), "Felipe", "Panchito", LocalDate.of(2018, 3, 4), "Pelo largo", Sexo.MACHO,
         Animal.PERRO, getCaracteristicasParaMascota(), getFotos(), TamanioMascota.CHICO);
   }
@@ -119,7 +125,7 @@ public class DummyData {
     return preguntas;
   }
 
-  public static DarEnAdopcion getPublicacionDeDarEnAdopcion(Notificador notificador) {
+  public static DarEnAdopcion getPublicacionDeDarEnAdopcion(TipoNotificadorPreferido notificador) {
     return new DarEnAdopcion(
         getUsuario(notificador),
         getMascotaRegistrada(notificador),
@@ -131,11 +137,11 @@ public class DummyData {
     );
   }
 
-  public static Rescate getPublicacionDeRescate(Notificador notificador) {
+  public static Rescate getPublicacionDeRescate(TipoNotificadorPreferido notificador) {
     return new Rescate(getPersona(notificador), getMascotaEncontrada(getFotos()), getAsociacion());
   }
 
-  public static SuscripcionParaAdopcion getSuscripcionParaAdopcion(Notificador notificador) {
+  public static SuscripcionParaAdopcion getSuscripcionParaAdopcion(TipoNotificadorPreferido notificador) {
     return new SuscripcionParaAdopcion(
         getUsuario(notificador),
         getAsociacion(),
@@ -163,6 +169,13 @@ public class DummyData {
         + "\"lat\":-34.46013439745161,\"long\":-58.80857841888721},\"telefono\":\"+541164657462\",\"admisiones\":{\""
         + "perros\":false,\"gatos\":true},\"capacidad\":50,\"lugares_disponibles\":45,\"patio\":true,\"caracteristicas"
         + "\":[\"Tranquilo\"]}]}";
+  }
+
+  public static MockNotificador getMockNotificador() {
+    NotificadorCorreo notificadorMockeado = mock(NotificadorCorreo.class);
+    TipoNotificadorPreferido tipoNotificadorMockeado = mock(TipoNotificadorPreferido.class);
+    when(tipoNotificadorMockeado.getNotificador(any())).thenReturn(notificadorMockeado);
+    return new MockNotificador(tipoNotificadorMockeado, notificadorMockeado);
   }
 
 }
