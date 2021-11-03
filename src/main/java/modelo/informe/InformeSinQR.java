@@ -1,15 +1,13 @@
 package modelo.informe;
 
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
-import repositorios.RepositorioAsociaciones;
-import modelo.asociacion.UbicadorAsociaciones;
-import modelo.hogarDeTransito.Hogar;
 import modelo.hogarDeTransito.ReceptorHogares;
 import modelo.mascota.Animal;
 import modelo.mascota.MascotaEncontrada;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.Persona;
 import modelo.publicacion.Rescate;
+import repositorios.RepositorioAsociaciones;
 import javax.persistence.*;
 import java.util.List;
 
@@ -51,12 +49,12 @@ public class InformeSinQR extends InformeRescate implements WithGlobalEntityMana
   }
 
   private void generarPublicacion() {
-    UbicadorAsociaciones ubicador = new UbicadorAsociaciones();
+    RepositorioAsociaciones repositorioAsociaciones = RepositorioAsociaciones.instancia;
     entityManager().persist(
         new Rescate(
             this.getRescatista(),
             this.getMascotaEncontrada(),
-            ubicador.getAsociacionMasCercana(getMascotaEncontrada().getUbicacion())
+            repositorioAsociaciones.getAsociacionMasCercana(getMascotaEncontrada().getUbicacion())
         )
     );
   }
