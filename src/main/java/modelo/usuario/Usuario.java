@@ -29,8 +29,8 @@ public class Usuario extends EntidadPersistente {
     this.persona = persona;
   }
 
-  public Usuario() {
-    
+  protected Usuario() {
+
   }
 
   public void autenticarUsuario(String contraseniaIngresada) {

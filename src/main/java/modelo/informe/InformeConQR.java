@@ -20,7 +20,7 @@ public class InformeConQR extends InformeRescate {
   private MascotaRegistrada mascotaRegistrada;
 
   // para hibernate
-  public InformeConQR() {
+  protected InformeConQR() {
   }
 
   public InformeConQR(Persona rescatista, Ubicacion ubicacionRescatista, MascotaEncontrada mascotaEncontrada,

@@ -22,7 +22,7 @@ public class InformeSinQR extends InformeRescate implements WithGlobalEntityMana
   private List<Caracteristica> caracteristicas;
 
   // para hibernate
-  public InformeSinQR() {
+  protected InformeSinQR() {
 
   }
 
