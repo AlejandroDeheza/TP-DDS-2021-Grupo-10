@@ -8,7 +8,6 @@ import modelo.mascota.MascotaEncontrada;
 import modelo.mascota.TamanioMascota;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.Persona;
-import repositorios.RepositorioInformes;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -18,13 +17,13 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class InformeRescate extends EntidadPersistente {
 
-  @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}) //Correcto - OneToOne? o ManyToOne?
+  @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   private Persona rescatista;
 
   @Embedded
   private Ubicacion ubicacionRescatista;
 
-  @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}) //Correcto
+  @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   private MascotaEncontrada mascotaEncontrada;
 
   @Transient

@@ -9,6 +9,9 @@ import repositorios.RepositorioAsociaciones;
 import modelo.hogarDeTransito.Hogar;
 import modelo.hogarDeTransito.ReceptorHogares;
 import modelo.mascota.Animal;
+import modelo.mascota.MascotaEncontrada;
+import modelo.mascota.caracteristica.Caracteristica;
+import modelo.persona.Persona;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -50,6 +53,49 @@ public class InformeSinQRTest extends NuestraAbstractPersistenceTest {
     when(receptorHogaresMock.getHogaresDisponibles(any(), any(), any(), any(), any())).thenReturn(hogares);
     assertEquals(hogares, informeSinQR.getHogaresCercanos(1000));
     verify(receptorHogaresMock, times(1)).getHogaresDisponibles(any(), any(), any(), any(), any());
+  }
+
+  @Test
+  @DisplayName("Al eliminar un InformeSinQR, no se elimina la lista de Características asociada")
+  public void eliminarUnInformeSinQRNoEliminaLaListaDeCaracteristicasAsociada() {
+    List<Caracteristica> caracteristicas = informeSinQR.getCaracteristicas();
+
+    entityManager().persist(informeSinQR);
+    assertEquals(1, entityManager().createQuery("from InformeSinQR", InformeSinQR.class).getResultList().size());
+    assertEquals(1, entityManager().createQuery("from Caracteristica", Caracteristica.class).getResultList().size());
+
+    entityManager().remove(informeSinQR);
+    assertEquals(0, entityManager().createQuery("from InformeSinQR", InformeSinQR.class).getResultList().size());
+    assertEquals(caracteristicas.get(0).getId(), entityManager().createQuery("from Caracteristica", Caracteristica.class).getResultList().get(0).getId());
+  }
+
+  @Test
+  @DisplayName("Al eliminar un InformeSinQR, no se elimina el Rescatista asociado")
+  public void eliminarUnInformeSinQRNoEliminaAlRescatistaAsociado() {
+    Persona rescatistaAsociado = informeSinQR.getRescatista();
+
+    entityManager().persist(informeSinQR);
+    assertEquals(1, entityManager().createQuery("from InformeSinQR", InformeSinQR.class).getResultList().size());
+
+    entityManager().remove(informeSinQR);
+    assertEquals(0, entityManager().createQuery("from InformeSinQR", InformeSinQR.class).getResultList().size());
+
+    Persona elMismoRescatistaAsociado = entityManager().find(Persona.class, rescatistaAsociado.getId());    
+    assertNotNull(elMismoRescatistaAsociado);
+  }
+
+  @Test
+  @DisplayName("Al eliminar un InformeSinQR, no se elimina el la MascotaEncontrada asociada")
+  public void eliminarUnInformeSinQRNoEliminaALaMascotaEncontradaAsociada() {
+    MascotaEncontrada mascotaEncontradaAsociada = informeSinQR.getMascotaEncontrada();
+
+    entityManager().persist(informeSinQR);
+    assertEquals(1, entityManager().createQuery("from InformeSinQR", InformeSinQR.class).getResultList().size());
+    assertEquals(1, entityManager().createQuery("from MascotaEncontrada", MascotaEncontrada.class).getResultList().size());
+
+    entityManager().remove(informeSinQR);
+    assertEquals(0, entityManager().createQuery("from InformeSinQR", InformeSinQR.class).getResultList().size());
+    assertEquals(mascotaEncontradaAsociada.getId(), entityManager().createQuery("from MascotaEncontrada", MascotaEncontrada.class).getResultList().get(0).getId());
   }
 
   private InformeSinQR generarInforme() {

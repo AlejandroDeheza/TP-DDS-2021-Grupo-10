@@ -2,7 +2,6 @@ package entregaTPA4.repositorios;
 
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import entregaTPA4.persistencia.NuestraAbstractPersistenceTest;

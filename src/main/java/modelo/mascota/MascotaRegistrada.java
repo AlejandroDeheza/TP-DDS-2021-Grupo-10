@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 public class MascotaRegistrada extends EntidadPersistente {
 
-  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}) //Correcto
+  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   private Usuario duenio;
 
   private String nombre;
@@ -27,7 +27,7 @@ public class MascotaRegistrada extends EntidadPersistente {
   @Enumerated
   private Animal animal;
 
-  @ManyToMany(cascade = CascadeType.ALL) //Correcto - Esa Lista de características no tiene sentido para otra Mascota
+  @ManyToMany(cascade = CascadeType.ALL)
   private List<Caracteristica> caracteristicas;
 
   @ElementCollection

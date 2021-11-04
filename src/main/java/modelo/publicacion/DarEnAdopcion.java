@@ -5,20 +5,19 @@ import modelo.mascota.MascotaRegistrada;
 import modelo.pregunta.RespuestaDelAdoptante;
 import modelo.pregunta.RespuestaDelDador;
 import modelo.usuario.Usuario;
-import repositorios.RepositorioDarEnAdopcion;
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 public class DarEnAdopcion extends Publicacion {
 
-  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}) //Correcto
+  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   private Usuario publicador;
 
-  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}) //Correcto
+  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   private Asociacion asociacion;
 
-  @OneToMany(cascade = CascadeType.ALL) //Correcto
+  @OneToMany(cascade = CascadeType.ALL)
   @JoinColumn(name = "Id_publicacion_dar_adopcion")
   private List<RespuestaDelDador> respuestasDelDador;
 
@@ -64,5 +63,9 @@ public class DarEnAdopcion extends Publicacion {
 
   public Boolean estaActiva() {
     return estaActiva;
+  }
+
+  public Usuario getPublicador() {
+    return this.publicador;
   }
 }

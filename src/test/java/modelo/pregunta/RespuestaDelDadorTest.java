@@ -1,34 +1,26 @@
 package modelo.pregunta;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import entregaTPA4.persistencia.NuestraAbstractPersistenceTest;
 import utils.DummyData;
-import java.util.ArrayList;
-import java.util.List;
 
-public class RespuestaDelDadorTest {
+public class RespuestaDelDadorTest extends NuestraAbstractPersistenceTest {
   ParDePreguntas parDePreguntas = DummyData.getParDePreguntas1();
-  List<RespuestaDelAdoptante> respuestasDelAdoptante = new ArrayList<>();
-
-  @BeforeEach
-  public void contextLoad() {
-    respuestasDelAdoptante.add(new RespuestaDelAdoptante("No", parDePreguntas));
-  }
+  RespuestaDelDador respuestaDelDador = new RespuestaDelDador("No", parDePreguntas);
 
   @Test
-  @DisplayName("Una Respuesta matchea con alguna de las respuestas")
-  public void respuestaMatcheaConAlgunaDeLasRespuestas() {
-    RespuestaDelDador respuestaDelDador = new RespuestaDelDador("Si", parDePreguntas);
-    assertTrue(respuestaDelDador.correspondeConAlguna(respuestasDelAdoptante));
-  }
+  @DisplayName("Al eliminar una RespuestaDelDador, no se elimina el ParDePreguntas asociado")
+  public void eliminarUnaRespuestaDelDadorNoEliminaAlParDePreguntasAsociado() {
+    ParDePreguntas unParDePreguntas = respuestaDelDador.getParDePreguntas();
 
-  @Test
-  @DisplayName("Una Respuesta no matchea con alguna de las respuestas")
-  public void respuestaNoMatcheaConAlgunaDeLasRespuestas() {
-    RespuestaDelDador respuestaDelDador = new RespuestaDelDador("Bla", parDePreguntas);
-    assertFalse(respuestaDelDador.correspondeConAlguna(respuestasDelAdoptante));
+    entityManager().persist(respuestaDelDador);
+    assertEquals(1, entityManager().createQuery("from RespuestaDelDador", RespuestaDelDador.class).getResultList().size());
+    assertEquals(1, entityManager().createQuery("from ParDePreguntas", ParDePreguntas.class).getResultList().size());
+
+    entityManager().remove(respuestaDelDador);
+    assertEquals(0, entityManager().createQuery("from RespuestaDelDador", RespuestaDelDador.class).getResultList().size());
+    assertEquals(unParDePreguntas.getId(), entityManager().createQuery("from ParDePreguntas", ParDePreguntas.class).getResultList().get(0).getId());
   }
 }

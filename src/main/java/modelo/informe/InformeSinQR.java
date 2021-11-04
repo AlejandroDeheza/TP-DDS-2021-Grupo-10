@@ -20,7 +20,7 @@ public class InformeSinQR extends InformeRescate implements WithGlobalEntityMana
   @Enumerated
   private Animal tipoAnimal;
 
-  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}) //Correcto
+  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   private List<Caracteristica> caracteristicas;
 
   @Transient
@@ -64,5 +64,9 @@ public class InformeSinQR extends InformeRescate implements WithGlobalEntityMana
             ubicador.getAsociacionMasCercana(getMascotaEncontrada().getUbicacion())
         )
     );
+  }
+  
+  public List<Caracteristica> getCaracteristicas() {
+    return this.caracteristicas;
   }
 }
