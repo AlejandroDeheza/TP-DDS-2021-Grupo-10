@@ -24,7 +24,7 @@ public abstract class InformeRescate extends EntidadPersistente {
   @Embedded
   private Ubicacion ubicacionRescatista;
 
-  @OneToOne(cascade = CascadeType.ALL) //Chequear - Tiene sentido una mascotaEncontrada sin su Informe?
+  @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}) //Correcto
   private MascotaEncontrada mascotaEncontrada;
 
   @Transient
