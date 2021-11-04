@@ -21,7 +21,7 @@ public class DarEnAdopcion extends Publicacion {
   @JoinColumn(name = "Id_publicacion_dar_adopcion")
   private List<RespuestaDelDador> respuestasDelDador;
 
-  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}) //Correcto
+  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   private MascotaRegistrada mascotaEnAdopcion;
 
   private Boolean estaActiva = true;

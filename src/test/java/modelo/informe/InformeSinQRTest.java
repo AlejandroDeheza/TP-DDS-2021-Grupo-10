@@ -17,6 +17,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import repositorios.RepositorioInformes;
 import repositorios.RepositorioRescates;
+import utils.CascadeTypeCheck;
 import utils.DummyData;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +28,14 @@ public class InformeSinQRTest extends NuestraAbstractPersistenceTest {
   RepositorioAsociaciones repositorioAsociaciones = new RepositorioAsociaciones();
   ReceptorHogares receptorHogaresMock;
   InformeSinQR informeSinQR;
+  CascadeTypeCheck cascadeTypeCheck;
 
   @BeforeEach
   public void loadContext() {
     receptorHogaresMock = mock(ReceptorHogares.class);
     entityManager().persist(DummyData.getAsociacion());
     informeSinQR = generarInforme();
+    cascadeTypeCheck = new CascadeTypeCheck();
   }
 
   @Test
@@ -73,28 +76,15 @@ public class InformeSinQRTest extends NuestraAbstractPersistenceTest {
   @DisplayName("Al eliminar un InformeSinQR, no se elimina el Rescatista asociado")
   public void eliminarUnInformeSinQRNoEliminaAlRescatistaAsociado() {
     Persona rescatistaAsociado = informeSinQR.getRescatista();
-
-    entityManager().persist(informeSinQR);
-    assertEquals(1, entityManager().createQuery("from InformeSinQR", InformeSinQR.class).getResultList().size());
-
-    entityManager().remove(informeSinQR);
-    assertEquals(0, entityManager().createQuery("from InformeSinQR", InformeSinQR.class).getResultList().size());
-
-    Persona elMismoRescatistaAsociado = entityManager().find(Persona.class, rescatistaAsociado.getId());    
-    assertNotNull(elMismoRescatistaAsociado);
+    assertTrue(cascadeTypeCheck.contemplaElCascadeType(informeSinQR, rescatistaAsociado, 1, 1, 0, 1));
+    assertEquals(rescatistaAsociado.getId(), entityManager().createQuery("from Persona", Persona.class).getResultList().get(0).getId());
   }
 
   @Test
   @DisplayName("Al eliminar un InformeSinQR, no se elimina el la MascotaEncontrada asociada")
   public void eliminarUnInformeSinQRNoEliminaALaMascotaEncontradaAsociada() {
     MascotaEncontrada mascotaEncontradaAsociada = informeSinQR.getMascotaEncontrada();
-
-    entityManager().persist(informeSinQR);
-    assertEquals(1, entityManager().createQuery("from InformeSinQR", InformeSinQR.class).getResultList().size());
-    assertEquals(1, entityManager().createQuery("from MascotaEncontrada", MascotaEncontrada.class).getResultList().size());
-
-    entityManager().remove(informeSinQR);
-    assertEquals(0, entityManager().createQuery("from InformeSinQR", InformeSinQR.class).getResultList().size());
+    assertTrue(cascadeTypeCheck.contemplaElCascadeType(informeSinQR, mascotaEncontradaAsociada, 1, 1, 0, 1));
     assertEquals(mascotaEncontradaAsociada.getId(), entityManager().createQuery("from MascotaEncontrada", MascotaEncontrada.class).getResultList().get(0).getId());
   }
 
@@ -103,5 +93,4 @@ public class InformeSinQRTest extends NuestraAbstractPersistenceTest {
         DummyData.getMascotaEncontrada(DummyData.getFotos()), receptorHogaresMock, Animal.PERRO,
         DummyData.getCaracteristicasParaMascota(), repositorioAsociaciones);
   }
-
 }

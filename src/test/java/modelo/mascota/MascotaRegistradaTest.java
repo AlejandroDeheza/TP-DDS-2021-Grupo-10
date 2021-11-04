@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import entregaTPA4.persistencia.NuestraAbstractPersistenceTest;
+import utils.CascadeTypeCheck;
 import utils.DummyData;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +15,13 @@ import java.util.List;
 public class MascotaRegistradaTest extends NuestraAbstractPersistenceTest {
   MascotaRegistrada mascotaRegistrada;
   List<Caracteristica> listaCaracteristica;
+  CascadeTypeCheck cascadeTypeCheck;
 
   @BeforeEach
   public void contextLoad() {
     mascotaRegistrada = DummyData.getMascotaRegistrada(null);
     listaCaracteristica = new ArrayList<>();
+    cascadeTypeCheck = new CascadeTypeCheck();
   }
 
   @Test
@@ -46,13 +49,7 @@ public class MascotaRegistradaTest extends NuestraAbstractPersistenceTest {
   @DisplayName("Al eliminar una MascotaRegistrada, no se elimina al Usuario dueño asociado")
   public void eliminarUnaMascotaRegistradaNoEliminaAlUsuarioDuenioAsociado() {
     Usuario duenio = mascotaRegistrada.getDuenio();
-
-    entityManager().persist(mascotaRegistrada);
-    assertEquals(1, entityManager().createQuery("from MascotaRegistrada", MascotaRegistrada.class).getResultList().size());
-    assertEquals(1, entityManager().createQuery("from Usuario", Usuario.class).getResultList().size());
-
-    entityManager().remove(mascotaRegistrada);
-    assertEquals(0, entityManager().createQuery("from MascotaRegistrada", MascotaRegistrada.class).getResultList().size());
+    assertTrue(cascadeTypeCheck.contemplaElCascadeType(mascotaRegistrada, duenio, 1, 1, 0, 1));
     assertEquals(duenio.getId(), entityManager().createQuery("from Usuario", Usuario.class).getResultList().get(0).getId());
   }
 

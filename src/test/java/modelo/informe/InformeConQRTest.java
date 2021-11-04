@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import entregaTPA4.persistencia.NuestraAbstractPersistenceTest;
+import utils.CascadeTypeCheck;
 import utils.DummyData;
 import utils.MockNotificador;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 public class InformeConQRTest extends NuestraAbstractPersistenceTest {
@@ -23,12 +25,14 @@ public class InformeConQRTest extends NuestraAbstractPersistenceTest {
   ReceptorHogares receptorHogaresMock;
   MockNotificador mockNotificador;
   InformeConQR informeConQR;
+  CascadeTypeCheck cascadeTypeCheck;
 
   @BeforeEach
   public void contextLoad() {
     receptorHogaresMock = mock(ReceptorHogares.class);
     mockNotificador = DummyData.getMockNotificador();
     informeConQR = generarInformeConQR();
+    cascadeTypeCheck = new CascadeTypeCheck();
   }
 
   @Test
@@ -52,42 +56,23 @@ public class InformeConQRTest extends NuestraAbstractPersistenceTest {
   @DisplayName("Al eliminar un InformeConQR, no se elimina la MascotaRegistrada asociada")
   public void eliminarUnInformeConQRNoEliminaALaMascotaRegistradaAsociada() {
     MascotaRegistrada mascotaRegistradaAsociada = informeConQR.getMascotaRegistrada();
-
-    entityManager().persist(informeConQR);
-    assertEquals(1, entityManager().createQuery("from InformeConQR", InformeConQR.class).getResultList().size());
-    assertEquals(1, entityManager().createQuery("from MascotaRegistrada", MascotaRegistrada.class).getResultList().size());
-
-    entityManager().remove(informeConQR);
-    assertEquals(0, entityManager().createQuery("from InformeConQR", InformeConQR.class).getResultList().size());
+    assertTrue(cascadeTypeCheck.contemplaElCascadeType(informeConQR, mascotaRegistradaAsociada, 1, 1, 0, 1));
     assertEquals(mascotaRegistradaAsociada.getId(), entityManager().createQuery("from MascotaRegistrada", MascotaRegistrada.class).getResultList().get(0).getId());
   }
-  
+
   @Test
   @DisplayName("Al eliminar un InformeConQR, no se elimina el Rescatista asociado")
   public void eliminarUnInformeConQRNoEliminaAlRescatistaAsociado() {
     Persona rescatistaAsociado = informeConQR.getRescatista();
-
-    entityManager().persist(informeConQR);
-    assertEquals(1, entityManager().createQuery("from InformeConQR", InformeConQR.class).getResultList().size());
-
-    entityManager().remove(informeConQR);
-    assertEquals(0, entityManager().createQuery("from InformeConQR", InformeConQR.class).getResultList().size());
-
-    Persona elMismoRescatistaAsociado = entityManager().find(Persona.class, rescatistaAsociado.getId());    
-    assertNotNull(elMismoRescatistaAsociado);
+    assertTrue(cascadeTypeCheck.contemplaElCascadeType(informeConQR, rescatistaAsociado, 1, 1 /*Rescatista*/ + 1 /*DueñoMascota*/, 0, 1 /*Rescatista*/ + 1 /*DueñoMascota*/));
+    assertNotNull(entityManager().find(Persona.class, rescatistaAsociado.getId()));
   }
-  
+
   @Test
   @DisplayName("Al eliminar un InformeConQR, no se elimina el la MascotaEncontrada asociada")
   public void eliminarUnInformeConQRNoEliminaALaMascotaEncontradaAsociada() {
     MascotaEncontrada mascotaEncontradaAsociada = informeConQR.getMascotaEncontrada();
-
-    entityManager().persist(informeConQR);
-    assertEquals(1, entityManager().createQuery("from InformeConQR", InformeConQR.class).getResultList().size());
-    assertEquals(1, entityManager().createQuery("from MascotaEncontrada", MascotaEncontrada.class).getResultList().size());
-
-    entityManager().remove(informeConQR);
-    assertEquals(0, entityManager().createQuery("from InformeConQR", InformeConQR.class).getResultList().size());
+    assertTrue(cascadeTypeCheck.contemplaElCascadeType(informeConQR, mascotaEncontradaAsociada, 1, 1, 0, 1));
     assertEquals(mascotaEncontradaAsociada.getId(), entityManager().createQuery("from MascotaEncontrada", MascotaEncontrada.class).getResultList().get(0).getId());
   }
 
