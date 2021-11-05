@@ -30,7 +30,7 @@ public class SuscripcionTest extends NuestraAbstractPersistenceTest {
   public void contextLoad() {
     mockNotificador = DummyData.getMockNotificador();
     suscripcion = DummyData.getSuscripcionParaAdopcion(mockNotificador.getTipo());
-    cascadeTypeCheck = new CascadeTypeCheck();
+    cascadeTypeCheck = new CascadeTypeCheck(suscripcion);
   }
 
   @Test
@@ -63,7 +63,7 @@ public class SuscripcionTest extends NuestraAbstractPersistenceTest {
   @DisplayName("Al eliminar una SuscripcionParaAdopcion, no se elimina su Usuario suscriptor asociado")
   public void eliminarUnaSuscripcionParaAdopcionNoEliminaSuUsuarioSuscriptorAsociado() {
     Usuario usuarioAsociado = suscripcion.getSuscriptor();
-    assertTrue(cascadeTypeCheck.contemplaElCascadeType(suscripcion, usuarioAsociado, 1, 1, 0, 1));
+    assertTrue(cascadeTypeCheck.contemplaElCascadeType(usuarioAsociado, 1, 1, 0, 1));
     assertEquals(usuarioAsociado.getId(), entityManager().createQuery("from Usuario", Usuario.class).getResultList().get(0).getId());
   }
 
@@ -71,7 +71,7 @@ public class SuscripcionTest extends NuestraAbstractPersistenceTest {
   @DisplayName("Al eliminar una SuscripcionParaAdopcion, no se elimina su Asociación asociada")
   public void eliminarUnaSuscripcionParaAdopcionNoEliminaSuAsociacionAsociada() {
     Asociacion asociacion = suscripcion.getAsociacion();
-    assertTrue(cascadeTypeCheck.contemplaElCascadeType(suscripcion, asociacion, 1, 1, 0, 1));
+    assertTrue(cascadeTypeCheck.contemplaElCascadeType(asociacion, 1, 1, 0, 1));
     assertEquals(asociacion.getId(), entityManager().createQuery("from Asociacion", Asociacion.class).getResultList().get(0).getId());
   }
 
@@ -79,27 +79,13 @@ public class SuscripcionTest extends NuestraAbstractPersistenceTest {
   @DisplayName("Al eliminar una SuscripcionParaAdopcion, se elimina sus RespuestaDelAdoptante asociadas")
   public void eliminarUnaSuscripcionParaAdopcionEliminaSusRespuestaDelAdoptanteAsociadas() {
     List<RespuestaDelAdoptante> respuestasDelAdoptante = suscripcion.getComodidadesDelAdoptante();
-
-    entityManager().persist(suscripcion);
-    assertEquals(1, entityManager().createQuery("from SuscripcionParaAdopcion", SuscripcionParaAdopcion.class).getResultList().size());
-    assertEquals(respuestasDelAdoptante.get(0).getId(), entityManager().createQuery("from RespuestaDelAdoptante", RespuestaDelAdoptante.class).getResultList().get(0).getId());
-
-    entityManager().remove(suscripcion);
-    assertEquals(0, entityManager().createQuery("from SuscripcionParaAdopcion", SuscripcionParaAdopcion.class).getResultList().size());
-    assertEquals(0, entityManager().createQuery("from RespuestaDelAdoptante", RespuestaDelAdoptante.class).getResultList().size());
+    assertTrue(cascadeTypeCheck.contemplaElCascadeType(respuestasDelAdoptante, 1, 2, 0, 0));
   }
 
   @Test
   @DisplayName("Al eliminar una SuscripcionParaAdopcion, se elimina la lista de Características asociada a la Preferencia del adoptante")
   public void eliminarUnaPreferenciaEliminaLaListaDeCaracteristicasAsociada() {
     List<Caracteristica> caracteristicas = suscripcion.getPreferenciaDelAdoptante().getCaracteristicas();
-
-    entityManager().persist(suscripcion);
-    assertEquals(1, entityManager().createQuery("from SuscripcionParaAdopcion", SuscripcionParaAdopcion.class).getResultList().size());
-    assertEquals(caracteristicas.get(0).getId(), entityManager().createQuery("from Caracteristica", Caracteristica.class).getResultList().get(0).getId());
-
-    entityManager().remove(suscripcion);
-    assertEquals(0, entityManager().createQuery("from SuscripcionParaAdopcion", SuscripcionParaAdopcion.class).getResultList().size());
-    assertEquals(0, entityManager().createQuery("from Caracteristica", Caracteristica.class).getResultList().size());
+    assertTrue(cascadeTypeCheck.contemplaElCascadeType(caracteristicas, 1, 1, 0, 0));
   }
 }

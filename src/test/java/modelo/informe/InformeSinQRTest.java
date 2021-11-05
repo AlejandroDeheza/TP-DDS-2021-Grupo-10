@@ -35,7 +35,7 @@ public class InformeSinQRTest extends NuestraAbstractPersistenceTest {
     receptorHogaresMock = mock(ReceptorHogares.class);
     entityManager().persist(DummyData.getAsociacion());
     informeSinQR = generarInforme();
-    cascadeTypeCheck = new CascadeTypeCheck();
+    cascadeTypeCheck = new CascadeTypeCheck(informeSinQR);
   }
 
   @Test
@@ -45,7 +45,6 @@ public class InformeSinQRTest extends NuestraAbstractPersistenceTest {
     assertTrue(repositorioInformes.getInformesPendientes().contains(informeSinQR));
     informeSinQR.procesarInforme();
     assertTrue(repositorioInformes.getInformesProcesados().contains(informeSinQR));
-
     assertEquals(1, new RepositorioRescates().getRescates().size());
   }
 
@@ -62,13 +61,7 @@ public class InformeSinQRTest extends NuestraAbstractPersistenceTest {
   @DisplayName("Al eliminar un InformeSinQR, no se elimina la lista de Características asociada")
   public void eliminarUnInformeSinQRNoEliminaLaListaDeCaracteristicasAsociada() {
     List<Caracteristica> caracteristicas = informeSinQR.getCaracteristicas();
-
-    entityManager().persist(informeSinQR);
-    assertEquals(1, entityManager().createQuery("from InformeSinQR", InformeSinQR.class).getResultList().size());
-    assertEquals(1, entityManager().createQuery("from Caracteristica", Caracteristica.class).getResultList().size());
-
-    entityManager().remove(informeSinQR);
-    assertEquals(0, entityManager().createQuery("from InformeSinQR", InformeSinQR.class).getResultList().size());
+    assertTrue(cascadeTypeCheck.contemplaElCascadeType(caracteristicas, 1, 1, 0, 1));
     assertEquals(caracteristicas.get(0).getId(), entityManager().createQuery("from Caracteristica", Caracteristica.class).getResultList().get(0).getId());
   }
 
@@ -76,7 +69,7 @@ public class InformeSinQRTest extends NuestraAbstractPersistenceTest {
   @DisplayName("Al eliminar un InformeSinQR, no se elimina el Rescatista asociado")
   public void eliminarUnInformeSinQRNoEliminaAlRescatistaAsociado() {
     Persona rescatistaAsociado = informeSinQR.getRescatista();
-    assertTrue(cascadeTypeCheck.contemplaElCascadeType(informeSinQR, rescatistaAsociado, 1, 1, 0, 1));
+    assertTrue(cascadeTypeCheck.contemplaElCascadeType(rescatistaAsociado, 1, 1, 0, 1));
     assertEquals(rescatistaAsociado.getId(), entityManager().createQuery("from Persona", Persona.class).getResultList().get(0).getId());
   }
 
@@ -84,7 +77,7 @@ public class InformeSinQRTest extends NuestraAbstractPersistenceTest {
   @DisplayName("Al eliminar un InformeSinQR, no se elimina el la MascotaEncontrada asociada")
   public void eliminarUnInformeSinQRNoEliminaALaMascotaEncontradaAsociada() {
     MascotaEncontrada mascotaEncontradaAsociada = informeSinQR.getMascotaEncontrada();
-    assertTrue(cascadeTypeCheck.contemplaElCascadeType(informeSinQR, mascotaEncontradaAsociada, 1, 1, 0, 1));
+    assertTrue(cascadeTypeCheck.contemplaElCascadeType(mascotaEncontradaAsociada, 1, 1, 0, 1));
     assertEquals(mascotaEncontradaAsociada.getId(), entityManager().createQuery("from MascotaEncontrada", MascotaEncontrada.class).getResultList().get(0).getId());
   }
 

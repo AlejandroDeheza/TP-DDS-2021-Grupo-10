@@ -22,7 +22,7 @@ public class RespuestaDelDadorTest extends NuestraAbstractPersistenceTest {
   @BeforeEach
   public void contextLoad() {
     respuestasDelAdoptante.add(respuestaDelAdoptante);
-    cascadeTypeCheck = new CascadeTypeCheck();
+    cascadeTypeCheck = new CascadeTypeCheck(respuestaDelDador);
   }
 
   @Test
@@ -43,7 +43,7 @@ public class RespuestaDelDadorTest extends NuestraAbstractPersistenceTest {
   @DisplayName("Al eliminar una RespuestaDelDador, no se elimina el ParDePreguntas asociado")
   public void eliminarUnaRespuestaDelDadorNoEliminaAlParDePreguntasAsociado() {
     ParDePreguntas unParDePreguntas = respuestaDelDador.getParDePreguntas();
-    assertTrue(cascadeTypeCheck.contemplaElCascadeType(respuestaDelDador, unParDePreguntas, 1, 1, 0, 1));
+    assertTrue(cascadeTypeCheck.contemplaElCascadeType(unParDePreguntas, 1, 1, 0, 1));
     assertEquals(unParDePreguntas.getId(), entityManager().createQuery("from ParDePreguntas", ParDePreguntas.class).getResultList().get(0).getId());
   }
 }

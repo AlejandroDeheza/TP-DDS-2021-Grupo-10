@@ -21,7 +21,7 @@ public class MascotaRegistradaTest extends NuestraAbstractPersistenceTest {
   public void contextLoad() {
     mascotaRegistrada = DummyData.getMascotaRegistrada(null);
     listaCaracteristica = new ArrayList<>();
-    cascadeTypeCheck = new CascadeTypeCheck();
+    cascadeTypeCheck = new CascadeTypeCheck(mascotaRegistrada);
   }
 
   @Test
@@ -49,7 +49,7 @@ public class MascotaRegistradaTest extends NuestraAbstractPersistenceTest {
   @DisplayName("Al eliminar una MascotaRegistrada, no se elimina al Usuario dueño asociado")
   public void eliminarUnaMascotaRegistradaNoEliminaAlUsuarioDuenioAsociado() {
     Usuario duenio = mascotaRegistrada.getDuenio();
-    assertTrue(cascadeTypeCheck.contemplaElCascadeType(mascotaRegistrada, duenio, 1, 1, 0, 1));
+    assertTrue(cascadeTypeCheck.contemplaElCascadeType(duenio, 1, 1, 0, 1));
     assertEquals(duenio.getId(), entityManager().createQuery("from Usuario", Usuario.class).getResultList().get(0).getId());
   }
 
@@ -57,13 +57,6 @@ public class MascotaRegistradaTest extends NuestraAbstractPersistenceTest {
   @DisplayName("Al eliminar una MascotaRegistrada, se elimina la lista de Características asociada")
   public void eliminarUnaMascotaRegistradaSeEliminaLaListaDeCaracteristicasAsociada() {
     List<Caracteristica> caracteristicas = mascotaRegistrada.getCaracteristicas();
-
-    entityManager().persist(mascotaRegistrada);
-    assertEquals(1, entityManager().createQuery("from MascotaRegistrada", MascotaRegistrada.class).getResultList().size());
-    assertEquals(caracteristicas.get(0).getId(), entityManager().createQuery("from Caracteristica", Caracteristica.class).getResultList().get(0).getId());
-
-    entityManager().remove(mascotaRegistrada);
-    assertEquals(0, entityManager().createQuery("from MascotaRegistrada", MascotaRegistrada.class).getResultList().size());
-    assertEquals(0, entityManager().createQuery("from Caracteristica", Caracteristica.class).getResultList().size());
+    assertTrue(cascadeTypeCheck.contemplaElCascadeType(caracteristicas, 1, 1, 0, 0));
   }
 }

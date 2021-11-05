@@ -32,7 +32,7 @@ public class InformeConQRTest extends NuestraAbstractPersistenceTest {
     receptorHogaresMock = mock(ReceptorHogares.class);
     mockNotificador = DummyData.getMockNotificador();
     informeConQR = generarInformeConQR();
-    cascadeTypeCheck = new CascadeTypeCheck();
+    cascadeTypeCheck = new CascadeTypeCheck(informeConQR);
   }
 
   @Test
@@ -56,7 +56,7 @@ public class InformeConQRTest extends NuestraAbstractPersistenceTest {
   @DisplayName("Al eliminar un InformeConQR, no se elimina la MascotaRegistrada asociada")
   public void eliminarUnInformeConQRNoEliminaALaMascotaRegistradaAsociada() {
     MascotaRegistrada mascotaRegistradaAsociada = informeConQR.getMascotaRegistrada();
-    assertTrue(cascadeTypeCheck.contemplaElCascadeType(informeConQR, mascotaRegistradaAsociada, 1, 1, 0, 1));
+    assertTrue(cascadeTypeCheck.contemplaElCascadeType(mascotaRegistradaAsociada, 1, 1, 0, 1));
     assertEquals(mascotaRegistradaAsociada.getId(), entityManager().createQuery("from MascotaRegistrada", MascotaRegistrada.class).getResultList().get(0).getId());
   }
 
@@ -64,7 +64,7 @@ public class InformeConQRTest extends NuestraAbstractPersistenceTest {
   @DisplayName("Al eliminar un InformeConQR, no se elimina el Rescatista asociado")
   public void eliminarUnInformeConQRNoEliminaAlRescatistaAsociado() {
     Persona rescatistaAsociado = informeConQR.getRescatista();
-    assertTrue(cascadeTypeCheck.contemplaElCascadeType(informeConQR, rescatistaAsociado, 1, 1 /*Rescatista*/ + 1 /*DueñoMascota*/, 0, 1 /*Rescatista*/ + 1 /*DueñoMascota*/));
+    assertTrue(cascadeTypeCheck.contemplaElCascadeType(rescatistaAsociado, 1, 1 /*Rescatista*/ + 1 /*DueñoMascota*/, 0, 1 /*Rescatista*/ + 1 /*DueñoMascota*/));
     assertNotNull(entityManager().find(Persona.class, rescatistaAsociado.getId()));
   }
 
@@ -72,7 +72,7 @@ public class InformeConQRTest extends NuestraAbstractPersistenceTest {
   @DisplayName("Al eliminar un InformeConQR, no se elimina el la MascotaEncontrada asociada")
   public void eliminarUnInformeConQRNoEliminaALaMascotaEncontradaAsociada() {
     MascotaEncontrada mascotaEncontradaAsociada = informeConQR.getMascotaEncontrada();
-    assertTrue(cascadeTypeCheck.contemplaElCascadeType(informeConQR, mascotaEncontradaAsociada, 1, 1, 0, 1));
+    assertTrue(cascadeTypeCheck.contemplaElCascadeType(mascotaEncontradaAsociada, 1, 1, 0, 1));
     assertEquals(mascotaEncontradaAsociada.getId(), entityManager().createQuery("from MascotaEncontrada", MascotaEncontrada.class).getResultList().get(0).getId());
   }
 

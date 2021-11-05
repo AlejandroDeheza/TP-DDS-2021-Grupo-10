@@ -10,7 +10,7 @@ import utils.DummyData;
 
 public class UsuarioTest extends NuestraAbstractPersistenceTest {
   Usuario usuario = DummyData.getUsuario(null);
-  CascadeTypeCheck cascadeTypeCheck = new CascadeTypeCheck();
+  CascadeTypeCheck cascadeTypeCheck = new CascadeTypeCheck(usuario);
 
   @Test
   @DisplayName("Si se crea un usuario valido, no se genera ningun problema")
@@ -28,7 +28,7 @@ public class UsuarioTest extends NuestraAbstractPersistenceTest {
   @DisplayName("Al eliminar un Usuario, se elimina su Persona asociada")
   public void eliminarUnUsuarioEliminaSuPersonaAsociada() {
     Persona personaAsociada = usuario.getPersona();
-    assertTrue(cascadeTypeCheck.contemplaElCascadeType(usuario, personaAsociada, 1, 1, 0, 0));
-    assertEquals(personaAsociada.getId(), entityManager().createQuery("from Persona", Persona.class).getResultList().get(0).getId());
+    assertTrue(cascadeTypeCheck.contemplaElCascadeType(personaAsociada, 1, 1, 0, 0));
+    assertNull(entityManager().find(Persona.class, personaAsociada.getId()));
   }
 }
