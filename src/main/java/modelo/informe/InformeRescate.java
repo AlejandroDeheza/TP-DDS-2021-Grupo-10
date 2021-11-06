@@ -27,10 +27,10 @@ public abstract class InformeRescate extends EntidadPersistente {
   @OneToOne(cascade = CascadeType.ALL)
   private MascotaEncontrada mascotaEncontrada;
 
-  private Boolean estaProcesado = false;
-
   @Transient
   private ReceptorHogares receptorHogares = new ReceptorHogares();
+
+  private Boolean estaProcesado = false;
 
   // para hibernate
   protected InformeRescate() {
