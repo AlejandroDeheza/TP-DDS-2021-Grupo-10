@@ -29,6 +29,9 @@ public abstract class InformeRescate extends EntidadPersistente {
 
   private Boolean estaProcesado = false;
 
+  @Transient
+  private ReceptorHogares receptorHogares = new ReceptorHogares();
+
   // para hibernate
   protected InformeRescate() {
 
@@ -39,12 +42,23 @@ public abstract class InformeRescate extends EntidadPersistente {
     this.rescatista = rescatista;
     this.ubicacionRescatista = ubicacionRescatista;
     this.mascotaEncontrada = mascotaEncontrada;
-
+    this.receptorHogares = receptorHogares;
   }
 
 
   public void procesarInforme() {
     this.estaProcesado = true;
+  }
+
+  public List<Hogar> getHogaresCercanos(Integer radioCercania, Animal tipoAnimal,
+                                        TamanioMascota tamanioMascota, List<Caracteristica> caracteristicas) {
+    return receptorHogares.getHogaresDisponibles(
+        ubicacionRescatista,
+        radioCercania,
+        tipoAnimal,
+        tamanioMascota,
+        caracteristicas
+    );
   }
 
   public MascotaEncontrada getMascotaEncontrada() {

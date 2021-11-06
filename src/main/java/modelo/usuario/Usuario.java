@@ -29,7 +29,7 @@ public class Usuario extends EntidadPersistente {
     this.persona = persona;
   }
 
-  protected Usuario() {
+  private Usuario() {
 
   }
 

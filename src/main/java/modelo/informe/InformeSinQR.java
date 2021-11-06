@@ -1,5 +1,6 @@
 package modelo.informe;
 
+import modelo.hogarDeTransito.Hogar;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import modelo.hogarDeTransito.ReceptorHogares;
 import modelo.mascota.Animal;
@@ -22,7 +23,7 @@ public class InformeSinQR extends InformeRescate implements WithGlobalEntityMana
   private List<Caracteristica> caracteristicas;
 
   // para hibernate
-  protected InformeSinQR() {
+  private InformeSinQR() {
 
   }
 
@@ -40,6 +41,14 @@ public class InformeSinQR extends InformeRescate implements WithGlobalEntityMana
 
   public List<Caracteristica> getCaracteristicas() {
     return caracteristicas;
+  }
+
+  public List<Hogar> getHogaresCercanos(Integer radioCercania) {
+    return super.getHogaresCercanos(
+        radioCercania,
+        tipoAnimal,
+        this.getMascotaEncontrada().getTamanio(), caracteristicas
+    );
   }
 
   @Override
