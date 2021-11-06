@@ -19,7 +19,7 @@ public class AsociacionTests extends NuestraAbstractPersistenceTest {
 
   Ubicacion ubicacion3 = new Ubicacion(100.01, 100.01, null);
   Asociacion asociacion3 = new Asociacion("", ubicacion3);
-  RepositorioAsociaciones repositorioAsociaciones = RepositorioAsociaciones.instancia;
+  RepositorioAsociaciones repositorioAsociaciones = new RepositorioAsociaciones();
 
   @BeforeEach
   public void loadContext() {

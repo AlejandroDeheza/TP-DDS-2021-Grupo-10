@@ -58,7 +58,7 @@ public class InformeSinQR extends InformeRescate implements WithGlobalEntityMana
   }
 
   private void generarPublicacion() {
-    RepositorioAsociaciones repositorioAsociaciones = RepositorioAsociaciones.instancia;
+    RepositorioAsociaciones repositorioAsociaciones = new RepositorioAsociaciones();
     entityManager().persist(
         new Rescate(
             this.getRescatista(),
