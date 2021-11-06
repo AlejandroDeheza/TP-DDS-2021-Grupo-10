@@ -45,11 +45,6 @@ public abstract class InformeRescate extends EntidadPersistente {
     this.receptorHogares = receptorHogares;
   }
 
-
-  public void procesarInforme() {
-    this.estaProcesado = true;
-  }
-
   public List<Hogar> getHogaresCercanos(Integer radioCercania, Animal tipoAnimal,
                                         TamanioMascota tamanioMascota, List<Caracteristica> caracteristicas) {
     return receptorHogares.getHogaresDisponibles(
@@ -61,6 +56,10 @@ public abstract class InformeRescate extends EntidadPersistente {
     );
   }
 
+  public void procesarInforme() {
+    this.estaProcesado = true;
+  }
+  
   public MascotaEncontrada getMascotaEncontrada() {
     return mascotaEncontrada;
   }
