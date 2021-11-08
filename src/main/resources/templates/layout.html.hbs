@@ -9,7 +9,17 @@
 <body>
   <nav>
     <a href="/">Home</a>
-  </nav>
+    <a href="/mascotas">Mascotas</a>
+    <a href="/hogares">Hogares</a>
+    {{#if sesionIniciada}}
+    <a href="/logout">Cerrar Sesión</a>
+    {{else}}
+    <a href="/login">Iniciar Sesión</a>
+    {{/if}}
+    {{#if sesionIniciada}}
+    <a href="/admin">Admin</a>
+    {{/if}}
+    </nav>
   <main>
     <h1>Patitas</h1>
     {{# block "contenido" }}

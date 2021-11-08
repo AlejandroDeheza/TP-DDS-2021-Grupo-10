@@ -1,6 +1,7 @@
 package main;
 
 import controllers.HomeController;
+import controllers.SesionController;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -17,9 +18,12 @@ public class Routes {
 
     HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
     HomeController homeController = new HomeController();
+    SesionController sesionController = new SesionController();
 
     Spark.get("/", homeController::getHome, engine);
-
+    Spark.get("/login", sesionController::mostrarLogin, engine);
+    Spark.post("/login", sesionController::crearSesion);
+    Spark.get("/admin", sesionController::mostrarAdmin, engine);
     Spark.after((request, response) -> {
       // TODO franco se los pasa
       //PerThreadEntityManagers.closeEntityManager();;
