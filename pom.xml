@@ -124,7 +124,7 @@
                             </descriptorRefs>
                             <archive>
                                 <manifest>
-                                    <mainClass>PatitasRunner</mainClass>
+                                    <mainClass>main.PatitasRunner</mainClass>
                                 </manifest>
                             </archive>
                             <finalName>patitas-app</finalName>

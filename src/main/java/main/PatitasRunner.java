@@ -1,3 +1,5 @@
+package main;
+
 import modelo.adopcion.RecomendadorDeAdopciones;
 import repositorios.RepositorioDarEnAdopcion;
 import repositorios.RepositorioSuscripcionesParaAdopciones;
