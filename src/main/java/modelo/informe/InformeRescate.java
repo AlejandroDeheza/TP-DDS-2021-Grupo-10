@@ -28,7 +28,7 @@ public abstract class InformeRescate extends EntidadPersistente {
   private MascotaEncontrada mascotaEncontrada;
 
   @Transient
-  private ReceptorHogares receptorHogares;
+  private ReceptorHogares receptorHogares = new ReceptorHogares();
 
   private Boolean estaProcesado = false;
 
@@ -45,8 +45,8 @@ public abstract class InformeRescate extends EntidadPersistente {
     this.receptorHogares = receptorHogares;
   }
 
-  public List<Hogar> getHogaresCercanos(Integer radioCercania, Animal tipoAnimal, TamanioMascota tamanioMascota,
-                                        List<Caracteristica> caracteristicas) {
+  public List<Hogar> getHogaresCercanos(Integer radioCercania, Animal tipoAnimal,
+                                        TamanioMascota tamanioMascota, List<Caracteristica> caracteristicas) {
     return receptorHogares.getHogaresDisponibles(
         ubicacionRescatista,
         radioCercania,
@@ -59,7 +59,7 @@ public abstract class InformeRescate extends EntidadPersistente {
   public void procesarInforme() {
     this.estaProcesado = true;
   }
-
+  
   public MascotaEncontrada getMascotaEncontrada() {
     return mascotaEncontrada;
   }
@@ -80,7 +80,7 @@ public abstract class InformeRescate extends EntidadPersistente {
     return mascotaEncontrada.getFechaEncuentro();
   }
 
-  public Boolean getEstaProcesado(){
+  public Boolean getEstaProcesado() {
     return this.estaProcesado;
   }
 

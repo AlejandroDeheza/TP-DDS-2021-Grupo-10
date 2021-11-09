@@ -1,15 +1,14 @@
 package modelo.informe;
 
-import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
-import repositorios.RepositorioAsociaciones;
-import modelo.asociacion.UbicadorAsociaciones;
 import modelo.hogarDeTransito.Hogar;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import modelo.hogarDeTransito.ReceptorHogares;
 import modelo.mascota.Animal;
 import modelo.mascota.MascotaEncontrada;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.Persona;
 import modelo.publicacion.Rescate;
+import repositorios.RepositorioAsociaciones;
 import javax.persistence.*;
 import java.util.List;
 
@@ -23,29 +22,32 @@ public class InformeSinQR extends InformeRescate implements WithGlobalEntityMana
   @ManyToMany(cascade = CascadeType.ALL)
   private List<Caracteristica> caracteristicas;
 
-  @Transient
-  private RepositorioAsociaciones repositorioAsociaciones;
-
   // para hibernate
   private InformeSinQR() {
 
   }
 
   public InformeSinQR(Persona rescatista, Ubicacion ubicacionRescatista, MascotaEncontrada mascotaEncontrada,
-                      ReceptorHogares receptorHogares, Animal tipoAnimal, List<Caracteristica> caracteristicas,
-                      RepositorioAsociaciones repositorioAsociaciones) {
+                      ReceptorHogares receptorHogares, Animal tipoAnimal, List<Caracteristica> caracteristicas) {
     super(rescatista, ubicacionRescatista, mascotaEncontrada, receptorHogares);
     this.tipoAnimal = tipoAnimal;
     this.caracteristicas = caracteristicas;
-    this.repositorioAsociaciones = repositorioAsociaciones;
+
+  }
+
+  public Animal getTipoAnimal() {
+    return tipoAnimal;
+  }
+
+  public List<Caracteristica> getCaracteristicas() {
+    return caracteristicas;
   }
 
   public List<Hogar> getHogaresCercanos(Integer radioCercania) {
     return super.getHogaresCercanos(
         radioCercania,
         tipoAnimal,
-        this.getMascotaEncontrada().getTamanio(),
-        caracteristicas
+        this.getMascotaEncontrada().getTamanio(), caracteristicas
     );
   }
 
@@ -56,12 +58,12 @@ public class InformeSinQR extends InformeRescate implements WithGlobalEntityMana
   }
 
   private void generarPublicacion() {
-    UbicadorAsociaciones ubicador = new UbicadorAsociaciones(repositorioAsociaciones);
+    RepositorioAsociaciones repositorioAsociaciones = new RepositorioAsociaciones();
     entityManager().persist(
         new Rescate(
             this.getRescatista(),
             this.getMascotaEncontrada(),
-            ubicador.getAsociacionMasCercana(getMascotaEncontrada().getUbicacion())
+            repositorioAsociaciones.getAsociacionMasCercana(getMascotaEncontrada().getUbicacion())
         )
     );
   }

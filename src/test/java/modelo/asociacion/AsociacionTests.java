@@ -19,21 +19,21 @@ public class AsociacionTests extends NuestraAbstractPersistenceTest {
 
   Ubicacion ubicacion3 = new Ubicacion(100.01, 100.01, null);
   Asociacion asociacion3 = new Asociacion("", ubicacion3);
-
-  UbicadorAsociaciones ubicadorAsociaciones;
+  RepositorioAsociaciones repositorioAsociaciones = new RepositorioAsociaciones();
 
   @BeforeEach
   public void loadContext() {
-    entityManager().persist(asociacion); //50
-    entityManager().persist(asociacion2); //1
-    entityManager().persist(asociacion3); //100
-    ubicadorAsociaciones = new UbicadorAsociaciones(new RepositorioAsociaciones());
+    entityManager().persist(asociacion);
+    entityManager().persist(asociacion2);
+    entityManager().persist(asociacion3);
+
   }
 
   @Test
   @DisplayName("Se elije la asociacion más cercana")
   public void seleccionAsociacionMasCercana() {
-    assertEquals(asociacion2, ubicadorAsociaciones.getAsociacionMasCercana(new Ubicacion(0.01, 0.01, null)));
+    assertEquals(asociacion2, repositorioAsociaciones.getAsociacionMasCercana(new Ubicacion(0.01
+        , 0.01, null)));
   }
 
 }

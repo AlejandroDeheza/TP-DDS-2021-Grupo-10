@@ -55,7 +55,7 @@ public class InformeSinQRTest extends NuestraAbstractPersistenceTest {
   private InformeSinQR generarInforme() {
     return new InformeSinQR(DummyData.getPersona(null), DummyData.getUbicacion(),
         DummyData.getMascotaEncontrada(DummyData.getFotos()), receptorHogaresMock, Animal.PERRO,
-        DummyData.getCaracteristicasParaMascota(), repositorioAsociaciones);
+        DummyData.getCaracteristicasParaMascota());
   }
 
 }
