@@ -67,8 +67,4 @@ public class InformeSinQR extends InformeRescate implements WithGlobalEntityMana
         )
     );
   }
-  
-  public List<Caracteristica> getCaracteristicas() {
-    return this.caracteristicas;
-  }
 }

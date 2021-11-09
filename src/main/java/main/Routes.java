@@ -15,7 +15,6 @@ public class Routes {
     Spark.port(8080);
     Spark.staticFileLocation("/public");
 
-
     HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
     HomeController homeController = new HomeController();
     SesionController sesionController = new SesionController();
