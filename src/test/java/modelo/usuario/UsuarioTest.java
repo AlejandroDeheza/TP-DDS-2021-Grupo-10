@@ -1,12 +1,16 @@
 package modelo.usuario;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import entregaTPA4.persistencia.NuestraAbstractPersistenceTest;
+import modelo.persona.Persona;
+import utils.CascadeTypeCheck;
 import utils.DummyData;
 
-public class UsuarioTest {
+public class UsuarioTest extends NuestraAbstractPersistenceTest {
+  Usuario usuario = DummyData.getUsuario(null);
+  CascadeTypeCheck cascadeTypeCheck = new CascadeTypeCheck(usuario);
 
   @Test
   @DisplayName("Si se crea un usuario valido, no se genera ningun problema")
@@ -20,6 +24,11 @@ public class UsuarioTest {
     assertEquals(DummyData.getUsuarioVoluntario().getTipo(), TipoUsuario.VOLUNTARIO);
   }
 
+  @Test
+  @DisplayName("Al eliminar un Usuario, se elimina su Persona asociada")
+  public void eliminarUnUsuarioEliminaSuPersonaAsociada() {
+    Persona personaAsociada = usuario.getPersona();
+    assertTrue(cascadeTypeCheck.contemplaElCascadeType(personaAsociada, 1, 1, 0, 0));
+    assertNull(entityManager().find(Persona.class, personaAsociada.getId()));
+  }
 }
-
-

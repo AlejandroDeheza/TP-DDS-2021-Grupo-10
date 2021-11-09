@@ -15,7 +15,7 @@ public class RespuestaDelDador extends EntidadPersistente {
 
   private String respuesta;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   private ParDePreguntas parDePreguntas;
 
   // para hibernate

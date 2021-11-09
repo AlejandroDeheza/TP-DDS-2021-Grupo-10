@@ -19,7 +19,7 @@ public class InformeSinQR extends InformeRescate implements WithGlobalEntityMana
   @Enumerated
   private Animal tipoAnimal;
 
-  @ManyToMany(cascade = CascadeType.ALL)
+  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   private List<Caracteristica> caracteristicas;
 
   // para hibernate
@@ -66,5 +66,9 @@ public class InformeSinQR extends InformeRescate implements WithGlobalEntityMana
             repositorioAsociaciones.getAsociacionMasCercana(getMascotaEncontrada().getUbicacion())
         )
     );
+  }
+  
+  public List<Caracteristica> getCaracteristicas() {
+    return this.caracteristicas;
   }
 }

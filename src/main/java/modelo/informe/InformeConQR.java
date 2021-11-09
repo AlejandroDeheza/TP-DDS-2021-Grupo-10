@@ -15,11 +15,12 @@ import java.util.List;
 @Table(name = "informe_con_QR")
 public class InformeConQR extends InformeRescate {
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   private MascotaRegistrada mascotaRegistrada;
 
   // para hibernate
   private InformeConQR() {
+
   }
 
   public InformeConQR(Persona rescatista, Ubicacion ubicacionRescatista, MascotaEncontrada mascotaEncontrada,
@@ -50,6 +51,10 @@ public class InformeConQR extends InformeRescate {
 
   private void notificarAlDuenio() {
     mascotaRegistrada.getDuenio().getNotificadorPreferido().notificarEncontramosTuMascota(mascotaRegistrada);
+  }
+  
+  public MascotaRegistrada getMascotaRegistrada() {
+    return this.mascotaRegistrada;
   }
 
 }

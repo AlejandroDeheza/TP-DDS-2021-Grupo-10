@@ -24,7 +24,6 @@ import modelo.usuario.Usuario;
 
 import java.time.LocalDate;
 import java.util.*;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

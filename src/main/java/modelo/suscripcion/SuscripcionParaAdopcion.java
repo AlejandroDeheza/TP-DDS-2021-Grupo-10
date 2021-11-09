@@ -6,7 +6,6 @@ import modelo.asociacion.Asociacion;
 import modelo.pregunta.RespuestaDelAdoptante;
 import modelo.publicacion.DarEnAdopcion;
 import modelo.usuario.Usuario;
-import repositorios.RepositorioSuscripcionesParaAdopciones;
 
 import javax.persistence.*;
 
@@ -14,10 +13,10 @@ import javax.persistence.*;
 @Table(name = "suscripcion_adopcion")
 public class SuscripcionParaAdopcion extends EntidadPersistente {
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   private Usuario suscriptor;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   private Asociacion asociacion;
 
   @Embedded
@@ -64,6 +63,10 @@ public class SuscripcionParaAdopcion extends EntidadPersistente {
   public List<RespuestaDelAdoptante> getComodidadesDelAdoptante() {
     return comodidadesDelAdoptante;
   }
+  
+  public Usuario getSuscriptor() {
+    return this.suscriptor;
+  }
 
   public Boolean estaActiva() {
     return estaActiva;
@@ -72,5 +75,4 @@ public class SuscripcionParaAdopcion extends EntidadPersistente {
   public void desactivar(){
     this.estaActiva = false;
   }
-  
 }

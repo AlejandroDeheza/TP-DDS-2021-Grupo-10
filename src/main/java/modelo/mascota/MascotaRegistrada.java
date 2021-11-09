@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 public class MascotaRegistrada extends EntidadPersistente {
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   private Usuario duenio;
 
   private String nombre;
