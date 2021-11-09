@@ -13,11 +13,14 @@ public class RepositorioAsociaciones implements WithGlobalEntityManager {
         .getResultList();
   }
 
+
   public Asociacion getAsociacionMasCercana(Ubicacion ubicacion) {
-    Double minimaDistancia = this.getAsociaciones().stream()
+List<Asociacion> asociaciones = this.getAsociaciones();
+
+    Double minimaDistancia =asociaciones.stream()
         .map(asociacion -> asociacion.getUbicacion().getDistancia(ubicacion))
         .mapToDouble(Double::doubleValue).min().getAsDouble();
-    return this.getAsociaciones().stream()
+    return asociaciones.stream()
         .filter(asociacion -> asociacion.getUbicacion().getDistancia(ubicacion).equals(minimaDistancia))
         .findFirst().orElse(null);
   }
