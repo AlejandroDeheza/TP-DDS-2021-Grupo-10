@@ -52,9 +52,5 @@ public class InformeConQR extends InformeRescate {
   private void notificarAlDuenio() {
     mascotaRegistrada.getDuenio().getNotificadorPreferido().notificarEncontramosTuMascota(mascotaRegistrada);
   }
-  
-  public MascotaRegistrada getMascotaRegistrada() {
-    return this.mascotaRegistrada;
-  }
 
 }
