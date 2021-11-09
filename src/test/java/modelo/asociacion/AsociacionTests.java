@@ -23,9 +23,9 @@ public class AsociacionTests extends NuestraAbstractPersistenceTest {
 
   @BeforeEach
   public void loadContext() {
-    entityManager().persist(asociacion); //50
-    entityManager().persist(asociacion2); //1
-    entityManager().persist(asociacion3); //100
+    entityManager().persist(asociacion);
+    entityManager().persist(asociacion2);
+    entityManager().persist(asociacion3);
 
   }
 

@@ -23,7 +23,7 @@ public class TransientTest extends NuestraAbstractPersistenceTest implements Wit
         DummyData.getPersona(TipoNotificadorPreferido.CORREO)
     );
     Usuario elMismoUsuario = persistirYsacarDeLaDB(usuario, "from Usuario");
-    elMismoUsuario.autenticarUsuario("soyGonzalo");
+    elMismoUsuario.autenticarUsuario("soyGonzalo"); // uso un metodo que romperia si el atributo @Transient esta null
   }
 
   @Test
@@ -36,7 +36,7 @@ public class TransientTest extends NuestraAbstractPersistenceTest implements Wit
         DummyData.getMascotaRegistrada(TipoNotificadorPreferido.CORREO)
     );
     InformeConQR elMismoInforme = persistirYsacarDeLaDB(informe, "from InformeConQR");
-    elMismoInforme.getHogaresCercanos(100);
+    elMismoInforme.getHogaresCercanos(100); // uso un metodo que romperia si el atributo @Transient esta null
   }
 
   public <T> T persistirYsacarDeLaDB(T instancia, String jql) {
