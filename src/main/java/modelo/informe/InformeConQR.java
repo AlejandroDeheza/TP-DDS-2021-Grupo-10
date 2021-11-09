@@ -5,7 +5,6 @@ import modelo.hogarDeTransito.ReceptorHogares;
 import modelo.mascota.MascotaEncontrada;
 import modelo.mascota.MascotaRegistrada;
 import modelo.persona.Persona;
-import repositorios.RepositorioInformes;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
