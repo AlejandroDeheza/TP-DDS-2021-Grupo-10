@@ -1,0 +1,33 @@
+<html>
+
+<head>
+  <link rel="stylesheet" type="text/css" href="/main.css">
+  {{# block "titulo" }}
+  {{/block}}
+</head>
+
+<body>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/mascotas">Mascotas</a>
+    <a href="/hogares">Hogares</a>
+    {{#if sesionIniciada}}
+    <a href="/logout">Cerrar Sesión</a>
+    {{else}}
+    <a href="/login">Iniciar Sesión</a>
+    {{/if}}
+    {{#if sesionIniciada}}
+    <a href="/admin">Admin</a>
+    {{/if}}
+    </nav>
+  <main>
+    <h1>Patitas</h1>
+    {{# block "contenido" }}
+    {{/block}}
+  </main>
+  <footer class="fondo-gris">
+    Copyright Patitas 2021
+  </footer>
+</body>
+
+</html>
