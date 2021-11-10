@@ -1,53 +1,77 @@
 package controllers;
 
+import excepciones.AutenticacionConsecutivaException;
+import excepciones.AutenticacionInvalidaException;
 import modelo.usuario.Usuario;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
+import repositorios.RepositorioUsuarios;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-
-import java.util.HashMap;
-import java.util.Map;
+import utils.ValidadorAutenticacionNuevo;
+import java.time.LocalTime;
 import java.util.NoSuchElementException;
 
-public class SesionController {
-  // TODO GRAN TODO: notar que las responsabildades
-  // de saber si una personas está con sesión inciada,
-  // de saber le usuarie actual, etc, probablmente se vayan a repetir
-  // y convendrá generalizarlas
+public class SesionController extends Controller implements WithGlobalEntityManager, TransactionalOps {
 
   public ModelAndView mostrarLogin(Request request, Response response) {
-    if (request.session().attribute("user_id") != null) {
+    if (tieneSesionActiva(request)) {
       response.redirect("/");
       return null;
     }
-    Map<String, Object> modelo = new HashMap<>();
-    modelo.put("sesionIniciada", request.session().attribute("user_id") != null);
-    return new ModelAndView(modelo, "formulario-login.html.hbs");
+    return new ModelAndView(getMap(request), "formulario-login.html.hbs");
   }
 
   public Void crearSesion(Request request, Response response) {
     try {
-//      Usuario usuario = RepositorioUsuarios.instancia.buscarPorUsuarioYContrasenia(
-//          request.queryParams("username"),
-//          request.queryParams("password"));
+      Usuario usuario = new RepositorioUsuarios().buscarPorUsuario(request.queryParams("username"));
 
-//      request.session().attribute("user_id", usuario.getId());
-//      request.session().attribute("is_admin", usuario.isAdmin());
-      response.redirect("/"); // TODO aca va a convenir leer el origen
+      if (request.session().attribute("ultimo_intento_sesion_fallido") == null ||
+          request.session().attribute("contador_intentos_sesion_fallidos") == null) {
+        request.session().attribute("ultimo_intento_sesion_fallido", LocalTime.now());
+        request.session().attribute("contador_intentos_sesion_fallidos", 0);
+      }
+
+      new ValidadorAutenticacionNuevo(
+          request.session().attribute("ultimo_intento_sesion_fallido"),
+          request.session().attribute("contador_intentos_sesion_fallidos")
+      ).autenticarUsuario(usuario, request.queryParams("password"));
+
+      request.session().attribute("user_id", usuario.getId());
+      request.session().attribute("is_admin", usuario.esAdmin());
+      request.session().attribute("contador_intentos_sesion_fallidos", "0");
+      redireccionCasoFeliz(request, response, "/", null);
       return null;
-    } catch (NoSuchElementException e) {
-      response.redirect("/login"); // TODO redirigir agregando un mensaje de error
+    } catch (NoSuchElementException e) { // entra aca si se ingreso mal el usuario
+      setearAtributosAnteError(request, response, e);
+      return null;
+    } catch (AutenticacionInvalidaException e) { // entra aca si se ingreso mal la contraseña
+      setearAtributosAnteError(request, response, e);
+      return null;
+    } catch (AutenticacionConsecutivaException e) { // entra aca si se ingreso mal la contraseña hace poco
+      redireccionCasoError(request, response, "/login", e.getMessage());
       return null;
     }
   }
 
-  public ModelAndView mostrarAdmin(Request request, Response response) {
-    if (request.session().attribute("is_admin") != null) {
-      response.redirect("/");
-      return null;
-    }
-    Map<String, Object> modelo = new HashMap<>();
-    modelo.put("sesionIniciada", request.session().attribute("is_admin") != null);
-    return new ModelAndView(modelo, "admin.html.hbs");
+  public Void cerrarSesion(Request request, Response response) {
+    request.session().attribute("user_id", null);
+    request.session().attribute("is_admin", null);
+    request.session().attribute("ultimo_intento_sesion_fallido", null);
+    request.session().attribute("contador_intentos_sesion_fallidos", null);
+    response.redirect("/");
+    return null;
   }
+
+  private void setearAtributosAnteError(Request request, Response response, RuntimeException e) {
+    request.session().attribute("ultimo_intento_sesion_fallido", LocalTime.now());
+    int contador = request.session().attribute("contador_intentos_sesion_fallidos");
+    request.session().attribute(
+        "contador_intentos_sesion_fallidos",
+        contador + 1
+    );
+    redireccionCasoError(request, response, "/login", e.getMessage());
+  }
+
 }

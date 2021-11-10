@@ -18,9 +18,6 @@ public class Usuario extends EntidadPersistente {
   @OneToOne(cascade = CascadeType.ALL)
   private Persona persona;
 
-  @Transient
-  private ValidadorAutenticacion validadorAutenticacion = new ValidadorAutenticacion();
-
   public Usuario(String usuario, String contrasenia, TipoUsuario tipo, Persona persona) {
     new ValidadorContrasenias().correrValidaciones(contrasenia);
     this.usuario = usuario;
@@ -31,10 +28,6 @@ public class Usuario extends EntidadPersistente {
 
   private Usuario() {
 
-  }
-
-  public void autenticarUsuario(String contraseniaIngresada) {
-    validadorAutenticacion.autenticarUsuario(this, contraseniaIngresada);
   }
 
   public Notificador getNotificadorPreferido() {
@@ -55,5 +48,9 @@ public class Usuario extends EntidadPersistente {
 
   public Persona getPersona() {
     return persona;
+  }
+
+  public Boolean esAdmin() {
+    return tipo == TipoUsuario.ADMIN;
   }
 }

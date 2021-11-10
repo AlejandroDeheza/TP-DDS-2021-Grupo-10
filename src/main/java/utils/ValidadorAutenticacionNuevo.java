@@ -1,20 +1,25 @@
-package modelo.usuario;
+package utils;
 
 import excepciones.AutenticacionConsecutivaException;
 import excepciones.AutenticacionInvalidaException;
+import modelo.usuario.Usuario;
 import java.time.LocalTime;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
 
-public class ValidadorAutenticacion {
+public class ValidadorAutenticacionNuevo {
 
-  private LocalTime ultimoIntentoDeSesionFallido = LocalTime.now();
-  private Integer contadorIntentosDeSesionFallidos = 0;
+  private final LocalTime ultimoIntentoDeSesionFallido;
+  private final Integer contadorIntentosDeSesionFallidos;
+
+  public ValidadorAutenticacionNuevo(LocalTime ultimoIntentoDeSesionFallido, Integer contadorIntentosDeSesionFallidos) {
+    this.ultimoIntentoDeSesionFallido = ultimoIntentoDeSesionFallido;
+    this.contadorIntentosDeSesionFallidos = contadorIntentosDeSesionFallidos;
+  }
 
   public void autenticarUsuario(Usuario usuario, String contraseniaIngresada) {
     validarCantidadDeIntentosFallidos();
     validarContraseniaIngresada(usuario, contraseniaIngresada);
-    this.contadorIntentosDeSesionFallidos = 0;
   }
 
   private void validarCantidadDeIntentosFallidos() {
@@ -32,8 +37,6 @@ public class ValidadorAutenticacion {
 
   private void validarContraseniaIngresada(Usuario usuario, String contraseniaIngresada) {
     if (laContraseniaEsIncorrecta(usuario, contraseniaIngresada)) {
-      ultimoIntentoDeSesionFallido = LocalTime.now();
-      this.contadorIntentosDeSesionFallidos = contadorIntentosDeSesionFallidos + 1;
       throw new AutenticacionInvalidaException("La contraseña ingresada es incorrecta");
     }
   }
@@ -50,5 +53,4 @@ public class ValidadorAutenticacion {
   private boolean laContraseniaEsIncorrecta(Usuario usuario, String contraseniaIngresada) {
     return !usuario.getContrasenia().equals(contraseniaIngresada);
   }
-
 }

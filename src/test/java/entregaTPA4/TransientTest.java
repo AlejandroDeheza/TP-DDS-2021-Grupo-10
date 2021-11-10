@@ -15,18 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TransientTest extends NuestraAbstractPersistenceTest implements WithGlobalEntityManager {
 
   @Test
-  public void transientTestDeUsuario() {
-    Usuario usuario = new Usuario(
-        "Gonzalo",
-        "soyGonzalo",
-        TipoUsuario.NORMAL,
-        DummyData.getPersona(TipoNotificadorPreferido.CORREO)
-    );
-    Usuario elMismoUsuario = persistirYsacarDeLaDB(usuario, "from Usuario");
-    elMismoUsuario.autenticarUsuario("soyGonzalo"); // uso un metodo que romperia si el atributo @Transient esta null
-  }
-
-  @Test
   public void transientTestDeInformeRescate() {
     InformeConQR informe = new InformeConQR(
         DummyData.getPersona(TipoNotificadorPreferido.CORREO),
