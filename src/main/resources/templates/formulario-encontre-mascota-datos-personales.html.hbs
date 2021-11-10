@@ -4,50 +4,12 @@
 
 {{# partial "contenido" }}
     <section class="fondo-gris">
-        <h2>Para avisarnos sobre la mascota rescatada, por favor primero completa tus datos personales.</h2>
-        <form class="encontre-mascota" action="/mascotas/encontre-mascota/lugar-encuentro" method="POST">
-            <div class="campo">
-                <span class="nombre-campo">Nombre:</span><input type="text"required="required" name="nombre"
-                placeholder="Ingrese su nombre">
-            </div>
-            <div class="campo">
-               <span class="nombre-campo">Apellido:</span><input type="text"required="required" name="apellido"
-                placeholder="Ingrese su apellido">
-            </div>
-            <div class="campo">
-               <span class="nombre-campo">Correo Electronico:</span><input type="email"required="required" name="email"
-                placeholder="Ingrese su correo electronico">
-            </div>
-            <div class="campo">
-                <span class="nombre-campo">Telefono:</span><input type="tel" required="required"name="telefono"
-                placeholder="Ingrese su Telefono">
-            </div>
-            <div class="campo">
-                <span class="nombre-campo">Tipo Documento:</span>
-                <select name="tipoDocumento">
-                    {{#each tiposDocumentos}}
-                        <option value="{{this}}">{{this}}</option>
-                    {{/each}}
-                </select>
-            </div>
-            <div class="campo">
-               <span class="nombre-campo">Numero documento:</span><input type="text"required="required"
-               name="numero-documento"
-                placeholder="Ingrese su Numero documento">
-            </div>
-            <div class="campo">
+        <h2>Para avisarnos sobre la mascota rescatada, por favor primero completa tus datos personales.n</h2>
 
-               <span class="medio-contacto">Medio contacto:</span>
-                <select name="medioContacto">
-                    {{#each medioContactos}}
-                        <option value="{{this}}">{{this}}</option>
-                    {{/each}}
-                </select>
-            </div>
+        <form class="encontre-mascota" action="/encontre-mascota/lugar-encuentro" method="POST">
             <div class="campo">
-               <span class="medio-contacto">Fecha nacimiento:</span><input type="date"required="required"
-               name="fecha-nacimiento"
-                placeholder="Ingrese su Fecha de Nacimiento">
+                <span class="nombre-campo">Nombre:</span><input type="text" name="nombre"
+                placeholder="Ingrese su nombre">
             </div>
             <input type="submit" value="Siguiente">
         </form>

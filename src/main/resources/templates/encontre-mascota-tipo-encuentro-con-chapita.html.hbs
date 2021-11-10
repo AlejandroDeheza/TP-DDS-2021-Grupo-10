@@ -5,28 +5,18 @@
 {{# partial "contenido" }}
     <section class="fondo-gris">
          <section class="fondo-gris">
-             <form class="encontre-mascota"
-             action="/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/con-chapita"
+             <h2>Para avisarnos sobre la mascota rescatada, por favor primero completa tus datos personales.n</h2>
+
+             <form class="encontre-mascota" action="/encontre-mascota/lugar-encuentro/tipo-encuentro/con-chapita"
              method="GET">
                  <div class="campo">
                      <span class="nombre-campo">Ingrese el codigo de la chapita:</span><input
-                     type="number" required="required" name="codigo-chapita"
-                     value="{{codigo-chapita}}" min="1"
-                     placeholder="Ingrese el codigo de la chapita" >
+                     type="number" name="codigo-chapita"
+                     placeholder="Ingrese el codigo de la chapita">
                  </div>
                  <input type="submit" value="Buscar">
              </form>
-        <h2>Informacion de la mascota</h2>
-         {{#mascotaRegistrada}}
-              {{#each fotos as |foto|}}
-             <img src="/images/mascotaregistrada/{{foto.link}}"  class="card-img" alt="boton"
-              {{/each}}
-             alt="boton" />
-            <li>Nombre: {{nombre}}</li>
-            <li>Apodo: {{apodo}}</li>
-            <li>Sexo: {{sexo}}</li>
-         {{/mascotaRegistrada}}
-            <form action="/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/con-chapita" method="POST">
+             <form action="/encontre-mascota/lugar-encuentro/tipo-encuentro/con-chapita" method="POST">
                  <button name="enviar" value="Enviar">Enviar</button>
       </form>
     </section>

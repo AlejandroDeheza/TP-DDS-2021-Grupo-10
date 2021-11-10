@@ -7,36 +7,13 @@
              <h2>Para avisarnos sobre la mascota rescatada, por favor primero completa tus datos personales.n</h2>
 
              <form class="encontre-mascota"
-             action="/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/sin-chapita"
+             action="/encontre-mascota/lugar-encuentro/tipo-encuentro/sin-chapita"
              method="POST">
                  <div class="campo">
-                     <span class="nombre-campo">Tipo Animal:</span>
-                     <select name="tipoDocumento">
-                     {{#each tipoAnimales}}
-                         <option value="{{this}}">{{this}}</option>
-                     {{/each}}
-                     </select>
+                     <span class="nombre-campo">Ingrese el codigo de la chapita:</span><input
+                     type="number" name="codigo-chapita"
+                     placeholder="Ingrese el codigo de la chapita">
                  </div>
-                 <div class="campo">
-                     <span class="nombre-campo">Tamaño:</span>
-                     <select name="tamanioMascota">
-                         {{#each tamanioMascota}}
-                             <option value="{{this}}">{{this}}</option>
-                         {{/each}}
-                     </select>
-                 </div>
-                 <h2>Caracteristicas</h2>
-                 <div class="campo">
-                     <span class="nombre-campo">Color:</span><input
-                     type="color" required="required" name="color"
-                     placeholder="Ingrese color">
-                 </div>
-
-                 <div class="campo">
-                   <span class="nombre-campo">Caracter:</span><input
-                      type="text" required="required"name="caracter"
-                        placeholder="Ingrese el caracter">
-                   </div>
                  <input type="submit" value="Enviar">
              </form>
     </section>
