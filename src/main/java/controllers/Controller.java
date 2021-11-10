@@ -10,16 +10,12 @@ public abstract class Controller {
 
   protected Map<String, Object> getMap(Request request) {
     Map<String, Object> mapa = new HashMap<>();
-    mapa.put("sesionIniciada", request.session().attribute("user_id") != null);
+    mapa.put("sesionIniciada", tieneSesionActiva(request));
     return mapa;
   }
 
-  protected Boolean seInicioSesion(Request request) {
+  protected Boolean tieneSesionActiva(Request request) {
     return request.session().attribute("user_id") != null;
-  }
-
-  protected Boolean noSeInicioSesion(Request request) {
-    return request.session().attribute("user_id") == null;
   }
 
   protected Boolean noEsAdmin(Request request) {

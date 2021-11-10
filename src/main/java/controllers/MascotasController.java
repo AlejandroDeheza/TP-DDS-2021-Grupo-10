@@ -7,7 +7,7 @@ import spark.Response;
 public class MascotasController extends Controller{
 
   public ModelAndView mostrarRegistracion(Request request, Response response) {
-    if (noSeInicioSesion(request)) {
+    if (!tieneSesionActiva(request)) {
       response.redirect("/login?origin=/registracion-mascota");
       return null;
     }

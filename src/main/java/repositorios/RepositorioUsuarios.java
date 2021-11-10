@@ -14,15 +14,15 @@ public class RepositorioUsuarios implements WithGlobalEntityManager {
     return entityManager().find(Usuario.class, id);
   }
 
-  public Usuario buscarPorUsuario(String usuario) {
+  public Usuario buscarPorUsuario(String nombreUsuario) {
     return listar().stream()
-        .filter(u -> u.getUsuario().equals(usuario))
+        .filter(u -> u.getUsuario().equals(nombreUsuario))
         .findFirst().get();
   }
 
-  public Boolean yaExiste(String usuario) {
+  public Boolean yaExiste(String nombreUsuario) {
     return listar().stream()
-        .anyMatch(u -> u.getUsuario().equals(usuario));
+        .anyMatch(u -> u.getUsuario().equals(nombreUsuario));
   }
 
   private List<Usuario> listar() {

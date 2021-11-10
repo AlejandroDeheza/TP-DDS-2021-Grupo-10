@@ -19,7 +19,7 @@ public class Routes {
     HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
     HomeController homeController = new HomeController();
     SesionController sesionController = new SesionController();
-    AdminController adminController = new AdminController();
+    UsuarioController usuarioController = new UsuarioController();
     PublicacionesController publicacionesController = new PublicacionesController();
     MascotasController mascotasController = new MascotasController();
 
@@ -28,18 +28,13 @@ public class Routes {
     Spark.get("/login", sesionController::mostrarLogin, engine);
     Spark.post("/login", sesionController::crearSesion);
     Spark.get("/logout", sesionController::cerrarSesion);
-    Spark.get("/registracion", sesionController::mostrarRegistracion, engine);
-    Spark.post("/registracion", sesionController::registrar);
 
-    Spark.get("/admin", adminController::mostrarAdmin, engine);
+    Spark.get("/registracion", usuarioController::mostrarFormularioCreacionUsuario, engine);
+    Spark.post("/registracion", usuarioController::registrarUsuario);
+    Spark.get("/admin", usuarioController::mostrarAdmin, engine);
 
     Spark.get("/mascotas-en-adopcion", publicacionesController::mostrarMascotasEnAdopcion, engine);
     Spark.get("/registracion-mascota", mascotasController::mostrarRegistracion, engine);
-
-    Spark.after((request, response) -> {
-      // TODO franco se los pasa
-      //PerThreadEntityManagers.closeEntityManager();;
-    });
 
     System.out.println("Servidor iniciado!");
   }

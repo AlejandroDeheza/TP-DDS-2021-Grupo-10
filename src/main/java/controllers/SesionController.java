@@ -2,15 +2,7 @@ package controllers;
 
 import excepciones.AutenticacionConsecutivaException;
 import excepciones.AutenticacionInvalidaException;
-import excepciones.ContraseniaInvalidaException;
-import modelo.notificacion.TipoNotificadorPreferido;
-import modelo.persona.DatosDeContacto;
-import modelo.persona.DocumentoIdentidad;
-import modelo.persona.Persona;
-import modelo.persona.TipoDocumento;
-import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
-import modelo.usuario.ValidadorContrasenias;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 import repositorios.RepositorioUsuarios;
@@ -18,14 +10,13 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import utils.ValidadorAutenticacionNuevo;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.NoSuchElementException;
 
 public class SesionController extends Controller implements WithGlobalEntityManager, TransactionalOps {
 
   public ModelAndView mostrarLogin(Request request, Response response) {
-    if (seInicioSesion(request)) {
+    if (tieneSesionActiva(request)) {
       response.redirect("/");
       return null;
     }
@@ -62,57 +53,6 @@ public class SesionController extends Controller implements WithGlobalEntityMana
       redireccionCasoError(request, response, "/login", e.getMessage());
       return null;
     }
-  }
-
-  public ModelAndView mostrarRegistracion(Request request, Response response) {
-    return new ModelAndView(getMap(request), "registracion.html.hbs");
-  }
-
-  public Void registrar(Request request, Response response) {
-    try {
-      new ValidadorContrasenias().correrValidaciones(request.queryParams("contrasenia"));
-    } catch (ContraseniaInvalidaException e) {
-      redireccionCasoError(request, response, "/registracion", e.getMessage());
-      return null;
-    }
-
-    if (new RepositorioUsuarios().yaExiste(request.queryParams("usuario"))) {
-      redireccionCasoError(request, response,"/registracion", "Ya existe una cuenta con el nombre de usuario ingresado");
-    } else {
-      DocumentoIdentidad documentoIdentidad = new DocumentoIdentidad(
-          TipoDocumento.values()[Integer.parseInt(request.queryParams("tipoDocumento"))],
-          request.queryParams("numeroDocumento")
-      );
-
-      DatosDeContacto datosDeContacto = new DatosDeContacto(
-          request.queryParams("telefono"),
-          request.queryParams("email")
-      );
-
-      Persona persona = new Persona(
-          request.queryParams("nombre"),
-          request.queryParams("apellido"),
-          documentoIdentidad,
-          datosDeContacto,
-          LocalDate.parse(request.queryParams("fechaNacimiento")),
-          TipoNotificadorPreferido.values()[Integer.parseInt(request.queryParams("tipoNotificadorPreferido"))]
-      );
-
-      Usuario nuevo = new Usuario(
-          request.queryParams("usuario"),
-          request.queryParams("contrasenia"),
-          TipoUsuario.NORMAL,
-          persona
-      );
-
-      withTransaction(() -> {
-        new RepositorioUsuarios().agregar(nuevo);
-      });
-
-      request.session().attribute("user_id", nuevo.getId());
-      redireccionCasoFeliz(request, response, "/", "La cuenta se ha registrado con exito!");
-    }
-    return null;
   }
 
   public Void cerrarSesion(Request request, Response response) {
