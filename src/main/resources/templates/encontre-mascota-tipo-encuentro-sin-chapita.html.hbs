@@ -1,0 +1,22 @@
+{{# partial "titulo" }}
+    <title>Patitas - Encontre una Mascota sin chapita</title>
+{{/partial}}
+
+{{# partial "contenido" }}
+    <section class="fondo-gris">
+             <h2>Para avisarnos sobre la mascota rescatada, por favor primero completa tus datos personales.n</h2>
+
+             <form class="encontre-mascota"
+             action="/encontre-mascota/lugar-encuentro/tipo-encuentro/sin-chapita"
+             method="POST">
+                 <div class="campo">
+                     <span class="nombre-campo">Ingrese el codigo de la chapita:</span><input
+                     type="number" name="codigo-chapita"
+                     placeholder="Ingrese el codigo de la chapita">
+                 </div>
+                 <input type="submit" value="Enviar">
+             </form>
+    </section>
+{{/partial}}
+
+{{> layout.html.hbs }}
