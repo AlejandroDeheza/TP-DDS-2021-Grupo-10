@@ -1,0 +1,26 @@
+{{# partial "titulo" }}
+    <title>Patitas - Encontre una Mascota</title>
+{{/partial}}
+
+{{# partial "contenido" }}
+    <section class="fondo-gris">
+        <h2>Para avisarnos sobre la mascota rescatada, por favor primero completa tus datos personales.n</h2>
+
+        <form class="encontre-mascota" action="/encontre-mascota/lugar-encuentro/tipo-encuentro"
+        method="POST">
+            <div class="campo">
+                <span class="nombre-campo">Nombre:</span><input type="text" name="nombre"
+                placeholder="Ingrese su nombre">
+            </div>
+            <div class="campo">
+                <span class="nombre-campo">Contraseña:</span><input type="password" name="password" placeholder="Ingrese contraseña">
+            </div>
+            <input type="submit" value="Iniciar Sesión">
+        </form>
+
+
+
+    </section>
+{{/partial}}
+
+{{> layout.html.hbs }}
