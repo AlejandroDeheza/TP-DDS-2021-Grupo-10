@@ -29,6 +29,11 @@ public class Routes {
 
     Spark.get("/login", sesionController::mostrarLogin, engine);
     Spark.post("/login", sesionController::crearSesion);
+    Spark.get("/admin", sesionController::mostrarAdmin, engine);
+
+
+
+
     Spark.get("/logout", sesionController::cerrarSesion);
 
     Spark.get("/creacion-usuario", usuarioController::mostrarFormularioCreacionUsuario, engine);
@@ -106,5 +111,9 @@ public class Routes {
     System.out.println("Servidor iniciado!");
   }
 
+      Spark.after((request, response) -> {
+    // TODO franco se los pasa
+    //PerThreadEntityManagers.closeEntityManager();;
+  });
 
 }

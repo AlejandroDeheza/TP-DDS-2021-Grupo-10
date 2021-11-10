@@ -4,7 +4,7 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
-public class EncontreMascotaController extends Controller {
+public class EncontreMascotaController {
 
   public ModelAndView getFormularioDatosNoUsuario(Request request, Response response) {
     if (request.session().attribute("user_id") != null) {
