@@ -15,9 +15,9 @@ public class RepositorioAsociaciones implements WithGlobalEntityManager {
 
 
   public Asociacion getAsociacionMasCercana(Ubicacion ubicacion) {
-List<Asociacion> asociaciones = this.getAsociaciones();
+    List<Asociacion> asociaciones = this.getAsociaciones();
 
-    Double minimaDistancia =asociaciones.stream()
+    Double minimaDistancia = asociaciones.stream()
         .map(asociacion -> asociacion.getUbicacion().getDistancia(ubicacion))
         .mapToDouble(Double::doubleValue).min().getAsDouble();
     return asociaciones.stream()
