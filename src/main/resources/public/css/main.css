@@ -1,0 +1,84 @@
+:root {
+  --margen-bottom: 35px;
+}
+
+.actions-container {
+  margin-bottom: var(--margen-bottom);
+}
+
+.action:last-child {
+  text-align: center;
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  width: 300;
+  height: 200;
+  overflow: hidden;
+  border-radius: 6px;
+  box-shadow: 0 0 0 0 #7952b3;
+  filter: grayscale(100%);
+  position: relative;
+  transition: filter 0.6s, box-shadow 0.6s;
+}
+.card > img {
+  width: 300px;
+  height: 200px;
+}
+
+.card:hover {
+  box-shadow: 0 0 0 2px #7952b3;
+  filter: none;
+}
+
+.nav-link {
+  color: white !important;
+  margin: 0 50px;
+}
+
+.navbar {
+  background-color: #7952b3;
+  height: 110px;
+  margin-bottom: var(--margen-bottom);
+}
+
+.navbar-nav {
+  font-size: 20px;
+}
+
+.navbar-brand {
+  align-items: center;
+  color: white !important;
+  display: flex;
+}
+
+.navbar-brand > img {
+  width: 100px;
+  height: 85px;
+  margin-right: 5px;
+}
+
+.flex-center {
+  justify-content: center;
+}
+
+.footer {
+  color: white;
+  align-items: center;
+  background-color: #7952b3;
+  bottom: 0;
+  display: flex;
+  height: 70px;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
+.section {
+  margin-bottom: var(--margen-bottom);
+}
