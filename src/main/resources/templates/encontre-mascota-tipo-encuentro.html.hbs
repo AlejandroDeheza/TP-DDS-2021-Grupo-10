@@ -1,0 +1,28 @@
+{{# partial "titulo" }}
+    <title>Patitas - Encontre una Mascota</title>
+{{/partial}}
+
+{{# partial "contenido" }}
+    <section class="fondo-gris">
+     <div class="d-flex justify-content-around actions-container">
+            <a href="/encontre-mascota/lugar-encuentro/tipo-encuentro/con-chapita">
+             <div class="card bg-dark text-white" type="button">
+               <img
+                 src="/images/tiene-chapita.jpg" class="card-img" alt="boton" />
+               <div class="card-img-overlay action">
+                 <h3 class="card-title">Tiene Chapita</h3>
+               </div>
+             </div>
+             </a>
+              <a href="/encontre-mascota/lugar-encuentro/tipo-encuentro/sin-chapita">
+             <div class="card bg-dark text-white" type="button">
+               <img src="/images/no-chapita.jpg" class="card-img" alt="boton" />
+               <div class="card-img-overlay action">
+                 <h3 class="card-title">No tiene Chapita</h3>
+               </div>
+             </div>
+              </a>
+    </section>
+{{/partial}}
+
+{{> layout.html.hbs }}
