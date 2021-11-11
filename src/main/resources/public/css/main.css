@@ -43,8 +43,26 @@
 }
 
 .form-login {
-  width: 100%;
+  width: 75%;
   margin: 0 110px;
+}
+
+.foto-bienvenida {
+  background-image: url("https://fondosmil.com/fondo/22182.jpg");
+  display: flex;
+  flex: 1;
+  background-position-x: center;
+  background-position-y: center;
+  background-repeat: no-repeat;
+}
+
+.foto-bienvenida-sign-in {
+  background-image: url("http://st.gde-fon.com/wallpapers_original/422625_koshka_sobaka_kotenok_shhenok_trava_fon_5269x3500_www.Gde-Fon.com.jpg");
+  display: flex;
+  flex: 1;
+  background-position-x: center;
+  background-position-y: center;
+  background-repeat: no-repeat;
 }
 
 .login-container {
@@ -53,9 +71,27 @@
   margin: 0 -110px;
 }
 
+.logo-login {
+  width: 120px;
+  height: 120px;
+}
+
+.mensaje-bienvenida {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  align-items: center;
+  color: white;
+  font-size: xx-large;
+  font-weight: 600;
+  margin: 0 70px;
+  text-align: center;
+}
+
 .submit-button {
-  border-radius: 15px;
-  width: 100%;
+  border-radius: 50px;
+  width: 200px;
+  margin-top: 30px;
   background-color: #7952b3 !important;
   border-color: #7952b3 !important;
 }
@@ -65,6 +101,14 @@
   justify-content: center;
   display: flex;
   align-items: center;
+  flex-direction: column;
+}
+
+.form-container-sign-up {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .image-container {
