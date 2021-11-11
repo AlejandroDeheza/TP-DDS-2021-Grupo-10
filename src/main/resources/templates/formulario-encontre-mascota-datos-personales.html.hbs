@@ -4,12 +4,43 @@
 
 {{# partial "contenido" }}
     <section class="fondo-gris">
-        <h2>Para avisarnos sobre la mascota rescatada, por favor primero completa tus datos personales.n</h2>
-
-        <form class="encontre-mascota" action="/encontre-mascota/lugar-encuentro" method="POST">
+        <h2>Para avisarnos sobre la mascota rescatada, por favor primero completa tus datos personales.</h2>
+        <form class="encontre-mascota" action="/mascotas/encontre-mascota/lugar-encuentro" method="POST">
             <div class="campo">
                 <span class="nombre-campo">Nombre:</span><input type="text" name="nombre"
                 placeholder="Ingrese su nombre">
+            </div>
+            <div class="campo">
+               <span class="nombre-campo">Apellido:</span><input type="text" name="apellido"
+                placeholder="Ingrese su apellido">
+            </div>
+            <div class="campo">
+               <span class="nombre-campo">Correo Electronico:</span><input type="text" name="email"
+                placeholder="Ingrese su correo electronico">
+            </div>
+            <div class="campo">
+                <span class="nombre-campo">Telefono:</span><input type="text" name="telefono"
+                placeholder="Ingrese su Telefono">
+            </div>
+            <div class="campo">
+               <span class="nombre-campo">Tipo Documento:</span><input type="text"
+               name="tipo-documento"
+                placeholder="Ingrese su Tipo documento">
+            </div>
+            <div class="campo">
+               <span class="nombre-campo">Numero documento:</span><input type="text"
+               name="numero-documento"
+                placeholder="Ingrese su Numero documento">
+            </div>
+            <div class="campo">
+               <span class="medio-contacto">Medio contacto:</span><input type="text"
+               name="medio-contacto"
+                placeholder="Ingrese un medio de contacto">
+            </div>
+            <div class="campo">
+               <span class="medio-contacto">Fecha nacimiento:</span><input type="text"
+               name="fecha-nacimiento"
+                placeholder="Ingrese su Fecha de Nacimiento">
             </div>
             <input type="submit" value="Siguiente">
         </form>
