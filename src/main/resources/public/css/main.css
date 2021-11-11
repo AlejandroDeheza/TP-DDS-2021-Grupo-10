@@ -53,6 +53,56 @@
   height: 200px;
 }
 
+.agregar-pregunta {
+  text-align: center;
+}
+
+.asociaciones-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.admin-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: 0.25 rem;
+  width: 100%;
+  height: auto;
+}
+
+.admin-card-dropdown {
+  position: relative;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: 0.25 rem;
+  width: 100%;
+  height: 60;
+}
+
+.pregunta-asociacion {
+  padding: 0.4em 0;
+}
+
+.agregar-pregunta {
+  text-align: center;
+}
+
+.titulo-preguntas {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .card:hover {
   box-shadow: 0 0 0 2px #7952b3;
   filter: none;
@@ -116,6 +166,17 @@
   border-color: #7952b3 !important;
 }
 
+.visibility-none {
+  visibility: hidden;
+}
+
+.center-space-evenly {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100%;
+}
+
 .image-error-container {
   height: 500px;
 }
@@ -129,6 +190,11 @@
   border-radius: 50px;
   width: 200px;
   margin-top: 10px;
+  background-color: #7952b3 !important;
+  border-color: #7952b3 !important;
+}
+
+.btn-agregar-preguntas {
   background-color: #7952b3 !important;
   border-color: #7952b3 !important;
 }
@@ -255,6 +321,39 @@
 .section {
   margin-bottom: var(--margen-bottom);
 }
+
+.titulo-caracteristicas {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1em;
+}
+
+.agregar-pregunta {
+  text-align: center;
+}
+
+.titulo-preguntas {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1em;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.preguntas-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1em;
+};
 
 #sign-in {
   background-color: #7952b3;

@@ -15,7 +15,7 @@ public class ParDePreguntas extends EntidadPersistente {
 
   private String preguntaDelAdoptante;
 
-  private Boolean esObligatoria = true;
+  private Boolean esObligatoria;
 
   @ElementCollection
   private List<ParDeRespuestas> paresDeRespuestas = new ArrayList<>();
@@ -44,6 +44,14 @@ public class ParDePreguntas extends EntidadPersistente {
 
   public void agregarRespuesta(ParDeRespuestas parDeRespuestas) {
     paresDeRespuestas.add(parDeRespuestas);
+  }
+
+  public void agregarRespuestaDador(String respuestaDador) {
+    respuestasPosiblesDelDador.add(respuestaDador);
+  }
+
+  public void agregarRespuestaAdoptante(String respuestaAdoptante) {
+    respuestasPosiblesDelAdoptante.add(respuestaAdoptante);
   }
 
   public String getPreguntaDelDador() {

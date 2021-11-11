@@ -51,7 +51,7 @@ public class UsuarioController extends Controller implements WithGlobalEntityMan
     }
 
     if (new RepositorioUsuarios().yaExiste(request.queryParams("usuario"))) {
-      redireccionCasoError(request, response,"/creacion-usuario", "Ya existe una cuenta con el nombre de usuario ingresado");
+      redireccionCasoError(request, response, "/creacion-usuario", "Ya existe una cuenta con el nombre de usuario ingresado");
     } else {
       DocumentoIdentidad documentoIdentidad = new DocumentoIdentidad(
           TipoDocumento.values()[Integer.parseInt(request.queryParams("tipoDocumento"))],

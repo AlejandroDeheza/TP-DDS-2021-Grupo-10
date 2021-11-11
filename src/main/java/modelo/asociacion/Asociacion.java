@@ -7,8 +7,11 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Asociacion extends EntidadPersistente {
@@ -20,6 +23,7 @@ public class Asociacion extends EntidadPersistente {
 
   @OneToMany
   @JoinColumn(name = "asociacion_id")
+  @Cascade(CascadeType.ALL)
   private List<ParDePreguntas> preguntas = new ArrayList<>();
 
   // para hibernate
