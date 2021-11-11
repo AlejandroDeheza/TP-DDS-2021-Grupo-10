@@ -103,9 +103,15 @@ public class Routes {
 
     Spark.get("/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/con-chapita",
         encontreMascotaController::getFormularioConChapita, engine);
+
+//    Spark.get("/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/con-chapita/:id",
+//        (request, response) -> encontreMascotaController.getDetalleMascotaConChapita(request,
+//            response, engine));
+
     Spark.post("/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/con-chapita",
         (request, response) -> encontreMascotaController.enviarMascotaEncontrada(request,
             response));
+
     Spark.get("/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/sin-chapita",
         encontreMascotaController::getFormularioSinChapita, engine);
     Spark.post("/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/sin-chapita",
