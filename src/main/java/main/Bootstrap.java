@@ -55,9 +55,9 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
     Ubicacion ubicacion2 = new Ubicacion(219.0, 22.0, "Mozart 1923");
     Ubicacion ubicacion3 = new Ubicacion(334.0, 529.0, "Pedraza 34");
 
-    Asociacion asociacion1 = new Asociacion("Una Asociación", ubicacion1);
-    Asociacion asociacion2 = new Asociacion("Otra Asociación", ubicacion2);
-    Asociacion asociacion3 = new Asociacion("Otra Asociación", ubicacion3);
+    Asociacion asociacion1 = new Asociacion("Asociada", ubicacion1);
+    Asociacion asociacion2 = new Asociacion("Desasociada", ubicacion2);
+    Asociacion asociacion3 = new Asociacion("Corte Logia", ubicacion3);
 
     ParDePreguntas parDePreguntas1 = new ParDePreguntas("Pregunta del Dador 1", "Pregunta del Adoptante 1", true);
     ParDePreguntas parDePreguntas2 = new ParDePreguntas("Pregunta del Dador 2", "Pregunta del Adoptante 2", true);
