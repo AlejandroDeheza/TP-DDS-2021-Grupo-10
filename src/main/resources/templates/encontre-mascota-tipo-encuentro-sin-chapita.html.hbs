@@ -10,14 +10,20 @@
              action="/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/sin-chapita"
              method="POST">
                  <div class="campo">
-                     <span class="nombre-campo">Tipo Animal:</span><input
-                     type="text" required="required"name="tipo-animal"
-                     placeholder="Ingrese el tipo de animal">
+                     <span class="nombre-campo">Tipo Animal:</span>
+                     <select name="tipoDocumento">
+                     {{#each tipoAnimales}}
+                         <option value="{{this}}">{{this}}</option>
+                     {{/each}}
+                     </select>
                  </div>
                  <div class="campo">
-                     <span class="nombre-campo">Tamaño:</span><input
-                     type="text" required="required"name="tamanio"
-                     placeholder="Ingrese el tamaño">
+                     <span class="nombre-campo">Tamaño:</span>
+                     <select name="tamanioMascota">
+                         {{#each tamanioMascota}}
+                             <option value="{{this}}">{{this}}</option>
+                         {{/each}}
+                     </select>
                  </div>
                  <h2>Caracteristicas</h2>
                  <div class="campo">
@@ -25,6 +31,7 @@
                      type="color" required="required" name="color"
                      placeholder="Ingrese color">
                  </div>
+
                  <div class="campo">
                    <span class="nombre-campo">Caracter:</span><input
                       type="text" required="required"name="caracter"

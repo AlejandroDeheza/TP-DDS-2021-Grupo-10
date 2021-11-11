@@ -1,6 +1,8 @@
 package controllers;
 
+import modelo.mascota.Animal;
 import modelo.mascota.MascotaRegistrada;
+import modelo.mascota.TamanioMascota;
 import modelo.notificacion.TipoNotificadorPreferido;
 import modelo.persona.TipoDocumento;
 import repositorios.RepositorioMascotaRegistrada;
@@ -111,7 +113,16 @@ public class EncontreMascotaController extends Controller {
       response.redirect("/mascotas/encontre-mascota");
       return null;
     }
-    return new ModelAndView(getMap(request), "encontre-mascota-tipo-encuentro-sin-chapita.html.hbs");
+
+    Map<String, Object> modelo = getMap(request);
+
+    EnumSet<Animal> animal = EnumSet.allOf(Animal.class);
+    EnumSet<TamanioMascota> tamanioMascotas = EnumSet.allOf(TamanioMascota.class);
+
+    modelo.put("tipoAnimales",animal);
+    modelo.put("tamanioMascota",tamanioMascotas);
+
+    return new ModelAndView(modelo, "encontre-mascota-tipo-encuentro-sin-chapita.html.hbs");
   }
 
 
