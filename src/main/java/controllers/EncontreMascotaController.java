@@ -79,6 +79,7 @@ public class EncontreMascotaController extends Controller {
             null;
 
     modelo.put("mascotaRegistrada", mascotaRegistrada);
+    modelo.put("codigo-chapita", id);
     return new ModelAndView(modelo, "encontre-mascota-tipo-encuentro-con-chapita.html.hbs");
   }
 
