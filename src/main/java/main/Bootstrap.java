@@ -1,5 +1,10 @@
 package main;
 
+import modelo.mascota.Animal;
+import modelo.mascota.Foto;
+import modelo.mascota.MascotaRegistrada;
+import modelo.mascota.Sexo;
+import modelo.mascota.TamanioMascota;
 import modelo.notificacion.TipoNotificadorPreferido;
 import modelo.persona.DatosDeContacto;
 import modelo.persona.DocumentoIdentidad;
@@ -10,8 +15,12 @@ import modelo.usuario.Usuario;
 import org.uqbarproject.jpa.java8.extras.EntityManagerOps;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
+import repositorios.RepositorioMascotaRegistrada;
+import repositorios.RepositorioUsuarios;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, TransactionalOps {
 
@@ -38,10 +47,23 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
         LocalDate.now(),
         TipoNotificadorPreferido.CORREO
     );
-        withTransaction(() -> {
-           persist(new Usuario("pepito", "pepitopepito", TipoUsuario.NORMAL, persona));
-           // TODO: ver cual seria la carga inicial
-        });
+
+    Usuario usuario = new Usuario("pepito", "pepitopepito", TipoUsuario.NORMAL, persona);
+    Foto foto = new Foto("coco.jpg", null);
+    List<Foto> fotos = new ArrayList<>();
+    fotos.add(foto);
+    MascotaRegistrada mascotaRegistrada = new MascotaRegistrada(usuario, "Perrito", "coco",
+        LocalDate.now(), "Es re bueno y gordo", Sexo.MACHO, Animal.PERRO, null, fotos,
+        TamanioMascota.CHICO);
+
+    RepositorioMascotaRegistrada repositorioMascotaRegistrada = new RepositorioMascotaRegistrada();
+
+    withTransaction(() -> {
+      persist(usuario);
+      repositorioMascotaRegistrada.agregar(mascotaRegistrada);
+      System.out.println(repositorioMascotaRegistrada.getPorNombre(mascotaRegistrada.getNombre()).getId());
+      // TODO: ver cual seria la carga inicial
+    });
   }
 
 }

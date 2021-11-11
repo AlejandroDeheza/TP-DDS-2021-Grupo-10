@@ -7,38 +7,49 @@
         <h2>Para avisarnos sobre la mascota rescatada, por favor primero completa tus datos personales.</h2>
         <form class="encontre-mascota" action="/mascotas/encontre-mascota/lugar-encuentro" method="POST">
             <div class="campo">
-                <span class="nombre-campo">Nombre:</span><input type="text" name="nombre"
+                <span class="nombre-campo">Nombre:</span><input type="text"required="required" name="nombre"
                 placeholder="Ingrese su nombre">
             </div>
             <div class="campo">
-               <span class="nombre-campo">Apellido:</span><input type="text" name="apellido"
+               <span class="nombre-campo">Apellido:</span><input type="text"required="required" name="apellido"
                 placeholder="Ingrese su apellido">
             </div>
             <div class="campo">
-               <span class="nombre-campo">Correo Electronico:</span><input type="text" name="email"
+               <span class="nombre-campo">Correo Electronico:</span><input type="email"required="required" name="email"
                 placeholder="Ingrese su correo electronico">
             </div>
             <div class="campo">
-                <span class="nombre-campo">Telefono:</span><input type="text" name="telefono"
+                <span class="nombre-campo">Telefono:</span><input type="tel" required="required"name="telefono"
                 placeholder="Ingrese su Telefono">
             </div>
             <div class="campo">
-               <span class="nombre-campo">Tipo Documento:</span><input type="text"
+                 <span class="nombre-campo">Tipo Documento:</span><input
+                 list="tipo-documento"required="required"
                name="tipo-documento"
                 placeholder="Ingrese su Tipo documento">
+             <datalist id="tipo-documento">
+                  <option value="DNI">
+                  <option value="DU">
+                </datalist>
             </div>
             <div class="campo">
-               <span class="nombre-campo">Numero documento:</span><input type="text"
+               <span class="nombre-campo">Numero documento:</span><input type="text"required="required"
                name="numero-documento"
                 placeholder="Ingrese su Numero documento">
             </div>
             <div class="campo">
-               <span class="medio-contacto">Medio contacto:</span><input type="text"
+
+               <span class="medio-contacto">Medio contacto:</span><input
+               list="medios-contactos"required="required"
                name="medio-contacto"
                 placeholder="Ingrese un medio de contacto">
+                <datalist id="medios-contactos">
+                  <option value="Correo">
+                </datalist>
+
             </div>
             <div class="campo">
-               <span class="medio-contacto">Fecha nacimiento:</span><input type="text"
+               <span class="medio-contacto">Fecha nacimiento:</span><input type="date"required="required"
                name="fecha-nacimiento"
                 placeholder="Ingrese su Fecha de Nacimiento">
             </div>
