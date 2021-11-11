@@ -23,8 +23,9 @@ public class EncontreMascotaController extends Controller {
     EnumSet<TipoNotificadorPreferido> tipoNotificadorPreferidos = EnumSet.allOf(TipoNotificadorPreferido.class);
 
     EnumSet<TipoDocumento> tiposDocumentos = EnumSet.allOf(TipoDocumento.class);
-    modelo.put("medio-de-contacto", tipoNotificadorPreferidos);
-    modelo.put("tipos-documentos", tiposDocumentos);
+
+    modelo.put("medioContactos", tipoNotificadorPreferidos);
+    modelo.put("tiposDocumentos", tiposDocumentos);
     return new ModelAndView(modelo, "formulario-encontre-mascota-datos-personales.html.hbs");
   }
 
