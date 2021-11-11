@@ -39,8 +39,18 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
         LocalDate.now(),
         TipoNotificadorPreferido.CORREO
     );
+
+    Persona persona2 = new Persona(
+        "Pepito",
+        "Fernandez",
+        documentoIdentidad,
+        datosDeContacto,
+        LocalDate.now(),
+        TipoNotificadorPreferido.CORREO
+    );
         withTransaction(() -> {
-           persist(new Usuario("pepito", "pepitopepito", TipoUsuario.NORMAL, persona));
+          //persist(new Usuario("pepito", "pepitopepito", TipoUsuario.NORMAL, persona));
+          persist(new Usuario("admin", "adminadmin", TipoUsuario.ADMIN, persona2));
            // TODO: ver cual seria la carga inicial
               });
   }

@@ -21,11 +21,22 @@ import java.time.LocalDate;
 public class UsuarioController extends Controller implements WithGlobalEntityManager, TransactionalOps {
 
   public ModelAndView mostrarAdmin(Request request, Response response) {
+    /*
     if (noEsAdmin(request)) {
       response.redirect("/");
       return null;
     }
+    */
     return new ModelAndView(getMap(request), "admin.html.hbs");
+  }
+  public ModelAndView mostrarCaracteristicas(Request request, Response response) {
+    /*
+    if (noEsAdmin(request)) {
+      response.redirect("/");
+      return null;
+    }
+    */
+    return new ModelAndView(getMap(request), "caracteristicas.html.hbs");
   }
 
   public ModelAndView mostrarFormularioCreacionUsuario(Request request, Response response) {

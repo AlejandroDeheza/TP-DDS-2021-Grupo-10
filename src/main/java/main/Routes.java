@@ -12,7 +12,7 @@ public class Routes {
     new Bootstrap().run();
 
     System.out.println("Iniciando servidor...");
-    Spark.port(8080);
+    Spark.port(8081);
     Spark.staticFileLocation("/public");
     DebugScreen.enableDebugScreen();
 
@@ -31,7 +31,8 @@ public class Routes {
 
     Spark.get("/registracion", usuarioController::mostrarFormularioCreacionUsuario, engine);
     Spark.post("/registracion", usuarioController::registrarUsuario);
-    Spark.get("/admin", usuarioController::mostrarAdmin, engine);
+    Spark.get("/caracteristicas", usuarioController::mostrarCaracteristicas, engine);
+    Spark.get("/preguntas-asociaciones", usuarioController::mostrarAdmin, engine);
 
     Spark.get("/mascotas-en-adopcion", publicacionesController::mostrarMascotasEnAdopcion, engine);
     Spark.get("/registracion-mascota", mascotasController::mostrarRegistracion, engine);
