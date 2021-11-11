@@ -10,6 +10,7 @@ import modelo.usuario.Usuario;
 import org.uqbarproject.jpa.java8.extras.EntityManagerOps;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
+import repositorios.RepositorioUsuarios;
 
 import java.time.LocalDate;
 
@@ -38,11 +39,10 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
         LocalDate.now(),
         TipoNotificadorPreferido.CORREO
     );
-
-    withTransaction(() -> {
-      persist(new Usuario("pepito", "pepitopepito", TipoUsuario.NORMAL, persona));
-      // TODO: ver cual seria la carga inicial
-    });
+        withTransaction(() -> {
+           persist(new Usuario("pepito", "pepitopepito", TipoUsuario.NORMAL, persona));
+           // TODO: ver cual seria la carga inicial
+              });
   }
 
 }
