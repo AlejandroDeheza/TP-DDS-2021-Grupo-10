@@ -23,14 +23,12 @@
                 placeholder="Ingrese su Telefono">
             </div>
             <div class="campo">
-                 <span class="nombre-campo">Tipo Documento:</span><input
-                 list="tipo-documento"required="required"
-               name="tipo-documento"
-                placeholder="Ingrese su Tipo documento">
-             <datalist id="tipo-documento">
-                  <option value="DNI">
-                  <option value="DU">
-                </datalist>
+                <span class="nombre-campo">Tipo Documento:</span>
+                <select name="tipoDocumento">
+                    {{#each tiposDocumentos}}
+                        <option value="{{this}}">{{this}}</option>
+                    {{/each}}
+                </select>
             </div>
             <div class="campo">
                <span class="nombre-campo">Numero documento:</span><input type="text"required="required"
@@ -39,14 +37,12 @@
             </div>
             <div class="campo">
 
-               <span class="medio-contacto">Medio contacto:</span><input
-               list="medios-contactos"required="required"
-               name="medio-contacto"
-                placeholder="Ingrese un medio de contacto">
-                <datalist id="medios-contactos">
-                  <option value="Correo">
-                </datalist>
-
+               <span class="medio-contacto">Medio contacto:</span>
+                <select name="medioContacto">
+                    {{#each medioContactos}}
+                        <option value="{{this}}">{{this}}</option>
+                    {{/each}}
+                </select>
             </div>
             <div class="campo">
                <span class="medio-contacto">Fecha nacimiento:</span><input type="date"required="required"
