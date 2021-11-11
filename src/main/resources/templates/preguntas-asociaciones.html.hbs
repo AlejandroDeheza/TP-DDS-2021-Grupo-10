@@ -1,0 +1,28 @@
+{{# partial "titulo" }}
+    <title>Patitas - Preguntas de Asociaciones</title>
+{{/partial}}
+
+{{# partial "contenido" }}
+	<h1>Preguntas de Asociaciones</h1>
+
+	{{#preguntas}}
+	<div class="pregunta-asociacion">
+	    <button class="btn btn-primary admin-card-dropdown" type="button" data-bs-toggle="collapse" data-bs-target="#pregunta-{{id}}" aria-expanded="false" aria-controls="collapseExample">
+	      Pregunta N{{id}}°
+	    </button>
+	    <div class="admin-card collapse" id="pregunta-{{id}}">
+	      <div class="card-body">
+	        <p>
+	          Pregunta del dador: {{preguntaDelDador}}
+	        </p>
+	        <p>
+	          Pregunta del adoptante: {{preguntaDelAdoptante}}
+	        </p>
+	      </div>
+	    </div>
+    </div>
+    {{/preguntas}}
+
+{{/partial}}
+
+{{> layout.html.hbs}}
