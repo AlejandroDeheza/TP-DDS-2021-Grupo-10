@@ -1,28 +1,45 @@
 {{# partial "titulo" }}
-    <title>Patitas - Preguntas de Asociaciones</title>
+	<title>Patitas - Preguntas de Asociaciones</title>
 {{/partial}}
 
 {{# partial "contenido" }}
-	<h1>Preguntas de Asociaciones</h1>
+	<div class="titulo-preguntas">
+		<h1>Preguntas de Asociaciones</h1>
+		<form class="dropdown">
+			<a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownAsociacionesDisponibles" data-bs-toggle="dropdown" aria-expanded="false">
+				Filtrar por Asociación
+			</a>
+			<ul class="dropdown-menu" aria-labelledby="dropdownAsociacionesDisponibles">
+				{{#asociaciones}}
+					<li><button class="dropdown-item" name="idAsociacion" type="submit" value="{{id}}">Asociación {{nombre}} [ID {{id}}]</li>
+				{{/asociaciones}}
+			</ul>
+		</form>
+	</div>
 
 	{{#preguntas}}
 	<div class="pregunta-asociacion">
-	    <button class="btn btn-primary admin-card-dropdown" type="button" data-bs-toggle="collapse" data-bs-target="#pregunta-{{id}}" aria-expanded="false" aria-controls="collapseExample">
-	      Pregunta N{{id}}°
-	    </button>
-	    <div class="admin-card collapse" id="pregunta-{{id}}">
-	      <div class="card-body">
-	        <p>
-	          Pregunta del dador: {{preguntaDelDador}}
-	        </p>
-	        <p>
-	          Pregunta del adoptante: {{preguntaDelAdoptante}}
-	        </p>
-	      </div>
-	    </div>
-    </div>
-    {{/preguntas}}
-
+		<button class="btn btn-primary admin-card-dropdown" type="button" data-bs-toggle="collapse" data-bs-target="#pregunta-{{id}}" aria-expanded="false" aria-controls="collapseExample">
+			Pregunta N{{id}}°
+		</button>
+		<div class="admin-card collapse" id="pregunta-{{id}}">
+			<div class="card-body">
+				<p>
+					Pregunta del dador: {{preguntaDelDador}}
+				</p>
+				<p>
+					Pregunta del adoptante: {{preguntaDelAdoptante}}
+				</p>
+			</div>
+		</div>
+	</div>
+	{{/preguntas}}
+    
+    <div class="pregunta-asociacion agregar-pregunta">
+		<button class="btn btn-primary" type="button" aria-expanded="false">
+			+ Pregunta
+		</button>
+	</div>
 {{/partial}}
 
 {{> layout.html.hbs}}

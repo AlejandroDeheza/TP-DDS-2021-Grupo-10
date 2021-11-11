@@ -4,6 +4,7 @@ import modelo.asociacion.Asociacion;
 import modelo.informe.Ubicacion;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RepositorioAsociaciones implements WithGlobalEntityManager {
 
@@ -13,6 +14,9 @@ public class RepositorioAsociaciones implements WithGlobalEntityManager {
         .getResultList();
   }
 
+  public List<Asociacion> buscarPorId(Long id) {
+    return getAsociaciones().stream().filter(asociaciones -> asociaciones.getId() == id).collect(Collectors.toList());
+  }
 
   public Asociacion getAsociacionMasCercana(Ubicacion ubicacion) {
     List<Asociacion> asociaciones = this.getAsociaciones();

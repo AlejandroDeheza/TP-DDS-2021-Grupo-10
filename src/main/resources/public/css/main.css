@@ -64,6 +64,16 @@
   padding: 0.4em 0;
 }
 
+.agregar-pregunta {
+  text-align: center;
+}
+
+.titulo-preguntas {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .card:hover {
   box-shadow: 0 0 0 2px #7952b3;
   filter: none;

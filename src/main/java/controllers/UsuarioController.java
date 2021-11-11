@@ -53,9 +53,21 @@ public class UsuarioController extends Controller implements WithGlobalEntityMan
       return null;
     }
     */
-    List<ParDePreguntas> parDePreguntas = new RepositorioPreguntasObligatorias().getPreguntas();
+    RepositorioAsociaciones repositorioAsociaciones = new RepositorioAsociaciones();
+    RepositorioPreguntasObligatorias repositorioPreguntasObligatorias = new RepositorioPreguntasObligatorias();
+    String filtro = request.queryParams("idAsociacion");
+
+    List<Asociacion> todasLasAsociaciones = repositorioAsociaciones.getAsociaciones();
+    List<Asociacion> asociacionFiltrada = filtro == null ?
+        todasLasAsociaciones : repositorioAsociaciones.buscarPorId(Long.parseLong(filtro));
+
+    List<ParDePreguntas> parDePreguntas = asociacionFiltrada.size() == 1 ?
+        asociacionFiltrada.get(0).getPreguntas() : repositorioPreguntasObligatorias.getPreguntas();
+
     Map<String, Object> modelo = new HashMap<>();
+    modelo.put("asociaciones", todasLasAsociaciones);
     modelo.put("preguntas", parDePreguntas);
+
     return new ModelAndView(modelo, "preguntas-asociaciones.html.hbs");
   }
 
