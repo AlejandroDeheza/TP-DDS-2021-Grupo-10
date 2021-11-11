@@ -17,7 +17,10 @@
              </form>
         <h2>Informacion de la mascota</h2>
          {{#mascotaRegistrada}}
-             <img src="/images/mascotaregistrada/{{}}.jpg" class="card-img" alt="boton" />
+              {{#each fotos as |foto|}}
+             <img src="/images/mascotaregistrada/{{foto.link}}" class="card-img"
+              {{/each}}
+             alt="boton" />
             <li>Nombre: {{nombre}}</li>
             <li>Apodo: {{apodo}}</li>
             <li>Sexo: {{sexo}}</li>
