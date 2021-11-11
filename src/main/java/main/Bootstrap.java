@@ -42,7 +42,7 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
         withTransaction(() -> {
            persist(new Usuario("pepito", "pepitopepito", TipoUsuario.NORMAL, persona));
            // TODO: ver cual seria la carga inicial
-              });
+        });
   }
 
 }

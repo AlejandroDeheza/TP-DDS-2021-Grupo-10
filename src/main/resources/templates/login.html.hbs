@@ -1,0 +1,38 @@
+{{#partial "contenido" }}
+<div class="login-container">
+    <div class="form-container">
+        <form class="form-login" action="/login" method="POST">
+            <div class="row g-3">
+                <div class="col">
+                    <div class="form-floating mb-5">
+                        <input type="text" name="usuario" class="form-control" id="floatingInput"
+                            placeholder="usuario12345">
+                        <label for="floatingInput">Usuario</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col">
+                    <div class="form-floating mb-5">
+                        <input type="password" name="password" class="form-control" id="floatingPassword"
+                            placeholder="Password">
+                        <label for="floatingPassword">Password</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3 justify-content-center">
+                <div class="col">
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary submit-button">Ingresar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="image-container">
+        <img src="images/login-img.jpg" alt="patitas-logo" width="30" height="24" />
+    </div>
+</div>
+{{/partial}}
+
+{{> layout.html.hbs }}
