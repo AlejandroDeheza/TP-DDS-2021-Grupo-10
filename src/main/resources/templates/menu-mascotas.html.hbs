@@ -1,0 +1,22 @@
+{{# partial "titulo" }}
+    <title>Patitas - Encontre una Mascota</title>
+{{/partial}}
+
+{{# partial "contenido" }}
+    <section class="fondo-gris">
+            <h2>Elija una de las opciones</h2>
+     <div class="d-flex justify-content-around actions-container">
+            <a href="/mascotas/encontre-mascota">
+             <div class="card bg-dark text-white" type="button">
+               <img
+                 src="/images/encontre-a-mi-mascota.jpg" class="card-img" alt="boton" />
+               <div class="card-img-overlay action">
+                 <h3 class="card-title">Encontre una mascota</h3>
+               </div>
+             </div>
+             </a>
+    </div>
+    </section>
+{{/partial}}
+
+{{> layout.html.hbs }}

@@ -40,29 +40,32 @@ public class Routes {
     Spark.post("/registracion-mascota", mascotasController::registrarMascota);
 
 
-    Spark.get("/encontre-mascota", encontreMascotaController::getFormularioDatosNoUsuario, engine);
+    Spark.get("/mascotas", mascotasController::getRedirectMascotas,
+        engine);
+    Spark.get("/mascotas/encontre-mascota", encontreMascotaController::getFormularioDatosNoUsuario,
+        engine);
 
-    Spark.post("/encontre-mascota/lugar-encuentro",
+    Spark.post("/mascotas/encontre-mascota/lugar-encuentro",
         (request, response) -> encontreMascotaController.completarLugarEncuentro(request,
             response));
-    Spark.get("/encontre-mascota/lugar-encuentro",
+    Spark.get("/mascotas/encontre-mascota/lugar-encuentro",
         encontreMascotaController::getFormularioLugarEncuentro, engine);
 
-    Spark.post("/encontre-mascota/lugar-encuentro/tipo-encuentro",
+    Spark.post("/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro",
         (request, response) -> encontreMascotaController.elegirLugarEncuentro(request,
             response));
 
-    Spark.get("/encontre-mascota/lugar-encuentro/tipo-encuentro",
+    Spark.get("/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro",
         encontreMascotaController::getTiposEncuentros, engine);
 
-    Spark.get("/encontre-mascota/lugar-encuentro/tipo-encuentro/con-chapita",
+    Spark.get("/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/con-chapita",
         encontreMascotaController::getFormularioConChapita, engine);
-    Spark.post("/encontre-mascota/lugar-encuentro/tipo-encuentro/con-chapita",
+    Spark.post("/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/con-chapita",
         (request, response) -> encontreMascotaController.enviarMascotaEncontrada(request,
             response));
-    Spark.get("/encontre-mascota/lugar-encuentro/tipo-encuentro/sin-chapita",
+    Spark.get("/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/sin-chapita",
         encontreMascotaController::getFormularioSinChapita, engine);
-    Spark.post("/encontre-mascota/lugar-encuentro/tipo-encuentro/sin-chapita",
+    Spark.post("/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/sin-chapita",
         (request, response) -> encontreMascotaController.enviarMascotaEncontrada(request,
             response));
     System.out.println("Servidor iniciado!");
