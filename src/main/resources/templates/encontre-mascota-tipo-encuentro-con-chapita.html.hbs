@@ -5,22 +5,23 @@
 {{# partial "contenido" }}
     <section class="fondo-gris">
          <section class="fondo-gris">
-             <form class="encontre-mascota" action="/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/con-chapita"
+             <form class="encontre-mascota"
+             action="/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/con-chapita"
              method="GET">
                  <div class="campo">
                      <span class="nombre-campo">Ingrese el codigo de la chapita:</span><input
-                     type="number" name="codigo-chapita"
-                     placeholder="Ingrese el codigo de la chapita">
+                     type="number" required="required" name="codigo-chapita"
+                     placeholder="Ingrese el codigo de la chapita" value="{{filtro}}">
                  </div>
                  <input type="submit" value="Buscar">
              </form>
         <h2>Informacion de la mascota</h2>
-         {{#mascota}}
-             <img src="/images/tiene-chapita.jpg" class="card-img" alt="boton" />
+         {{#mascotaRegistrada}}
+             <img src="/images/mascotaregistrada/{{}}.jpg" class="card-img" alt="boton" />
             <li>Nombre: {{nombre}}</li>
             <li>Apodo: {{apodo}}</li>
             <li>Sexo: {{sexo}}</li>
-         {{/mascota}}
+         {{/mascotaRegistrada}}
 
 
 
