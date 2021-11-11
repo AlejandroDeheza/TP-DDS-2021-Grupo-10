@@ -19,18 +19,14 @@
         <h2>Informacion de la mascota</h2>
          {{#mascotaRegistrada}}
               {{#each fotos as |foto|}}
-             <img src="/images/mascotaregistrada/{{foto.link}}" class="card-img"
+             <img src="/images/mascotaregistrada/{{foto.link}}"  class="card-img" alt="boton"
               {{/each}}
              alt="boton" />
             <li>Nombre: {{nombre}}</li>
             <li>Apodo: {{apodo}}</li>
             <li>Sexo: {{sexo}}</li>
          {{/mascotaRegistrada}}
-
-
-
-
-             <form action="/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/con-chapita" method="POST">
+            <form action="/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/con-chapita" method="POST">
                  <button name="enviar" value="Enviar">Enviar</button>
       </form>
     </section>
