@@ -6,11 +6,14 @@ import modelo.persona.DatosDeContacto;
 import modelo.persona.DocumentoIdentidad;
 import modelo.persona.Persona;
 import modelo.persona.TipoDocumento;
+import modelo.pregunta.ParDePreguntas;
 import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
 import modelo.usuario.ValidadorContrasenias;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
+import repositorios.RepositorioAsociaciones;
+import repositorios.RepositorioPreguntasObligatorias;
 import repositorios.RepositorioUsuarios;
 import spark.ModelAndView;
 import spark.Request;
@@ -18,6 +21,9 @@ import spark.Response;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class UsuarioController extends Controller implements WithGlobalEntityManager, TransactionalOps {
 
@@ -38,6 +44,19 @@ public class UsuarioController extends Controller implements WithGlobalEntityMan
     }
     */
     return new ModelAndView(getMap(request), "caracteristicas.html.hbs");
+  }
+
+  public ModelAndView mostrarPreguntasAsociaciones(Request request, Response response) {
+    /*
+    if (noEsAdmin(request)) {
+      response.redirect("/");
+      return null;
+    }
+    */
+    List<ParDePreguntas> parDePreguntas = new RepositorioPreguntasObligatorias().getPreguntas();
+    Map<String, Object> modelo = new HashMap<>();
+    modelo.put("preguntas", parDePreguntas);
+    return new ModelAndView(modelo, "preguntas-asociaciones.html.hbs");
   }
 
   public ModelAndView mostrarFormularioCreacionUsuario(Request request, Response response) {

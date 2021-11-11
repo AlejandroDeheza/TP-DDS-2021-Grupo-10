@@ -1,10 +1,13 @@
 package main;
 
+import modelo.asociacion.Asociacion;
+import modelo.informe.Ubicacion;
 import modelo.notificacion.TipoNotificadorPreferido;
 import modelo.persona.DatosDeContacto;
 import modelo.persona.DocumentoIdentidad;
 import modelo.persona.Persona;
 import modelo.persona.TipoDocumento;
+import modelo.pregunta.ParDePreguntas;
 import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
 import org.uqbarproject.jpa.java8.extras.EntityManagerOps;
@@ -47,11 +50,30 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
         LocalDate.now(),
         TipoNotificadorPreferido.CORREO
     );
-        withTransaction(() -> {
-          //persist(new Usuario("pepito", "pepitopepito", TipoUsuario.NORMAL, persona));
-          persist(new Usuario("admin", "adminadmin", TipoUsuario.ADMIN, persona2));
-           // TODO: ver cual seria la carga inicial
-        });
+
+    Ubicacion ubicacion1 = new Ubicacion(2000.0, 2100.0, "Medrano 951");
+    Ubicacion ubicacion2 = new Ubicacion(219.0, 22.0, "Mozart 1923");
+    Ubicacion ubicacion3 = new Ubicacion(334.0, 529.0, "Pedraza 34");
+
+    Asociacion asociacion1 = new Asociacion("Una Asociación", ubicacion1);
+    Asociacion asociacion2 = new Asociacion("Otra Asociación", ubicacion2);
+    Asociacion asociacion3 = new Asociacion("Otra Asociación", ubicacion3);
+
+    ParDePreguntas parDePreguntas1 = new ParDePreguntas("Pregunta del Dador 1", "Pregunta del Adoptante 1", true);
+    ParDePreguntas parDePreguntas2 = new ParDePreguntas("Pregunta del Dador 2", "Pregunta del Adoptante 2", true);
+    ParDePreguntas parDePreguntas3 = new ParDePreguntas("Pregunta del Dador 3", "Pregunta del Adoptante 3", false);
+
+    asociacion1.agregarPregunta(parDePreguntas1);
+    asociacion1.agregarPregunta(parDePreguntas2);
+    asociacion2.agregarPregunta(parDePreguntas3);
+
+    withTransaction(() -> {
+      persist(new Usuario("pepito", "pepitopepito", TipoUsuario.NORMAL, persona));
+      persist(new Usuario("admin", "adminadmin", TipoUsuario.ADMIN, persona2));
+      persist(asociacion1);
+      persist(asociacion2);
+      persist(asociacion3);
+    });
   }
 
 }
