@@ -1,49 +1,67 @@
 {{# partial "titulo" }}
-    <title>Patitas - Encontre una Mascota sin chapita</title>
+<title>Patitas - Encontre una Mascota sin chapita</title>
 {{/partial}}
 
 {{# partial "contenido" }}
-    <section class="fondo-gris">
-             <h2>Para avisarnos sobre la mascota rescatada, por favor primero completa tus datos personales.n</h2>
-
-             <form class="encontre-mascota"
-             action="/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/sin-chapita"
-             method="POST">
-                 <div class="campo">
-                     <span class="nombre-campo">Tipo Animal:</span>
-                     <select name="tipoDocumento">
-                     {{#each tipoAnimales}}
-                         <option value="{{this}}">{{this}}</option>
-                     {{/each}}
-                     </select>
-                 </div>
-                 <div class="campo">
-                     <span class="nombre-campo">Tamaño:</span>
-                     <select name="tamanioMascota">
-                         {{#each tamanioMascota}}
-                             <option value="{{this}}">{{this}}</option>
-                         {{/each}}
-                     </select>
-                 </div>
-                 <h2>Caracteristicas</h2>
-                 <div class="campo">
-                     <span class="nombre-campo">Color:</span><input
-                     type="color" required="required" name="color"
-                     placeholder="Ingrese color">
-                 </div>
-                {{#each listaCaracteristicasValoresPosibles}}
-                  <div class="campo">
-                   <span class="nombre-campo">{{nombreCaracteristica}}</span>
-                      <select name="valoresCaracteristicas">
-                          {{#each valoresCaracteristicas}}
-                              <option value="{{this}}">{{this}}</option>
-                          {{/each}}
-                      </select>
-                   </div>
-                 {{/each}}
-                 <input type="submit" value="Enviar">
-             </form>
-    </section>
+<section class="fondo-gris">
+  <h1>Encontre una mascota sin chapita</h1>
+  <form class="encontre-mascota" action="/mascotas/encontre-mascota/sin-chapita" method="POST">
+    <h2>Datos de la ubicación</h2>
+    <div class="campo">
+      <span class="nombre-campo">Ubicacion:</span><input type="text" required="required" name="ubicacion-rescatista"
+        placeholder="Ingrese su ubicacion">
+    </div>
+    <div class="campo">
+      <span class="nombre-campo">Ubicacion rescate:</span><input type="text" required="required"
+        name="ubicacion-rescate" placeholder="Ingrese la ubicacion del rescate">
+    </div>
+    <div class="campo">
+      <span class="nombre-campo">Fecha Rescate:</span><input type="date" required="required" name="fecha-rescate"
+        placeholder="Ingrese la fecha del rescate">
+    </div>
+    <div class="campo">
+      <span class="nombre-campo">Descripcion estado mascota:</span><input type="text" required="required"
+        name="estado-mascota" placeholder="Ingrese el estado de la mascota">
+    </div>
+    <div class="campo">
+      <span class="nombre-campo">Tipo Adjuntar fotos:</span><input type="file" id="img" name="img" accept="image/*"
+        required="required" multiple name="fotos" placeholder="Adjunte las fotos de la mascota">
+    </div>
+   <h2>Datos de la mascota con chapita</h2>
+    <div class="campo">
+      <span class="nombre-campo">Tipo Animal:</span>
+      <select name="tipoDocumento">
+        {{#each tipoAnimales}}
+        <option value="{{this}}">{{this}}</option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="campo">
+      <span class="nombre-campo">Tamaño:</span>
+      <select name="tamanioMascota">
+        {{#each tamanioMascota}}
+        <option value="{{this}}">{{this}}</option>
+        {{/each}}
+      </select>
+    </div>
+    <h2>Caracteristicas</h2>
+    <div class="campo">
+      <span class="nombre-campo">Color:</span><input type="color" required="required" name="color"
+        placeholder="Ingrese color">
+    </div>
+    {{#each listaCaracteristicasValoresPosibles}}
+    <div class="campo">
+      <span class="nombre-campo">{{nombreCaracteristica}}</span>
+      <select name="valoresCaracteristicas">
+        {{#each valoresCaracteristicas}}
+        <option value="{{this}}">{{this}}</option>
+        {{/each}}
+      </select>
+    </div>
+    {{/each}}
+    <input type="submit" value="Enviar">
+  </form>
+</section>
 {{/partial}}
 
 {{> layout.html.hbs }}

@@ -4,38 +4,7 @@
 
 {{# partial "contenido" }}
     <section class="fondo-gris">
-        <h2>Para registrar los datos de la mascota rescatada complete la siguiente información.</h2>
-        <form class="encontre-mascota" action="/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro"
-        method="POST">
-   <div class="campo">
-                <span class="nombre-campo">Ubicacion:</span><input type="text"required="required"
-                name="ubicacion-rescatista"
-                placeholder="Ingrese su ubicacion">
-            </div>
-            <div class="campo">
-               <span class="nombre-campo">Ubicacion rescate:</span><input type="text"required="required"
-               name="ubicacion-rescate"
-                placeholder="Ingrese la ubicacion del rescate">
-            </div>
-            <div class="campo">
-               <span class="nombre-campo">Fecha Rescate:</span><input type="date"required="required"
-               name="fecha-rescate"
-                placeholder="Ingrese la fecha del rescate">
-            </div>
-            <div class="campo">
-                <span class="nombre-campo">Descripcion estado mascota:</span><input type="text"required="required"
-                name="estado-mascota"
-                placeholder="Ingrese el estado de la mascota">
-            </div>
-            <div class="campo">
-               <span class="nombre-campo">Tipo Adjuntar fotos:</span><input type="file" id="img"
-               name="img" accept="image/*"required="required" multiple
-               name="fotos"
-                placeholder="Adjunte las fotos de la mascota">
-            </div>
-            <input type="submit" value="Siguiente">
-        </form>
-    </section>
+
 {{/partial}}
 
 {{> layout.html.hbs }}
