@@ -1,6 +1,7 @@
 package controllers;
 
 import excepciones.ContraseniaInvalidaException;
+import modelo.asociacion.Asociacion;
 import modelo.notificacion.TipoNotificadorPreferido;
 import modelo.persona.DatosDeContacto;
 import modelo.persona.DocumentoIdentidad;
@@ -37,6 +38,7 @@ public class UsuarioController extends Controller implements WithGlobalEntityMan
     */
     return new ModelAndView(getMap(request), "admin.html.hbs");
   }
+
   public ModelAndView mostrarCaracteristicas(Request request, Response response) {
     /*
     if (noEsAdmin(request)) {
@@ -98,13 +100,13 @@ public class UsuarioController extends Controller implements WithGlobalEntityMan
       return null;
     }
 
-    if(!contrasenia.equals(validacionContrasenia)){
+    if (!contrasenia.equals(validacionContrasenia)) {
       redireccionCasoError(request, response, "/creacion-usuario", "Las contraseñas no matchean entre si");
       return null;
     }
 
     if (new RepositorioUsuarios().yaExiste(request.queryParams("usuario"))) {
-      redireccionCasoError(request, response,"/creacion-usuario", "Ya existe una cuenta con el nombre de usuario ingresado");
+      redireccionCasoError(request, response, "/creacion-usuario", "Ya existe una cuenta con el nombre de usuario ingresado");
     } else {
       DocumentoIdentidad documentoIdentidad = new DocumentoIdentidad(
           TipoDocumento.values()[Integer.parseInt(request.queryParams("tipoDocumento"))],

@@ -35,7 +35,14 @@
           <a class="nav-link" href="#">Mascotas</a>
           <a class="nav-link" href="#">Hogares</a>
           <a class="nav-link" href="#">Contacto</a>
-          <a class="nav-link" href="#">Admin</a>
+          <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="/admin" role="button" aria-expanded="false">Admin</a>
+                          <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="/caracteristicas">Características</a></li>
+                              <li><hr class="dropdown-divider"></li>
+                              <li><a class="dropdown-item" href="/preguntas-asociaciones">Preguntas asociaciones</a></li>
+                          </ul>
+          </li>
         </div>
         {{#if sesionIniciada}}
         {{else}}
