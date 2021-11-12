@@ -67,4 +67,9 @@ public class MascotasController extends Controller implements WithGlobalEntityMa
     redireccionCasoFeliz(request, response, "/", "Tu mascota se ha agregado con exito!");
     return null;
   }
+
+
+  public ModelAndView getRedirectMascotas(Request request, Response response) {
+    return new ModelAndView(getMap(request), "menu-mascotas.html.hbs");
+  }
 }
