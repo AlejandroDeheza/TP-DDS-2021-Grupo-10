@@ -24,8 +24,14 @@
 			<input type="text" class="form-control" name="preguntaAdoptante" id="preguntaAdoptante" required>
 		</div>
 		<div>
-			<label for="cantidadRespuestasPosibles" class="form-label">Cantidad de respuestas posibles a brindar</label>
-			<input type="number" class="form-control" name="cantidadRespuestasPosibles" id="cantidadRespuestasPosibles" min="0" oninput="validity.valid||(value='');" required>
+			<label for="cantidadMatcheos" class="form-label">Cantidad de matcheos</label>
+			<input type="number" class="form-control" name="cantidadMatcheos" id="cantidadRespuestasPosibles" min="1" oninput="validity.valid||(value='');" required>
+		</div>
+		<div class="form-check">
+			<input class="form-check-input" type="checkbox" id="esObligatoria" name="esObligatoria" checked>
+			<label class="form-check-label" for="esObligatoria">
+				Default checkbox
+			</label>
 		</div>
 		<div>
 			<input class="btn btn-primary" type="submit" value="Agregar pregunta"/>
