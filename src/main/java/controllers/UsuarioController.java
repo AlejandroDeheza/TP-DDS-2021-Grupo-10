@@ -17,6 +17,7 @@ import spark.Request;
 import spark.Response;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class UsuarioController extends Controller implements WithGlobalEntityManager, TransactionalOps {
 
@@ -33,15 +34,24 @@ public class UsuarioController extends Controller implements WithGlobalEntityMan
   }
 
   public Void registrarUsuario(Request request, Response response) {
+
+    String contrasenia = request.queryParams("contrasenia");
+    String validacionContrasenia = request.queryParams("validacionContrasenia");
+
     try {
       new ValidadorContrasenias().correrValidaciones(request.queryParams("contrasenia"));
     } catch (ContraseniaInvalidaException e) {
-      redireccionCasoError(request, response, "/registracion", e.getMessage());
+      redireccionCasoError(request, response, "/creacion-usuario", e.getMessage());
+      return null;
+    }
+
+    if(!contrasenia.equals(validacionContrasenia)){
+      redireccionCasoError(request, response, "/creacion-usuario", "Las contraseñas no matchean entre si");
       return null;
     }
 
     if (new RepositorioUsuarios().yaExiste(request.queryParams("usuario"))) {
-      redireccionCasoError(request, response,"/registracion", "Ya existe una cuenta con el nombre de usuario ingresado");
+      redireccionCasoError(request, response,"/creacion-usuario", "Ya existe una cuenta con el nombre de usuario ingresado");
     } else {
       DocumentoIdentidad documentoIdentidad = new DocumentoIdentidad(
           TipoDocumento.values()[Integer.parseInt(request.queryParams("tipoDocumento"))],
@@ -53,12 +63,14 @@ public class UsuarioController extends Controller implements WithGlobalEntityMan
           request.queryParams("email")
       );
 
+
+
       Persona persona = new Persona(
           request.queryParams("nombre"),
           request.queryParams("apellido"),
           documentoIdentidad,
           datosDeContacto,
-          LocalDate.parse(request.queryParams("fechaNacimiento")),
+          LocalDate.parse(request.queryParams("fechaNacimiento"), DateTimeFormatter.ofPattern("MM/dd/yyyy")),
           TipoNotificadorPreferido.values()[Integer.parseInt(request.queryParams("tipoNotificadorPreferido"))]
       );
 
