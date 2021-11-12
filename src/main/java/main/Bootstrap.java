@@ -39,6 +39,7 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
         "pepito@gmail.com"
     );
 
+
     Persona persona = new Persona(
         "Pepito",
         "Gonzalez",
