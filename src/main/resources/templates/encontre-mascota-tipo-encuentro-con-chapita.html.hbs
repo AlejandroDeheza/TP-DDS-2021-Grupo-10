@@ -1,35 +1,52 @@
 {{# partial "titulo" }}
-    <title>Patitas - Encontre una Mascota con chapita</title>
+<title>Patitas - Encontre una Mascota con chapita</title>
 {{/partial}}
 
 {{# partial "contenido" }}
-    <section class="fondo-gris">
-         <section class="fondo-gris">
-             <form class="encontre-mascota"
-             action="/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/con-chapita"
-             method="GET">
-                 <div class="campo">
-                     <span class="nombre-campo">Ingrese el codigo de la chapita:</span><input
-                     type="number" required="required" name="codigo-chapita"
-                     value="{{codigo-chapita}}" min="1"
-                     placeholder="Ingrese el codigo de la chapita" >
-                 </div>
-                 <input type="submit" value="Buscar">
-             </form>
-        <h2>Informacion de la mascota</h2>
-         {{#mascotaRegistrada}}
-              {{#each fotos as |foto|}}
-             <img src="/images/mascotaregistrada/{{foto.link}}"  class="card-img" alt="boton"
-              {{/each}}
-             alt="boton" />
-            <li>Nombre: {{nombre}}</li>
-            <li>Apodo: {{apodo}}</li>
-            <li>Sexo: {{sexo}}</li>
-         {{/mascotaRegistrada}}
-            <form action="/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/con-chapita" method="POST">
-                 <button name="enviar" value="Enviar">Enviar</button>
-      </form>
-    </section>
+<section class="fondo-gris">
+  <h1>Encontre una mascota con chapita</h1>
+  <form class="encontre-mascota" action="/mascotas/encontre-mascota/con-chapita" method="POST">
+    <h2>Datos de la ubicación</h2>
+    <div class="campo">
+      <span class="nombre-campo">Ubicacion:</span><input type="text" required="required" name="ubicacion-rescatista"
+        placeholder="Ingrese su ubicacion">
+    </div>
+    <div class="campo">
+      <span class="nombre-campo">Ubicacion rescate:</span><input type="text" required="required"
+        name="ubicacion-rescate" placeholder="Ingrese la ubicacion del rescate">
+    </div>
+    <div class="campo">
+      <span class="nombre-campo">Fecha Rescate:</span><input type="date" required="required" name="fecha-rescate"
+        placeholder="Ingrese la fecha del rescate">
+    </div>
+    <div class="campo">
+      <span class="nombre-campo">Descripcion estado mascota:</span><input type="text" required="required"
+        name="estado-mascota" placeholder="Ingrese el estado de la mascota">
+    </div>
+    <div class="campo">
+      <span class="nombre-campo">Tipo Adjuntar fotos:</span><input type="file" id="img" name="img" accept="image/*"
+        required="required" multiple name="fotos" placeholder="Adjunte las fotos de la mascota">
+    </div>
+   <h2>Datos de la mascota con chapita</h2>
+    <div class="campo">
+      <span class="nombre-campo">Ingrese el codigo de la chapita:</span><input type="number" required="required"
+        name="codigo-chapita" value="{{codigo-chapita}}" min="1" placeholder="Ingrese el codigo de la chapita">
+    </div>
+{{!--     <button name="enviar" value="{{codigo-chapita}}" --}}
+{{!--     action="/mascotas/encontre-mascota/con-chapita" method="GET">Buscar</button> --}}
+{{!--   <h2>Informacion de la mascota</h2> --}}
+{{!--   {{#mascotaRegistrada}} --}}
+{{!--   {{#each fotos as |foto|}} --}}
+{{!--   <img src="/images/mascotaregistrada/{{foto.link}}" class="card-img" alt="boton" alt="boton" /> --}}
+{{!--   {{/each}} --}}
+{{!--   <li>Nombre: {{nombre}}</li> --}}
+{{!--   <li>Apodo: {{apodo}}</li> --}}
+{{!--   <li>Sexo: {{sexo}}</li> --}}
+{{!--   {{/mascotaRegistrada}} --}}
+
+    <input type="submit" value="Enviar">
+  </form>
+</section>
 {{/partial}}
 
 {{> layout.html.hbs }}

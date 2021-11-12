@@ -14,11 +14,13 @@ import modelo.persona.DatosDeContacto;
 import modelo.persona.DocumentoIdentidad;
 import modelo.persona.Persona;
 import modelo.persona.TipoDocumento;
+import modelo.usuario.Usuario;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioInformes;
 import repositorios.RepositorioMascotaRegistrada;
+import repositorios.RepositorioUsuarios;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -32,72 +34,10 @@ import java.util.Map;
 public class EncontreMascotaController extends Controller implements WithGlobalEntityManager,
     TransactionalOps {
 
-  public ModelAndView getFormularioDatosNoUsuario(Request request, Response response) {
-    Map<String, Object> modelo = getMap(request);
-    if (tieneSesionActiva(request)) {
-      response.redirect("/mascotas/encontre-mascota/lugar-encuentro");
-      return null;
-    }
-
-    EnumSet<TipoNotificadorPreferido> tipoNotificadorPreferidos = EnumSet.allOf(TipoNotificadorPreferido.class);
-
-    EnumSet<TipoDocumento> tiposDocumentos = EnumSet.allOf(TipoDocumento.class);
-
-    modelo.put("medioContactos", tipoNotificadorPreferidos);
-    modelo.put("tiposDocumentos", tiposDocumentos);
-    return new ModelAndView(modelo, "formulario-encontre-mascota-datos-personales.html.hbs");
-  }
-
-
-  public Void completarLugarEncuentro(Request request, Response response) {
-    if (request.session().attribute("user_id") != null) {
-      response.redirect("/mascotas/encontre-mascota");
-      return null;
-    }
-    response.redirect("/mascotas/encontre-mascota/lugar-encuentro");
-    return null;
-  }
-
-  public ModelAndView getFormularioLugarEncuentro(Request request, Response response) {
-    Map<String, Object> modelo = getMap(request);
-    if (request.session().attribute("user_id") != null) {
-      response.redirect("/mascotas/encontre-mascota");
-      return null;
-    }
-    return new ModelAndView(modelo, "formulario-encontre-mascota-datos-ubicacion.html.hbs");
-  }
-
-  public Void elegirLugarEncuentro(Request request, Response response) {
-//    if (!tieneSesionActiva(request) || getMap(request).get("persona") == null) {
-//      response.redirect("/mascotas/encontre-mascota");
-//      return null;
-//    }
-    String ubicacionRescatistaString = request.queryParams("ubicacion-rescatista");
-    String ubicacionRescateString = request.queryParams("ubicacion-rescate");
-    LocalDate fechaRescate = LocalDate.parse(request.queryParams("fecha-rescate"),
-        DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-    String estadoMascota = request.queryParams("estado-mascota");
-    String fotosString = request.queryParams("img");
-
-    List<Foto> fotos = new ArrayList<>();
-    Ubicacion ubicacionRescatista = new Ubicacion(1122.1, 122.1, ubicacionRescatistaString);
-    Ubicacion ubicacionRescate = new Ubicacion(1122.1, 122.1, ubicacionRescateString);
-    Map<String, Object> modelo = getMap(request);
-
-    modelo.put("ubicacionRescatista", ubicacionRescatista);
-    modelo.put("ubicacionRescate", ubicacionRescate);
-    modelo.put("fechaRescate", fechaRescate);
-    modelo.put("estadoMascota", estadoMascota);
-    modelo.put("fotos", fotos);
-
-
-    response.redirect("/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro");
-    return null;
-  }
 
   public ModelAndView getTiposEncuentros(Request request, Response response) {
-    if (request.session().attribute("user_id") != null) {
-      response.redirect("/mascotas/encontre-mascota");
+    if (!tieneSesionActiva(request)) {
+      response.redirect("/login");
       return null;
     }
     return new ModelAndView(getMap(request), "encontre-mascota-tipo-encuentro.html.hbs");
@@ -105,8 +45,8 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
 
 
   public ModelAndView getFormularioConChapita(Request request, Response response) {
-    if (request.session().attribute("user_id") != null) {
-      response.redirect("/mascotas/encontre-mascota");
+    if (!tieneSesionActiva(request)) {
+      response.redirect("/login");
       return null;
     }
     Map<String, Object> modelo = getMap(request);
@@ -124,8 +64,8 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
 
 
   public ModelAndView getFormularioSinChapita(Request request, Response response) {
-    if (request.session().attribute("user_id") != null) {
-      response.redirect("/mascotas/encontre-mascota");
+    if (!tieneSesionActiva(request)) {
+      response.redirect("/login");
       return null;
     }
 
@@ -145,36 +85,63 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
     return new ModelAndView(modelo, "encontre-mascota-tipo-encuentro-sin-chapita.html.hbs");
   }
 
+  Map<String, Object> getValoresUbicacion(Request request, Response response) {
+    String ubicacionRescatistaString = request.queryParams("ubicacion-rescatista");
+    String ubicacionRescateString = request.queryParams("ubicacion-rescate");
+    LocalDate fechaRescate = LocalDate.parse(request.queryParams("fecha-rescate"),
+        DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    String estadoMascota = request.queryParams("estado-mascota");
+    String fotosString = request.queryParams("img");
 
-  public Void enviarMascotaEncontradaConChapita(Request request, Response response) {
-    if (request.session().attribute("user_id") != null) {
-      response.redirect("/mascotas/encontre-mascota");
-      return null;
-    }
+    List<Foto> fotos = new ArrayList<>();
+    Ubicacion ubicacionRescatista = new Ubicacion(1122.1, 122.1, ubicacionRescatistaString);
+    Ubicacion ubicacionRescate = new Ubicacion(1122.1, 122.1, ubicacionRescateString);
     Map<String, Object> modelo = getMap(request);
 
+    modelo.put("ubicacionRescatista", ubicacionRescatista);
+    modelo.put("ubicacionRescate", ubicacionRescate);
+    modelo.put("fechaRescate", fechaRescate);
+    modelo.put("estadoMascota", estadoMascota);
+    modelo.put("fotos", fotos);
+    return modelo;
+  }
+
+  public Void enviarMascotaEncontradaConChapita(Request request, Response response) {
+    if (!tieneSesionActiva(request)) {
+      response.redirect("/login");
+      return null;
+    }
+    Map<String, Object> modelo = getValoresUbicacion(request, response);
+
+    Ubicacion ubicacionRescatista = (Ubicacion) modelo.get("ubicacionRescatista");
+    Ubicacion ubicacionRescate = (Ubicacion) modelo.get("ubicacionRescate");
+    LocalDate fechaRescate = (LocalDate) modelo.get("fechaRescate");
+    String estadoMascota = (String) modelo.get("estadoMascota");
+    List<Foto> fotos = (List<Foto>) modelo.get("fotos");
+
+    Long Id = request.session().attribute("user_id");
+    Usuario usuario = new RepositorioUsuarios().getPorId(Id);
+    Persona persona = usuario.getPersona();
     withTransaction(() -> {
       RepositorioInformes repositorioInformes = new RepositorioInformes();
       MascotaRegistrada mascotaRegistrada = (MascotaRegistrada) modelo.get("mascotaRegistrada");
-      LocalDate fechaEncuentro = (LocalDate) modelo.get("fechaEncuentro");
-      Ubicacion ubicacionRescate = (Ubicacion) modelo.get("ubicacionRescate");
+
       MascotaEncontrada mascotaEncontrada = new MascotaEncontrada(mascotaRegistrada.getFotos(), ubicacionRescate
-          , (String) modelo.get("estadoMascota"), fechaEncuentro,
+          , estadoMascota, fechaRescate,
           mascotaRegistrada.getTamanio());
       ReceptorHogares receptorHogares = new ReceptorHogares();
-      InformeConQR informeConQR = new InformeConQR((Persona) modelo.get("persona"), (Ubicacion) modelo.get(
-          "ubicacionRescatista"), mascotaEncontrada, receptorHogares, mascotaRegistrada);
+      InformeConQR informeConQR = new InformeConQR(persona, ubicacionRescatista, mascotaEncontrada, receptorHogares, mascotaRegistrada);
 
       repositorioInformes.agregarInforme(informeConQR);
 
     });
-    redireccionCasoFeliz(request, response, "/", "La cuenta se ha registrado con exito!");
+    // redireccionCasoFeliz(request, response, "/", "La cuenta se ha registrado con exito!");
     return null;
   }
 
 
   public Void enviarMascotaEncontradaSinChapita(Request request, Response response) {
-    if (request.session().attribute("user_id") != null) {
+    if (!tieneSesionActiva(request)) {
       response.redirect("/mascotas/encontre-mascota");
       return null;
     }
