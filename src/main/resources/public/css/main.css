@@ -178,6 +178,24 @@
   margin-bottom: var(--margen-bottom);
 }
 
+.agregar-pregunta {
+  text-align: center;
+}
+
+.titulo-preguntas {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1em;
+}
+
+.preguntas-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1em;
+};
+
 #sign-in {
   background-color: #7952b3;
   border-color: #7952b3;

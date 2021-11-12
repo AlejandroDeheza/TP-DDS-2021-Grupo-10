@@ -3,10 +3,34 @@
 {{/partial}}
 
 {{# partial "contenido" }}
-	<div class="titulo-preguntas">
-		<h1>Preguntas de Asociaciones</h1>
-		
-	</div>
+	<h1>Nueva Pregunta</h1>
+	
+	<form class="row g-3" action="/matchear-preguntas">
+		<div>
+			<label for="asociacionId" class="form-label">Asociación</label>
+			<select class="form-select" name="asociacionId" id="asociacionId" required>
+				<option selected disabled value="">Asociación...</option>
+				{{#asociaciones}}
+					<option value="{{id}}">{{nombre}} [ID {{id}}]</option>
+				{{/asociaciones}}
+			</select>
+		</div>
+		<div>
+			<label for="preguntaDador" class="form-label">Pregunta para el dador</label>
+			<input type="text" class="form-control" name="preguntaDador" id="preguntaDador" required>
+		</div>
+		<div>
+			<label for="preguntaAdoptante" class="form-label">Pregunta para el adoptante</label>
+			<input type="text" class="form-control" name="preguntaAdoptante" id="preguntaAdoptante" required>
+		</div>
+		<div>
+			<label for="cantidadRespuestasPosibles" class="form-label">Cantidad de respuestas posibles a brindar</label>
+			<input type="number" class="form-control" name="cantidadRespuestasPosibles" id="cantidadRespuestasPosibles" min="0" oninput="validity.valid||(value='');" required>
+		</div>
+		<div>
+			<input class="btn btn-primary" type="submit" value="Agregar pregunta"/>
+		</div>
+	</form>
 {{/partial}}
 
 {{> layout.html.hbs}}

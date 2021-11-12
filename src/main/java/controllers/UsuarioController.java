@@ -1,20 +1,16 @@
 package controllers;
 
 import excepciones.ContraseniaInvalidaException;
-import modelo.asociacion.Asociacion;
 import modelo.notificacion.TipoNotificadorPreferido;
 import modelo.persona.DatosDeContacto;
 import modelo.persona.DocumentoIdentidad;
 import modelo.persona.Persona;
 import modelo.persona.TipoDocumento;
-import modelo.pregunta.ParDePreguntas;
 import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
 import modelo.usuario.ValidadorContrasenias;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
-import repositorios.RepositorioAsociaciones;
-import repositorios.RepositorioPreguntasObligatorias;
 import repositorios.RepositorioUsuarios;
 import spark.ModelAndView;
 import spark.Request;
@@ -22,66 +18,14 @@ import spark.Response;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 public class UsuarioController extends Controller implements WithGlobalEntityManager, TransactionalOps {
 
   public ModelAndView mostrarAdmin(Request request, Response response) {
-    /*
     if (noEsAdmin(request)) {
       response.redirect("/");
       return null;
     }
-    */
     return new ModelAndView(getMap(request), "admin.html.hbs");
-  }
-
-  public ModelAndView mostrarCaracteristicas(Request request, Response response) {
-    /*
-    if (noEsAdmin(request)) {
-      response.redirect("/");
-      return null;
-    }
-    */
-    return new ModelAndView(getMap(request), "caracteristicas.html.hbs");
-  }
-
-  public ModelAndView mostrarPreguntasAsociaciones(Request request, Response response) {
-    /*
-    if (noEsAdmin(request)) {
-      response.redirect("/");
-      return null;
-    }
-    */
-    RepositorioAsociaciones repositorioAsociaciones = new RepositorioAsociaciones();
-    RepositorioPreguntasObligatorias repositorioPreguntasObligatorias = new RepositorioPreguntasObligatorias();
-    String filtro = request.queryParams("idAsociacion");
-
-    List<Asociacion> todasLasAsociaciones = repositorioAsociaciones.getAsociaciones();
-    List<Asociacion> asociacionFiltrada = filtro == null ?
-        todasLasAsociaciones : repositorioAsociaciones.buscarPorId(Long.parseLong(filtro));
-
-    List<ParDePreguntas> parDePreguntas = asociacionFiltrada.size() == 1 ?
-        asociacionFiltrada.get(0).getPreguntas() : repositorioPreguntasObligatorias.getPreguntas();
-
-    Map<String, Object> modelo = new HashMap<>();
-    modelo.put("asociaciones", todasLasAsociaciones);
-    modelo.put("preguntas", parDePreguntas);
-
-    return new ModelAndView(modelo, "preguntas-asociaciones.html.hbs");
-  }
-
-  public ModelAndView cargarNuevaPreguntaAsociacion(Request request, Response response) {
-    /*
-    if (noEsAdmin(request)) {
-      response.redirect("/");
-      return null;
-    }
-    */
-    return new ModelAndView(getMap(request), "nueva-pregunta.html.hbs");
   }
 
   public ModelAndView mostrarFormularioCreacionUsuario(Request request, Response response) {

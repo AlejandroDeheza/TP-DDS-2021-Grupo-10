@@ -22,6 +22,8 @@ public class Routes {
     UsuarioController usuarioController = new UsuarioController();
     PublicacionesController publicacionesController = new PublicacionesController();
     MascotasController mascotasController = new MascotasController();
+    PreguntasController preguntasController = new PreguntasController();
+    CaracteristicasController caracteristicasController = new CaracteristicasController();
 
     Spark.get("/", homeController::getHome, engine);
 
@@ -33,9 +35,10 @@ public class Routes {
     Spark.post("/creacion-usuario", usuarioController::registrarUsuario);
     Spark.get("/admin", usuarioController::mostrarAdmin, engine);
 
-    Spark.get("/caracteristicas", usuarioController::mostrarCaracteristicas, engine);
-    Spark.get("/preguntas-asociaciones", usuarioController::mostrarPreguntasAsociaciones, engine);
-    Spark.get("/nueva-pregunta", usuarioController::cargarNuevaPreguntaAsociacion, engine);
+    Spark.get("/caracteristicas", caracteristicasController::mostrarCaracteristicas, engine);
+    Spark.get("/preguntas-asociaciones", preguntasController::mostrarPreguntasAsociaciones, engine);
+    Spark.get("/nueva-pregunta", preguntasController::cargarNuevaPreguntaAsociacion, engine);
+    Spark.get("/matchear-preguntas", preguntasController::matchearPreguntasAsociacion, engine);
 
     Spark.get("/mascotas-en-adopcion", publicacionesController::mostrarMascotasEnAdopcion, engine);
 
