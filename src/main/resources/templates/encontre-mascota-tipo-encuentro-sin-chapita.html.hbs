@@ -1,23 +1,19 @@
-{{# partial "titulo" }}
-<title>Patitas - Encontre una Mascota sin chapita</title>
-{{/partial}}
-
 {{# partial "contenido" }}
 <section class="fondo-gris">
   <h1>Encontre una mascota sin chapita</h1>
-  <form class="form-login" action="/mascotas/encontre-mascota/sin-chapita" method="POST">
+  <form class="form-login" action="/mascotas/encontre-mascota/sin-chapita" method="POST" id="encontreForm">
     <h2>Datos de la ubicación</h2>
     <div class="input-group input-group-sm mb-3">
       <span class="input-group-text" id="inputGroup-sizing-sm">Ubicacion</span><input type="text" required="required"
-        name="ubicacion-rescatista" placeholder="Ingrese su ubicacion">
+        name="ubicacionRescatista" placeholder="Ingrese su ubicacion">
     </div>
     <div class="input-group input-group-sm mb-3">
       <span class="input-group-text" id="inputGroup-sizing-sm">Ubicacion rescate</span><input type="text"
-        required="required" name="ubicacion-rescate" placeholder="Ingrese la ubicacion del rescate">
+        required="required" name="ubicacionRescate" placeholder="Ingrese la ubicacion del rescate">
     </div>
     <div class="input-group date input-group-sm mb-3" id="datepicker">
       <span class="input-group-text" id="inputGroup-sizing-sm">Fecha rescate</span>
-      <input type="text" required name="fecha-rescate" class="form-control">
+      <input type="text" required name="fechaRescate" class="form-control">
       <span class="input-group-append">
         <span class="input-group-text bg-white d-block">
           <i class="fa fa-calendar"></i>
@@ -26,27 +22,26 @@
     </div>
     <div class="input-group input-group-sm mb-3">
       <span class="input-group-text" id="inputGroup-sizing-sm">Descripcion estado mascota</span><input type="text"
-        required="required" name="estado-mascota" placeholder="Ingrese el estado de la mascota">
+        required="required" name="estadoMascota" placeholder="Ingrese el estado de la mascota">
     </div>
     <div class="input-group input-group-sm mb-3">
       <span class="input-group-text" id="inputGroup-sizing-sm">Tipo Adjuntar fotos</span><input type="file" id="img"
-        name="img" accept="image/*" required="required" multiple name="fotos"
-        placeholder="Adjunte las fotos de la mascota">
+        name="img" accept="image/*" multiple name="fotos" placeholder="Adjunte las fotos de la mascota">
     </div>
     <h2>Datos de la mascota con chapita</h2>
     <div class="input-group input-group-sm mb-3">
       <span class="input-group-text" id="inputGroup-sizing-sm">Tipo Animal</span>
       <select class="form-select" required name="tipoAnimal" id="inputGroupSelect02">
-        <option value="0">PERRO</option>
-        <option value="1">GATO</option>
+        <option value="0">Perro</option>
+        <option value="1">Gato</option>
       </select>
     </div>
     <div class="input-group input-group-sm mb-3">
       <span class="input-group-text" id="inputGroup-sizing-sm">Tamaño</span>
       <select class="form-select" required name="tamanioMascota" id="inputGroupSelect02">
-        <option value="0">CHICO</option>
-        <option value="1">MEDIANO</option>
-        <option value="2">GRANDE</option>
+        <option value="0">Chico</option>
+        <option value="1">Mediano</option>
+        <option value="2">Grande</option>
       </select>
     </div>
     <h2>Caracteristicas</h2>
@@ -56,8 +51,8 @@
     </div-->
     {{#each listaCaracteristicasValoresPosibles}}
     <div class="input-group input-group-sm mb-3">
-      <span class="input-group-text" id="inputGroup-sizing-sm">{{nombreCaracteristica}}</span>
-      <select name="valoresCaracteristicas">
+      <span class="input-group-text nombreCaracteristica" id="nombreCaracteristica">{{nombreCaracteristica}}</span>
+      <select class="valoresCaracteristica" name="valoresCaracteristica" id="valoresCaracteristica">
         {{#each valoresCaracteristicas}}
         <option value="{{this}}">{{this}}</option>
         {{/each}}
@@ -78,6 +73,48 @@
   $(function () {
     $('#datepicker').datepicker();
   });
+</script>
+<script type="text/javascript">
+  $("#encontreForm").submit(
+    function (event) {
+      event.preventDefault();
+
+      let form = $("#encontreForm");
+      let path = form.attr("action");
+      let ubicacionRescatista = form.find("[name='ubicacionRescatista']").val();
+      let ubicacionRescate = form.find("[name='ubicacionRescate']").val();
+      let fechaRescate = form.find("[name='fechaRescate']").val();
+      let estadoMascota = form.find("[name='estadoMascota']").val();
+      let tipoAnimal = form.find("[name='tipoAnimal']").val();
+      let tamanioMascota = form.find("[name='tamanioMascota']").val();
+
+      let nombresCaracteristicas = Array.from(document.getElementsByClassName('nombreCaracteristica')).map(e => e.innerText);
+      let valores = Array.from(document.getElementsByClassName('valoresCaracteristica')).map(e => e.selectedOptions[0].value);
+
+      let caracteristicas = [];
+      for (i = 0; i < nombresCaracteristicas.length; i++) {
+        let nombre = nombresCaracteristicas[i];
+        let valor = valores[i];
+        let caractersitica = { nombre, valor }
+        caracteristicas.push(caractersitica);
+      }
+
+      let url = "http://localhost:8080" + path;
+      let body = {
+        ubicacionRescatista,
+        ubicacionRescate,
+        fechaRescate,
+        estadoMascota,
+        tipoAnimal,
+        tamanioMascota,
+        caracteristicas,
+      }
+
+      console.log(body)
+      var posting = $.post(url, body);
+    }
+
+  );
 </script>
 {{/partial}}
 

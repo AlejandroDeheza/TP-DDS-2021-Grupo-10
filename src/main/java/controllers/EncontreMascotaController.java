@@ -1,5 +1,10 @@
 package controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import modelo.MascotaSinChapitaRequest;
 import modelo.hogarDeTransito.ReceptorHogares;
 import modelo.informe.InformeConQR;
 import modelo.informe.InformeSinQR;
@@ -91,30 +96,7 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
     return new ModelAndView(modelo, "encontre-mascota-tipo-encuentro-sin-chapita.html.hbs");
   }
 
-  Map<String, Object> getValoresUbicacion(Request request, Response response) {
-    String ubicacionRescatistaString = request.queryParams("ubicacion-rescatista");
-    String ubicacionRescateString = request.queryParams("ubicacion-rescate");
-    LocalDate fechaRescate = LocalDate.parse(request.queryParams("fecha-rescate"),
-        DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-    String estadoMascota = request.queryParams("estado-mascota");
 
-    String[] fotosString = request.queryParamsValues("img");
-    List<Foto> fotos = new ArrayList<>();
-    Arrays.stream(fotosString).forEach((foto) -> fotos.add(new Foto(foto,
-        null)));
-    Ubicacion ubicacionRescatista = new Ubicacion(1122.1, 122.1, ubicacionRescatistaString);
-    //TODO ver la latitud y longitud
-    //TODO: ver como guardar las imagenes
-    Ubicacion ubicacionRescate = new Ubicacion(1122.1, 122.1, ubicacionRescateString);
-    Map<String, Object> modelo = getMap(request);
-
-    modelo.put("ubicacionRescatista", ubicacionRescatista);
-    modelo.put("ubicacionRescate", ubicacionRescate);
-    modelo.put("fechaRescate", fechaRescate);
-    modelo.put("estadoMascota", estadoMascota);
-    modelo.put("fotos", fotos);
-    return modelo;
-  }
 
   public Void enviarMascotaEncontradaConChapita(Request request, Response response) {
     if (!tieneSesionActiva(request)) {
@@ -122,7 +104,7 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
       return null;
     }
     try {
-      Map<String, Object> modelo = getValoresUbicacion(request, response);
+      Map<String, Object> modelo = getBodyFromRequest(request, response);
 
       Ubicacion ubicacionRescatista = (Ubicacion) modelo.get("ubicacionRescatista");
       Ubicacion ubicacionRescate = (Ubicacion) modelo.get("ubicacionRescate");
@@ -170,10 +152,7 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
       return null;
     }
     try {
-      Map<String, Object> modelo = getMap(request);
-
-      String colorString = request.queryParams("color");
-
+      Map<String, Object> modelo = getBodyFromRequest(request, response);
 
       Ubicacion ubicacionRescatista = (Ubicacion) modelo.get("ubicacionRescatista");
       Ubicacion ubicacionRescate = (Ubicacion) modelo.get("ubicacionRescate");
@@ -181,13 +160,14 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
       String estadoMascota = (String) modelo.get("estadoMascota");
       List<Foto> fotos = (List<Foto>) modelo.get("fotos");
       Long Id = request.session().attribute("user_id");
+      List<Caracteristica> caracteristicas = (List<Caracteristica>) modelo.get("caracteristicas");
+
       Usuario usuario = new RepositorioUsuarios().getPorId(Id);
       Persona persona = usuario.getPersona();
 
       TamanioMascota tamanioMascota =
           TamanioMascota.values()[Integer.parseInt(request.queryParams("tamanioMascota"))];
       Animal animal = Animal.values()[Integer.parseInt(request.queryParams("tipoAnimal"))];
-      List<Caracteristica> caracteristicas = new ArrayList<>();
       RepositorioInformes repositorioInformes = new RepositorioInformes();
       MascotaEncontrada mascotaEncontrada = new MascotaEncontrada(fotos, ubicacionRescate
           , estadoMascota, fechaRescate,
@@ -205,5 +185,39 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
       redireccionCasoError(request, response, "/", "Fallo la registracion");
       return null;
     }
+  }
+
+  private Map<String, Object> getBodyFromRequest(Request request, Response response) {
+
+    ObjectMapper mapper = new ObjectMapper();
+
+    String ubicacionRescatistaString = request.queryParams("ubicacionRescatista");
+    String ubicacionRescateString = request.queryParams("ubicacionRescate");
+    LocalDate fechaRescate = LocalDate.parse(request.queryParams("fechaRescate"),
+        DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+    String estadoMascota = request.queryParams("estadoMascota");
+    MascotaSinChapitaRequest objeto;
+    try {
+      objeto = mapper.readValue(request.body(),MascotaSinChapitaRequest.class);
+    } catch (JsonProcessingException e) {
+      redireccionCasoError(request, response, "/", "Hubo un error al cargar los datos, disculpe las molestias");
+      return null;
+    }
+
+//    String[] fotosString = request.queryParamsValues("img");
+//    List<Foto> fotos = new ArrayList<>();
+//    Arrays.stream(fotosString).forEach((foto) -> fotos.add(new Foto(foto,
+//        null)));
+    Ubicacion ubicacionRescatista = new Ubicacion(1122.1, 122.1, ubicacionRescatistaString);
+    Ubicacion ubicacionRescate = new Ubicacion(1122.1, 122.1, ubicacionRescateString);
+    Map<String, Object> modelo = getMap(request);
+
+    modelo.put("ubicacionRescatista", ubicacionRescatista);
+    modelo.put("ubicacionRescate", ubicacionRescate);
+    modelo.put("fechaRescate", fechaRescate);
+    modelo.put("estadoMascota", estadoMascota);
+//    modelo.put("fotos", fotos);
+    modelo.put("caracteristicas", objeto.getCaracteristicasMascota());
+    return modelo;
   }
 }

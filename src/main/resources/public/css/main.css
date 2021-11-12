@@ -104,6 +104,10 @@
   flex-direction: column;
 }
 
+.encontre-mascota-container {
+  height: calc(100vh - 150px);
+}
+
 .form-container-sign-up {
   flex: 1;
   display: flex;

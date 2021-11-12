@@ -49,14 +49,12 @@ public class Routes {
     Spark.get("/mascotas/encontre-mascota/con-chapita",
         encontreMascotaController::getFormularioConChapita, engine);
     Spark.post("/mascotas/encontre-mascota/con-chapita",
-        (request, response) -> encontreMascotaController.enviarMascotaEncontradaConChapita(request,
-            response));
+        encontreMascotaController::enviarMascotaEncontradaConChapita);
 
     Spark.get("/mascotas/encontre-mascota/sin-chapita",
         encontreMascotaController::getFormularioSinChapita, engine);
     Spark.post("/mascotas/encontre-mascota/sin-chapita",
-        (request, response) -> encontreMascotaController.enviarMascotaEncontradaSinChapita(request,
-            response));
+        encontreMascotaController::enviarMascotaEncontradaSinChapita);
     System.out.println("Servidor iniciado!");
   }
 
