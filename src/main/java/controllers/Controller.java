@@ -11,6 +11,9 @@ public abstract class Controller {
   protected Map<String, Object> getMap(Request request) {
     Map<String, Object> mapa = new HashMap<>();
     mapa.put("sesionIniciada", tieneSesionActiva(request));
+    if (tieneSesionActiva(request)) {
+      mapa.put("nombreUsuario", request.session().attribute("user_name"));
+    }
     return mapa;
   }
 
