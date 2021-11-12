@@ -31,12 +31,16 @@
                      type="color" required="required" name="color"
                      placeholder="Ingrese color">
                  </div>
-
-                 <div class="campo">
-                   <span class="nombre-campo">Caracter:</span><input
-                      type="text" required="required"name="caracter"
-                        placeholder="Ingrese el caracter">
+                {{#each listaCaracteristicasValoresPosibles}}
+                  <div class="campo">
+                   <span class="nombre-campo">{{nombreCaracteristica}}</span>
+                      <select name="valoresCaracteristicas">
+                          {{#each valoresCaracteristicas}}
+                              <option value="{{this}}">{{this}}</option>
+                          {{/each}}
+                      </select>
                    </div>
+                 {{/each}}
                  <input type="submit" value="Enviar">
              </form>
     </section>
