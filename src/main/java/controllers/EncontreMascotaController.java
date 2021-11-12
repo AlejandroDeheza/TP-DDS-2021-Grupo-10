@@ -2,12 +2,14 @@ package controllers;
 
 import modelo.hogarDeTransito.ReceptorHogares;
 import modelo.informe.InformeConQR;
+import modelo.informe.InformeSinQR;
 import modelo.informe.Ubicacion;
 import modelo.mascota.Animal;
 import modelo.mascota.Foto;
 import modelo.mascota.MascotaEncontrada;
 import modelo.mascota.MascotaRegistrada;
 import modelo.mascota.TamanioMascota;
+import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 import modelo.notificacion.TipoNotificadorPreferido;
 import modelo.persona.DatosDeContacto;
@@ -27,6 +29,7 @@ import spark.Response;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +59,6 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
         id != null ?
             repositorioMascotaRegistrada.getPorId(Long.parseLong(id)) :
             null;
-
     modelo.put("mascotaRegistrada", mascotaRegistrada);
     modelo.put("codigo-chapita", id);
     return new ModelAndView(modelo, "encontre-mascota-tipo-encuentro-con-chapita.html.hbs");
@@ -91,10 +93,14 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
     LocalDate fechaRescate = LocalDate.parse(request.queryParams("fecha-rescate"),
         DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     String estadoMascota = request.queryParams("estado-mascota");
-    String fotosString = request.queryParams("img");
 
+    String[] fotosString = request.queryParamsValues("img");
     List<Foto> fotos = new ArrayList<>();
+    Arrays.stream(fotosString).forEach((foto) -> fotos.add(new Foto(foto,
+        null)));
     Ubicacion ubicacionRescatista = new Ubicacion(1122.1, 122.1, ubicacionRescatistaString);
+    //TODO ver la latitud y longitud
+    //TODO: ver como guardar las imagenes
     Ubicacion ubicacionRescate = new Ubicacion(1122.1, 122.1, ubicacionRescateString);
     Map<String, Object> modelo = getMap(request);
 
@@ -111,32 +117,41 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
       response.redirect("/login");
       return null;
     }
-    Map<String, Object> modelo = getValoresUbicacion(request, response);
+    try {
+      Map<String, Object> modelo = getValoresUbicacion(request, response);
 
-    Ubicacion ubicacionRescatista = (Ubicacion) modelo.get("ubicacionRescatista");
-    Ubicacion ubicacionRescate = (Ubicacion) modelo.get("ubicacionRescate");
-    LocalDate fechaRescate = (LocalDate) modelo.get("fechaRescate");
-    String estadoMascota = (String) modelo.get("estadoMascota");
-    List<Foto> fotos = (List<Foto>) modelo.get("fotos");
+      Ubicacion ubicacionRescatista = (Ubicacion) modelo.get("ubicacionRescatista");
+      Ubicacion ubicacionRescate = (Ubicacion) modelo.get("ubicacionRescate");
+      LocalDate fechaRescate = (LocalDate) modelo.get("fechaRescate");
+      String estadoMascota = (String) modelo.get("estadoMascota");
+      List<Foto> fotos = (List<Foto>) modelo.get("fotos");
 
-    Long Id = request.session().attribute("user_id");
-    Usuario usuario = new RepositorioUsuarios().getPorId(Id);
-    Persona persona = usuario.getPersona();
-    withTransaction(() -> {
+      Long Id = request.session().attribute("user_id");
+      Usuario usuario = new RepositorioUsuarios().getPorId(Id);
+      Persona persona = usuario.getPersona();
+
+      RepositorioMascotaRegistrada repositorioMascotaRegistrada = new RepositorioMascotaRegistrada();
+      String idChapitaString = request.queryParams("codigo-chapita");
+      Long idChapita = Long.parseLong(idChapitaString);
+      MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.getPorId(idChapita);
+
       RepositorioInformes repositorioInformes = new RepositorioInformes();
-      MascotaRegistrada mascotaRegistrada = (MascotaRegistrada) modelo.get("mascotaRegistrada");
-
-      MascotaEncontrada mascotaEncontrada = new MascotaEncontrada(mascotaRegistrada.getFotos(), ubicacionRescate
+      MascotaEncontrada mascotaEncontrada = new MascotaEncontrada(fotos, ubicacionRescate
           , estadoMascota, fechaRescate,
           mascotaRegistrada.getTamanio());
       ReceptorHogares receptorHogares = new ReceptorHogares();
-      InformeConQR informeConQR = new InformeConQR(persona, ubicacionRescatista, mascotaEncontrada, receptorHogares, mascotaRegistrada);
+      InformeConQR informeConQR = new InformeConQR(persona, ubicacionRescatista,
+          mascotaEncontrada, receptorHogares, mascotaRegistrada);
 
-      repositorioInformes.agregarInforme(informeConQR);
-
-    });
-    // redireccionCasoFeliz(request, response, "/", "La cuenta se ha registrado con exito!");
-    return null;
+      withTransaction(() -> {
+        repositorioInformes.agregarInforme(informeConQR);
+      });
+      redireccionCasoFeliz(request, response, "/", "La cuenta se ha registrado con exito!");
+      return null;
+    } catch (Exception e) {
+      redireccionCasoError(request, response, "/", "Fallo la registracion");
+      return null;
+    }
   }
 
 
@@ -145,53 +160,42 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
       response.redirect("/mascotas/encontre-mascota");
       return null;
     }
-    Map<String, Object> modelo = getMap(request);
+    try {
+      Map<String, Object> modelo = getMap(request);
 
-    withTransaction(() -> {
-      RepositorioInformes repositorioInformes = new RepositorioInformes();
-      MascotaRegistrada mascotaRegistrada = (MascotaRegistrada) modelo.get("mascotaRegistrada");
-      LocalDate fechaEncuentro = (LocalDate) modelo.get("fechaEncuentro");
+      String colorString = request.queryParams("color");
+
+
+      Ubicacion ubicacionRescatista = (Ubicacion) modelo.get("ubicacionRescatista");
       Ubicacion ubicacionRescate = (Ubicacion) modelo.get("ubicacionRescate");
-      MascotaEncontrada mascotaEncontrada = new MascotaEncontrada(mascotaRegistrada.getFotos(), ubicacionRescate
-          , (String) modelo.get("estadoMascota"), fechaEncuentro,
-          mascotaRegistrada.getTamanio());
+      LocalDate fechaRescate = (LocalDate) modelo.get("fechaRescate");
+      String estadoMascota = (String) modelo.get("estadoMascota");
+      List<Foto> fotos = (List<Foto>) modelo.get("fotos");
+      Long Id = request.session().attribute("user_id");
+      Usuario usuario = new RepositorioUsuarios().getPorId(Id);
+      Persona persona = usuario.getPersona();
+
+      TamanioMascota tamanioMascota =
+          TamanioMascota.values()[Integer.parseInt(request.queryParams("tamanioMascota"))];
+      Animal animal = Animal.values()[Integer.parseInt(request.queryParams("tipoAnimal"))];
+      List<Caracteristica> caracteristicas = new ArrayList<>();
+      RepositorioInformes repositorioInformes = new RepositorioInformes();
+      MascotaEncontrada mascotaEncontrada = new MascotaEncontrada(fotos, ubicacionRescate
+          , estadoMascota, fechaRescate,
+          tamanioMascota);
       ReceptorHogares receptorHogares = new ReceptorHogares();
-      InformeConQR informeConQR = new InformeConQR((Persona) modelo.get("persona"), (Ubicacion) modelo.get(
-          "ubicacionRescatista"), mascotaEncontrada, receptorHogares, mascotaRegistrada);
+      InformeSinQR informeSinQR = new InformeSinQR(persona,
+          ubicacionRescatista, mascotaEncontrada, receptorHogares, animal, caracteristicas);
+      withTransaction(() -> {
+        repositorioInformes.agregarInforme(informeSinQR);
 
-      repositorioInformes.agregarInforme(informeConQR);
-
-    });
-    redireccionCasoFeliz(request, response, "/", "La cuenta se ha registrado con exito!");
-    return null;
-  }
-
-  public Void enviarDatosNoUsuario(Request request, Response response) {
-    String nombre = request.queryParams("nombre");
-    String apellido = request.queryParams("apellido");
-    String email = request.queryParams("email");
-    String telefono = request.queryParams("telefono");
-    TipoDocumento tipoDocumento = TipoDocumento.values()[Integer.parseInt(request.queryParams("tipoDocumento"))];
-    String numeroDocumento = request.queryParams("numero-documento");
-    LocalDate fechaNacimiento = LocalDate.parse(request.queryParams("fecha-nacimiento"),
-        DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-    TipoNotificadorPreferido tipoNotificadorPreferido =
-        TipoNotificadorPreferido.values()[Integer.parseInt(request.queryParams(
-            "tipoNotificadorPreferido"))];
-
-    DatosDeContacto datosDeContacto = new DatosDeContacto(telefono, email);
-    DocumentoIdentidad documentoIdentidad = new DocumentoIdentidad(tipoDocumento, numeroDocumento);
-    Persona persona = new Persona(
-        nombre,
-        apellido,
-        documentoIdentidad,
-        datosDeContacto,
-        fechaNacimiento,
-        tipoNotificadorPreferido
-    );
-    Map<String, Object> modelo = getMap(request);
-    modelo.put("persona", persona);
-    response.redirect("/mascotas/encontre-mascota/lugar-encuentro");
-    return null;
+      });
+      redireccionCasoFeliz(request, response, "/", "La cuenta se ha registrado con exito!");
+      return null;
+    } catch (
+        Exception e) {
+      redireccionCasoError(request, response, "/", "Fallo la registracion");
+      return null;
+    }
   }
 }

@@ -27,13 +27,18 @@
       <span class="nombre-campo">Tipo Adjuntar fotos:</span><input type="file" id="img" name="img" accept="image/*"
         required="required" multiple name="fotos" placeholder="Adjunte las fotos de la mascota">
     </div>
-   <h2>Datos de la mascota con chapita</h2>
+
     <div class="campo">
       <span class="nombre-campo">Ingrese el codigo de la chapita:</span><input type="number" required="required"
         name="codigo-chapita" value="{{codigo-chapita}}" min="1" placeholder="Ingrese el codigo de la chapita">
     </div>
-{{!--     <button name="enviar" value="{{codigo-chapita}}" --}}
-{{!--     action="/mascotas/encontre-mascota/con-chapita" method="GET">Buscar</button> --}}
+{{!--    <h2>Datos de la mascota con chapita</h2> --}}
+{{!--   <form class="encontre-mascota" action="/mascotas/encontre-mascota/con-chapita" method="GET"> --}}
+{{!--     <div class="campo"> --}}
+{{!--       <span class="nombre-campo">Ingrese el codigo de la chapita:</span><input type="number" required="required" --}}
+{{!--         name="codigo-chapita" value="{{codigo-chapita}}" min="1" placeholder="Ingrese el codigo de la chapita"> --}}
+{{!--     </div> --}}
+{{!--     <input type="submit" value="Buscar"> --}}
 {{!--   <h2>Informacion de la mascota</h2> --}}
 {{!--   {{#mascotaRegistrada}} --}}
 {{!--   {{#each fotos as |foto|}} --}}
@@ -44,7 +49,8 @@
 {{!--   <li>Sexo: {{sexo}}</li> --}}
 {{!--   {{/mascotaRegistrada}} --}}
 
-    <input type="submit" value="Enviar">
+{{!--     </form> --}}
+     <input type="submit" value="Enviar">
   </form>
 </section>
 {{/partial}}

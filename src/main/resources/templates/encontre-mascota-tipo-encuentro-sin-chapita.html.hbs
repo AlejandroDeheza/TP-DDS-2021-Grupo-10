@@ -30,19 +30,20 @@
    <h2>Datos de la mascota con chapita</h2>
     <div class="campo">
       <span class="nombre-campo">Tipo Animal:</span>
-      <select name="tipoDocumento">
-        {{#each tipoAnimales}}
-        <option value="{{this}}">{{this}}</option>
-        {{/each}}
-      </select>
+                        <select class="form-select"  required name="tipoAnimal"
+                        id="inputGroupSelect02">
+                            <option value="0">PERRO</option>
+                            <option value="1">GATO</option>
+                        </select>
     </div>
     <div class="campo">
       <span class="nombre-campo">Tamaño:</span>
-      <select name="tamanioMascota">
-        {{#each tamanioMascota}}
-        <option value="{{this}}">{{this}}</option>
-        {{/each}}
-      </select>
+                        <select class="form-select"  required name="tamanioMascota"
+                        id="inputGroupSelect02">
+                            <option value="0">CHICO</option>
+                            <option value="1">MEDIANO</option>
+                            <option value="2">GRANDE</option>
+                        </select>
     </div>
     <h2>Caracteristicas</h2>
     <div class="campo">
