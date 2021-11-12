@@ -18,27 +18,31 @@
 	</div>
 
 	{{#preguntas}}
-	<div class="pregunta-asociacion">
-		<button class="btn btn-primary admin-card-dropdown" type="button" data-bs-toggle="collapse" data-bs-target="#pregunta-{{id}}" aria-expanded="false" aria-controls="collapseExample">
-			Pregunta N{{id}}°
-		</button>
-		<div class="admin-card collapse" id="pregunta-{{id}}">
-			<div class="card-body">
-				<p>
-					Pregunta del dador: {{preguntaDelDador}}
-				</p>
-				<p>
-					Pregunta del adoptante: {{preguntaDelAdoptante}}
-				</p>
+		<div class="accordion accordion-flush" id="accordionFlushPregunta{{id}}">
+			<div class="accordion-item">
+				<h2 class="accordion-header" id="flush-pregunta{{id}}">
+					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsePregunta{{id}}" aria-expanded="false" aria-controls="flush-collapsePregunta{{id}}">
+						Pregunta N{{id}}°
+					</button>
+				</h2>
+				<div id="flush-collapsePregunta{{id}}" class="accordion-collapse collapse" aria-labelledby="flush-pregunta{{id}}" data-bs-parent="#accordionFlushPregunta{{id}}">
+					<div class="accordion-body">
+						<p>
+							Pregunta del dador: {{preguntaDelDador}}
+						</p>
+						<p>
+							Pregunta del adoptante: {{preguntaDelAdoptante}}
+						</p>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
 	{{/preguntas}}
-    
-    <div class="pregunta-asociacion agregar-pregunta">
-		<button class="btn btn-primary" type="button" aria-expanded="false">
+
+	<div class="agregar-pregunta">
+		<a class="btn btn-primary" href="/nueva-pregunta">
 			+ Pregunta
-		</button>
+		</a>
 	</div>
 {{/partial}}
 

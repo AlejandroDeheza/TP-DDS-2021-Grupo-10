@@ -33,6 +33,7 @@ public class Routes {
     Spark.post("/registracion", usuarioController::registrarUsuario);
     Spark.get("/caracteristicas", usuarioController::mostrarCaracteristicas, engine);
     Spark.get("/preguntas-asociaciones", usuarioController::mostrarPreguntasAsociaciones, engine);
+    Spark.get("/nueva-pregunta", usuarioController::cargarNuevaPreguntaAsociacion, engine);
 
     Spark.get("/mascotas-en-adopcion", publicacionesController::mostrarMascotasEnAdopcion, engine);
     Spark.get("/registracion-mascota", mascotasController::mostrarRegistracion, engine);
