@@ -63,8 +63,6 @@ public class UsuarioController extends Controller implements WithGlobalEntityMan
           request.queryParams("email")
       );
 
-
-
       Persona persona = new Persona(
           request.queryParams("nombre"),
           request.queryParams("apellido"),

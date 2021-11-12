@@ -16,7 +16,7 @@
                 <div class="col">
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-sm">Nombre</span>
-                        <input type="text" name="nombre" class="form-control" aria-label="Sizing example input"
+                        <input type="text" name="nombre" required class="form-control" aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-sm">
                     </div>
                 </div>
@@ -25,7 +25,7 @@
                 <div class="col">
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-sm">Apellido</span>
-                        <input type="text" name="apellido" class="form-control" aria-label="Sizing example input"
+                        <input type="text" name="apellido" required class="form-control" aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-sm">
                     </div>
                 </div>
@@ -34,7 +34,7 @@
                 <div class="col">
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-sm">Teléfono</span>
-                        <input type="text" name="telefono" class="form-control" aria-label="Sizing example input"
+                        <input type="text" name="telefono" required class="form-control" aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-sm">
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                 <div class="col">
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-sm">Email</span>
-                        <input type="text" name="email" class="form-control" aria-label="Sizing example input"
+                        <input type="text" name="email" required class="form-control" aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-sm">
                     </div>
                 </div>
@@ -51,7 +51,7 @@
             <div class="row g-3">
                 <div class="col">
                     <div class="input-group mb-3">
-                        <select class="form-select" name="tipoNotificadorPreferido" id="inputGroupSelect02">
+                        <select class="form-select" required name="tipoNotificadorPreferido" id="inputGroupSelect01">
                             <option selected>Medio de contacto preferido</option>
                             <option value="0">Email</option>
                         </select>
@@ -62,7 +62,7 @@
                 <div class="col">
                     <div class="input-group date input-group-sm mb-3" id="datepicker">
                         <span class="input-group-text" id="inputGroup-sizing-sm">Fecha de nacimiento</span>
-                        <input type="text" name="fechaNacimiento" class="form-control">
+                        <input type="text" required name="fechaNacimiento" class="form-control">
                         <span class="input-group-append">
                             <span class="input-group-text bg-white d-block">
                                 <i class="fa fa-calendar"></i>
@@ -74,7 +74,7 @@
             <div class="row g-3">
                 <div class="col">
                     <div class="input-group mb-3">
-                        <select class="form-select" name="tipoDocumento" id="inputGroupSelect02">
+                        <select class="form-select"  required name="tipoDocumento" id="inputGroupSelect02">
                             <option selected>Tipo de documento</option>
                             <option value="0">DNI</option>
                             <option value="1">LC</option>
@@ -89,7 +89,7 @@
                 <div class="col">
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-sm">Número de documento</span>
-                        <input type="text" name="numeroDocumento" class="form-control" aria-label="Sizing example input"
+                        <input type="number" required name="numeroDocumento" class="form-control" aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-sm">
                     </div>
                 </div>
@@ -98,7 +98,7 @@
                 <div class="col">
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-sm">Usuario</span>
-                        <input type="text" name="usuario" class="form-control" aria-label="Sizing example input"
+                        <input type="text" required name="usuario" class="form-control" aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-sm">
                     </div>
                 </div>
@@ -107,7 +107,7 @@
                 <div class="col">
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-sm">Contraseña</span>
-                        <input type="password" name="contrasenia" class="form-control" aria-label="Sizing example input"
+                        <input type="password" required name="contrasenia" class="form-control" aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-sm">
                     </div>
                 </div>
@@ -116,7 +116,7 @@
                 <div class="col">
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-sm">Confirmación Contraseña</span>
-                        <input type="password" name="validacionContrasenia" class="form-control" aria-label="Sizing example input"
+                        <input type="password" required name="validacionContrasenia" class="form-control" aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-sm">
                     </div>
                 </div>
