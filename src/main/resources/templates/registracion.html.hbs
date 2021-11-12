@@ -1,0 +1,141 @@
+{{#partial "contenido" }}
+<div class="login-container">
+    <div class="foto-bienvenida">
+        <div class="mensaje-bienvenida">
+            <div>
+                Crea tu cuenta para ser parte de nuestra comunidad
+            </div>
+        </div>
+    </div>
+    <div class="form-container-sign-up">
+        <div> <img src="images/patitas-logo.jpg" alt="patitas-logo" width="30" height="24"
+                class="d-inline-block align-text-top logo-login" />
+        </div>
+        <form class="form-login" action="/creacion-usuario" method="POST">
+            <div class="row g-3">
+                <div class="col">
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Nombre</span>
+                        <input type="text" name="nombre" required class="form-control" aria-label="Sizing example input"
+                            aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col">
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Apellido</span>
+                        <input type="text" name="apellido" required class="form-control" aria-label="Sizing example input"
+                            aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col">
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Teléfono</span>
+                        <input type="text" name="telefono" required class="form-control" aria-label="Sizing example input"
+                            aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col">
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Email</span>
+                        <input type="text" name="email" required class="form-control" aria-label="Sizing example input"
+                            aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col">
+                    <div class="input-group mb-3">
+                        <select class="form-select" required name="tipoNotificadorPreferido" id="inputGroupSelect01">
+                            <option selected>Medio de contacto preferido</option>
+                            <option value="0">Email</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col">
+                    <div class="input-group date input-group-sm mb-3" id="datepicker">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Fecha de nacimiento</span>
+                        <input type="text" required name="fechaNacimiento" class="form-control">
+                        <span class="input-group-append">
+                            <span class="input-group-text bg-white d-block">
+                                <i class="fa fa-calendar"></i>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col">
+                    <div class="input-group mb-3">
+                        <select class="form-select"  required name="tipoDocumento" id="inputGroupSelect02">
+                            <option selected>Tipo de documento</option>
+                            <option value="0">DNI</option>
+                            <option value="1">LC</option>
+                            <option value="2">LE</option>
+                            <option value="3">CI</option>
+                            <option value="4">PASAPORTE</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col">
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Número de documento</span>
+                        <input type="number" required name="numeroDocumento" class="form-control" aria-label="Sizing example input"
+                            aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col">
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Usuario</span>
+                        <input type="text" required name="usuario" class="form-control" aria-label="Sizing example input"
+                            aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col">
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Contraseña</span>
+                        <input type="password" required name="contrasenia" class="form-control" aria-label="Sizing example input"
+                            aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col">
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Confirmación Contraseña</span>
+                        <input type="password" required name="validacionContrasenia" class="form-control" aria-label="Sizing example input"
+                            aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3 justify-content-center">
+                <div class="col">
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary submit-button">Registrarme</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#datepicker').datepicker();
+    });
+</script>
+{{/partial}}
+
+{{> layout.html.hbs }}

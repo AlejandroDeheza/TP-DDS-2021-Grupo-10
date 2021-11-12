@@ -1,5 +1,7 @@
 :root {
   --margen-bottom: 35px;
+  --header-height: 80px;
+  --footer-height: 70px;
 }
 
 .actions-container {
@@ -36,19 +38,101 @@
   filter: none;
 }
 
+.main-container {
+  margin: 0 110px;
+}
+
+.form-login {
+  width: 75%;
+  margin: 0 110px;
+}
+
+.foto-bienvenida {
+  background-image: url("https://fondosmil.com/fondo/22182.jpg");
+  display: flex;
+  flex: 1;
+  background-position-x: center;
+  background-position-y: center;
+  background-repeat: no-repeat;
+}
+
+.foto-bienvenida-sign-in {
+  background-image: url("http://st.gde-fon.com/wallpapers_original/422625_koshka_sobaka_kotenok_shhenok_trava_fon_5269x3500_www.Gde-Fon.com.jpg");
+  display: flex;
+  flex: 1;
+  background-position-x: center;
+  background-position-y: center;
+  background-repeat: no-repeat;
+}
+
+.login-container {
+  display: flex;
+  height: calc(100vh - 150px);
+  margin: 0 -110px;
+}
+
+.logo-login {
+  width: 120px;
+  height: 120px;
+}
+
+.mensaje-bienvenida {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  align-items: center;
+  color: white;
+  font-size: xx-large;
+  font-weight: 600;
+  margin: 0 70px;
+  text-align: center;
+}
+
+.submit-button {
+  border-radius: 50px;
+  width: 200px;
+  margin-top: 30px;
+  background-color: #7952b3 !important;
+  border-color: #7952b3 !important;
+}
+
+.form-container {
+  flex: 1;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.form-container-sign-up {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.image-container {
+  flex: 1;
+}
+
+.image-container > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .nav-link {
   color: white !important;
-  margin: 0 50px;
+  margin: 0 25px;
 }
 
 .navbar {
   background-color: #7952b3;
-  height: 110px;
-  margin-bottom: var(--margen-bottom);
+  height: 80px;
 }
 
 .navbar-nav {
-  font-size: 20px;
+  font-size: 15px;
 }
 
 .navbar-brand {
@@ -58,13 +142,13 @@
 }
 
 .navbar-brand > img {
-  width: 100px;
-  height: 85px;
+  width: 80px;
+  height: 65px;
   margin-right: 5px;
 }
 
 .flex-center {
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .footer {
@@ -81,4 +165,9 @@
 
 .section {
   margin-bottom: var(--margen-bottom);
+}
+
+#sign-in {
+  background-color: #7952b3;
+  border-color: #7952b3;
 }

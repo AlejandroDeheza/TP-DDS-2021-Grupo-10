@@ -1,204 +1,86 @@
 <html>
-  <head>
-    <link rel="stylesheet" type="text/css" href="css/main.css" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-      crossorigin="anonymous"
-    />
-    <!-- JavaScript Bundle with Popper -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-      crossorigin="anonymous"
-    ></script>
-    <title>Rescate de Patitas</title>
-  </head>
 
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-          <img
-            src="images/patitas-logo.jpg"
-            alt="patitas-logo"
-            width="30"
-            height="24"
-            class="d-inline-block align-text-top"
-          />
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div
-          class="collapse navbar-collapse flex-center"
-          id="navbarNavAltMarkup"
-        >
-          <div class="navbar-nav">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-            <a class="nav-link" href="#">Mascotas</a>
-            <a class="nav-link" href="#">Hogares</a>
-            <a class="nav-link">Contacto</a>
-            <a class="nav-link">Admin</a>
-          </div>
-        </div>
-      </div>
-    </nav>
-    <main class="container">
-      <div class="d-flex justify-content-around actions-container">
-        <div class="card bg-dark text-white" type="button">
-          <img
-            src="/images/encontre-a-mi-mascota.jpg"
-            class="card-img"
-            alt="boton"
-          />
-          <div class="card-img-overlay action">
-            <h3 class="card-title">Encontre a una mascota</h3>
-          </div>
-        </div>
-        <div class="card bg-dark text-white" type="button">
-          <img src="/images/dog.jpg" class="card-img" alt="boton" />
-          <div class="card-img-overlay action">
-            <h3 class="card-title">Registrar a mi mascota</h3>
-          </div>
-        </div>
-        <div class="card bg-dark text-white" type="button">
-          <img
-            src="/images/suscripcion-mascotas.jpg"
-            class="card-img"
-            alt="boton"
-          />
-          <div class="card-img-overlay action">
-            <h3 class="card-title">
-              Suscribirme a recomendaciones de adopción
-            </h3>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div class="section">
-          <h3 class="title">CANTIDAD DE ADOPCIONES</h3>
-          <div>
-            <p>
-              A lo largo de más de veinte años de funcionamiento, nos
-              enorgullece haber encontrado hogar a 15.300 perros y a 2.298
-              gatos, incluyendo tanto a adultos como cachorros. El promedio de
-              adopciones es de 50 perros y de 15 gatos por mes.
-            </p>
-          </div>
-        </div>
-        <div class="section">
-          <h3 class="title">NUESTRA HISTORIA</h3>
-          <div>
-            <p>
-              Mascotas en adopción se formó con el fin de poder rescatar,
-              rehabilitar y luego dar en adopción aquellos perros, gatos
-              abandonados o maltratados en la zona de Del Viso, Partido de
-              Pilar. NO TENEMOS UN LUGAR FÍSICO PROPIO Utilizamos distintos
-              pensionados que se abonan por día hasta que se adopta el animal.
-              Tenemos en este momento más de 80 animales adultos y cachorros
-              (entre perros y gatos) que esperan encontrar un hogar donde se los
-              trate con respeto y responsabilidad.
-            </p>
-          </div>
-        </div>
+<head>
+  <link rel="stylesheet" type="text/css" href="css/main.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+  <link rel="shortcut icon" type="image/jpg" href="/images/patitas-logo.jpg">
+  <title>Rescate de Patitas</title>
+</head>
 
-        <div class="section">
-          <h3 class="title">FORMA DE TRABAJO</h3>
-          <p>
-            Para llevar a cabo esta tarea, hay una serie de pasos que seguir:
-          </p>
-          <ol class="list-group list-group-numbered">
-            <li class="list-group-item">
-              <b>Rescate y recuperación</b>
-              <p>
-                Se trata de hacer todo lo posible para dar asilo a la mayor
-                cantidad de animales posible, por un tema de espacio y de
-                presupuesto, no siempre es factible. Una vez que el animal es
-                rescatado, se le realiza un control veterinario para conocer en
-                qué estado se encuentra, se vacuna y desparasita. Paso seguido,
-                se fija fecha para su castración.
-              </p>
-            </li>
-            <li class="list-group-item">
-              <b>Difusión</b>
-              <p>
-                Una vez efectuada la castración, se observa su temperamento,
-                comportamiento e interacción con otros animales y humanos. Luego
-                de un minucioso diagnóstico se determina cuál sería su función
-                en un hogar adoptivo: la de animal de compañía, guardia o alerta
-                y qué tipo de ambiente sería ideal para el mismo: una casa,
-                departamento, o un campo. Asimismo, se evalúa cual sería su
-                adoptante correcto: una familia con niños o solo de adultos.
-              </p>
-            </li>
-            <li class="list-group-item">
-              <b>Puesta en adopción</b>
-              <p>
-                Luego de haber sido evaluado su temperamento, se publican fotos
-                en diferentes medios de comunicación; como internet en redes
-                sociales, sitios dedicados al ofrecimiento de mascotas para
-                adopción y anuncios en los diarios.
-              </p>
-            </li>
-            <li class="list-group-item">
-              <b>Entrevistas</b>
-              <p>
-                Se entrevista a los posibles candidatos para cada adopción. Para
-                poder adoptar es necesario ser mayor de edad, tener el
-                consentimiento de todos los integrantes de la familia y
-                acreditar su identidad mediante la presentación del documento de
-                identidad. También se exige la copia de cualquier servicio a
-                nombre del adoptante para poder cotejar la veracidad del
-                domicilio.
-              </p>
-            </li>
-            <li class="list-group-item">
-              <b>Seguimientos</b>
-              <p>
-                Cada animal se entrega en adopción con una chapa identificadora
-                que tiene números de contacto del grupo y un número que
-                corresponde al animal adoptado. Una vez que se efectuó la
-                adopción, se vuelca esa información a una base de datos, que
-                permite tener acceso a la información para llevar a cabo los
-                seguimientos. Se realizan varios llamados a lo largo del tiempo
-                para ver cómo se adaptó a su nuevo hogar. Muchos adoptantes
-                generan un vínculo con Mascotas en adopción a traves de los
-                años.
-              </p>
-            </li>
-          </ol>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="images/patitas-logo.jpg" alt="patitas-logo" width="30" height="24"
+          class="d-inline-block align-text-top" />
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse flex-center" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+          <a class="nav-link" href="#">Mascotas</a>
+          <a class="nav-link" href="#">Hogares</a>
+          <a class="nav-link" href="#">Contacto</a>
+          <a class="nav-link" href="#">Admin</a>
         </div>
+        {{#if sesionIniciada}}
+        {{else}}
+        <div class="navbar-nav">
+          <a class="nav-link" href="/creacion-usuario">Crea tu cuenta</a>
+          <a class="nav-link" href="/login">Ingresá</a>
+        </div>
+        {{/if}}
+      </div>
+      {{#if sesionIniciada}}
+      <div class="avatar-persona">
+        <div class="btn-group" role="group">
+          <button id="sign-in" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+              class="bi bi-person-circle" viewBox="0 0 16 16">
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"></path>
+              <path fill-rule="evenodd"
+                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z">
+              </path>
+            </svg>
+          </button>
+          Emiliano
+          <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+            <li><a class="dropdown-item" href="/logout">Cerrar sesión</a></li>
+          </ul>
+        </div>
+      </div>
+      {{/if}}
+    </div>
+    </div>
+  </nav>
+  <main class="main-container">
+    {{# block "contenido" }}
+    {{/block}}
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col d-flex justify-content-center">
+          © Copyright Patitas 2021
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
 
-        <div class="section">
-          <h3 class="title">CONDICIONES DE ENTREGA DE LOS ANIMALES</h3>
-          <div>
-            Todos los animales se entregan vacunados y desparasitados con
-            certificado avalado por un veterinario y, si son adultos
-            esterilizados. También se entregan con collar, chapita
-            identificatoria y correa. No pedimos ningún tipo de remuneración por
-            cada animal que entregamos en adopción.
-          </div>
-        </div>
-      </div>
-    </main>
-    <footer class="footer">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col d-flex justify-content-center">
-            © Copyright Patitas 2021
-          </div>
-        </div>
-      </div>
-    </footer>
-  </body>
 </html>

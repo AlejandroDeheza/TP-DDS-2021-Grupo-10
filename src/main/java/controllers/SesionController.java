@@ -20,7 +20,7 @@ public class SesionController extends Controller implements WithGlobalEntityMana
       response.redirect("/");
       return null;
     }
-    return new ModelAndView(getMap(request), "formulario-login.html.hbs");
+    return new ModelAndView(getMap(request), "login.html.hbs");
   }
 
   public Void crearSesion(Request request, Response response) {

@@ -29,8 +29,8 @@ public class Routes {
     Spark.post("/login", sesionController::crearSesion);
     Spark.get("/logout", sesionController::cerrarSesion);
 
-    Spark.get("/registracion", usuarioController::mostrarFormularioCreacionUsuario, engine);
-    Spark.post("/registracion", usuarioController::registrarUsuario);
+    Spark.get("/creacion-usuario", usuarioController::mostrarFormularioCreacionUsuario, engine);
+    Spark.post("/creacion-usuario", usuarioController::registrarUsuario);
     Spark.get("/admin", usuarioController::mostrarAdmin, engine);
 
     Spark.get("/mascotas-en-adopcion", publicacionesController::mostrarMascotasEnAdopcion, engine);
