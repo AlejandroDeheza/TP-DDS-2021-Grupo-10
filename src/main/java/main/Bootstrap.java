@@ -5,6 +5,7 @@ import modelo.mascota.Foto;
 import modelo.mascota.MascotaRegistrada;
 import modelo.mascota.Sexo;
 import modelo.mascota.TamanioMascota;
+import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 import modelo.notificacion.TipoNotificadorPreferido;
 import modelo.persona.DatosDeContacto;
 import modelo.persona.DocumentoIdentidad;
@@ -15,11 +16,13 @@ import modelo.usuario.Usuario;
 import org.uqbarproject.jpa.java8.extras.EntityManagerOps;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
+import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioMascotaRegistrada;
 import repositorios.RepositorioUsuarios;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, TransactionalOps {
@@ -59,10 +62,22 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
 
     RepositorioMascotaRegistrada repositorioMascotaRegistrada = new RepositorioMascotaRegistrada();
 
+    CaracteristicaConValoresPosibles unaCaracteristicaConDosValoresPosibles =
+        new CaracteristicaConValoresPosibles("Comportamiento", Arrays.asList("Inquieto", "Tranquilo"));
+
+    CaracteristicaConValoresPosibles caracteristicaConTresValoresPosibles =
+        new CaracteristicaConValoresPosibles("Animo", Arrays.asList("Feliz", "Triste", "Nose"));
+
+    RepositorioCaracteristicas repositorioCaracteristicas = new RepositorioCaracteristicas();
+
+
+
     withTransaction(() -> {
       persist(usuario);
       repositorioMascotaRegistrada.agregar(mascotaRegistrada);
       System.out.println(repositorioMascotaRegistrada.getPorNombre(mascotaRegistrada.getNombre()).getId());
+      repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(unaCaracteristicaConDosValoresPosibles);
+      repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(caracteristicaConTresValoresPosibles);
       // TODO: ver cual seria la carga inicial
     });
   }

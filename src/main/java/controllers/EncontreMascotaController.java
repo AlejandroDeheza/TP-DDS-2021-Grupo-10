@@ -3,8 +3,10 @@ package controllers;
 import modelo.mascota.Animal;
 import modelo.mascota.MascotaRegistrada;
 import modelo.mascota.TamanioMascota;
+import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 import modelo.notificacion.TipoNotificadorPreferido;
 import modelo.persona.TipoDocumento;
+import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioMascotaRegistrada;
 import spark.ModelAndView;
 import spark.Request;
@@ -119,8 +121,13 @@ public class EncontreMascotaController extends Controller {
     EnumSet<Animal> animal = EnumSet.allOf(Animal.class);
     EnumSet<TamanioMascota> tamanioMascotas = EnumSet.allOf(TamanioMascota.class);
 
+    RepositorioCaracteristicas repositorioCaracteristicas = new RepositorioCaracteristicas();
+    List<CaracteristicaConValoresPosibles> listaCaracteristicasConValoresPosibles =
+        repositorioCaracteristicas.getCaracteristicasConValoresPosibles();
+
     modelo.put("tipoAnimales",animal);
     modelo.put("tamanioMascota",tamanioMascotas);
+    modelo.put("listaCaracteristicasValoresPosibles", listaCaracteristicasConValoresPosibles);
 
     return new ModelAndView(modelo, "encontre-mascota-tipo-encuentro-sin-chapita.html.hbs");
   }
