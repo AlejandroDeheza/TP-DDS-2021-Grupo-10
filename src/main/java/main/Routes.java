@@ -23,17 +23,11 @@ public class Routes {
     UsuarioController usuarioController = new UsuarioController();
     PublicacionesController publicacionesController = new PublicacionesController();
     MascotasController mascotasController = new MascotasController();
-    ErrorController errorController = new ErrorController();
 
     Spark.get("/", homeController::getHome, engine);
 
     Spark.get("/login", sesionController::mostrarLogin, engine);
     Spark.post("/login", sesionController::crearSesion);
-    Spark.get("/admin", sesionController::mostrarAdmin, engine);
-
-
-
-
     Spark.get("/logout", sesionController::cerrarSesion);
 
     Spark.get("/creacion-usuario", usuarioController::mostrarFormularioCreacionUsuario, engine);
@@ -55,53 +49,15 @@ public class Routes {
     Spark.get("/mascotas/encontre-mascota/con-chapita",
         encontreMascotaController::getFormularioConChapita, engine);
     Spark.post("/mascotas/encontre-mascota/con-chapita",
-        (request, response) -> encontreMascotaController.enviarMascotaEncontradaConChapita(request,
-            response));
+        encontreMascotaController::enviarMascotaEncontradaConChapita);
 
     Spark.get("/mascotas/encontre-mascota/sin-chapita",
         encontreMascotaController::getFormularioSinChapita, engine);
     Spark.post("/mascotas/encontre-mascota/sin-chapita",
-        (request, response) -> encontreMascotaController.enviarMascotaEncontradaSinChapita(request,
-            response));
-    Spark.get("/error", errorController::mostrarPantallaError, engine);
-
-
-    Spark.get("/mascotas", mascotasController::getRedirectMascotas,
-        engine);
-    Spark.get("/mascotas/encontre-mascota", encontreMascotaController::getFormularioDatosNoUsuario,
-        engine);
-
-    Spark.post("/mascotas/encontre-mascota/lugar-encuentro",
-        (request, response) -> encontreMascotaController.completarLugarEncuentro(request,
-            response));
-    Spark.get("/mascotas/encontre-mascota/lugar-encuentro",
-        encontreMascotaController::getFormularioLugarEncuentro, engine);
-
-    Spark.post("/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro",
-        (request, response) -> encontreMascotaController.elegirLugarEncuentro(request,
-            response));
-
-    Spark.get("/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro",
-        encontreMascotaController::getTiposEncuentros, engine);
-
-    Spark.get("/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/con-chapita",
-        encontreMascotaController::getFormularioConChapita, engine);
-
-//    Spark.get("/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/con-chapita/:id",
-//        (request, response) -> encontreMascotaController.getDetalleMascotaConChapita(request,
-//            response, engine));
-
-    Spark.post("/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/con-chapita",
-        (request, response) -> encontreMascotaController.enviarMascotaEncontrada(request,
-            response));
-
-    Spark.get("/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/sin-chapita",
-        encontreMascotaController::getFormularioSinChapita, engine);
-    Spark.post("/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/sin-chapita",
-        (request, response) -> encontreMascotaController.enviarMascotaEncontrada(request,
-            response));
+        encontreMascotaController::enviarMascotaEncontradaSinChapita);
     System.out.println("Servidor iniciado!");
   }
+    Spark.get("/error", errorController::mostrarPantallaError, engine);
 
       Spark.after((request, response) -> {
     // TODO franco se los pasa

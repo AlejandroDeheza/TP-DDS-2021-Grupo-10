@@ -3,68 +3,75 @@
 {{/partial}}
 
 {{# partial "contenido" }}
-<section class="fondo-gris">
-  <h1>Encontre una mascota con chapita</h1>
-  <form class="form-login" action="/mascotas/encontre-mascota/con-chapita" method="POST">
-    <h2>Datos de la ubicación</h2>
-      <div class="input-group input-group-sm mb-3">
-          <span class="input-group-text" id="inputGroup-sizing-sm">Ubicacion:</span><input type="text" required="required" name="ubicacion-rescatista"
-                                                                                           placeholder="Ingrese su ubicacion">
-      </div>
-      <div class="input-group input-group-sm mb-3">
-          <span class="input-group-text" id="inputGroup-sizing-sm">Ubicacion rescate:</span><input type="text" required="required"
-                                                                                                   name="ubicacion-rescate" placeholder="Ingrese la ubicacion del rescate">
-      </div>
-    <div class="input-group date input-group-sm mb-3" id="datepicker">
-    <span class="input-group-text" id="inputGroup-sizing-sm">Fecha Rescate</span>
-                            <input type="text" required name="fecha-rescate" class="form-control">
-                            <span class="input-group-append">
-                                <span class="input-group-text bg-white d-block">
-                                    <i class="fa fa-calendar"></i>
-                                </span>
-                            </span>
-                        </div>
-      <div class="input-group input-group-sm mb-3">
-          <span class="input-group-text" id="inputGroup-sizing-sm">Descripcion estado mascota:</span><input type="text" required="required"
-                                                                                                            name="estado-mascota" placeholder="Ingrese el estado de la mascota">
-      </div>
-      <div class="input-group input-group-sm mb-3">
-          <span class="input-group-text" id="inputGroup-sizing-sm">Adjuntar fotos:</span><input type="file" id="img" name="img" accept="image/*"
-                                                                                                     required="required" multiple name="fotos" placeholder="Adjunte las fotos de la mascota">
-      </div>
+<div class="encontre-mascota-container">
+    <h1>Encontre una mascota con chapita</h1>
+    <form class="form-login" action="/mascotas/encontre-mascota/con-chapita" method="POST">
+        <div class="row g-3">
+            <div class="col">
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Ubicacion:</span><input type="text"
+                        required="required" name="ubicacion-rescatista" placeholder="Ingrese su ubicacion">
+                </div>
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col">
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Ubicacion rescate:</span><input type="text"
+                        required="required" name="ubicacion-rescate" placeholder="Ingrese la ubicacion del rescate">
+                </div>
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col">
+                <div class="input-group date input-group-sm mb-3" id="datepicker">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Fecha Rescate</span>
+                    <input type="text" required name="fecha-rescate" class="form-control">
+                    <span class="input-group-append">
+                        <span class="input-group-text bg-white d-block">
+                            <i class="fa fa-calendar"></i>
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col">
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Descripcion estado mascota:</span><input
+                        type="text" required="required" name="estado-mascota"
+                        placeholder="Ingrese el estado de la mascota">
+                </div>
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col">
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Adjuntar fotos:</span><input type="file"
+                        id="img" name="img" accept="image/*" required="required" multiple name="fotos"
+                        placeholder="Adjunte las fotos de la mascota">
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col">
 
-      <div class="input-group input-group-sm mb-3">
-          <span class="input-group-text" id="inputGroup-sizing-sm">Ingrese el codigo de la chapita:</span><input type="number" required="required"
-                                                                                                                 name="codigo-chapita" value="" min="1" placeholder="Ingrese el codigo de la chapita">
-      </div>
-{{!--    <h2>Datos de la mascota con chapita</h2> --}}
-{{!--   <form class="encontre-mascota" action="/mascotas/encontre-mascota/con-chapita" method="GET"> --}}
-{{!--     <div class="campo"> --}}
-{{!--       <span class="nombre-campo">Ingrese el codigo de la chapita:</span><input type="number" required="required" --}}
-{{!--         name="codigo-chapita" value="{{codigo-chapita}}" min="1" placeholder="Ingrese el codigo de la chapita"> --}}
-{{!--     </div> --}}
-{{!--     <input type="submit" value="Buscar"> --}}
-{{!--   <h2>Informacion de la mascota</h2> --}}
-{{!--   {{#mascotaRegistrada}} --}}
-{{!--   {{#each fotos as |foto|}} --}}
-{{!--   <img src="/images/mascotaregistrada/{{foto.link}}" class="card-img" alt="boton" alt="boton" /> --}}
-{{!--   {{/each}} --}}
-{{!--   <li>Nombre: {{nombre}}</li> --}}
-{{!--   <li>Apodo: {{apodo}}</li> --}}
-{{!--   <li>Sexo: {{sexo}}</li> --}}
-{{!--   {{/mascotaRegistrada}} --}}
-
-{{!--     </form> --}}
-                   <div class="row g-3 justify-content-center">
-                       <div class="col">
-                           <div class="d-flex justify-content-center">
-                               <button type="submit" class="btn btn-primary
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Ingrese el codigo de la
+                            chapita:</span><input type="number" required="required" name="codigo-chapita" value=""
+                            min="1" placeholder="Ingrese el codigo de la chapita">
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3 justify-content-center">
+                <div class="col">
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary
                                submit-button">Enviar</button>
-                           </div>
-                       </div>
-                   </div>
-  </form>
-</section>
+                    </div>
+                </div>
+            </div>
+    </form>
+</div>
 <script type="text/javascript">
     $(function () {
         $('#datepicker').datepicker();
