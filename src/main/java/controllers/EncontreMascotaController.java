@@ -80,6 +80,10 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
     List<CaracteristicaConValoresPosibles> listaCaracteristicasConValoresPosibles =
         repositorioCaracteristicas.getCaracteristicasConValoresPosibles();
 
+    listaCaracteristicasConValoresPosibles =
+        listaCaracteristicasConValoresPosibles.size() > 3?
+            listaCaracteristicasConValoresPosibles.subList(0,2):listaCaracteristicasConValoresPosibles;
+
     modelo.put("tipoAnimales", animal);
     modelo.put("tamanioMascota", tamanioMascotas);
     modelo.put("listaCaracteristicasValoresPosibles", listaCaracteristicasConValoresPosibles);
