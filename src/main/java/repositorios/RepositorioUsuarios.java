@@ -1,14 +1,9 @@
 package repositorios;
 
 import modelo.usuario.Usuario;
-import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import java.util.List;
 
-public class RepositorioUsuarios implements WithGlobalEntityManager {
-
-  public void agregar(Usuario usuario) {
-    entityManager().persist(usuario);
-  }
+public class RepositorioUsuarios extends Repositorio {
 
   public Usuario getPorId(Long id){
     return entityManager().find(Usuario.class, id);

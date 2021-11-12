@@ -34,7 +34,9 @@ public class Routes {
     Spark.get("/admin", usuarioController::mostrarAdmin, engine);
 
     Spark.get("/mascotas-en-adopcion", publicacionesController::mostrarMascotasEnAdopcion, engine);
+
     Spark.get("/registracion-mascota", mascotasController::mostrarRegistracion, engine);
+    Spark.post("/registracion-mascota", mascotasController::registrarMascota);
 
     System.out.println("Servidor iniciado!");
   }
