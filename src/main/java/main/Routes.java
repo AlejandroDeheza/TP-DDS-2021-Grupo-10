@@ -50,12 +50,16 @@ public class Routes {
         engine);
     Spark.get("/mascotas/encontre-mascota", encontreMascotaController::getFormularioDatosNoUsuario,
         engine);
+    Spark.post("/mascotas/encontre-mascota",
+        (request, response) -> encontreMascotaController.enviarDatosNoUsuario(request,
+            response));
 
+    Spark.get("/mascotas/encontre-mascota/lugar-encuentro",
+        encontreMascotaController::getFormularioLugarEncuentro, engine);
     Spark.post("/mascotas/encontre-mascota/lugar-encuentro",
         (request, response) -> encontreMascotaController.completarLugarEncuentro(request,
             response));
-    Spark.get("/mascotas/encontre-mascota/lugar-encuentro",
-        encontreMascotaController::getFormularioLugarEncuentro, engine);
+
 
     Spark.post("/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro",
         (request, response) -> encontreMascotaController.elegirLugarEncuentro(request,
@@ -67,18 +71,15 @@ public class Routes {
     Spark.get("/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/con-chapita",
         encontreMascotaController::getFormularioConChapita, engine);
 
-//    Spark.get("/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/con-chapita/:id",
-//        (request, response) -> encontreMascotaController.getDetalleMascotaConChapita(request,
-//            response, engine));
 
     Spark.post("/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/con-chapita",
-        (request, response) -> encontreMascotaController.enviarMascotaEncontrada(request,
+        (request, response) -> encontreMascotaController.enviarMascotaEncontradaConChapita(request,
             response));
 
     Spark.get("/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/sin-chapita",
         encontreMascotaController::getFormularioSinChapita, engine);
     Spark.post("/mascotas/encontre-mascota/lugar-encuentro/tipo-encuentro/sin-chapita",
-        (request, response) -> encontreMascotaController.enviarMascotaEncontrada(request,
+        (request, response) -> encontreMascotaController.enviarMascotaEncontradaSinChapita(request,
             response));
     Spark.get("/error", errorController::mostrarPantallaError, engine);
 
