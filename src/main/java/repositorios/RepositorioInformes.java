@@ -29,5 +29,8 @@ public class RepositorioInformes implements WithGlobalEntityManager {
         .filter(InformeRescate::getEstaProcesado).collect(Collectors.toList());
   }
 
+  public void agregarInforme(InformeRescate informeRescate) {
+    entityManager().persist(informeRescate);
+  }
 }
 
