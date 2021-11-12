@@ -24,6 +24,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class UsuarioController extends Controller implements WithGlobalEntityManager, TransactionalOps {
 
@@ -70,6 +71,16 @@ public class UsuarioController extends Controller implements WithGlobalEntityMan
     modelo.put("preguntas", parDePreguntas);
 
     return new ModelAndView(modelo, "preguntas-asociaciones.html.hbs");
+  }
+
+  public ModelAndView cargarNuevaPreguntaAsociacion(Request request, Response response) {
+    /*
+    if (noEsAdmin(request)) {
+      response.redirect("/");
+      return null;
+    }
+    */
+    return new ModelAndView(getMap(request), "nueva-pregunta.html.hbs");
   }
 
   public ModelAndView mostrarFormularioCreacionUsuario(Request request, Response response) {
