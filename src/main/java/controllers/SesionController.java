@@ -40,6 +40,7 @@ public class SesionController extends Controller implements WithGlobalEntityMana
 
       request.session().attribute("user_id", usuario.getId());
       request.session().attribute("is_admin", usuario.esAdmin());
+      request.session().attribute("user_name", usuario.getUsuario());
       request.session().attribute("contador_intentos_sesion_fallidos", "0");
       redireccionCasoFeliz(request, response, "/", null);
       return null;
@@ -58,6 +59,7 @@ public class SesionController extends Controller implements WithGlobalEntityMana
   public Void cerrarSesion(Request request, Response response) {
     request.session().attribute("user_id", null);
     request.session().attribute("is_admin", null);
+    request.session().attribute("user_name", null);
     request.session().attribute("ultimo_intento_sesion_fallido", null);
     request.session().attribute("contador_intentos_sesion_fallidos", null);
     response.redirect("/");
