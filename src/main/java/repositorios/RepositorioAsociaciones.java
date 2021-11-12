@@ -6,7 +6,7 @@ import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class RepositorioAsociaciones implements WithGlobalEntityManager {
+public class RepositorioAsociaciones extends Repositorio implements WithGlobalEntityManager {
 
   public List<Asociacion> getAsociaciones() {
     return entityManager()

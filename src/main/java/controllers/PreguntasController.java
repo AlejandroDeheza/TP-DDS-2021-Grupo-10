@@ -15,51 +15,12 @@ import spark.Request;
 import spark.Response;
 
 public class PreguntasController extends Controller implements WithGlobalEntityManager, TransactionalOps {
-
-  public class BorradorParDePreguntas {
-    private String preguntaDelDador;
-    private String preguntaDelAdoptante;
-    private Boolean esObligatoria = true;
-    private Long asociacionId;
-
-    public BorradorParDePreguntas setPreguntas(String preguntaDelDador, String preguntaDelAdoptante, Boolean esObligatoria) {
-      this.preguntaDelDador = preguntaDelDador;
-      this.preguntaDelAdoptante = preguntaDelAdoptante;
-      this.esObligatoria = esObligatoria;
-      return this;
-    }
-
-    public BorradorParDePreguntas setAsociacionId(Long asociacionId) {
-      this.asociacionId = asociacionId;
-      return this;
-    }
-
-    public ParDePreguntas crearParDePreguntas() {
-      return new ParDePreguntas(this.preguntaDelDador, this.preguntaDelAdoptante, this.esObligatoria);
-    }
-
-    public String getPreguntaDelDador() {
-      return this.preguntaDelDador;
-    }
-
-    public String getPreguntaDelAdoptante() {
-      return this.preguntaDelAdoptante;
-    }
-
-    public Boolean getEsObligatoria() {
-      return this.esObligatoria;
-    }
-
-    public Long getAsociacionId() {
-      return this.asociacionId;
-    }
-  }
-
   RepositorioAsociaciones repositorioAsociaciones = new RepositorioAsociaciones();
   RepositorioPreguntasObligatorias repositorioPreguntasObligatorias = new RepositorioPreguntasObligatorias();
   BorradorParDePreguntas borradorParDePreguntas;
 
   public ModelAndView mostrarPreguntasAsociaciones(Request request, Response response) {
+    System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<mostrarPreguntasAsociaciones<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
     String filtro = request.queryParams("idAsociacion");
 
     List<Asociacion> todasLasAsociaciones = repositorioAsociaciones.getAsociaciones();
@@ -68,6 +29,7 @@ public class PreguntasController extends Controller implements WithGlobalEntityM
 
     List<ParDePreguntas> parDePreguntas = asociacionFiltrada.size() == 1 ?
         asociacionFiltrada.get(0).getPreguntas() : repositorioPreguntasObligatorias.getPreguntas();
+    /* TODO: filtrar solamente preguntas que sean obligatorias de la asociación. Contemplar preguntas no obligatorias? */
 
     Map<String, Object> modelo = getMap(request);
     modelo.put("asociaciones", todasLasAsociaciones);
@@ -77,14 +39,16 @@ public class PreguntasController extends Controller implements WithGlobalEntityM
   }
 
   public ModelAndView cargarNuevaPreguntaAsociacion(Request request, Response response) {
+    System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<cargarNuevaPreguntaAsociacion<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
     borradorParDePreguntas = new BorradorParDePreguntas();
     Map<String, Object> modelo = getMap(request);
     List<Asociacion> todasLasAsociaciones = repositorioAsociaciones.getAsociaciones();
     modelo.put("asociaciones", todasLasAsociaciones);
     return new ModelAndView(modelo, "nueva-pregunta.html.hbs");
   }
-  
+
   public ModelAndView matchearPreguntasAsociacion(Request request, Response response) {
+    System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<matchearPreguntasAsociacion<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
     String asociacionId = request.queryParams("asociacionId");
     String preguntaDador = request.queryParams("preguntaDador");
     String preguntaAdoptante = request.queryParams("preguntaAdoptante");
@@ -93,6 +57,12 @@ public class PreguntasController extends Controller implements WithGlobalEntityM
     Map<String, Object> modelo = getMap(request);
     List<Integer> matcheos = IntStream.rangeClosed(1, Integer.parseInt(cantidadMatcheos)).boxed().collect(Collectors.toList());
     this.borradorParDePreguntas.setPreguntas(preguntaDador, preguntaAdoptante, esObligatoria).setAsociacionId(Long.parseLong(asociacionId));
+
+    request.session().attribute("asociacion_id", asociacionId);
+    request.session().attribute("pregunta_dador", preguntaDador);
+    request.session().attribute("pregunta_adoptante", preguntaAdoptante);
+    request.session().attribute("es_obligatoria", esObligatoria);
+
     modelo.put("asociacionId", asociacionId);
     modelo.put("cantidadMatcheos", matcheos);
     modelo.put("borradorParDePreguntas", borradorParDePreguntas);
@@ -100,9 +70,40 @@ public class PreguntasController extends Controller implements WithGlobalEntityM
   }
 
   public Void crearParDePreguntasAsociacion(Request request, Response response) {
-    System.out.println("Dador: " + this.borradorParDePreguntas.getPreguntaDelDador());
-    System.out.println("Adoptante: " + this.borradorParDePreguntas.getPreguntaDelAdoptante());
-    System.out.println("Obligatorio: " + this.borradorParDePreguntas.getEsObligatoria());
+    System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<crearParDePreguntasAsociacion<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+    String asociacionId = request.session().attribute("asociacion_id");
+    String preguntaDador = request.session().attribute("pregunta_dador");
+    String preguntaAdoptante = request.session().attribute("pregunta_adoptante");
+    Boolean esObligatoria = request.session().attribute("es_obligatoria");
+
+    System.out.println("ID: " + asociacionId + "Dador: " + preguntaDador + "Adoptante: " + preguntaAdoptante + "Obligatoria: " + esObligatoria);
+
+    ParDePreguntas parDePreguntas = new ParDePreguntas(
+      preguntaDador,
+      preguntaAdoptante,
+      esObligatoria
+    );
+
+    withTransaction(() -> {
+      if(esObligatoria) {
+        repositorioAsociaciones.getAsociaciones().stream().forEach(asociacion -> {
+          asociacion.agregarPregunta(parDePreguntas);
+        });
+      } else {
+        Asociacion asociacion = repositorioAsociaciones.buscarPorId(Long.parseLong(asociacionId)).get(0);
+        asociacion.agregarPregunta(parDePreguntas);
+      }
+    });
+
+    this.finalizarCreacionDeParDePreguntas(request, response);
+    return null;
+  }
+
+  public Void finalizarCreacionDeParDePreguntas(Request request, Response response) {
+    request.session().attribute("asociacion_id", null);
+    request.session().attribute("pregunta_dador", null);
+    request.session().attribute("pregunta_adoptante", null);
+    request.session().attribute("es_obligatoria", null);
     response.redirect("/preguntas-asociaciones");
     return null;
   }
