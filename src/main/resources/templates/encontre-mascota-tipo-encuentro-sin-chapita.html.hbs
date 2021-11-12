@@ -5,45 +5,49 @@
 {{# partial "contenido" }}
 <section class="fondo-gris">
   <h1>Encontre una mascota sin chapita</h1>
-  <form class="encontre-mascota" action="/mascotas/encontre-mascota/sin-chapita" method="POST">
+  <form class="form-login" action="/mascotas/encontre-mascota/sin-chapita" method="POST">
     <h2>Datos de la ubicación</h2>
-    <div class="campo">
-      <span class="nombre-campo">Ubicacion:</span><input type="text" required="required" name="ubicacion-rescatista"
-        placeholder="Ingrese su ubicacion">
+    <div class="input-group input-group-sm mb-3">
+      <span class="input-group-text" id="inputGroup-sizing-sm">Ubicacion</span><input type="text" required="required"
+        name="ubicacion-rescatista" placeholder="Ingrese su ubicacion">
     </div>
-    <div class="campo">
-      <span class="nombre-campo">Ubicacion rescate:</span><input type="text" required="required"
-        name="ubicacion-rescate" placeholder="Ingrese la ubicacion del rescate">
+    <div class="input-group input-group-sm mb-3">
+      <span class="input-group-text" id="inputGroup-sizing-sm">Ubicacion rescate</span><input type="text"
+        required="required" name="ubicacion-rescate" placeholder="Ingrese la ubicacion del rescate">
     </div>
-    <div class="campo">
-      <span class="nombre-campo">Fecha Rescate:</span><input type="date" required="required" name="fecha-rescate"
-        placeholder="Ingrese la fecha del rescate">
+    <div class="input-group date input-group-sm mb-3" id="datepicker">
+      <span class="input-group-text" id="inputGroup-sizing-sm">Fecha rescate</span>
+      <input type="text" required name="fecha-rescate" class="form-control">
+      <span class="input-group-append">
+        <span class="input-group-text bg-white d-block">
+          <i class="fa fa-calendar"></i>
+        </span>
+      </span>
     </div>
-    <div class="campo">
-      <span class="nombre-campo">Descripcion estado mascota:</span><input type="text" required="required"
-        name="estado-mascota" placeholder="Ingrese el estado de la mascota">
+    <div class="input-group input-group-sm mb-3">
+      <span class="input-group-text" id="inputGroup-sizing-sm">Descripcion estado mascota</span><input type="text"
+        required="required" name="estado-mascota" placeholder="Ingrese el estado de la mascota">
     </div>
-    <div class="campo">
-      <span class="nombre-campo">Tipo Adjuntar fotos:</span><input type="file" id="img" name="img" accept="image/*"
-        required="required" multiple name="fotos" placeholder="Adjunte las fotos de la mascota">
+    <div class="input-group input-group-sm mb-3">
+      <span class="input-group-text" id="inputGroup-sizing-sm">Tipo Adjuntar fotos</span><input type="file" id="img"
+        name="img" accept="image/*" required="required" multiple name="fotos"
+        placeholder="Adjunte las fotos de la mascota">
     </div>
-   <h2>Datos de la mascota con chapita</h2>
-    <div class="campo">
-      <span class="nombre-campo">Tipo Animal:</span>
-                        <select class="form-select"  required name="tipoAnimal"
-                        id="inputGroupSelect02">
-                            <option value="0">PERRO</option>
-                            <option value="1">GATO</option>
-                        </select>
+    <h2>Datos de la mascota con chapita</h2>
+    <div class="input-group input-group-sm mb-3">
+      <span class="input-group-text" id="inputGroup-sizing-sm">Tipo Animal</span>
+      <select class="form-select" required name="tipoAnimal" id="inputGroupSelect02">
+        <option value="0">PERRO</option>
+        <option value="1">GATO</option>
+      </select>
     </div>
-    <div class="campo">
-      <span class="nombre-campo">Tamaño:</span>
-                        <select class="form-select"  required name="tamanioMascota"
-                        id="inputGroupSelect02">
-                            <option value="0">CHICO</option>
-                            <option value="1">MEDIANO</option>
-                            <option value="2">GRANDE</option>
-                        </select>
+    <div class="input-group input-group-sm mb-3">
+      <span class="input-group-text" id="inputGroup-sizing-sm">Tamaño</span>
+      <select class="form-select" required name="tamanioMascota" id="inputGroupSelect02">
+        <option value="0">CHICO</option>
+        <option value="1">MEDIANO</option>
+        <option value="2">GRANDE</option>
+      </select>
     </div>
     <h2>Caracteristicas</h2>
     <!--div class="campo">
@@ -51,8 +55,8 @@
         placeholder="Ingrese color">
     </div-->
     {{#each listaCaracteristicasValoresPosibles}}
-    <div class="campo">
-      <span class="nombre-campo">{{nombreCaracteristica}}</span>
+    <div class="input-group input-group-sm mb-3">
+      <span class="input-group-text" id="inputGroup-sizing-sm">{{nombreCaracteristica}}</span>
       <select name="valoresCaracteristicas">
         {{#each valoresCaracteristicas}}
         <option value="{{this}}">{{this}}</option>
@@ -60,9 +64,21 @@
       </select>
     </div>
     {{/each}}
-    <input type="submit" value="Enviar">
+    <div class="row g-3 justify-content-center">
+      <div class="col">
+        <div class="d-flex justify-content-center">
+          <button type="submit" class="btn btn-primary
+                            submit-button">Enviar</button>
+        </div>
+      </div>
+    </div>
   </form>
 </section>
+<script type="text/javascript">
+  $(function () {
+    $('#datepicker').datepicker();
+  });
+</script>
 {{/partial}}
 
 {{> layout.html.hbs }}
