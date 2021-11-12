@@ -37,7 +37,7 @@ public class ValidadorAutenticacionNuevo {
 
   private void validarContraseniaIngresada(Usuario usuario, String contraseniaIngresada) {
     if (laContraseniaEsIncorrecta(usuario, contraseniaIngresada)) {
-      throw new AutenticacionInvalidaException("La contraseña ingresada es incorrecta");
+      throw new AutenticacionInvalidaException("La contrasenia ingresada es incorrecta");
     }
   }
 

@@ -41,12 +41,12 @@ public class UsuarioController extends Controller implements WithGlobalEntityMan
     try {
       new ValidadorContrasenias().correrValidaciones(request.queryParams("contrasenia"));
     } catch (ContraseniaInvalidaException e) {
-      redireccionCasoError(request, response, "/creacion-usuario", e.getMessage());
+      redireccionCasoError(request, response, "/error", e.getMessage());
       return null;
     }
 
     if(!contrasenia.equals(validacionContrasenia)){
-      redireccionCasoError(request, response, "/creacion-usuario", "Las contraseñas no matchean entre si");
+      redireccionCasoError(request, response, "/creacion-usuario", "Las contrasenias no matchean entre si");
       return null;
     }
 

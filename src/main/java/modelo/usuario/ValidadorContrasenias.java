@@ -13,7 +13,7 @@ public class ValidadorContrasenias {
 
   private void validarLargoMinimo(String contrasenia) {
     if (contrasenia.length() < 8)
-      throw new ContraseniaInvalidaException("El largo de la contraseña debe tener como mínimo 8 caracteres");
+      throw new ContraseniaInvalidaException("El largo de la contrasenia debe tener como mínimo 8 caracteres");
   }
 
   private void validarContraseniasComunes(String contrasenia) {
@@ -21,7 +21,7 @@ public class ValidadorContrasenias {
     List<String> contraseniasComunes = gestorArchivos.getArchivoEnLista(
         "src/main/resources/10k-most-common.txt");
     if (contraseniasComunes.contains(contrasenia))
-      throw new ContraseniaInvalidaException("Es una de las 10.000 contraseñas mas usadas");
+      throw new ContraseniaInvalidaException("Es una de las 10.000 contrasenias mas usadas");
   }
 
 }

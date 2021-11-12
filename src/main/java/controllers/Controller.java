@@ -30,10 +30,10 @@ public abstract class Controller {
   }
 
   protected void redireccionCasoError(Request request, Response response, String porDefecto, String mensaje) {
-    response.redirect(
-        porDefecto +
-            (request.queryParams("origin") == null ? "" : "?origin=" + request.queryParams("origin"))
+    response.redirect("/error" +
+        (request.queryParams("origin") == null ? "" : "?origin=" + request.queryParams("origin")) +
+        "?mensajeError=" + mensaje
     );
-    // TODO redirigir agregando un mensaje de error
   }
 }
+  

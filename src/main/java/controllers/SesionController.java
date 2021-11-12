@@ -64,7 +64,7 @@ public class SesionController extends Controller implements WithGlobalEntityMana
     return null;
   }
 
-  private void setearAtributosAnteError(Request request, Response response, RuntimeException e) {
+  private void setearAtributosAnteError(Request request, Response response, Exception e) {
     request.session().attribute("ultimo_intento_sesion_fallido", LocalTime.now());
     int contador = request.session().attribute("contador_intentos_sesion_fallidos");
     request.session().attribute(
