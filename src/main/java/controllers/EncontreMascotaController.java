@@ -81,8 +81,8 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
         repositorioCaracteristicas.getCaracteristicasConValoresPosibles();
 
     listaCaracteristicasConValoresPosibles =
-        listaCaracteristicasConValoresPosibles.size() > 3?
-            listaCaracteristicasConValoresPosibles.subList(0,2):listaCaracteristicasConValoresPosibles;
+        listaCaracteristicasConValoresPosibles.size() > 3 ?
+            listaCaracteristicasConValoresPosibles.subList(0, 2) : listaCaracteristicasConValoresPosibles;
 
     modelo.put("tipoAnimales", animal);
     modelo.put("tamanioMascota", tamanioMascotas);
@@ -95,7 +95,7 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
     String ubicacionRescatistaString = request.queryParams("ubicacion-rescatista");
     String ubicacionRescateString = request.queryParams("ubicacion-rescate");
     LocalDate fechaRescate = LocalDate.parse(request.queryParams("fecha-rescate"),
-        DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        DateTimeFormatter.ofPattern("MM/dd/yyyy"));
     String estadoMascota = request.queryParams("estado-mascota");
 
     String[] fotosString = request.queryParamsValues("img");
@@ -134,11 +134,16 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
       Usuario usuario = new RepositorioUsuarios().getPorId(Id);
       Persona persona = usuario.getPersona();
 
+
       RepositorioMascotaRegistrada repositorioMascotaRegistrada = new RepositorioMascotaRegistrada();
       String idChapitaString = request.queryParams("codigo-chapita");
       Long idChapita = Long.parseLong(idChapitaString);
       MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.getPorId(idChapita);
-
+      if (mascotaRegistrada == null) {
+        redireccionCasoError(request, response, "/mascotas/encontre-mascota/con-chapita", "El " +
+            "codigo de chapita no es valido");
+        return null;
+      }
       RepositorioInformes repositorioInformes = new RepositorioInformes();
       MascotaEncontrada mascotaEncontrada = new MascotaEncontrada(fotos, ubicacionRescate
           , estadoMascota, fechaRescate,
@@ -150,10 +155,10 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
       withTransaction(() -> {
         repositorioInformes.agregarInforme(informeConQR);
       });
-      redireccionCasoFeliz(request, response, "/", "La cuenta se ha registrado con exito!");
+      redireccionCasoFeliz(request, response, "/", "Se genero el informe correctamentes");
       return null;
     } catch (Exception e) {
-      redireccionCasoError(request, response, "/", "Fallo la registracion");
+      redireccionCasoError(request, response, "/", "Fallo la generacion del informe");
       return null;
     }
   }
@@ -196,8 +201,7 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
       });
       redireccionCasoFeliz(request, response, "/", "La cuenta se ha registrado con exito!");
       return null;
-    } catch (
-        Exception e) {
+    } catch (Exception e) {
       redireccionCasoError(request, response, "/", "Fallo la registracion");
       return null;
     }

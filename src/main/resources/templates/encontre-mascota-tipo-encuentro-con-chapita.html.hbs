@@ -15,10 +15,15 @@
           <span class="input-group-text" id="inputGroup-sizing-sm">Ubicacion rescate:</span><input type="text" required="required"
                                                                                                    name="ubicacion-rescate" placeholder="Ingrese la ubicacion del rescate">
       </div>
-      <div class="input-group date input-group-sm mb-3" id="datepicker">
-          <span class="input-group-text" id="inputGroup-sizing-sm">Fecha Rescate:</span><input type="date" required="required" name="fecha-rescate"
-                                                                                               placeholder="Ingrese la fecha del rescate">
-      </div>
+    <div class="input-group date input-group-sm mb-3" id="datepicker">
+    <span class="input-group-text" id="inputGroup-sizing-sm">Fecha Rescate</span>
+                            <input type="text" required name="fecha-rescate" class="form-control">
+                            <span class="input-group-append">
+                                <span class="input-group-text bg-white d-block">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                            </span>
+                        </div>
       <div class="input-group input-group-sm mb-3">
           <span class="input-group-text" id="inputGroup-sizing-sm">Descripcion estado mascota:</span><input type="text" required="required"
                                                                                                             name="estado-mascota" placeholder="Ingrese el estado de la mascota">
@@ -50,9 +55,21 @@
 {{!--   {{/mascotaRegistrada}} --}}
 
 {{!--     </form> --}}
-     <input type="submit" value="Enviar">
+                   <div class="row g-3 justify-content-center">
+                       <div class="col">
+                           <div class="d-flex justify-content-center">
+                               <button type="submit" class="btn btn-primary
+                               submit-button">Enviar</button>
+                           </div>
+                       </div>
+                   </div>
   </form>
 </section>
+<script type="text/javascript">
+    $(function () {
+        $('#datepicker').datepicker();
+    });
+</script>
 {{/partial}}
 
 {{> layout.html.hbs }}
