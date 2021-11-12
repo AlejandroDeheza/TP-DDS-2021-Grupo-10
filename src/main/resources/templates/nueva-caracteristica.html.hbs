@@ -1,0 +1,23 @@
+{{# partial "titulo" }}
+	<title>Patitas - Caracteristicas</title>
+{{/partial}}
+
+{{# partial "contenido" }}
+	<h1>Nueva Caracteristica</h1>
+	
+	<form class="row g-3">
+				<div>
+			<label for="preguntaDador" class="form-label">Nombre Característica</label>
+			<input type="text" class="form-control" name="nombreCaracteristica" id="nombreCaracteristica" required>
+		</div>
+		<div>
+			<label for="preguntaAdoptante" class="form-label">Valores Caracteristica</label>
+			<input type="text" class="form-control" name="ValoresCaracteristica" id="ValoresCaracteristica" required>
+		</div>
+		<div>
+			<input class="btn btn-primary" type="submit" value="Agregar pregunta"/>
+		</div>
+	</form>
+{{/partial}}
+
+{{> layout.html.hbs}}

@@ -4,28 +4,34 @@
 
 
 {{# partial "contenido" }}
-    <section class="fondo-gris">
-        <h1>ESTE ES EL DE CARACTERISTICAS</h1>
-        <h2>Sobre nuestro sitio</h2>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc porta neque sed nisi rutrum, eu ultricies lacus
-            rutrum. In sagittis, nunc a pellentesque egestas, lacus odio tincidunt nunc, nec facilisis ipsum lorem sit amet
-            mauris. Maecenas vel mi turpis. Morbi ac lacus auctor ante dignissim aliquam vitae vel turpis. Suspendisse
-            tincidunt mi id commodo consectetur. Suspendisse ut gravida justo. Praesent a lectus ut nisl iaculis bibendum.
-            Nam nec sem sit amet sapien pharetra sodales. Proin congue, tortor ut condimentum fringilla, risus mauris
-            ultrices enim, vitae semper diam leo ac nisi.
-        </p>
 
-        <p>
-            Donec semper purus risus, ut semper diam condimentum in. Mauris id gravida nulla. Quisque id nisl ut erat
-            condimentum accumsan vel et arcu. Sed dapibus justo ut sapien venenatis, non volutpat elit ornare. Ut cursus,
-            dui nec egestas efficitur, turpis nulla venenatis sapien, et vulputate sapien nibh et arcu. Vivamus non
-            facilisis mi. Curabitur augue metus, fringilla at consectetur eu, molestie ac lectus. Aliquam imperdiet leo
-            cursus, dapibus purus in, pretium turpis. Aenean porta, quam et imperdiet faucibus, orci augue sollicitudin
-            enim, nec cursus purus velit a lacus. Integer nunc sem, aliquam sed tortor maximus, imperdiet placerat leo. Sed
-            dapibus dui quam, nec sodales velit suscipit a.
-        </p>
-    </section>
+	{{#caracteristicas}}
+		<div class="accordion accordion-flush" id="accordionFlushCaracteristica{{nombreCaracteristica}}">
+			<div class="accordion-item">
+				<h2 class="accordion-header" id="flush-caracteristica{{nombreCaracteristica}}">
+					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseCaracteristica{{nombreCaracteristica}}" aria-expanded="false" aria-controls="flush-collapseCaracteristica{{nombreCaracteristica}}">
+						Caracteristica: {{nombreCaracteristica}}
+					</button>
+				</h2>
+				<div id="flush-collapseCaracteristica{{nombreCaracteristica}}" class="accordion-collapse collapse" aria-labelledby="flush-caracteristica{{nombreCaracteristica}}" data-bs-parent="#accordionFlushCaracteristica{{nombreCaracteristica}}">
+					<div class="accordion-body">
+						<ul>
+                            {{#valoresCaracteristicas}}
+                                    <li>{{this}}</li>
+                            {{/valoresCaracteristicas}}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	{{/caracteristicas}}
+
+	<div class="agregar-caracteristica">
+		<a class="btn btn-primary" href="/nueva-caracteristica">
+			+ Pregunta
+		</a>
+	</div>
 {{/partial}}
+
 
 {{> layout.html.hbs }}
