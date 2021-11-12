@@ -36,6 +36,8 @@ public class Routes {
     Spark.get("/admin", usuarioController::mostrarAdmin, engine);
 
     Spark.get("/caracteristicas", caracteristicasController::mostrarCaracteristicas, engine);
+    Spark.get("/nueva-caracteristica", caracteristicasController::cargarNuevaCaracteristica, engine);
+
 
     Spark.get("/preguntas-asociaciones", preguntasController::mostrarPreguntasAsociaciones, engine);
     Spark.post("/preguntas-asociaciones", preguntasController::crearParDePreguntasAsociacion);
