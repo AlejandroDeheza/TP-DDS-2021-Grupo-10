@@ -1,0 +1,27 @@
+{{# partial "contenido" }}
+
+<div class="container error-container">
+    <div class="row">
+        <img src="images/perrito-error.jpg" class="image-error-container" />
+        <div class="col">
+            <div class="mensaje-error">
+                <h2>Tu acción puso triste a un perrito :( </h2>
+                <div>
+                    <h3>{{mensajeError}}</h3>
+                </div>
+            </div>
+            <div class="error-button-container">
+                <button type="submit" class="btn btn-primary submit-button-error" onclick="volverAtras()">Volver
+                    atras</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function volverAtras() {
+        window.history.back()
+    }
+</script>
+{{/partial}}
+
+{{> layout.html.hbs }}
