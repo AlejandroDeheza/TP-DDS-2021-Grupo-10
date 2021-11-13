@@ -23,6 +23,7 @@ public class Routes {
     UsuarioController usuarioController = new UsuarioController();
     PublicacionesController publicacionesController = new PublicacionesController();
     MascotasController mascotasController = new MascotasController();
+    ErrorController errorController = new ErrorController();
 
     Spark.get("/", homeController::getHome, engine);
 
@@ -55,6 +56,10 @@ public class Routes {
         encontreMascotaController::getFormularioSinChapita, engine);
     Spark.post("/mascotas/encontre-mascota/sin-chapita",
         encontreMascotaController::enviarMascotaEncontradaSinChapita);
+
+    Spark.get("/error", errorController::mostrarPantallaError, engine);
+
+
     System.out.println("Servidor iniciado!");
   }
 

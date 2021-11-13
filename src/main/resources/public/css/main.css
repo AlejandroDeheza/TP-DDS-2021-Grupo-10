@@ -96,6 +96,23 @@
   border-color: #7952b3 !important;
 }
 
+.image-error-container {
+  height: 500px;
+}
+
+.error-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.submit-button-error {
+  border-radius: 50px;
+  width: 200px;
+  margin-top: 10px;
+  background-color: #7952b3 !important;
+  border-color: #7952b3 !important;
+}
+
 .form-container {
   flex: 1;
   justify-content: center;
@@ -104,8 +121,22 @@
   flex-direction: column;
 }
 
+
 .encontre-mascota-container {
   height: calc(100vh - 150px);
+
+.mensaje-error {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.error-container {
+  height: calc(100vh - 150px);
+  padding: 50px;
+
 }
 
 .form-container-sign-up {
