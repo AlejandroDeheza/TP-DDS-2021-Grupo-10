@@ -127,6 +127,15 @@
   flex-direction: column;
 }
 
+.pregunta-caracteristica {
+  margin: 10px 0;
+  font-weight: 600;
+}
+
+.boton-registrar-mascota {
+  margin-bottom: 20px;
+}
+
 .mensaje-error {
   margin-top: 20px;
   display: flex;
@@ -145,6 +154,15 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+}
+
+.registracion-mascota {
+  height: calc(100vh - 150px);
+  margin: 0 -110px;
+}
+
+.caracteristicas {
+  margin-top: 0px;
 }
 
 .usuario-nombre {

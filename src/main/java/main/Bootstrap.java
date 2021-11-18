@@ -1,5 +1,6 @@
 package main;
 
+import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 import modelo.notificacion.TipoNotificadorPreferido;
 import modelo.persona.DatosDeContacto;
 import modelo.persona.DocumentoIdentidad;
@@ -10,8 +11,10 @@ import modelo.usuario.Usuario;
 import org.uqbarproject.jpa.java8.extras.EntityManagerOps;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
+import repositorios.RepositorioCaracteristicas;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, TransactionalOps {
 
@@ -38,9 +41,19 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
         LocalDate.now(),
         TipoNotificadorPreferido.CORREO
     );
+    RepositorioCaracteristicas repositorioCaracteristicas = new RepositorioCaracteristicas();
+    CaracteristicaConValoresPosibles c1 = new CaracteristicaConValoresPosibles("Comportamiento", Arrays.asList("Inquieto", "Tranquilo"));
+    CaracteristicaConValoresPosibles c2 = new CaracteristicaConValoresPosibles("Caracter", Arrays.asList("Pacifico", "Violento"));
+    CaracteristicaConValoresPosibles c3 = new CaracteristicaConValoresPosibles("Apetito", Arrays.asList("Poco", "Intermedio", "Mucho"));
+
+
+
+
         withTransaction(() -> {
            persist(new Usuario("pepito", "asdasdas", TipoUsuario.NORMAL, persona));
-           // TODO: ver cual seria la carga inicial
+          repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c1);
+          repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c2);
+          repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c3);
         });
   }
 
