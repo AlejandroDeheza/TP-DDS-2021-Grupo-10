@@ -1,0 +1,36 @@
+{{# partial "titulo" }}
+	<title>Patitas - Matchear preguntas</title>
+{{/partial}}
+
+{{# partial "contenido" }}
+	<h1>Par de preguntas válidas para {{asociacion.nombre}} [ID {{asociacion.id}}]</h1>
+	<form class="row g-3" action="/asociaciones/{{asociacion.id}}/preguntas" method="POST">
+		{{#cantidadRespuestasPosibles}}
+			<div class="row g-2">
+				<div class="col-md">
+					<label for="respuestaPosibleDador{{this}}" class="form-label">Respuesta posible dador {{this}}</label>
+					<select class="form-select" id="respuestaPosibleDador{{this}}" name="respuestaPosibleDador{{this}}" aria-label="Default select example">
+						<option selected>Elegir respuesta posible dador...</option>
+						{{#respuestasPosiblesDador}}
+							<option value="{{this}}">{{this}}</option>
+						{{/respuestasPosiblesDador}}
+					</select>
+				</div>
+				<div class="col-md">
+					<label for="respuestaPosibleAdoptante{{this}}" class="form-label">Respuesta posible adoptante {{this}}</label>
+					<select class="form-select" id="respuestaPosibleAdoptante{{this}}" name="respuestaPosibleAdoptante{{this}}" aria-label="Default select example">
+						<option selected>Elegir respuesta posible adoptante...</option>
+						{{#respuestasPosiblesAdoptante}}
+							<option value="{{this}}">{{this}}</option>
+						{{/respuestasPosiblesAdoptante}}
+					</select>
+				</div>
+			</div>
+		{{/cantidadRespuestasPosibles}}
+		<div>
+			<input class="btn btn-primary" type="submit" value="Confirmar"/>
+		</div>
+	</form>
+{{/partial}}
+
+{{> layout.html.hbs}}

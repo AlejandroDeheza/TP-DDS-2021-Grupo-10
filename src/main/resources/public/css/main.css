@@ -38,7 +38,13 @@
   text-align: center;
 }
 
-.titulo-preguntas {
+.dropdown-asociaciones {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.asociaciones-title {
   display: flex;
   flex-direction: row;
   justify-content: space-between;

@@ -5,15 +5,10 @@
 {{# partial "contenido" }}
 	<h1>Nueva Pregunta</h1>
 	
-	<form class="row g-3" action="/matchear-preguntas">
+	<form class="row g-3" action="/asociaciones/{{asociacion}}/preguntas/nueva-pregunta-2">
 		<div>
-			<label for="asociacionId" class="form-label">Asociación</label>
-			<select class="form-select" name="asociacionId" id="asociacionId" required>
-				<option selected disabled value="">Asociación...</option>
-				{{#asociaciones}}
-					<option value="{{id}}">{{nombre}} [ID {{id}}]</option>
-				{{/asociaciones}}
-			</select>
+			<label for="concepto" class="form-label">Idea principal de las preguntas a realizar</label>
+			<input type="text" class="form-control" name="concepto" id="concepto" required>
 		</div>
 		<div>
 			<label for="preguntaDador" class="form-label">Pregunta para el dador</label>
@@ -23,18 +18,22 @@
 			<label for="preguntaAdoptante" class="form-label">Pregunta para el adoptante</label>
 			<input type="text" class="form-control" name="preguntaAdoptante" id="preguntaAdoptante" required>
 		</div>
+		<h2>Respuestas posibles para el dador</h2>
+		{{#respuestasPosibles}}
+			<div>
+				<label for="respuestaPosibleDador{{this}}" class="form-label">Respuesta posible del dador {{this}}</label>
+				<input type="text" class="form-control" name="respuestaPosibleDador{{this}}" id="respuestaPosibleDador{{this}}" required>
+			</div>
+		{{/respuestasPosibles}}
+		<h2>Respuestas posibles para el adoptante</h2>
+		{{#respuestasPosibles}}
+			<div>
+				<label for="respuestaPosibleAdoptante{{this}}" class="form-label">Respuesta posible del adoptante {{this}}</label>
+				<input type="text" class="form-control" name="respuestaPosibleAdoptante{{this}}" id="respuestaPosibleAdoptante{{this}}" required>
+			</div>
+		{{/respuestasPosibles}}
 		<div>
-			<label for="cantidadMatcheos" class="form-label">Cantidad de matcheos</label>
-			<input type="number" class="form-control" name="cantidadMatcheos" id="cantidadRespuestasPosibles" min="1" oninput="validity.valid||(value='');" required>
-		</div>
-		<div class="form-check">
-			<input class="form-check-input" type="checkbox" id="esObligatoria" name="esObligatoria" checked>
-			<label class="form-check-label" for="esObligatoria">
-				Es obligatoria
-			</label>
-		</div>
-		<div>
-			<input class="btn btn-primary" type="submit" value="Agregar pregunta"/>
+			<input class="btn btn-primary" type="submit" value="Continuar"/>
 		</div>
 	</form>
 {{/partial}}

@@ -1,22 +1,22 @@
 {{# partial "titulo" }}
-	<title>Patitas - Preguntas de Asociaciones</title>
+	<title>Patitas - Preguntas Asociaciones</title>
 {{/partial}}
 
 {{# partial "contenido" }}
-	<div class="titulo-preguntas">
-		<h1>Preguntas de Asociaciones</h1>
-		<form class="dropdown">
-			<a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownAsociacionesDisponibles" data-bs-toggle="dropdown" aria-expanded="false">
-				Filtrar por Asociación
-			</a>
-			<ul class="dropdown-menu" aria-labelledby="dropdownAsociacionesDisponibles">
+	<div class="asociaciones-title">
+		<h2>Preguntas de la Asociación {{asociacion.nombre}} [ID {{asociacion.id}}]</h2>
+		<div class="dropdown dropdown-asociaciones">
+			<button class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+				Asociaciones...
+			</button>
+			<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+				<li><a class="dropdown-item" type="button" href="/asociaciones/0/preguntas">Panel General de Asociaciones</a></li>
 				{{#asociaciones}}
-					<li><button class="dropdown-item" name="idAsociacion" type="submit" value="{{id}}">Asociación {{nombre}} [ID {{id}}]</li>
+					<li><a class="dropdown-item" type="button" href="/asociaciones/{{id}}/preguntas">Asociación {{nombre}} [ID {{id}}]</a></li>
 				{{/asociaciones}}
 			</ul>
-		</form>
+		</div>
 	</div>
-
 	{{#preguntas}}
 		<div class="accordion accordion-flush" id="accordionFlushPregunta{{id}}">
 			<div class="accordion-item">
@@ -38,10 +38,13 @@
 			</div>
 		</div>
 	{{/preguntas}}
-
 	<div class="agregar-pregunta">
-		<a class="btn btn-primary" href="/nueva-pregunta">
-			+ Pregunta
+		<a class="btn btn-primary" href="/asociaciones/{{asociacion.id}}/preguntas/nueva-pregunta">
+			{{#if esObligatoria}}
+				Agregar Pregunta Obligatoria a Asociaciones
+			{{else}}
+				Agregar Pregunta No Obligatoria
+			{{/if}}
 		</a>
 	</div>
 {{/partial}}

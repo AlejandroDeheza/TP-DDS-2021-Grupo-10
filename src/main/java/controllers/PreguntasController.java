@@ -8,103 +8,74 @@ import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 import modelo.asociacion.Asociacion;
 import modelo.pregunta.ParDePreguntas;
+import modelo.pregunta.ParDeRespuestas;
 import repositorios.RepositorioAsociaciones;
-import repositorios.RepositorioPreguntasObligatorias;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
 public class PreguntasController extends Controller implements WithGlobalEntityManager, TransactionalOps {
-  RepositorioAsociaciones repositorioAsociaciones = new RepositorioAsociaciones();
-  RepositorioPreguntasObligatorias repositorioPreguntasObligatorias = new RepositorioPreguntasObligatorias();
-  BorradorParDePreguntas borradorParDePreguntas;
+  private RepositorioAsociaciones repositorioAsociaciones = new RepositorioAsociaciones();
+  private BorradorParDePreguntas borradorParDePreguntas;
+  final private String respuestasPosibles = "5";
 
-  public ModelAndView mostrarPreguntasAsociaciones(Request request, Response response) {
-    System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<mostrarPreguntasAsociaciones<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-    String filtro = request.queryParams("idAsociacion");
-
-    List<Asociacion> todasLasAsociaciones = repositorioAsociaciones.getAsociaciones();
-    List<Asociacion> asociacionFiltrada = filtro == null ?
-        todasLasAsociaciones : repositorioAsociaciones.buscarPorId(Long.parseLong(filtro));
-
-    List<ParDePreguntas> parDePreguntas = asociacionFiltrada.size() == 1 ?
-        asociacionFiltrada.get(0).getPreguntas() : repositorioPreguntasObligatorias.getPreguntas();
-    /* TODO: filtrar solamente preguntas que sean obligatorias de la asociación. Contemplar preguntas no obligatorias? */
-
+  public ModelAndView mostrarPreguntasDeLaAsociacion(Request request, Response response) {
+    String idAsociacion = request.params(":idAsociacion");
+    Boolean esObligatoria = false;
+    List<Asociacion> asociaciones = repositorioAsociaciones.getAsociaciones();
+    Asociacion asociacionBuscada = repositorioAsociaciones.buscarPorId(Long.parseLong(idAsociacion)).get(0);
+    List<ParDePreguntas> paresDePreguntasDeLaAsociacionBuscada = asociacionBuscada.getPreguntas();
     Map<String, Object> modelo = getMap(request);
-    modelo.put("asociaciones", todasLasAsociaciones);
-    modelo.put("preguntas", parDePreguntas);
-
+    modelo.put("asociaciones", asociaciones);
+    modelo.put("asociacion", asociacionBuscada);
+    modelo.put("preguntas", paresDePreguntasDeLaAsociacionBuscada);
+    modelo.put("esObligatoria", esObligatoria);
     return new ModelAndView(modelo, "preguntas-asociaciones.html.hbs");
   }
 
-  public ModelAndView cargarNuevaPreguntaAsociacion(Request request, Response response) {
-    System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<cargarNuevaPreguntaAsociacion<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-    borradorParDePreguntas = new BorradorParDePreguntas();
+  public ModelAndView agregarNuevaPreguntaALaAsociacion(Request request, Response response) {
+    String idAsociacion = request.params(":idAsociacion");
+    List<Integer> listaRespuestasPosibles = IntStream.rangeClosed(1, Integer.parseInt(respuestasPosibles)).boxed().collect(Collectors.toList());
     Map<String, Object> modelo = getMap(request);
-    List<Asociacion> todasLasAsociaciones = repositorioAsociaciones.getAsociaciones();
-    modelo.put("asociaciones", todasLasAsociaciones);
+    modelo.put("asociacion", idAsociacion);
+    modelo.put("respuestasPosibles", listaRespuestasPosibles);
     return new ModelAndView(modelo, "nueva-pregunta.html.hbs");
   }
 
-  public ModelAndView matchearPreguntasAsociacion(Request request, Response response) {
-    System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<matchearPreguntasAsociacion<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-    String asociacionId = request.queryParams("asociacionId");
-    String preguntaDador = request.queryParams("preguntaDador");
-    String preguntaAdoptante = request.queryParams("preguntaAdoptante");
-    String cantidadMatcheos = request.queryParams("cantidadMatcheos");
-    Boolean esObligatoria = request.queryParams("esObligatoria") == null ? false : true;
+  public ModelAndView matchearRespuestasPosibles(Request request, Response response) {
+    String idAsociacion = request.params(":idAsociacion");
+
+    this.borradorParDePreguntas = new BorradorParDePreguntas();
+    this.borradorParDePreguntas.setAsociacionId(Long.parseLong(idAsociacion));
+    this.borradorParDePreguntas.setPreguntas(request.queryParams("preguntaDador"), request.queryParams("preguntaAdoptante"), false);
+
+    for(int i = 1; i <= Integer.parseInt(respuestasPosibles); i++) {
+      this.borradorParDePreguntas.agregarRespuestaPosibleDador(request.queryParams("respuestaPosibleDador".concat(String.valueOf(i))));
+      this.borradorParDePreguntas.agregarRespuestaPosibleAdoptante(request.queryParams("respuestaPosibleAdoptante".concat(String.valueOf(i))));
+    }
+    Asociacion asociacionBuscada = repositorioAsociaciones.buscarPorId(this.borradorParDePreguntas.getAsociacionId()).get(0);
+    List<Integer> cantidadRespuestasPosibles = IntStream.rangeClosed(1, Integer.parseInt(respuestasPosibles)).boxed().collect(Collectors.toList());
     Map<String, Object> modelo = getMap(request);
-    List<Integer> matcheos = IntStream.rangeClosed(1, Integer.parseInt(cantidadMatcheos)).boxed().collect(Collectors.toList());
-    this.borradorParDePreguntas.setPreguntas(preguntaDador, preguntaAdoptante, esObligatoria).setAsociacionId(Long.parseLong(asociacionId));
 
-    request.session().attribute("asociacion_id", asociacionId);
-    request.session().attribute("pregunta_dador", preguntaDador);
-    request.session().attribute("pregunta_adoptante", preguntaAdoptante);
-    request.session().attribute("es_obligatoria", esObligatoria);
+    modelo.put("asociacion", asociacionBuscada);
+    modelo.put("cantidadRespuestasPosibles", cantidadRespuestasPosibles);
+    modelo.put("respuestasPosiblesDador", this.borradorParDePreguntas.getRespuestasPosiblesDelDador());
+    modelo.put("respuestasPosiblesAdoptante", this.borradorParDePreguntas.getRespuestasPosiblesDelAdoptante());
 
-    modelo.put("asociacionId", asociacionId);
-    modelo.put("cantidadMatcheos", matcheos);
-    modelo.put("borradorParDePreguntas", borradorParDePreguntas);
-    return new ModelAndView(modelo, "matchear-preguntas.html.hbs");
+    return new ModelAndView(modelo, "nueva-pregunta-2.html.hbs");
   }
 
   public Void crearParDePreguntasAsociacion(Request request, Response response) {
-    System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<crearParDePreguntasAsociacion<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-    String asociacionId = request.session().attribute("asociacion_id");
-    String preguntaDador = request.session().attribute("pregunta_dador");
-    String preguntaAdoptante = request.session().attribute("pregunta_adoptante");
-    Boolean esObligatoria = request.session().attribute("es_obligatoria");
-
-    System.out.println("ID: " + asociacionId + "Dador: " + preguntaDador + "Adoptante: " + preguntaAdoptante + "Obligatoria: " + esObligatoria);
-
-    ParDePreguntas parDePreguntas = new ParDePreguntas(
-      preguntaDador,
-      preguntaAdoptante,
-      esObligatoria
-    );
+    for(int i = 1; i <= Integer.parseInt(respuestasPosibles); i++) {
+      this.borradorParDePreguntas.agregarParDeRespuestas(new ParDeRespuestas(request.queryParams("respuestaPosibleDador".concat(String.valueOf(i))), request.queryParams("respuestaPosibleAdoptante".concat(String.valueOf(i)))));
+    }
 
     withTransaction(() -> {
-      if(esObligatoria) {
-        repositorioAsociaciones.getAsociaciones().stream().forEach(asociacion -> {
-          asociacion.agregarPregunta(parDePreguntas);
-        });
-      } else {
-        Asociacion asociacion = repositorioAsociaciones.buscarPorId(Long.parseLong(asociacionId)).get(0);
-        asociacion.agregarPregunta(parDePreguntas);
-      }
+      Asociacion asociacion = repositorioAsociaciones.buscarPorId(this.borradorParDePreguntas.getAsociacionId()).get(0);
+      asociacion.agregarPregunta(this.borradorParDePreguntas.crearParDePreguntas());
     });
 
-    this.finalizarCreacionDeParDePreguntas(request, response);
-    return null;
-  }
-
-  public Void finalizarCreacionDeParDePreguntas(Request request, Response response) {
-    request.session().attribute("asociacion_id", null);
-    request.session().attribute("pregunta_dador", null);
-    request.session().attribute("pregunta_adoptante", null);
-    request.session().attribute("es_obligatoria", null);
-    response.redirect("/preguntas-asociaciones");
+    response.redirect("/asociaciones/".concat((String.valueOf(this.borradorParDePreguntas.getAsociacionId())).concat("/preguntas")));
     return null;
   }
 

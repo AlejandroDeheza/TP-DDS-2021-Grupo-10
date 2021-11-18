@@ -1,0 +1,20 @@
+{{# partial "titulo" }}
+	<title>Patitas - Preguntas de Asociaciones</title>
+{{/partial}}
+
+{{# partial "contenido" }}
+	<h1>Preguntas de Asociaciones</h1>
+	<div class="dropdown dropdown-asociaciones">
+		<button class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+			Asociaciones...
+		</button>
+		<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+			<li><a class="dropdown-item" type="button" href="/asociaciones/0/preguntas">Panel General de Asociaciones</a></li>
+			{{#asociaciones}}
+				<li><a class="dropdown-item" type="button" href="/asociaciones/{{id}}/preguntas">Asociación {{nombre}} [ID {{id}}]</a></li>
+			{{/asociaciones}}
+		</ul>
+	</div>
+{{/partial}}
+
+{{> layout.html.hbs}}
