@@ -8,6 +8,12 @@
   margin-bottom: var(--margen-bottom);
 }
 
+.avatar-persona {
+  position: absolute;
+  right: 160px;
+  bottom: 62px;
+}
+
 .action:last-child {
   text-align: center;
 }
@@ -141,6 +147,17 @@
   flex-direction: column;
 }
 
+.usuario-nombre {
+  margin: 0 4px;
+}
+
+.form-container-registracion-mascota {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
 .image-container {
   flex: 1;
 }
@@ -163,6 +180,8 @@
 
 .navbar-nav {
   font-size: 15px;
+  width: 100%;
+  justify-content: center;
 }
 
 .navbar-brand {
@@ -175,6 +194,14 @@
   width: 80px;
   height: 65px;
   margin-right: 5px;
+}
+
+.separator-nav-link {
+  margin-right: 200px;
+}
+
+#navbarNavAltMarkup {
+  justify-content: space-evenly;
 }
 
 .flex-center {
@@ -200,4 +227,7 @@
 #sign-in {
   background-color: #7952b3;
   border-color: #7952b3;
+  display: flex;
+  align-items: center;
+  position: absolute;
 }

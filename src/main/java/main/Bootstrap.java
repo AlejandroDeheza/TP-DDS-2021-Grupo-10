@@ -39,7 +39,7 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
         TipoNotificadorPreferido.CORREO
     );
         withTransaction(() -> {
-           persist(new Usuario("pepito", "pepitopepito", TipoUsuario.NORMAL, persona));
+           persist(new Usuario("pepito", "asdasdas", TipoUsuario.NORMAL, persona));
            // TODO: ver cual seria la carga inicial
         });
   }

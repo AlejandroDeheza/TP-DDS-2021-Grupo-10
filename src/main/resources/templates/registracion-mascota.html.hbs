@@ -1,45 +1,93 @@
 {{#partial "contenido" }}
 <div class="login-container">
-    <div class="form-container">
+    <div class="form-container-registracion-mascota">
         <div> <img src="images/patitas-logo.jpg" alt="patitas-logo" width="30" height="24"
                 class="d-inline-block align-text-top logo-login" />
         </div>
-        <form class="form-login" action="/login" method="POST">
+        <form class="form-login" action="/registracion-mascota" method="POST">
             <div class="row g-3">
                 <div class="col">
-                    <div class="form-floating mb-5">
-                        <input type="text" name="username" class="form-control" id="floatingInput"
-                            placeholder="usuario12345">
-                        <label for="floatingInput">Usuario</label>
+                    <div class="input-group-sm mb-3">
+                        <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre">
                     </div>
                 </div>
             </div>
             <div class="row g-3">
                 <div class="col">
-                    <div class="form-floating mb-5">
-                        <input type="password" name="password" class="form-control" id="floatingPassword"
-                            placeholder="Password">
-                        <label for="floatingPassword">Password</label>
+                    <div class="input-group-sm mb-3">
+                        <input type="text" name="apodo" class="form-control" id="apodo" placeholder="Apodo">
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col">
+                    <div class="input-group date input-group-sm mb-3" id="datepicker">
+                        <input type="text" required name="fechaNacimiento" class="form-control"
+                            placeholder="Fecha de nacimiento">
+                        <span class="input-group-append">
+                            <span class="input-group-text bg-white d-block">
+                                <i class="fa fa-calendar"></i>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col">
+                    <div class="input-group-sm mb-3">
+                        <select class="form-select" required name="sexo" id="sexo">
+                            <option selected>Sexo</option>
+                            <option value="0">Macho</option>
+                            <option value="1">Hembra</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col">
+                    <div class="input-group-sm mb-3">
+                        <select class="form-select" required name="tipoAnimal" id="tipoAnimal">
+                            <option selected>Tipo de animal</option>
+                            <option value="0">Perro</option>
+                            <option value="1">Gato</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col">
+                    <div class="input-group-sm mb-3">
+                        <select class="form-select" required name="tamanio" id="tamanio">
+                            <option selected>Tamaño</option>
+                            <option value="0">Chico</option>
+                            <option value="1">Mediano</option>
+                            <option value="2">Grande</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col">
+                    <div class="form-group">
+                        <textarea maxlength="200" placeholder="Descripcion de tu mascota" class="form-control" id="descripcion" rows="3"></textarea>
                     </div>
                 </div>
             </div>
             <div class="row g-3 justify-content-center">
                 <div class="col">
                     <div class="d-flex justify-content-center">
-                        <button type="submit" class="btn btn-primary submit-button">Ingresar</button>
+                        <button type="submit" class="btn btn-primary submit-button">Registrar</button>
                     </div>
                 </div>
             </div>
         </form>
     </div>
-    <div class="foto-bienvenida-sign-in">
-        <div class="mensaje-bienvenida">
-            <div>
-                Bienvenido de vuelta!
-            </div>
-        </div>
-    </div>
 </div>
+<script type="text/javascript">
+    $(function () {
+        $('#datepicker').datepicker();
+    });
+</script>
 {{/partial}}
 
 {{> layout.html.hbs }}
