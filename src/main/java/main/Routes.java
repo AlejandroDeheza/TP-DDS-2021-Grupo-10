@@ -19,6 +19,7 @@ public class Routes {
     HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
     HomeController homeController = new HomeController();
     SesionController sesionController = new SesionController();
+    EncontreMascotaController encontreMascotaController = new EncontreMascotaController();
     UsuarioController usuarioController = new UsuarioController();
     PublicacionesController publicacionesController = new PublicacionesController();
     MascotasController mascotasController = new MascotasController();
@@ -58,6 +59,7 @@ public class Routes {
         encontreMascotaController::enviarMascotaEncontradaSinChapita);
 
     Spark.get("/error", errorController::mostrarPantallaError, engine);
+
 
     System.out.println("Servidor iniciado!");
   }
