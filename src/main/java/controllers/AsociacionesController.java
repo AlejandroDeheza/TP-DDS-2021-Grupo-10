@@ -20,11 +20,4 @@ public class AsociacionesController extends Controller implements WithGlobalEnti
     return new ModelAndView(modelo, "asociaciones.html.hbs");
   }
 
-//  public ModelAndView mostrarPanelGeneralAsociaciones(Request request, Response response) {
-//    List<Asociacion> asociaciones = repositorioAsociaciones.getAsociaciones();
-//    Map<String, Object> modelo = getMap(request);
-//    modelo.put("asociaciones", asociaciones);
-//    return new ModelAndView(modelo, "asociaciones.html.hbs");
-//  }
-
 }

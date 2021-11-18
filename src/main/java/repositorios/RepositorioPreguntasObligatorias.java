@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class RepositorioPreguntasObligatorias extends Repositorio implements WithGlobalEntityManager {
 
-  public List<ParDePreguntas> getPreguntas() {
+  public List<ParDePreguntas> getPreguntasObligatorias() {
     return entityManager()
         .createQuery("from ParDePreguntas", ParDePreguntas.class)
         .getResultList().stream()

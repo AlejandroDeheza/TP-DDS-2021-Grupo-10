@@ -2,7 +2,6 @@ package main;
 
 import modelo.asociacion.Asociacion;
 import modelo.informe.Ubicacion;
-import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 import modelo.notificacion.TipoNotificadorPreferido;
 import modelo.persona.DatosDeContacto;
@@ -18,9 +17,7 @@ import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 import repositorios.RepositorioCaracteristicas;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, TransactionalOps {
 
@@ -68,6 +65,7 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
     ParDePreguntas parDePreguntas1 = new ParDePreguntas("Pregunta del Dador 1", "Pregunta del Adoptante 1", true);
     ParDePreguntas parDePreguntas2 = new ParDePreguntas("Pregunta del Dador 2", "Pregunta del Adoptante 2", true);
     ParDePreguntas parDePreguntas3 = new ParDePreguntas("Pregunta del Dador 3", "Pregunta del Adoptante 3", false);
+    ParDePreguntas parDePreguntas4 = new ParDePreguntas("Pregunta del Dador 4", "Pregunta del Adoptante 4", true);
 
     CaracteristicaConValoresPosibles caracteristicaValores1 = new CaracteristicaConValoresPosibles("características Valores 1", Arrays.asList("Inquieto", "Tranquilo"));
     CaracteristicaConValoresPosibles caracteristicaValores2 = new CaracteristicaConValoresPosibles("características Valores 2", Arrays.asList("Chico", "Grande"));
@@ -79,6 +77,7 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
     asociacion1.agregarPregunta(parDePreguntas1);
     asociacion1.agregarPregunta(parDePreguntas2);
     asociacion2.agregarPregunta(parDePreguntas3);
+    asociacion3.agregarPregunta(parDePreguntas4);
 
     withTransaction(() -> {
       persist(new Usuario("pepito", "pepitopepito", TipoUsuario.NORMAL, persona));

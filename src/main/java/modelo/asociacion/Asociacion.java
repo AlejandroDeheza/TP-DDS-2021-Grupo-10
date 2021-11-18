@@ -11,6 +11,7 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Asociacion extends EntidadPersistente {
@@ -53,6 +54,10 @@ public class Asociacion extends EntidadPersistente {
 
   public List<ParDePreguntas> getPreguntas() {
     return preguntas;
+  }
+  
+  public List<ParDePreguntas> getPreguntasObligatorias() {
+    return preguntas.stream().filter(p -> p.getEsObligatoria().equals(true)).collect(Collectors.toList());
   }
 
 }

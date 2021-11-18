@@ -3,20 +3,36 @@
 {{/partial}}
 
 {{# partial "contenido" }}
-	<div class="asociaciones-title">
-		<h2>Preguntas de la Asociación {{asociacion.nombre}} [ID {{asociacion.id}}]</h2>
-		<div class="dropdown dropdown-asociaciones">
-			<button class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-				Asociaciones...
-			</button>
-			<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-				<li><a class="dropdown-item" type="button" href="/asociaciones/0/preguntas">Panel General de Asociaciones</a></li>
-				{{#asociaciones}}
-					<li><a class="dropdown-item" type="button" href="/asociaciones/{{id}}/preguntas">Asociación {{nombre}} [ID {{id}}]</a></li>
-				{{/asociaciones}}
-			</ul>
+	{{#if esObligatoria}}
+		<div class="titulo-preguntas">
+			<h1>Preguntas Obligatorias de Asociaciones</h1>
+			<form class="dropdown">
+				<a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownAsociacionesDisponibles" data-bs-toggle="dropdown" aria-expanded="false">
+					Filtrar por Asociación
+				</a>
+				<ul class="dropdown-menu" aria-labelledby="dropdownAsociacionesDisponibles">
+					<li><a class="dropdown-item" type="button" href="/asociaciones/0/preguntas">Deshacer filtro</a></li>
+					{{#asociaciones}}
+						<li><button class="dropdown-item" name="idAsociacion" type="submit" value="{{id}}">Asociación {{nombre}} [ID {{id}}]</li>
+					{{/asociaciones}}
+				</ul>
+			</form>
 		</div>
-	</div>
+	{{else}}
+		<div class="asociaciones-title">
+			<h2>Preguntas Obligatorias y No Obligatorias de la Asociación {{asociacion.nombre}} [ID {{asociacion.id}}]</h2>
+			<div class="dropdown dropdown-asociaciones">
+				<button class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+					Asociaciones...
+				</button>
+				<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+					{{#asociaciones}}
+						<li><a class="dropdown-item" type="button" href="/asociaciones/{{id}}/preguntas">Asociación {{nombre}} [ID {{id}}]</a></li>
+					{{/asociaciones}}
+				</ul>
+			</div>
+		</div>
+	{{/if}}
 	{{#preguntas}}
 		<div class="accordion accordion-flush" id="accordionFlushPregunta{{id}}">
 			<div class="accordion-item">
@@ -39,13 +55,15 @@
 		</div>
 	{{/preguntas}}
 	<div class="agregar-pregunta">
-		<a class="btn btn-primary" href="/asociaciones/{{asociacion.id}}/preguntas/nueva-pregunta">
-			{{#if esObligatoria}}
+		{{#if esObligatoria}}
+			<a class="btn btn-primary" href="/asociaciones/0/preguntas/nueva-pregunta">
 				Agregar Pregunta Obligatoria a Asociaciones
-			{{else}}
+			</a>
+		{{else}}
+			<a class="btn btn-primary" href="/asociaciones/{{asociacion.id}}/preguntas/nueva-pregunta">
 				Agregar Pregunta No Obligatoria
-			{{/if}}
-		</a>
+			</a>
+		{{/if}}
 	</div>
 {{/partial}}
 

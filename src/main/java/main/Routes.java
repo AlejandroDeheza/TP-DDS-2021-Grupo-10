@@ -41,11 +41,11 @@ public class Routes {
     Spark.get("/nueva-caracteristica", caracteristicasController::cargarNuevaCaracteristica, engine);
 
     Spark.get("/asociaciones", asociacionesController::mostrarAsociaciones, engine);
+    Spark.get("/asociaciones/0/preguntas", preguntasController::mostrarPreguntasObligatoriasDeLasAsociaciones, engine);
     Spark.get("/asociaciones/:idAsociacion/preguntas", preguntasController::mostrarPreguntasDeLaAsociacion, engine);
     Spark.post("/asociaciones/:idAsociacion/preguntas", preguntasController::crearParDePreguntasAsociacion);
     Spark.get("/asociaciones/:idAsociacion/preguntas/nueva-pregunta", preguntasController::agregarNuevaPreguntaALaAsociacion, engine);
     Spark.get("/asociaciones/:idAsociacion/preguntas/nueva-pregunta-2", preguntasController::matchearRespuestasPosibles, engine);
-//    Spark.get("/asociaciones/0/preguntas", asociacionesController::mostrarPanelGeneralAsociaciones, engine);
 
     Spark.get("/mascotas-en-adopcion", publicacionesController::mostrarMascotasEnAdopcion, engine);
 
