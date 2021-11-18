@@ -19,10 +19,11 @@ public class Routes {
     HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
     HomeController homeController = new HomeController();
     SesionController sesionController = new SesionController();
-    EncontreMascotaController encontreMascotaController = new EncontreMascotaController();
     UsuarioController usuarioController = new UsuarioController();
     PublicacionesController publicacionesController = new PublicacionesController();
     MascotasController mascotasController = new MascotasController();
+    ErrorController errorController = new ErrorController();
+    EncontreMascotaController encontreMascotaController = new EncontreMascotaController();
 
     Spark.get("/", homeController::getHome, engine);
 
@@ -55,13 +56,10 @@ public class Routes {
         encontreMascotaController::getFormularioSinChapita, engine);
     Spark.post("/mascotas/encontre-mascota/sin-chapita",
         encontreMascotaController::enviarMascotaEncontradaSinChapita);
-    System.out.println("Servidor iniciado!");
-  }
+
     Spark.get("/error", errorController::mostrarPantallaError, engine);
 
-      Spark.after((request, response) -> {
-    // TODO franco se los pasa
-    //PerThreadEntityManagers.closeEntityManager();;
-  });
+    System.out.println("Servidor iniciado!");
+  }
 
 }
