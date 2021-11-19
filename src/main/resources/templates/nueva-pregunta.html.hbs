@@ -4,7 +4,6 @@
 
 {{# partial "contenido" }}
 	<h1>Nueva Pregunta</h1>
-	
 	<form class="row g-3" action="/asociaciones/{{asociacion}}/preguntas/nueva-pregunta-2">
 		<div>
 			<label for="concepto" class="form-label">Idea principal de las preguntas a realizar</label>
@@ -19,19 +18,19 @@
 			<input type="text" class="form-control" name="preguntaAdoptante" id="preguntaAdoptante" required>
 		</div>
 		<h2>Respuestas posibles para el dador</h2>
-		{{#respuestasPosibles}}
+		{{#rangoDeRespuestas}}
 			<div>
 				<label for="respuestaPosibleDador{{this}}" class="form-label">Respuesta posible del dador {{this}}</label>
 				<input type="text" class="form-control" name="respuestaPosibleDador{{this}}" id="respuestaPosibleDador{{this}}" required>
 			</div>
-		{{/respuestasPosibles}}
+		{{/rangoDeRespuestas}}
 		<h2>Respuestas posibles para el adoptante</h2>
-		{{#respuestasPosibles}}
+		{{#rangoDeRespuestas}}
 			<div>
 				<label for="respuestaPosibleAdoptante{{this}}" class="form-label">Respuesta posible del adoptante {{this}}</label>
 				<input type="text" class="form-control" name="respuestaPosibleAdoptante{{this}}" id="respuestaPosibleAdoptante{{this}}" required>
 			</div>
-		{{/respuestasPosibles}}
+		{{/rangoDeRespuestas}}
 		<div>
 			<input class="btn btn-primary" type="submit" value="Continuar"/>
 		</div>

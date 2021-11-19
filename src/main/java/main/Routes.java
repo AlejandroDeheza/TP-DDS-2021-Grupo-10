@@ -1,5 +1,6 @@
 package main;
 
+import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import controllers.*;
 import spark.Spark;
 import spark.debug.DebugScreen;
@@ -41,11 +42,10 @@ public class Routes {
     Spark.get("/nueva-caracteristica", caracteristicasController::cargarNuevaCaracteristica, engine);
 
     Spark.get("/asociaciones", asociacionesController::mostrarAsociaciones, engine);
-    Spark.get("/asociaciones/0/preguntas", preguntasController::mostrarPreguntasObligatoriasDeLasAsociaciones, engine);
     Spark.get("/asociaciones/:idAsociacion/preguntas", preguntasController::mostrarPreguntasDeLaAsociacion, engine);
-    Spark.post("/asociaciones/:idAsociacion/preguntas", preguntasController::crearParDePreguntasAsociacion);
-    Spark.get("/asociaciones/:idAsociacion/preguntas/nueva-pregunta", preguntasController::agregarNuevaPreguntaALaAsociacion, engine);
+    Spark.get("/asociaciones/:idAsociacion/preguntas/nueva-pregunta", preguntasController::nuevaPregunta, engine);
     Spark.get("/asociaciones/:idAsociacion/preguntas/nueva-pregunta-2", preguntasController::matchearRespuestasPosibles, engine);
+    Spark.post("/asociaciones/:idAsociacion/preguntas", preguntasController::crearParDePreguntasAsociacion);
 
     Spark.get("/mascotas-en-adopcion", publicacionesController::mostrarMascotasEnAdopcion, engine);
 

@@ -4,6 +4,11 @@
 
 {{# partial "contenido" }}
 	{{#if esObligatoria}}
+		<h1>Preguntas Obligatorias de Asociaciones</h1>
+	{{else}}
+		<h1>Preguntas de la Asociación {{asociacion.nombre}} [ID {{asociacion.id}}]</h1>
+	{{/if}}
+	<!-- {{#if esObligatoria}}
 		<div class="titulo-preguntas">
 			<h1>Preguntas Obligatorias de Asociaciones</h1>
 			<form class="dropdown">
@@ -32,7 +37,7 @@
 				</ul>
 			</div>
 		</div>
-	{{/if}}
+	{{/if}} -->
 	{{#preguntas}}
 		<div class="accordion accordion-flush" id="accordionFlushPregunta{{id}}">
 			<div class="accordion-item">

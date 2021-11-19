@@ -8,19 +8,21 @@ import modelo.pregunta.ParDeRespuestas;
 public class BorradorParDePreguntas {
   private String preguntaDelDador;
   private String preguntaDelAdoptante;
-  private Boolean esObligatoria = true;
+  private Boolean esObligatoria;
   private Long asociacionId;
-  private List<ParDeRespuestas> paresDeRespuestas;
-  private List<String> respuestasPosiblesDelDador;
-  private List<String> respuestasPosiblesDelAdoptante;
+  private List<ParDeRespuestas> paresDeRespuestas = new ArrayList<>();
+  private List<String> respuestasPosiblesDelDador = new ArrayList<>();
+  private List<String> respuestasPosiblesDelAdoptante = new ArrayList<>();
 
   public BorradorParDePreguntas setPreguntas(String preguntaDelDador, String preguntaDelAdoptante, Boolean esObligatoria) {
     this.preguntaDelDador = preguntaDelDador;
     this.preguntaDelAdoptante = preguntaDelAdoptante;
     this.esObligatoria = esObligatoria;
-    this.paresDeRespuestas = new ArrayList<>();
-    this.respuestasPosiblesDelDador = new ArrayList<>();
-    this.respuestasPosiblesDelAdoptante = new ArrayList<>();
+    return this;
+  }
+  
+  public BorradorParDePreguntas setAsociacionId(Long asociacionId) {
+    this.asociacionId = asociacionId;
     return this;
   }
 
@@ -34,11 +36,6 @@ public class BorradorParDePreguntas {
 
   public void agregarRespuestaPosibleAdoptante(String respuestaPosibleAdoptante) {
     this.respuestasPosiblesDelAdoptante.add(respuestaPosibleAdoptante);
-  }
-
-  public BorradorParDePreguntas setAsociacionId(Long asociacionId) {
-    this.asociacionId = asociacionId;
-    return this;
   }
 
   public ParDePreguntas crearParDePreguntas() {

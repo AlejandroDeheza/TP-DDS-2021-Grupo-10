@@ -14,8 +14,8 @@ public class RepositorioAsociaciones extends Repositorio implements WithGlobalEn
         .getResultList();
   }
 
-  public List<Asociacion> buscarPorId(Long id) {
-    return getAsociaciones().stream().filter(asociaciones -> asociaciones.getId() == id).collect(Collectors.toList());
+  public Asociacion buscarPorId(Long id) {
+    return entityManager().find(Asociacion.class, id);
   }
 
   public Asociacion getAsociacionMasCercana(Ubicacion ubicacion) {
