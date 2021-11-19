@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -51,6 +53,22 @@ public class PreguntasController extends Controller implements WithGlobalEntityM
 
   public ModelAndView matchearRespuestasPosibles(Request request, Response response) {
     String idAsociacion = request.params(":idAsociacion");
+    
+    List<String> listaRespuestasDador = new ArrayList<>();
+    List<String> listaRespuestasAdoptante = new ArrayList<>();
+    this.obtenerRango().stream().forEach(i -> {
+      listaRespuestasDador.add(request.queryParams("respuestaPosibleDador".concat(String.valueOf(i))));
+      listaRespuestasAdoptante.add(request.queryParams("respuestaPosibleAdoptante".concat(String.valueOf(i))));
+    });
+
+    listaRespuestasDador.removeAll(Collections.singleton(""));
+    listaRespuestasAdoptante.removeAll(Collections.singleton(""));
+    if(listaRespuestasDador.size() <= 1 || listaRespuestasAdoptante.size() <= 1) {
+      super.redireccionCasoError(request, response, null, "Debe ingresar mas de una respuesta posible");
+    }
+
+    System.out.println("listaRespuestasDador size: " + listaRespuestasDador.size());
+    System.out.println("listaRespuestasAdoptante size: " + listaRespuestasAdoptante.size());
 
     BorradorParDePreguntas borradorParDePreguntas = new BorradorParDePreguntas();
     borradorParDePreguntas.setAsociacionId(Long.parseLong(idAsociacion));
@@ -60,14 +78,14 @@ public class PreguntasController extends Controller implements WithGlobalEntityM
       request.session().attribute("es_obligatoria")
     );
 
-    for(int i = 1; i <= Integer.parseInt(totalRespuestasPosibles); i++) {
+    this.obtenerRango().stream().forEach(i -> {
       borradorParDePreguntas.agregarRespuestaPosibleDador(
           request.queryParams("respuestaPosibleDador".concat(String.valueOf(i)))
       );
       borradorParDePreguntas.agregarRespuestaPosibleAdoptante(
           request.queryParams("respuestaPosibleAdoptante".concat(String.valueOf(i)))
       );
-    }
+    });
 
     Map<String, Object> modelo = getMap(request);
     if(!borradorParDePreguntas.getEsObligatoria()) {

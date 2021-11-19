@@ -74,14 +74,14 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
     repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(caracteristicaValores1);
     repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(caracteristicaValores2);
 
-    asociacion1.agregarPregunta(parDePreguntas1);
-    asociacion1.agregarPregunta(parDePreguntas2);
     asociacion2.agregarPregunta(parDePreguntas3);
-    asociacion3.agregarPregunta(parDePreguntas4);
 
     withTransaction(() -> {
       persist(new Usuario("pepito", "pepitopepito", TipoUsuario.NORMAL, persona));
       persist(new Usuario("admin", "adminadmin", TipoUsuario.ADMIN, persona2));
+      persist(parDePreguntas1);
+      persist(parDePreguntas2);
+      persist(parDePreguntas4);
       persist(asociacion1);
       persist(asociacion2);
       persist(asociacion3);
