@@ -27,12 +27,16 @@ public class PreguntasController extends Controller implements WithGlobalEntityM
 
     List<Asociacion> asociaciones = repositorioAsociaciones.getAsociaciones();
     Asociacion asociacionBuscada = repositorioAsociaciones.buscarPorId(Long.parseLong(idAsociacion)).get(0);
-    List<ParDePreguntas> paresDePreguntasDeLaAsociacionBuscada = asociacionBuscada.getPreguntas();
+    List<ParDePreguntas> paresDePreguntasDeLaAsociacionBuscada = asociacionBuscada.getPreguntasNoObligatorias();
+    
+    System.out.println("Asociaciones: " + asociaciones);
+    System.out.println("asociacionBuscada: " + asociacionBuscada);
+    System.out.println("Pares de preguntas de la asociación buscada: " + paresDePreguntasDeLaAsociacionBuscada);
 
     Map<String, Object> modelo = getMap(request);
     modelo.put("asociaciones", asociaciones);
-    modelo.put("asociacion", asociacionBuscada);
     modelo.put("preguntas", paresDePreguntasDeLaAsociacionBuscada);
+    modelo.put("asociacion", asociacionBuscada);
     modelo.put("esObligatoria", request.session().attribute("es_obligatoria"));
     return new ModelAndView(modelo, "preguntas-asociaciones.html.hbs");
   }
@@ -47,6 +51,10 @@ public class PreguntasController extends Controller implements WithGlobalEntityM
 
     List<ParDePreguntas> paresDePreguntasObligatorias = asociacionFiltrada.size() == 1 ?
         asociacionFiltrada.get(0).getPreguntasObligatorias() : repositorioPreguntasObligatorias.getPreguntasObligatorias();
+        
+    System.out.println("Todas las asociaciones: " + todasLasAsociaciones);
+    System.out.println("asociacionFiltrada: " + asociacionFiltrada);
+    System.out.println("Pares de preguntas Obligatorias de la asociación buscada: " + paresDePreguntasObligatorias);
 
     Map<String, Object> modelo = getMap(request);
     modelo.put("asociaciones", todasLasAsociaciones);
@@ -58,6 +66,7 @@ public class PreguntasController extends Controller implements WithGlobalEntityM
   public ModelAndView agregarNuevaPreguntaALaAsociacion(Request request, Response response) {
     String idAsociacion = request.params(":idAsociacion");
     List<Integer> listaRespuestasPosibles = IntStream.rangeClosed(1, Integer.parseInt(respuestasPosibles)).boxed().collect(Collectors.toList());
+    
     Map<String, Object> modelo = getMap(request);
     modelo.put("asociacion", idAsociacion);
     modelo.put("respuestasPosibles", listaRespuestasPosibles);
@@ -81,6 +90,18 @@ public class PreguntasController extends Controller implements WithGlobalEntityM
     if(!idAsociacion.contentEquals("0")) {
       modelo.put("asociacion", repositorioAsociaciones.buscarPorId(this.borradorParDePreguntas.getAsociacionId()).get(0));
     }
+    
+    System.out.println("Preg adoptante: " + this.borradorParDePreguntas.getPreguntaDelAdoptante());
+    System.out.println("Preg dador: " + this.borradorParDePreguntas.getPreguntaDelAdoptante());
+    System.out.println("Asociación ID: " + this.borradorParDePreguntas.getAsociacionId());
+    System.out.println("Obligatoria: " + this.borradorParDePreguntas.getEsObligatoria());
+    System.out.println("Respuestas Posibles Del Adoptante: " + this.borradorParDePreguntas.getRespuestasPosiblesDelAdoptante());
+    System.out.println("Respuestas Posibles Del Dador: " + this.borradorParDePreguntas.getRespuestasPosiblesDelDador());
+    this.borradorParDePreguntas.getParesDeRespuestasPosibles().stream().forEach(pdrp -> {
+      System.out.println("Respuesta del adoptante: " + pdrp.getRespuestaDelAdoptante());
+      System.out.println("Respuesta del dador: " + pdrp.getRespuestaDelDador());
+    });
+    
     modelo.put("cantidadRespuestasPosibles", cantidadRespuestasPosibles);
     modelo.put("respuestasPosiblesDador", this.borradorParDePreguntas.getRespuestasPosiblesDelDador());
     modelo.put("respuestasPosiblesAdoptante", this.borradorParDePreguntas.getRespuestasPosiblesDelAdoptante());
@@ -98,17 +119,27 @@ public class PreguntasController extends Controller implements WithGlobalEntityM
           )
         );
     }
+    
+    System.out.println("Preg adoptante: " + this.borradorParDePreguntas.getPreguntaDelDador());
+    System.out.println("Preg dador: " + this.borradorParDePreguntas.getPreguntaDelAdoptante());
+    System.out.println("Asociación ID: " + this.borradorParDePreguntas.getAsociacionId());
+    System.out.println("Obligatoria: " + this.borradorParDePreguntas.getEsObligatoria());
+    System.out.println("Respuestas Posibles Del Adoptante: " + this.borradorParDePreguntas.getRespuestasPosiblesDelAdoptante());
+    System.out.println("Respuestas Posibles Del Dador: " + this.borradorParDePreguntas.getRespuestasPosiblesDelDador());
+    this.borradorParDePreguntas.getParesDeRespuestasPosibles().stream().forEach(pdrp -> {
+      System.out.println("Respuesta del adoptante: " + pdrp.getRespuestaDelAdoptante());
+      System.out.println("Respuesta del dador: " + pdrp.getRespuestaDelDador());
+    });
+    
+    List<Asociacion> asociaciones =
+        this.borradorParDePreguntas.getEsObligatoria() ?
+            repositorioAsociaciones.getAsociaciones() :
+              repositorioAsociaciones.buscarPorId(this.borradorParDePreguntas.getAsociacionId());
 
     withTransaction(() -> {
-      if(this.borradorParDePreguntas.getEsObligatoria()) {
-        ParDePreguntas parDePreguntas = this.borradorParDePreguntas.crearParDePreguntas();
-        repositorioAsociaciones.getAsociaciones().stream().forEach(asociacion -> {
-          asociacion.agregarPregunta(parDePreguntas);
-        });
-      } else {
-        Asociacion asociacion = repositorioAsociaciones.buscarPorId(this.borradorParDePreguntas.getAsociacionId()).get(0);
+      asociaciones.stream().forEach(asociacion -> {
         asociacion.agregarPregunta(this.borradorParDePreguntas.crearParDePreguntas());
-      }
+      });
     });
 
     response.redirect("/asociaciones/".concat((String.valueOf(this.borradorParDePreguntas.getAsociacionId())).concat("/preguntas")));
