@@ -59,6 +59,8 @@ public class MascotasController extends Controller implements WithGlobalEntityMa
     request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
     try(InputStream fotoInputStream = request.raw().getPart("fotoMascota").getInputStream()) {
       Files.copy(fotoInputStream, tempFile, StandardCopyOption.REPLACE_EXISTING);
+      Foto fotoMascota = new Foto(tempFile.toString(),null);
+      fotosMascota.add(fotoMascota);
     } catch (IOException | ServletException exception) {
       System.out.println(exception);
       redireccionCasoError(request, response, "/", "Hubo un error al cargar la foto de tu mascota, intenta con otra foto");
