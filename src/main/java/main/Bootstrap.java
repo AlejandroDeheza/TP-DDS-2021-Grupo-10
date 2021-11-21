@@ -12,7 +12,11 @@ import org.uqbarproject.jpa.java8.extras.EntityManagerOps;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 import repositorios.RepositorioCaracteristicas;
+import utils.Constantes;
 
+import static spark.Spark.*;
+
+import java.io.File;
 import java.time.LocalDate;
 import java.util.Arrays;
 
@@ -55,6 +59,12 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
           repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c2);
           repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c3);
         });
+
+    // Se crea el directorio para subir las fotos :)
+    File uploadDir = new File(Constantes.UPLOAD_DIRECTORY);
+    uploadDir.mkdir();
+    staticFiles.externalLocation(Constantes.UPLOAD_DIRECTORY);
+
   }
 
 }

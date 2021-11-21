@@ -18,6 +18,13 @@
   text-align: center;
 }
 
+.fotoMascota {
+  display: none;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+}
+
 .action {
   display: flex;
   align-items: center;
