@@ -55,13 +55,5 @@ public class Asociacion extends EntidadPersistente {
   public List<ParDePreguntas> getPreguntas() {
     return preguntas;
   }
-  
-//  public List<ParDePreguntas> getPreguntasObligatorias() {
-//    return preguntas.stream().filter(p -> p.getEsObligatoria().equals(true)).collect(Collectors.toList());
-//  }
-//
-//  public List<ParDePreguntas> getPreguntasNoObligatorias() {
-//    return preguntas.stream().filter(p -> p.getEsObligatoria().equals(false)).collect(Collectors.toList());
-//  }
 
 }

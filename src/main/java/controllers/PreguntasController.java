@@ -37,8 +37,10 @@ public class PreguntasController extends Controller implements WithGlobalEntityM
       modelo.put("asociacion", asociacionBuscada);
     }
 
+    modelo.put("asociaciones", repositorioAsociaciones.getAsociaciones());
     modelo.put("preguntas", paresDePreguntas);
     modelo.put("esObligatoria", request.session().attribute("es_obligatoria"));
+    modelo.put("mostrarBotonAgregarPreguntas", true);
     return new ModelAndView(modelo, "preguntas-asociaciones.html.hbs");
   }
 
@@ -67,9 +69,6 @@ public class PreguntasController extends Controller implements WithGlobalEntityM
       super.redireccionCasoError(request, response, null, "Debe ingresar mas de una respuesta posible");
     }
 
-    System.out.println("listaRespuestasDador size: " + listaRespuestasDador.size());
-    System.out.println("listaRespuestasAdoptante size: " + listaRespuestasAdoptante.size());
-
     BorradorParDePreguntas borradorParDePreguntas = new BorradorParDePreguntas();
     borradorParDePreguntas.setAsociacionId(Long.parseLong(idAsociacion));
     borradorParDePreguntas.setPreguntas(
@@ -96,7 +95,6 @@ public class PreguntasController extends Controller implements WithGlobalEntityM
     modelo.put("respuestasPosiblesAdoptante", borradorParDePreguntas.getRespuestasPosiblesDelAdoptante());
     modelo.put("redirectId", borradorParDePreguntas.getAsociacionId());
 
-    request.session().removeAttribute("es_obligatoria");
     request.session().attribute("borrador_par_preguntas", borradorParDePreguntas);
     return new ModelAndView(modelo, "nueva-pregunta-2.html.hbs");
   }
@@ -123,6 +121,7 @@ public class PreguntasController extends Controller implements WithGlobalEntityM
 
     response.redirect("/asociaciones/".concat((String.valueOf(borradorParDePreguntas.getAsociacionId())).concat("/preguntas")));
     request.session().removeAttribute("borrador_par_preguntas");
+    request.session().removeAttribute("es_obligatoria");
     return null;
   }
 

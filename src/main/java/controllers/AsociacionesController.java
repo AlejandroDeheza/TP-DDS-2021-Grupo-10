@@ -17,7 +17,8 @@ public class AsociacionesController extends Controller implements WithGlobalEnti
     List<Asociacion> asociaciones = repositorioAsociaciones.getAsociaciones();
     Map<String, Object> modelo = getMap(request);
     modelo.put("asociaciones", asociaciones);
-    return new ModelAndView(modelo, "asociaciones.html.hbs");
+    modelo.put("mostrarBotonAgregarPreguntas", false);
+    return new ModelAndView(modelo, "preguntas-asociaciones.html.hbs");
   }
 
 }

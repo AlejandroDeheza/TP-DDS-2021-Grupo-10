@@ -38,12 +38,6 @@
   text-align: center;
 }
 
-.dropdown-asociaciones {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
 .asociaciones-title {
   display: flex;
   flex-direction: row;
@@ -113,6 +107,17 @@
   border-color: #7952b3 !important;
 }
 
+.visibility-none {
+  visibility: hidden;
+}
+
+.center-space-evenly {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100%;
+}
+
 .image-error-container {
   height: 500px;
 }
@@ -126,6 +131,11 @@
   border-radius: 50px;
   width: 200px;
   margin-top: 10px;
+  background-color: #7952b3 !important;
+  border-color: #7952b3 !important;
+}
+
+.btn-agregar-preguntas {
   background-color: #7952b3 !important;
   border-color: #7952b3 !important;
 }
@@ -224,6 +234,13 @@
   justify-content: space-between;
   align-items: center;
   margin-top: 1em;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 .preguntas-container {

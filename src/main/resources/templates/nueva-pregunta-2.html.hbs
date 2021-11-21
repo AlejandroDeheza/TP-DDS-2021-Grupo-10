@@ -3,34 +3,40 @@
 {{/partial}}
 
 {{# partial "contenido" }}
-	<h1>Par de preguntas válidas para {{asociacion.nombre}} [ID {{asociacion.id}}]</h1>
-	<form class="row g-3" action="/asociaciones/{{redirectId}}/preguntas" method="POST">
-		{{#cantidadRespuestasPosibles}}
-			<div class="row g-2">
-				<div class="col-md">
-					<label for="respuestaPosibleDador{{this}}" class="form-label">Respuesta posible dador {{this}}</label>
-					<select class="form-select" id="respuestaPosibleDador{{this}}" name="respuestaPosibleDador{{this}}" aria-label="Default select example">
-						<option selected>Elegir respuesta posible dador...</option>
-						{{#respuestasPosiblesDador}}
-							<option value="{{this}}">{{this}}</option>
-						{{/respuestasPosiblesDador}}
-					</select>
-				</div>
-				<div class="col-md">
-					<label for="respuestaPosibleAdoptante{{this}}" class="form-label">Respuesta posible adoptante {{this}}</label>
-					<select class="form-select" id="respuestaPosibleAdoptante{{this}}" name="respuestaPosibleAdoptante{{this}}" aria-label="Default select example">
-						<option selected>Elegir respuesta posible adoptante...</option>
-						{{#respuestasPosiblesAdoptante}}
-							<option value="{{this}}">{{this}}</option>
-						{{/respuestasPosiblesAdoptante}}
-					</select>
-				</div>
+<h1>Par de preguntas válidas para {{asociacion.nombre}} [ID {{asociacion.id}}]</h1>
+<form class="row g-3" action="/asociaciones/{{redirectId}}/preguntas" method="POST">
+	{{#cantidadRespuestasPosibles}}
+		<div class="row g-2">
+			<div class="col-md">
+				<label for="respuestaPosibleDador{{this}}" class="form-label">Respuesta posible dador {{this}}</label>
+				<select class="form-select" id="respuestaPosibleDador{{this}}" name="respuestaPosibleDador{{this}}" aria-label="Default select example">
+					<option selected>Elegir respuesta posible dador...</option>
+					{{#respuestasPosiblesDador}}
+						<option value="{{this}}">{{this}}</option>
+					{{/respuestasPosiblesDador}}
+				</select>
 			</div>
-		{{/cantidadRespuestasPosibles}}
-		<div>
-			<input class="btn btn-primary" type="submit" value="Confirmar"/>
+			<div class="col-md">
+				<label for="respuestaPosibleAdoptante{{this}}" class="form-label">Respuesta posible adoptante {{this}}</label>
+				<select class="form-select" id="respuestaPosibleAdoptante{{this}}" name="respuestaPosibleAdoptante{{this}}" aria-label="Default select example">
+					<option selected>Elegir respuesta posible adoptante...</option>
+					{{#respuestasPosiblesAdoptante}}
+						<option value="{{this}}">{{this}}</option>
+					{{/respuestasPosiblesAdoptante}}
+				</select>
+			</div>
 		</div>
-	</form>
+	{{/cantidadRespuestasPosibles}}
+	<div class="center-space-evenly">
+		<button type="submit" class="btn btn-primary submit-button-error" onclick="volverAtras()">Volver atras</button>
+		<button type="submit" class="btn btn-primary submit-button-error"/>Confirmar</button>
+	</div>
+</form>
+<script>
+function volverAtras() {
+    window.history.back()
+}
+</script>
 {{/partial}}
 
 {{> layout.html.hbs}}

@@ -53,6 +53,11 @@ public class Routes {
     Spark.post("/registracion-mascota", mascotasController::registrarMascota);
 
     Spark.get("/error", errorController::mostrarPantallaError, engine);
+    
+    Spark.after((request, response) -> {
+      PerThreadEntityManagers.getEntityManager();
+      PerThreadEntityManagers.closeEntityManager();
+    });
 
     System.out.println("Servidor iniciado!");
   }
