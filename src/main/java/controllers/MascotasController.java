@@ -67,7 +67,6 @@ public class MascotasController extends Controller implements WithGlobalEntityMa
     //Obtengo sus caracteristicas
     caracteristicas = obtenerListaCaracteristicas(request);
 
-
     // Fecha de nacimiento
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
     LocalDate fechaNacimiento = LocalDate.parse(request.queryParams("fechaNacimiento"),formatter);
@@ -89,7 +88,7 @@ public class MascotasController extends Controller implements WithGlobalEntityMa
       new RepositorioMascotas().agregar(nueva);
     });
 
-    redireccionCasoFeliz(request, response, "/", "Tu mascota se ha agregado con exito!");
+    redireccionCasoFeliz(request, response, "/", "MASCOTA_REGISTRADA");
     return null;
   }
 
