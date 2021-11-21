@@ -7,9 +7,10 @@
       </div>
     </div>
   </div>
-  <form class="form-login" action="/mascotas/encontre-mascota/sin-chapita" method="POST" id="encontreForm">
-    <h2>Datos de la ubicación</h2>
-    <div class="row g-3">
+  <form class="form-login" enctype='multipart/form-data' action="/mascotas/encontre-mascota/sin-chapita" method="POST"
+    onsubmit="onFormSubmit()">
+    <div class="encontre-mascota">Datos de la ubicación</div>
+    <div class=" row g-3">
       <div class="col">
         <div class="input-group input-group-sm mb-3">
           <span class="input-group-text" id="inputGroup-sizing-sm">Ubicacion</span>
@@ -60,7 +61,7 @@
     <div class="row g-3">
       <div class="col-12">
         <div class="mb-3">
-          <input class="form-control form-control-sm" type="file" accept="image/*" id="foto-mascota" name="fotos">
+          <input class="form-control form-control-sm" type="file" accept="image/*" id="foto-mascota" name="fotoMascota">
           <div class="row g-3" style="margin-top: 0px;">
             <div class="col">
               <div>
@@ -71,8 +72,7 @@
         </div>
       </div>
     </div>
-
-    <h2>Datos de la mascota con chapita</h2>
+    <div class="encontre-mascota">Datos de la mascota</div>
     <div class="row g-3">
       <div class="col">
         <div class="input-group input-group-sm mb-3">
@@ -123,13 +123,13 @@
   </form>
 </div>
 <script type="text/javascript">
-    $(function () {
-        $('#datepicker').datepicker(
-            {
-                format: "dd/mm/yyyy"
-            }
-        );
-    });
+  $(function () {
+    $('#datepicker').datepicker(
+      {
+        format: "dd/mm/yyyy"
+      }
+    );
+  });
 
   // Muestro un preview de la foto que se suba
   const imageTag = $('#img-mascota');

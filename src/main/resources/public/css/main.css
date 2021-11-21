@@ -218,3 +218,8 @@ input::-webkit-inner-spin-button {
 input[type=number] {
     -moz-appearance: textfield;
 }
+
+.encontre-mascota {
+    margin: 10px 0;
+    font-weight: 600;
+}

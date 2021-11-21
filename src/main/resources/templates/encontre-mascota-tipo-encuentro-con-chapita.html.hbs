@@ -7,8 +7,10 @@
             </div>
         </div>
     </div>
-    <form class="form-login" action="/mascotas/encontre-mascota/con-chapita/detalle">
-        <div class="row g-3">
+    <form class="form-login" enctype='multipart/form-data' action="/mascotas/encontre-mascota/con-chapita" method="POST"
+        onsubmit="onFormSubmit()">
+        <div class="encontre-mascota">Datos de la ubicación</div>
+        <div class=" row g-3">
             <div class="col">
                 <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text" id="inputGroup-sizing-sm">Ubicacion</span>
@@ -37,7 +39,7 @@
             <div class="col">
                 <div class="input-group date input-group-sm mb-3" id="datepicker">
                     <span class="input-group-text" id="inputGroup-sizing-sm">Fecha Rescate</span>
-                    <input type="text" required name="fecha-rescate" class="form-control">
+                    <input type="text" required name="fechaRescate" class="form-control">
                     <span class="input-group-append">
                         <span class="input-group-text bg-white d-block">
                             <i class="fa fa-calendar"></i>
@@ -49,18 +51,27 @@
         <div class="row g-3">
             <div class="col">
                 <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-sm">Descripcion estado mascota</span><input
-                        type="text" required="required" name="estadoMascota"
-                        placeholder="Ingrese el estado de la mascota">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Descripcion estado mascota</span>
+                    <textarea maxlength="200" name="estadoMascota" placeholder="Ingrese el estado de la mascota"
+                        class="form-control" id="descripcion" rows="3"></textarea>
                 </div>
             </div>
         </div>
         <div class="row g-3">
-            <div class="col">
-                <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-sm">Adjuntar fotos</span><input type="file"
-                        id="img" name="img" accept="image/*" required="required" multiple name="fotos"
-                        placeholder="Adjunte las fotos de la mascota">
+            <div class="input-group input-group-sm mb-3">Adjuntar fotos</div>
+            <div class="row g-3">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <input class="form-control form-control-sm" type="file" accept="image/*" id="foto-mascota"
+                            name="fotoMascota">
+                        <div class="row g-3" style="margin-top: 0px;">
+                            <div class="col">
+                                <div>
+                                    <img id="img-mascota" src="#" alt="Mi mascota" class="fotoMascota" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row g-3">
@@ -78,7 +89,7 @@
                 <div class="col">
                     <div class="d-flex justify-content-center">
                         <button type="submit" class="btn btn-primary
-                        submit-button">Siguiente</button>
+                        submit-button">Enviar</button>
                     </div>
                 </div>
             </div>
@@ -92,6 +103,28 @@
             }
         );
     });
+
+    // Muestro un preview de la foto que se suba
+    const imageTag = $('#img-mascota');
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                imageTag.attr('src', e.target.result);
+            }
+            //transforma el archivo a b64
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    // agregando al event listener on-change del input
+    $("#foto-mascota").change(function () {
+        readURL(this);
+        imageTag.css('display', 'block')
+    });
+    function onFormSubmit() {
+        console.log('ejecutando esto:');
+        sessionStorage.setItem("mascota_registrada", true);
+    }
 </script>
 <script src="/js/busqueda.js"></script>
 <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCubYo08FIE6rhkIsXsV551fl2YxJYtqYE
