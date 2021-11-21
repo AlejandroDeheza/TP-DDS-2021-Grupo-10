@@ -1,10 +1,5 @@
 package controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import modelo.MascotaSinChapitaRequest;
 import modelo.hogarDeTransito.ReceptorHogares;
 import modelo.informe.InformeConQR;
 import modelo.informe.InformeSinQR;
@@ -16,11 +11,7 @@ import modelo.mascota.MascotaRegistrada;
 import modelo.mascota.TamanioMascota;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
-import modelo.notificacion.TipoNotificadorPreferido;
-import modelo.persona.DatosDeContacto;
-import modelo.persona.DocumentoIdentidad;
 import modelo.persona.Persona;
-import modelo.persona.TipoDocumento;
 import modelo.usuario.Usuario;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
@@ -31,13 +22,23 @@ import repositorios.RepositorioUsuarios;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import utils.Constantes;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletException;
 
 public class EncontreMascotaController extends Controller implements WithGlobalEntityManager,
     TransactionalOps {
@@ -85,17 +86,14 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
     List<CaracteristicaConValoresPosibles> listaCaracteristicasConValoresPosibles =
         repositorioCaracteristicas.getCaracteristicasConValoresPosibles();
 
-    listaCaracteristicasConValoresPosibles =
-        listaCaracteristicasConValoresPosibles.size() > 3 ?
-            listaCaracteristicasConValoresPosibles.subList(0, 2) : listaCaracteristicasConValoresPosibles;
+    List<CaracteristicaConValoresPosibles> listaCaracteristicas = repositorioCaracteristicas.getCaracteristicasConValoresPosibles();
+    modelo.put("caracteristicas", listaCaracteristicas);
 
     modelo.put("tipoAnimales", animal);
     modelo.put("tamanioMascota", tamanioMascotas);
-    modelo.put("listaCaracteristicasValoresPosibles", listaCaracteristicasConValoresPosibles);
 
     return new ModelAndView(modelo, "encontre-mascota-tipo-encuentro-sin-chapita.html.hbs");
   }
-
 
 
   public Void enviarMascotaEncontradaConChapita(Request request, Response response) {
@@ -104,13 +102,33 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
       return null;
     }
     try {
-      Map<String, Object> modelo = getBodyFromRequest(request, response);
 
-      Ubicacion ubicacionRescatista = (Ubicacion) modelo.get("ubicacionRescatista");
-      Ubicacion ubicacionRescate = (Ubicacion) modelo.get("ubicacionRescate");
-      LocalDate fechaRescate = (LocalDate) modelo.get("fechaRescate");
-      String estadoMascota = (String) modelo.get("estadoMascota");
-      List<Foto> fotos = (List<Foto>) modelo.get("fotos");
+
+      List<Foto> fotos = new ArrayList<>();
+
+      // Cargo la foto de la mascota
+      File uploadDir = new File(Constantes.UPLOAD_DIRECTORY);
+      Path tempFile = Files.createTempFile(uploadDir.toPath(), "", ".jpg");
+
+      request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
+      try (InputStream fotoInputStream = request.raw().getPart("fotos").getInputStream()) {
+        Files.copy(fotoInputStream, tempFile, StandardCopyOption.REPLACE_EXISTING);
+      } catch (IOException | ServletException exception) {
+        System.out.println(exception);
+        redireccionCasoError(request, response, "/", "Hubo un error al cargar la foto de tu mascota, intenta con otra foto");
+      }
+
+
+      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+      LocalDate fechaRescate = LocalDate.parse(request.queryParams("fechaRescate"), formatter);
+
+      String ubicacionRescatistaString = request.queryParams("ubicacionRescatista");
+      String ubicacionRescateString = request.queryParams("ubicacionRescate");
+      Ubicacion ubicacionRescatista = new Ubicacion(1122.1, 122.1, ubicacionRescatistaString);
+      Ubicacion ubicacionRescate = new Ubicacion(1122.1, 122.1, ubicacionRescateString);
+
+
+      String estadoMascota = (String) request.queryParams("estadoMascota");
 
       Long Id = request.session().attribute("user_id");
       Usuario usuario = new RepositorioUsuarios().getPorId(Id);
@@ -146,78 +164,89 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
   }
 
 
-  public Void enviarMascotaEncontradaSinChapita(Request request, Response response) {
+  public Void enviarMascotaEncontradaSinChapita(Request request, Response response) throws IOException {
     if (!tieneSesionActiva(request)) {
       response.redirect("/mascotas/encontre-mascota");
       return null;
     }
-    try {
-      Map<String, Object> modelo = getBodyFromRequest(request, response);
+    List<Caracteristica> caracteristicas;
+    List<Foto> fotos = new ArrayList<>();
 
-      Ubicacion ubicacionRescatista = (Ubicacion) modelo.get("ubicacionRescatista");
-      Ubicacion ubicacionRescate = (Ubicacion) modelo.get("ubicacionRescate");
-      LocalDate fechaRescate = (LocalDate) modelo.get("fechaRescate");
-      String estadoMascota = (String) modelo.get("estadoMascota");
-      List<Foto> fotos = (List<Foto>) modelo.get("fotos");
-      Long Id = request.session().attribute("user_id");
-      List<Caracteristica> caracteristicas = (List<Caracteristica>) modelo.get("caracteristicas");
+    // Cargo la foto de la mascota
+    File uploadDir = new File(Constantes.UPLOAD_DIRECTORY);
+    Path tempFile = Files.createTempFile(uploadDir.toPath(), "", ".jpg");
 
-      Usuario usuario = new RepositorioUsuarios().getPorId(Id);
-      Persona persona = usuario.getPersona();
-
-      TamanioMascota tamanioMascota =
-          TamanioMascota.values()[Integer.parseInt(request.queryParams("tamanioMascota"))];
-      Animal animal = Animal.values()[Integer.parseInt(request.queryParams("tipoAnimal"))];
-      RepositorioInformes repositorioInformes = new RepositorioInformes();
-      MascotaEncontrada mascotaEncontrada = new MascotaEncontrada(fotos, ubicacionRescate
-          , estadoMascota, fechaRescate,
-          tamanioMascota);
-      ReceptorHogares receptorHogares = new ReceptorHogares();
-      InformeSinQR informeSinQR = new InformeSinQR(persona,
-          ubicacionRescatista, mascotaEncontrada, receptorHogares, animal, caracteristicas);
-      withTransaction(() -> {
-        repositorioInformes.agregarInforme(informeSinQR);
-
-      });
-      redireccionCasoFeliz(request, response, "/", "La cuenta se ha registrado con exito!");
-      return null;
-    } catch (Exception e) {
-      redireccionCasoError(request, response, "/", "Fallo la registracion");
-      return null;
+    request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
+    try (InputStream fotoInputStream = request.raw().getPart("fotos").getInputStream()) {
+      Files.copy(fotoInputStream, tempFile, StandardCopyOption.REPLACE_EXISTING);
+    } catch (IOException | ServletException exception) {
+      System.out.println(exception);
+      redireccionCasoError(request, response, "/", "Hubo un error al cargar la foto de tu mascota, intenta con otra foto");
     }
-  }
 
-  private Map<String, Object> getBodyFromRequest(Request request, Response response) {
+    //Obtengo sus caracteristicas
+    caracteristicas = obtenerListaCaracteristicas(request);
 
-    ObjectMapper mapper = new ObjectMapper();
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    LocalDate fechaRescate = LocalDate.parse(request.queryParams("fechaRescate"), formatter);
 
     String ubicacionRescatistaString = request.queryParams("ubicacionRescatista");
     String ubicacionRescateString = request.queryParams("ubicacionRescate");
-    LocalDate fechaRescate = LocalDate.parse(request.queryParams("fechaRescate"),
-        DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-    String estadoMascota = request.queryParams("estadoMascota");
-    MascotaSinChapitaRequest objeto;
-    try {
-      objeto = mapper.readValue(request.body(),MascotaSinChapitaRequest.class);
-    } catch (JsonProcessingException e) {
-      redireccionCasoError(request, response, "/", "Hubo un error al cargar los datos, disculpe las molestias");
-      return null;
-    }
-
-//    String[] fotosString = request.queryParamsValues("img");
-//    List<Foto> fotos = new ArrayList<>();
-//    Arrays.stream(fotosString).forEach((foto) -> fotos.add(new Foto(foto,
-//        null)));
     Ubicacion ubicacionRescatista = new Ubicacion(1122.1, 122.1, ubicacionRescatistaString);
     Ubicacion ubicacionRescate = new Ubicacion(1122.1, 122.1, ubicacionRescateString);
-    Map<String, Object> modelo = getMap(request);
 
-    modelo.put("ubicacionRescatista", ubicacionRescatista);
-    modelo.put("ubicacionRescate", ubicacionRescate);
-    modelo.put("fechaRescate", fechaRescate);
-    modelo.put("estadoMascota", estadoMascota);
-//    modelo.put("fotos", fotos);
-    modelo.put("caracteristicas", objeto.getCaracteristicasMascota());
-    return modelo;
+    String estadoMascota = (String) request.queryParams("estadoMascota");
+
+    Long Id = request.session().attribute("user_id");
+
+    Usuario usuario = new RepositorioUsuarios().getPorId(Id);
+    Persona persona = usuario.getPersona();
+
+    TamanioMascota tamanioMascota =
+        TamanioMascota.values()[Integer.parseInt(request.queryParams("tamanioMascota"))];
+    Animal animal = Animal.values()[Integer.parseInt(request.queryParams("tipoAnimal"))];
+    RepositorioInformes repositorioInformes = new RepositorioInformes();
+    MascotaEncontrada mascotaEncontrada = new MascotaEncontrada(fotos, ubicacionRescate
+        , estadoMascota, fechaRescate,
+        tamanioMascota);
+    ReceptorHogares receptorHogares = new ReceptorHogares();
+    InformeSinQR informeSinQR = new InformeSinQR(persona,
+        ubicacionRescatista, mascotaEncontrada, receptorHogares, animal, caracteristicas);
+    withTransaction(() -> {
+      repositorioInformes.agregarInforme(informeSinQR);
+
+    });
+    redireccionCasoFeliz(request, response, "/", "La cuenta se ha registrado con exito!");
+    return null;
+  }
+
+
+  private List<Caracteristica> obtenerListaCaracteristicas(Request request) {
+    Set<String> queryParams = request.queryParams();
+
+    List<Caracteristica> caracteristicas = new ArrayList<>();
+
+    RepositorioCaracteristicas repositorioCaracteristicas = new RepositorioCaracteristicas();
+    // Obtengo los nombre de caracteristicas para comparar con los query params :)
+    List<String> listaNombresCaracteristicas = repositorioCaracteristicas.getCaracteristicas()
+        .stream()
+        .map(caracteristica -> caracteristica.getNombreCaracteristica())
+        .collect(Collectors.toList());
+
+    List<String> nombreParamsQueMandaron = queryParams
+        .stream()
+        .filter(param -> listaNombresCaracteristicas
+            .stream()
+            .anyMatch(c -> c.equals(param)))
+        .collect(Collectors.toList());
+
+    nombreParamsQueMandaron.forEach(
+        param -> {
+          Caracteristica caracteristica = new Caracteristica(param, request.queryParams(param));
+          caracteristicas.add(caracteristica);
+        }
+    );
+    return caracteristicas;
   }
 }

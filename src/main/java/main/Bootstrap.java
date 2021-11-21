@@ -52,7 +52,7 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
         TipoNotificadorPreferido.CORREO
     );
 
-    Usuario usuario = new Usuario("pepito", "asd123asd123", TipoUsuario.NORMAL, persona);
+    Usuario usuario = new Usuario("pepito", "pepitopepito", TipoUsuario.NORMAL, persona);
     Foto foto = new Foto("coco.jpg", null);
     List<Foto> fotos = new ArrayList<>();
     fotos.add(foto);

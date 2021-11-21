@@ -1,207 +1,220 @@
 :root {
-  --margen-bottom: 35px;
-  --header-height: 80px;
-  --footer-height: 70px;
+    --margen-bottom: 35px;
+    --header-height: 80px;
+    --footer-height: 70px;
 }
 
 .actions-container {
-  margin-bottom: var(--margen-bottom);
+    margin-bottom: var(--margen-bottom);
 }
 
 .action:last-child {
-  text-align: center;
+    text-align: center;
 }
 
 .action {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .card {
-  width: 300;
-  height: 200;
-  overflow: hidden;
-  border-radius: 6px;
-  box-shadow: 0 0 0 0 #7952b3;
-  filter: grayscale(100%);
-  position: relative;
-  transition: filter 0.6s, box-shadow 0.6s;
+    width: 300;
+    height: 200;
+    overflow: hidden;
+    border-radius: 6px;
+    box-shadow: 0 0 0 0 #7952b3;
+    filter: grayscale(100%);
+    position: relative;
+    transition: filter 0.6s, box-shadow 0.6s;
 }
+
 .card > img {
-  width: 300px;
-  height: 200px;
+    width: 300px;
+    height: 200px;
 }
 
 .card:hover {
-  box-shadow: 0 0 0 2px #7952b3;
-  filter: none;
+    box-shadow: 0 0 0 2px #7952b3;
+    filter: none;
 }
 
 .main-container {
-  margin: 0 110px;
+    margin: 0 110px;
 }
 
 .form-login {
-  width: 75%;
-  margin: 0 110px;
+    width: 75%;
+    margin: 0 110px;
 }
 
 .foto-bienvenida {
-  background-image: url("https://fondosmil.com/fondo/22182.jpg");
-  display: flex;
-  flex: 1;
-  background-position-x: center;
-  background-position-y: center;
-  background-repeat: no-repeat;
+    background-image: url("https://fondosmil.com/fondo/22182.jpg");
+    display: flex;
+    flex: 1;
+    background-position-x: center;
+    background-position-y: center;
+    background-repeat: no-repeat;
 }
 
 .foto-bienvenida-sign-in {
-  background-image: url("http://st.gde-fon.com/wallpapers_original/422625_koshka_sobaka_kotenok_shhenok_trava_fon_5269x3500_www.Gde-Fon.com.jpg");
-  display: flex;
-  flex: 1;
-  background-position-x: center;
-  background-position-y: center;
-  background-repeat: no-repeat;
+    background-image: url("http://st.gde-fon.com/wallpapers_original/422625_koshka_sobaka_kotenok_shhenok_trava_fon_5269x3500_www.Gde-Fon.com.jpg");
+    display: flex;
+    flex: 1;
+    background-position-x: center;
+    background-position-y: center;
+    background-repeat: no-repeat;
 }
 
 .login-container {
-  display: flex;
-  height: calc(100vh - 150px);
-  margin: 0 -110px;
+    display: flex;
+    height: calc(100vh - 150px);
+    margin: 0 -110px;
 }
 
 .logo-login {
-  width: 120px;
-  height: 120px;
+    width: 120px;
+    height: 120px;
 }
 
 .mensaje-bienvenida {
-  display: flex;
-  justify-content: center;
-  flex: 1;
-  align-items: center;
-  color: white;
-  font-size: xx-large;
-  font-weight: 600;
-  margin: 0 70px;
-  text-align: center;
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    align-items: center;
+    color: white;
+    font-size: xx-large;
+    font-weight: 600;
+    margin: 0 70px;
+    text-align: center;
 }
 
 .submit-button {
-  border-radius: 50px;
-  width: 200px;
-  margin-top: 30px;
-  background-color: #7952b3 !important;
-  border-color: #7952b3 !important;
+    border-radius: 50px;
+    width: 200px;
+    margin-top: 30px;
+    background-color: #7952b3 !important;
+    border-color: #7952b3 !important;
 }
 
 .image-error-container {
-  height: 500px;
+    height: 500px;
 }
 
 .error-button-container {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
 .submit-button-error {
-  border-radius: 50px;
-  width: 200px;
-  margin-top: 10px;
-  background-color: #7952b3 !important;
-  border-color: #7952b3 !important;
+    border-radius: 50px;
+    width: 200px;
+    margin-top: 10px;
+    background-color: #7952b3 !important;
+    border-color: #7952b3 !important;
 }
 
 .form-container {
-  flex: 1;
-  justify-content: center;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+    flex: 1;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 .mensaje-error {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .error-container {
-  height: calc(100vh - 150px);
-  padding: 50px;
+    height: calc(100vh - 150px);
+    padding: 50px;
 }
 
 .form-container-sign-up {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 .image-container {
-  flex: 1;
+    flex: 1;
 }
 
 .image-container > img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .nav-link {
-  color: white !important;
-  margin: 0 25px;
+    color: white !important;
+    margin: 0 25px;
 }
 
 .navbar {
-  background-color: #7952b3;
-  height: 80px;
+    background-color: #7952b3;
+    height: 80px;
 }
 
 .navbar-nav {
-  font-size: 15px;
+    font-size: 15px;
 }
 
 .navbar-brand {
-  align-items: center;
-  color: white !important;
-  display: flex;
+    align-items: center;
+    color: white !important;
+    display: flex;
 }
 
 .navbar-brand > img {
-  width: 80px;
-  height: 65px;
-  margin-right: 5px;
+    width: 80px;
+    height: 65px;
+    margin-right: 5px;
 }
 
 .flex-center {
-  justify-content: space-between;
+    justify-content: space-between;
 }
 
 .footer {
-  color: white;
-  align-items: center;
-  background-color: #7952b3;
-  bottom: 0;
-  display: flex;
-  height: 70px;
-  left: 0;
-  right: 0;
-  width: 100%;
+    color: white;
+    align-items: center;
+    background-color: #7952b3;
+    bottom: 0;
+    display: flex;
+    height: 70px;
+    left: 0;
+    right: 0;
+    width: 100%;
 }
 
 .section {
-  margin-bottom: var(--margen-bottom);
+    margin-bottom: var(--margen-bottom);
 }
 
 #sign-in {
-  background-color: #7952b3;
-  border-color: #7952b3;
+    background-color: #7952b3;
+    border-color: #7952b3;
 }
 
 .encontre-mascota-container {
     height: calc(100vh - 150px);
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
 }

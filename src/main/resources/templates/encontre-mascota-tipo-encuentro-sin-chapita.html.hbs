@@ -1,121 +1,162 @@
 {{# partial "contenido" }}
-<section class="fondo-gris">
-  <h1>Encontre una mascota sin chapita</h1>
+<div class="encontre-mascota-container">
+  <div class="foto-bienvenida">
+    <div class="mensaje-bienvenida">
+      <div>
+        Encontre una mascota sin chapita
+      </div>
+    </div>
+  </div>
   <form class="form-login" action="/mascotas/encontre-mascota/sin-chapita" method="POST" id="encontreForm">
     <h2>Datos de la ubicación</h2>
-    <div class="input-group input-group-sm mb-3">
-      <span class="input-group-text" id="inputGroup-sizing-sm">Ubicacion</span><input type="text" required="required"
-        name="ubicacionRescatista" placeholder="Ingrese su ubicacion">
+    <div class="row g-3">
+      <div class="col">
+        <div class="input-group input-group-sm mb-3">
+          <span class="input-group-text" id="inputGroup-sizing-sm">Ubicacion</span>
+          <input type="text" id="ubicacionRescatista" name="ubicacionRescatista" required="required"
+            placeholder="Ingrese su ubicacion">
+        </div>
+      </div>
     </div>
-    <div class="input-group input-group-sm mb-3">
-      <span class="input-group-text" id="inputGroup-sizing-sm">Ubicacion rescate</span><input type="text"
-        required="required" name="ubicacionRescate" placeholder="Ingrese la ubicacion del rescate">
+    <div class="row g-3">
+      <div class="col">
+        <div class="input-group input-group-sm mb-3">
+          <span class="input-group-text" id="inputGroup-sizing-sm">Ubicacion rescate</span><input type="text"
+            required="required" id="ubicacionRescate" name="ubicacionRescate"
+            placeholder="Ingrese la ubicacion del rescate">
+        </div>
+      </div>
     </div>
-    <div class="input-group date input-group-sm mb-3" id="datepicker">
-      <span class="input-group-text" id="inputGroup-sizing-sm">Fecha rescate</span>
-      <input type="text" required name="fechaRescate" class="form-control">
-      <span class="input-group-append">
-        <span class="input-group-text bg-white d-block">
-          <i class="fa fa-calendar"></i>
-        </span>
-      </span>
+    <div class="row g-3">
+      <div class="col">
+        <div class="input-group input-group-sm mb-3">
+          <div id="map" style="width:100%;height:400px;"></div>
+        </div>
+      </div>
     </div>
-    <div class="input-group input-group-sm mb-3">
-      <span class="input-group-text" id="inputGroup-sizing-sm">Descripcion estado mascota</span><input type="text"
-        required="required" name="estadoMascota" placeholder="Ingrese el estado de la mascota">
+    <div class="row g-3">
+      <div class="col">
+        <div class="input-group date input-group-sm mb-3" id="datepicker">
+          <span class="input-group-text" id="inputGroup-sizing-sm">Fecha Rescate</span>
+          <input type="text" required name="fechaRescate" class="form-control">
+          <span class="input-group-append">
+            <span class="input-group-text bg-white d-block">
+              <i class="fa fa-calendar"></i>
+            </span>
+          </span>
+        </div>
+      </div>
     </div>
-    <div class="input-group input-group-sm mb-3">
-      <span class="input-group-text" id="inputGroup-sizing-sm">Tipo Adjuntar fotos</span><input type="file" id="img"
-        name="img" accept="image/*" multiple name="fotos" placeholder="Adjunte las fotos de la mascota">
+    <div class="row g-3">
+      <div class="col">
+        <div class="input-group input-group-sm mb-3">
+          <span class="input-group-text" id="inputGroup-sizing-sm">Descripcion estado mascota</span>
+          <textarea maxlength="200" name="estadoMascota" placeholder="Ingrese el estado de la mascota"
+            class="form-control" id="descripcion" rows="3"></textarea>
+        </div>
+      </div>
     </div>
+    <div class="input-group input-group-sm mb-3">Adjuntar fotos</div>
+    <div class="row g-3">
+      <div class="col-12">
+        <div class="mb-3">
+          <input class="form-control form-control-sm" type="file" accept="image/*" id="foto-mascota" name="fotos">
+          <div class="row g-3" style="margin-top: 0px;">
+            <div class="col">
+              <div>
+                <img id="img-mascota" src="#" alt="Mi mascota" class="fotoMascota" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <h2>Datos de la mascota con chapita</h2>
-    <div class="input-group input-group-sm mb-3">
-      <span class="input-group-text" id="inputGroup-sizing-sm">Tipo Animal</span>
-      <select class="form-select" required name="tipoAnimal" id="inputGroupSelect02">
-        <option value="0">Perro</option>
-        <option value="1">Gato</option>
-      </select>
+    <div class="row g-3">
+      <div class="col">
+        <div class="input-group input-group-sm mb-3">
+          <span class="input-group-text" id="inputGroup-sizing-sm">Tipo Animal</span>
+          <select class="form-select" required name="tipoAnimal" id="inputGroupSelect02">
+            <option value="0">Perro</option>
+            <option value="1">Gato</option>
+          </select>
+        </div>
+      </div>
     </div>
-    <div class="input-group input-group-sm mb-3">
-      <span class="input-group-text" id="inputGroup-sizing-sm">Tamaño</span>
-      <select class="form-select" required name="tamanioMascota" id="inputGroupSelect02">
-        <option value="0">Chico</option>
-        <option value="1">Mediano</option>
-        <option value="2">Grande</option>
-      </select>
+    <div class="row g-3">
+      <div class="col">
+        <div class="input-group input-group-sm mb-3">
+          <span class="input-group-text" id="inputGroup-sizing-sm">Tamaño</span>
+          <select class="form-select" required name="tamanioMascota" id="inputGroupSelect02">
+            <option value="0">Chico</option>
+            <option value="1">Mediano</option>
+            <option value="2">Grande</option>
+          </select>
+        </div>
+      </div>
     </div>
-    <h2>Caracteristicas</h2>
-    <!--div class="campo">
-      <span class="nombre-campo">Color:</span><input type="color" required="required" name="color"
-        placeholder="Ingrese color">
-    </div-->
-    {{#each listaCaracteristicasValoresPosibles}}
-    <div class="input-group input-group-sm mb-3">
-      <span class="input-group-text nombreCaracteristica" id="nombreCaracteristica">{{nombreCaracteristica}}</span>
-      <select class="valoresCaracteristica" name="valoresCaracteristica" id="valoresCaracteristica">
-        {{#each valoresCaracteristicas}}
-        <option value="{{this}}">{{this}}</option>
+    <div class="row g-3">
+      <div class="col-12">
+        <div class="pregunta-caracteristica"> ¿Qué caracteriza a la mascota que
+          encontraste?</div>
+        {{#each caracteristicas}}
+        <div class="input-group-sm mb-3">
+          <div class="pregunta-caracteristica"> {{nombreCaracteristica}}</div>
+          <select class="form-select" required name="{{nombreCaracteristica}}" id="{{nombreCaracteristica}}">
+            {{#each valoresCaracteristicas}}
+            <option value="{{this}}">{{this}}</option>
+            {{/each}}
+          </select>
+        </div>
         {{/each}}
-      </select>
+
+      </div>
     </div>
-    {{/each}}
     <div class="row g-3 justify-content-center">
       <div class="col">
         <div class="d-flex justify-content-center">
-          <button type="submit" class="btn btn-primary
-                            submit-button">Enviar</button>
+          <button type="submit" class="btn btn-primary submit-button">Enviar</button>
         </div>
       </div>
     </div>
   </form>
-</section>
+</div>
 <script type="text/javascript">
-  $(function () {
-    $('#datepicker').datepicker();
-  });
-</script>
-<script type="text/javascript">
-  $("#encontreForm").submit(
-    function (event) {
-      event.preventDefault();
+    $(function () {
+        $('#datepicker').datepicker(
+            {
+                format: "dd/mm/yyyy"
+            }
+        );
+    });
 
-      let form = $("#encontreForm");
-      let path = form.attr("action");
-      let ubicacionRescatista = form.find("[name='ubicacionRescatista']").val();
-      let ubicacionRescate = form.find("[name='ubicacionRescate']").val();
-      let fechaRescate = form.find("[name='fechaRescate']").val();
-      let estadoMascota = form.find("[name='estadoMascota']").val();
-      let tipoAnimal = form.find("[name='tipoAnimal']").val();
-      let tamanioMascota = form.find("[name='tamanioMascota']").val();
-
-      let nombresCaracteristicas = Array.from(document.getElementsByClassName('nombreCaracteristica')).map(e => e.innerText);
-      let valores = Array.from(document.getElementsByClassName('valoresCaracteristica')).map(e => e.selectedOptions[0].value);
-
-      let caracteristicas = [];
-      for (i = 0; i < nombresCaracteristicas.length; i++) {
-        let nombre = nombresCaracteristicas[i];
-        let valor = valores[i];
-        let caractersitica = { nombre, valor }
-        caracteristicas.push(caractersitica);
+  // Muestro un preview de la foto que se suba
+  const imageTag = $('#img-mascota');
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        imageTag.attr('src', e.target.result);
       }
-
-      let url = "http://localhost:8080" + path;
-      let body = {
-        ubicacionRescatista,
-        ubicacionRescate,
-        fechaRescate,
-        estadoMascota,
-        tipoAnimal,
-        tamanioMascota,
-        caracteristicas,
-      }
-
-      console.log(body)
-      var posting = $.post(url, body);
+      //transforma el archivo a b64
+      reader.readAsDataURL(input.files[0]);
     }
-
-  );
+  }
+  // agregando al event listener on-change del input
+  $("#foto-mascota").change(function () {
+    readURL(this);
+    imageTag.css('display', 'block')
+  });
+  function onFormSubmit() {
+    console.log('ejecutando esto:');
+    sessionStorage.setItem("mascota_registrada", true);
+  }
 </script>
+<script src="/js/busqueda.js"></script>
+<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCubYo08FIE6rhkIsXsV551fl2YxJYtqYE
+    &callback=initAutocomplete&libraries=places&v=weekly">
+    </script>
 {{/partial}}
 
 {{> layout.html.hbs }}
