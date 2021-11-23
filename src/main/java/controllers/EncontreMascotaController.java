@@ -99,56 +99,63 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
       response.redirect("/login");
       return null;
     }
-    List<Foto> fotos = obtenerFotos(request, response);
+    try {
+      // List<Foto> fotos = obtenerFotos(request, response);
+      // TODO: ver porque no funciona las fotos
+      Foto foto = new Foto("", "");
+      List<Foto> fotos = new ArrayList<>();
+      fotos.add(foto);
+      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+      LocalDate fechaRescate = LocalDate.parse(request.queryParams("fechaRescate"), formatter);
 
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    LocalDate fechaRescate = LocalDate.parse(request.queryParams("fechaRescate"), formatter);
+      String ubicacionRescatistaString = request.queryParams("ubicacionRescatista");
+      String latitudRescatistaString = request.queryParams("latitudRescatista");
+      String longitudRescatistaString = request.queryParams("longitudRescatista");
+      String latitudRescateString = request.queryParams("latitudRescate");
+      String longitudRescateString = request.queryParams("longitudRescate");
+      String ubicacionRescateString = request.queryParams("ubicacionRescate");
+      Ubicacion ubicacionRescatista = new Ubicacion(Double.parseDouble(latitudRescatistaString),
+          Double.parseDouble(longitudRescatistaString),
+          ubicacionRescatistaString);
+      Ubicacion ubicacionRescate = new Ubicacion(Double.parseDouble(latitudRescateString),
+          Double.parseDouble(longitudRescateString), ubicacionRescateString);
+//      Ubicacion ubicacionRescatista = new Ubicacion(1.1,
+//          1.1,
+//          ubicacionRescatistaString);
+//      Ubicacion ubicacionRescate = new Ubicacion(1.1,
+//          1.1, ubicacionRescateString);
+      String estadoMascota = request.queryParams("estadoMascota");
 
-    String ubicacionRescatistaString = request.queryParams("ubicacionRescatista");
-    String latitudRescatistaString = request.queryParams("latitudRescatista");
-    String longitudRescatistaString = request.queryParams("longitudRescatista");
-    String latitudRescateString = request.queryParams("latitudRescate");
-    String longitudRescateString = request.queryParams("longitudRescate");
-    String ubicacionRescateString = request.queryParams("ubicacionRescate");
-//    Ubicacion ubicacionRescatista = new Ubicacion(Double.parseDouble(latitudRescatistaString),
-//        Double.parseDouble(longitudRescatistaString),
-//        ubicacionRescatistaString);
-//    Ubicacion ubicacionRescate = new Ubicacion(Double.parseDouble(latitudRescateString),
-//        Double.parseDouble(longitudRescateString), ubicacionRescateString);
-    Ubicacion ubicacionRescatista = new Ubicacion(1.1,
-        1.1,
-        ubicacionRescatistaString);
-    Ubicacion ubicacionRescate = new Ubicacion(1.1,
-        1.1, ubicacionRescateString);
-    String estadoMascota = request.queryParams("estadoMascota");
-
-    Long Id = request.session().attribute("user_id");
-    Usuario usuario = new RepositorioUsuarios().getPorId(Id);
-    Persona persona = usuario.getPersona();
+      Long Id = request.session().attribute("user_id");
+      Usuario usuario = new RepositorioUsuarios().getPorId(Id);
+      Persona persona = usuario.getPersona();
 
 
-    RepositorioMascotaRegistrada repositorioMascotaRegistrada = new RepositorioMascotaRegistrada();
-    String idChapitaString = request.queryParams("codigoChapita");
-    Long idChapita = Long.parseLong(idChapitaString);
-    MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.getPorId(idChapita);
-    TamanioMascota tamanioMascota = mascotaRegistrada.getTamanio();
-    if (mascotaRegistrada == null) {
-      redireccionCasoError(request, response, "/mascotas/encontre-mascota/con-chapita", "El " +
-          "codigo de chapita no es valido");
-      return null;
+      RepositorioMascotaRegistrada repositorioMascotaRegistrada = new RepositorioMascotaRegistrada();
+      String idChapitaString = request.queryParams("codigoChapita");
+      Long idChapita = Long.parseLong(idChapitaString);
+      MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.getPorId(idChapita);
+      TamanioMascota tamanioMascota = mascotaRegistrada.getTamanio();
+      if (mascotaRegistrada == null) {
+        redireccionCasoError(request, response, "/mascotas/encontre-mascota/con-chapita", "El " +
+            "codigo de chapita no es valido");
+        return null;
+      }
+      RepositorioInformes repositorioInformes = new RepositorioInformes();
+      MascotaEncontrada mascotaEncontrada = new MascotaEncontrada(fotos, ubicacionRescate
+          , estadoMascota, fechaRescate,
+          tamanioMascota);
+      ReceptorHogares receptorHogares = new ReceptorHogares();
+      InformeConQR informeConQR = new InformeConQR(persona, ubicacionRescatista,
+          mascotaEncontrada, receptorHogares, mascotaRegistrada);
+
+      withTransaction(() -> {
+        repositorioInformes.agregarInforme(informeConQR);
+      });
+    } catch (Exception e) {
+      redireccionCasoError(request, response, "/error", "Fallo la generacion del informe");
     }
-    RepositorioInformes repositorioInformes = new RepositorioInformes();
-    MascotaEncontrada mascotaEncontrada = new MascotaEncontrada(fotos, ubicacionRescate
-        , estadoMascota, fechaRescate,
-        tamanioMascota);
-    ReceptorHogares receptorHogares = new ReceptorHogares();
-    InformeConQR informeConQR = new InformeConQR(persona, ubicacionRescatista,
-        mascotaEncontrada, receptorHogares, mascotaRegistrada);
-
-    withTransaction(() -> {
-      repositorioInformes.agregarInforme(informeConQR);
-    });
-    redireccionCasoFeliz(request, response, "/", "Se genero el informe correctamentes");
+    redireccionCasoFeliz(request, response, "/", "Se genero el informe!");
     return null;
   }
 
@@ -158,75 +165,79 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
       response.redirect("/mascotas/encontre-mascota");
       return null;
     }
-    List<Caracteristica> caracteristicas;
-    List<Foto> fotos = obtenerFotos(request, response);
+    try {
+// TODO: falta obtener la latitud y longitud
+      List<Foto> fotos = obtenerFotos(request, response);
 
 
-    //Obtengo sus caracteristicas
-    caracteristicas = obtenerListaCaracteristicas(request);
+      List<Caracteristica> caracteristicas;
+      //Obtengo sus caracteristicas
+      caracteristicas = obtenerListaCaracteristicas(request);
 
 
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    LocalDate fechaRescate = LocalDate.parse(request.queryParams("fechaRescate"), formatter);
+      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+      LocalDate fechaRescate = LocalDate.parse(request.queryParams("fechaRescate"), formatter);
 
-    String ubicacionRescatistaString = request.queryParams("ubicacionRescatista");
-    String latitudRescatistaString = request.queryParams("latitudRescatista");
-    String longitudRescatistaString = request.queryParams("longitudRescatista");
-    String latitudRescateString = request.queryParams("latitudRescate");
-    String longitudRescateString = request.queryParams("longitudRescate");
-    String ubicacionRescateString = request.queryParams("ubicacionRescate");
+      String ubicacionRescatistaString = request.queryParams("ubicacionRescatista");
+      String latitudRescatistaString = request.queryParams("latitudRescatista");
+      String longitudRescatistaString = request.queryParams("longitudRescatista");
+      String latitudRescateString = request.queryParams("latitudRescate");
+      String longitudRescateString = request.queryParams("longitudRescate");
+      String ubicacionRescateString = request.queryParams("ubicacionRescate");
 
-//    Ubicacion ubicacionRescatista = new Ubicacion(Double.parseDouble(latitudRescatistaString),
-//        Double.parseDouble(longitudRescatistaString),
-//        ubicacionRescatistaString);
-//    Ubicacion ubicacionRescate = new Ubicacion(Double.parseDouble(latitudRescateString),
-//        Double.parseDouble(longitudRescateString), ubicacionRescateString);
-    Ubicacion ubicacionRescatista = new Ubicacion(1.1,
-        1.1,
-        ubicacionRescatistaString);
-    Ubicacion ubicacionRescate = new Ubicacion(1.1,
-        1.1, ubicacionRescateString);
+//      Ubicacion ubicacionRescatista = new Ubicacion(Double.parseDouble(latitudRescatistaString),
+//          Double.parseDouble(longitudRescatistaString),
+//          ubicacionRescatistaString);
+//      Ubicacion ubicacionRescate = new Ubicacion(Double.parseDouble(latitudRescateString),
+//          Double.parseDouble(longitudRescateString), ubicacionRescateString);
+      Ubicacion ubicacionRescatista = new Ubicacion(1.1,
+          1.1,
+          ubicacionRescatistaString);
+      Ubicacion ubicacionRescate = new Ubicacion(1.1,
+          1.1, ubicacionRescateString);
 
-    String estadoMascota = request.queryParams("estadoMascota");
+      String estadoMascota = request.queryParams("estadoMascota");
 
-    Long Id = request.session().attribute("user_id");
+      Long Id = request.session().attribute("user_id");
 
-    Usuario usuario = new RepositorioUsuarios().getPorId(Id);
-    Persona persona = usuario.getPersona();
+      Usuario usuario = new RepositorioUsuarios().getPorId(Id);
+      Persona persona = usuario.getPersona();
 
-    TamanioMascota tamanioMascota =
-        TamanioMascota.values()[Integer.parseInt(request.queryParams("tamanioMascota"))];
-    Animal animal = Animal.values()[Integer.parseInt(request.queryParams("tipoAnimal"))];
-    RepositorioInformes repositorioInformes = new RepositorioInformes();
-    MascotaEncontrada mascotaEncontrada = new MascotaEncontrada(fotos, ubicacionRescate
-        , estadoMascota, fechaRescate,
-        tamanioMascota);
-    ReceptorHogares receptorHogares = new ReceptorHogares();
-    InformeSinQR informeSinQR = new InformeSinQR(persona,
-        ubicacionRescatista, mascotaEncontrada, receptorHogares, animal, caracteristicas);
-    withTransaction(() -> {
-      repositorioInformes.agregarInforme(informeSinQR);
+      TamanioMascota tamanioMascota =
+          TamanioMascota.values()[Integer.parseInt(request.queryParams("tamanioMascota"))];
+      Animal animal = Animal.values()[Integer.parseInt(request.queryParams("tipoAnimal"))];
+      RepositorioInformes repositorioInformes = new RepositorioInformes();
+      MascotaEncontrada mascotaEncontrada = new MascotaEncontrada(fotos, ubicacionRescate
+          , estadoMascota, fechaRescate,
+          tamanioMascota);
+      ReceptorHogares receptorHogares = new ReceptorHogares();
+      InformeSinQR informeSinQR = new InformeSinQR(persona,
+          ubicacionRescatista, mascotaEncontrada, receptorHogares, animal, caracteristicas);
+      withTransaction(() -> {
+        repositorioInformes.agregarInforme(informeSinQR);
 
-    });
-    redireccionCasoFeliz(request, response, "/", "La cuenta se ha registrado con exito!");
+      });
+    } catch (
+        Exception e) {
+      redireccionCasoError(request, response, "/error", "Fallo la generacion del informe");
+    }
+
+    redireccionCasoFeliz(request, response, "/", "Se genero el informe!");
     return null;
   }
 
-  private List<Foto> obtenerFotos(Request request, Response response) throws IOException {
+  private List<Foto> obtenerFotos(Request request, Response response) throws IOException, ServletException {
     List<Foto> fotos = new ArrayList<>();
     // Cargo la foto de la mascota
     File uploadDir = new File(Constantes.UPLOAD_DIRECTORY);
     Path tempFile = Files.createTempFile(uploadDir.toPath(), "", ".jpg");
 
     request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
-    try (InputStream fotoInputStream = request.raw().getPart("fotoMascota").getInputStream()) {
-      Files.copy(fotoInputStream, tempFile, StandardCopyOption.REPLACE_EXISTING);
-      fotos.add(new Foto(tempFile.toAbsolutePath().toString(), LocalDate.now().toString()));
+    InputStream fotoInputStream = request.raw().getPart("fotoMascota").getInputStream();
+    Files.copy(fotoInputStream, tempFile, StandardCopyOption.REPLACE_EXISTING);
+    fotos.add(new Foto(tempFile.toAbsolutePath().toString(), LocalDate.now().toString()));
 
-    } catch (IOException | ServletException exception) {
-      System.out.println(exception);
-      redireccionCasoError(request, response, "/", "Hubo un error al cargar la foto de tu mascota, intenta con otra foto");
-    }
+
     return fotos;
   }
 

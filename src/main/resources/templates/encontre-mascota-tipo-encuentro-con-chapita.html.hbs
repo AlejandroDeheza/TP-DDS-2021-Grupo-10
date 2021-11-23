@@ -67,7 +67,7 @@
                         <div class="mb-3">
                             <input class="form-control form-control-sm" type="file"
                                    accept="image/*"
-                                   id="fotoMascota"
+                                   id="foto-mascota"
                                    name="fotoMascota">
                             <div class="row g-3" style="margin-top: 0px;">
                                 <div class="col">
@@ -106,8 +106,8 @@
         </div>
     </div>
     <script src="/js/busqueda.js"></script>
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCubYo08FIE6rhkIsXsV551fl2YxJYtqYE
-    &callback=initAutocomplete&libraries=places&v=weekly">
+    <script async
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCubYo08FIE6rhkIsXsV551fl2YxJYtqYE&callback=initAutocomplete&libraries=places&v=weekly">
     </script>
     <script type="text/javascript">
         $(function () {
@@ -133,7 +133,7 @@
         }
 
         // agregando al event listener on-change del input
-        $("#fotoMascota").change(function () {
+        $("#foto-mascota").change(function () {
             readURL(this);
             imageTag.css('display', 'block')
         });
@@ -142,108 +142,66 @@
         function onFormSubmit() {
             console.log('ejecutando esto:');
             sessionStorage.setItem("mascota_registrada", true);
-
-            // let ubicacionRescatista = document.getElementById('ubicacionRescatista').value;
-            // let ubicacionRescate = document.getElementById('ubicacionRescate').value;
-            //
-            // const obtenerLatitudLongitud = async (ubicacion) => {
-            //     const geocoder = new google.maps.Geocoder();
-            //     const response = await geocoder.geocode({'address': ubicacion});
-            //     console.log("obtener")
-            //     latitud = response.results[0].geometry.location.lat();
-            //     longitud = response.results[0].geometry.location.lng();
-            //     return {
-            //         latitud, longitud
-            //     }
-            // }
-            //
-            // let latitudRescate = (await obtenerLatitudLongitud(ubicacionRescate)).latitud
-            // let longitudRescate = (await obtenerLatitudLongitud(ubicacionRescate)).longitud
-            // let latitudRescatista = (await obtenerLatitudLongitud(ubicacionRescatista)).latitud
-            // let longitudRescatista = (await obtenerLatitudLongitud(ubicacionRescatista)).longitud
-            //
-            // let form = $("#encontreForm");
-            // let path = form.attr("action");
-            // let fechaRescate = form.find("[name='fechaRescate']").val();
-            // let estadoMascota = form.find("[name='estadoMascota']").val();
-            // let codigoChapita = form.find("[name='codigoChapita']").val();
-            // let fotoMascota = form.find("[name='fotoMascota']").val();
-            // let url = "http://localhost:8080" + path;
-            // console.log(latitudRescate, longitudRescate, latitudRescatista, longitudRescatista)
-            // let body = {
-            //     ubicacionRescatista,
-            //     ubicacionRescate,
-            //     fechaRescate,
-            //     estadoMascota,
-            //     codigoChapita,
-            //     fotoMascota,
-            //     latitudRescatista,
-            //     longitudRescatista,
-            //     latitudRescate,
-            //     longitudRescate
-            // }
-            // console.log(body)
-            // $.post(url, body);
         }
     </script>
-    <!--    <script type="text/javascript">-->
-    <!--        $("#encontreForm").submit(-->
-    <!--                async function (event) {-->
-    <!--                    event.preventDefault();-->
+    <script type="text/javascript">
+        $("#encontreForm").submit(
+                async function (event) {
+                    event.preventDefault();
 
-    <!--                    let ubicacionRescatista = document.getElementById('ubicacionRescatista').value;-->
-    <!--                    let ubicacionRescate = document.getElementById('ubicacionRescate').value;-->
-    <!--                    let latLngRescatista;-->
-    <!--                    let latLngRescate;-->
+                    let ubicacionRescatista = document.getElementById('ubicacionRescatista').value;
+                    let ubicacionRescate = document.getElementById('ubicacionRescate').value;
+                    let latLngRescatista;
+                    let latLngRescate;
 
-    <!--                    latLngRescatista = await obtenerLatitudLongitud(ubicacionRescatista);-->
-    <!--                    latLngRescate = await obtenerLatitudLongitud(ubicacionRescate);-->
+                    latLngRescatista = await obtenerLatitudLongitud(ubicacionRescatista);
+                    latLngRescate = await obtenerLatitudLongitud(ubicacionRescate);
 
 
-    <!--                    let form = $("#encontreForm");-->
-    <!--                    let path = form.attr("action");-->
-    <!--                    let fechaRescate = form.find("[name='fechaRescate']").val();-->
-    <!--                    let estadoMascota = form.find("[name='estadoMascota']").val();-->
-    <!--                    let codigoChapita = form.find("[name='codigoChapita']").val();-->
-    <!--                    let fotoMascota;-->
-    <!--                    let url = "http://localhost:8080" + path;-->
-    <!--                    let latitudRescatista = latLngRescatista.latitud-->
-    <!--                    let longitudRescatista = latLngRescatista.longitud-->
+                    let form = $("#encontreForm");
+                    let path = form.attr("action");
+                    let fechaRescate = form.find("[name='fechaRescate']").val();
+                    let estadoMascota = form.find("[name='estadoMascota']").val();
+                    let codigoChapita = form.find("[name='codigoChapita']").val();
+                    let fotoMascota = form.find("[name='fotoMascota']").val();
+                    let url = "http://localhost:8080" + path;
+                    let latitudRescatista = latLngRescatista.latitud
+                    let longitudRescatista = latLngRescatista.longitud
 
-    <!--                    let latitudRescate = latLngRescate.latitud-->
-    <!--                    let longitudRescate = latLngRescate.longitud-->
-    <!--                    console.log(latitudRescate, longitudRescate, latitudRescatista, longitudRescatista)-->
-    <!--                    let body = {-->
-    <!--                        ubicacionRescatista,-->
-    <!--                        ubicacionRescate,-->
-    <!--                        fechaRescate,-->
-    <!--                        estadoMascota,-->
-    <!--                        codigoChapita,-->
-    <!--                        fotoMascota,-->
-    <!--                        latitudRescatista,-->
-    <!--                        longitudRescatista,-->
-    <!--                        latitudRescate,-->
-    <!--                        longitudRescate-->
-    <!--                    }-->
-    <!--                    console.log(body)-->
-    <!--                    $.post(url, body);-->
-    <!--                }-->
-    <!--        )-->
+                    let latitudRescate = latLngRescate.latitud
+                    let longitudRescate = latLngRescate.longitud
+                    console.log(latitudRescate, longitudRescate, latitudRescatista, longitudRescatista)
+                    let body = {
+                        ubicacionRescatista,
+                        ubicacionRescate,
+                        fechaRescate,
+                        estadoMascota,
+                        codigoChapita,
+                        fotoMascota,
+                        latitudRescatista,
+                        longitudRescatista,
+                        latitudRescate,
+                        longitudRescate
+                    }
+                    console.log(body)
+                    $.post(url, body);
+                }
+        )
 
-    <!--        const obtenerLatitudLongitud = async (ubicacion) => {-->
-    <!--                    const geocoder = new google.maps.Geocoder();-->
-    <!--                    const response = await geocoder.geocode({'address': ubicacion});-->
+        const obtenerLatitudLongitud = async (ubicacion) => {
+                    const geocoder = new google.maps.Geocoder();
+                    const response = await geocoder.geocode({'address': ubicacion});
 
-    <!--                    latitud = response.results[0].geometry.location.lat();-->
-    <!--                    longitud = response.results[0].geometry.location.lng();-->
+                    latitud = response.results[0].geometry.location.lat();
+                    longitud = response.results[0].geometry.location.lng();
 
-    <!--                    return {-->
-    <!--                        latitud, longitud-->
-    <!--                    }-->
-    <!--                }-->
+                    return {
+                        latitud, longitud
+                    }
+                }
 
-    <!--        ;-->
-    <!--    </script>-->
+        ;
+    </script>
 {{/partial}}
 
 {{> layout.html.hbs }}
