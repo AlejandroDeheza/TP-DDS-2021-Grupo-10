@@ -1,29 +1,34 @@
 {{# partial "titulo" }}
-<title>Patitas - Encontre una Mascota</title>
+    <title>Patitas - Encontre una Mascota</title>
 {{/partial}}
 
 {{# partial "contenido" }}
-<div class="encontre-mascota-container">
-  <h2>Elija una de las opciones</h2>
-  <div class="d-flex justify-content-around actions-container">
-    <a href="/mascotas/encontre-mascota/con-chapita">
-      <div class="card bg-dark text-white" type="button">
-        <img src="/images/tiene-chapita.jpg" class="card-img" alt="boton" />
-        <div class="card-img-overlay action">
-          <h3 class="card-title">Tiene Chapita</h3>
+    <div class="reigstracion-mascota">
+        <div class="encontre-mascota-container">
+            <div><img src="/images/patitas-logo.jpg" alt="patitas-logo" width="30" height="24"
+                      class="d-inline-block align-text-top logo-login"/>
+            </div>
+            <h1>Elija una de las opciones</h1>
+            <div class="d-flex justify-content-around actions-container">
+                <a href="/mascotas/encontre-mascota/con-chapita">
+                    <div class="card bg-dark text-white" type="button">
+                        <img src="/images/tiene-chapita.jpg" class="card-img" alt="boton"/>
+                        <div class="card-img-overlay action">
+                            <h3 class="card-title">Tiene Chapita</h3>
+                        </div>
+                    </div>
+                </a>
+                <a href="/mascotas/encontre-mascota/sin-chapita">
+                    <div class="card bg-dark text-white" type="button">
+                        <img src="/images/no-chapita.jpg" class="card-img" alt="boton"/>
+                        <div class="card-img-overlay action">
+                            <h3 class="card-title">No tiene Chapita</h3>
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
-      </div>
-    </a>
-    <a href="/mascotas/encontre-mascota/sin-chapita">
-      <div class="card bg-dark text-white" type="button">
-        <img src="/images/no-chapita.jpg" class="card-img" alt="boton" />
-        <div class="card-img-overlay action">
-          <h3 class="card-title">No tiene Chapita</h3>
-        </div>
-      </div>
-    </a>
-  </div>
-</div>
+    </div>
 {{/partial}}
 
 {{> layout.html.hbs }}

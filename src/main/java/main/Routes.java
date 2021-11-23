@@ -40,9 +40,7 @@ public class Routes {
     Spark.get("/registracion-mascota", mascotasController::mostrarRegistracion, engine);
     Spark.post("/registracion-mascota", mascotasController::registrarMascota);
 
-
-    Spark.get("/mascotas", mascotasController::getRedirectMascotas,
-        engine);
+    
     Spark.get("/mascotas/encontre-mascota", encontreMascotaController::getTiposEncuentros,
         engine);
 

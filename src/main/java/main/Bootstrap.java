@@ -18,8 +18,11 @@ import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioMascotaRegistrada;
-import repositorios.RepositorioUsuarios;
+import utils.Constantes;
 
+import static spark.Spark.*;
+
+import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,6 +55,7 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
         TipoNotificadorPreferido.CORREO
     );
 
+
     Usuario usuario = new Usuario("pepito", "pepitopepito", TipoUsuario.NORMAL, persona);
     Foto foto = new Foto("coco.jpg", null);
     List<Foto> fotos = new ArrayList<>();
@@ -71,7 +75,6 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
     RepositorioCaracteristicas repositorioCaracteristicas = new RepositorioCaracteristicas();
 
 
-
     withTransaction(() -> {
       persist(usuario);
       repositorioMascotaRegistrada.agregar(mascotaRegistrada);
@@ -80,6 +83,25 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
       repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(caracteristicaConTresValoresPosibles);
       // TODO: ver cual seria la carga inicial
     });
+
+    CaracteristicaConValoresPosibles c1 = new CaracteristicaConValoresPosibles("Comportamiento", Arrays.asList("Inquieto", "Tranquilo"));
+    CaracteristicaConValoresPosibles c2 = new CaracteristicaConValoresPosibles("Caracter", Arrays.asList("Pacifico", "Violento"));
+    CaracteristicaConValoresPosibles c3 = new CaracteristicaConValoresPosibles("Apetito", Arrays.asList("Poco", "Intermedio", "Mucho"));
+
+
+    withTransaction(() -> {
+      persist(new Usuario("pepito", "asdasdas", TipoUsuario.NORMAL, persona));
+      repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c1);
+      repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c2);
+      repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c3);
+    });
+
+    // Se crea el directorio para subir las fotos :)
+    File uploadDir = new File(Constantes.UPLOAD_DIRECTORY);
+    uploadDir.mkdir();
+    staticFiles.externalLocation(Constantes.UPLOAD_DIRECTORY);
+
+
   }
 
 }

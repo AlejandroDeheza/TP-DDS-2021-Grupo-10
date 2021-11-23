@@ -1,73 +1,67 @@
 {{# partial "contenido" }}
-    <div class="encontre-mascota-container">
-        <div class="foto-bienvenida">
-            <div class="mensaje-bienvenida">
-                <div>
-                    Encontre una mascota con chapita
-                </div>
+
+    <div class="reigstracion-mascota">
+        <div class="encontre-mascota-container">
+            <div><img src="/images/patitas-logo.jpg" alt="patitas-logo" width="30" height="24"
+                      class="d-inline-block align-text-top logo-login"/>
             </div>
-        </div>
-        <form class="form-login" enctype='multipart/form-data' id="encontreForm"
-              action="/mascotas/encontre-mascota/con-chapita" method="POST"
-              onsubmit="onFormSubmit()">
-            <div class="encontre-mascota">Datos de la ubicación</div>
-            <div class=" row g-3">
-                <div class="col">
-                    <div class="input-group input-group-sm mb-3">
-                            <span class="input-group-text"
-                                  id="inputGroup-sizing-sm">Ubicacion</span>
-                        <input type="text" id="ubicacionRescatista" name="ubicacionRescatista"
-                               required="required"
-                               placeholder="Ingrese su ubicacion">
+            <h1> Encontre una mascota con chapita</h1>
+            <form class="form-login" enctype='multipart/form-data' id="encontreForm"
+                  action="/mascotas/encontre-mascota/con-chapita" method="POST"
+                  onsubmit="onFormSubmit()">
+                <div class="encontre-mascota">Datos de la ubicación</div>
+                <div class=" row g-3">
+                    <div class="col">
+                        <div class="input-group input-group-sm mb-3">
+                            <input type="text" id="ubicacionRescatista" name="ubicacionRescatista"
+                                   class="form-control"
+                                   required="required"
+                                   placeholder="Ingrese su ubicacion">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row g-3">
-                <div class="col">
-                    <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text"
-                              id="inputGroup-sizing-sm">Ubicacion rescate</span><input type="text"
-                                                                                       required="required"
-                                                                                       id="ubicacionRescate"
-                                                                                       name="ubicacionRescate"
-                                                                                       placeholder="Ingrese la ubicacion del rescate">
+                <div class="row g-3">
+                    <div class="col">
+                        <div class="input-group input-group-sm mb-3">
+                            <input type="text"
+                                   required="required"
+                                   class="form-control"
+                                   id="ubicacionRescate"
+                                   name="ubicacionRescate"
+                                   placeholder="Ingrese la ubicacion del rescate">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row g-3">
-                <div class="col">
-                    <div class="input-group input-group-sm mb-3">
-                        <div id="map" style="width:100%;height:400px;"></div>
+                <div class="row g-3">
+                    <div class="col">
+                        <div class="input-group input-group-sm mb-3">
+                            <div id="map" style="width:100%;height:400px;"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row g-3">
-                <div class="col">
-                    <div class="input-group date input-group-sm mb-3" id="datepicker">
-                        <span class="input-group-text"
-                              id="inputGroup-sizing-sm">Fecha Rescate</span>
-                        <input type="text" required name="fechaRescate" id="fechaRescate"
-                               class="form-control">
-                        <span class="input-group-append">
+                <div class="row g-3">
+                    <div class="col">
+                        <div class="input-group date input-group-sm mb-3" id="datepicker">
+                            <input type="text" required name="fechaRescate" id="fechaRescate"
+                                   class="form-control" placeholder="Fecha de Rescate">
+                            <span class="input-group-append">
                         <span class="input-group-text bg-white d-block">
                             <i class="fa fa-calendar"></i>
                         </span>
                     </span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row g-3">
-                <div class="col">
-                    <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">Descripcion estado mascota</span>
-                        <textarea maxlength="200" name="estadoMascota" id="estadoMascota"
-                                  placeholder="Ingrese el estado de la mascota"
+                <div class="row g-3">
+                    <div class="col">
+                        <div class="form-group">
+                        <textarea maxlength="200" name="estadoMascota"
+                                  placeholder="Descripcion del estado de la mascota"
                                   class="form-control" id="descripcion" rows="3"></textarea>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row g-3">
-                <div class="input-group input-group-sm mb-3">Adjuntar fotos</div>
+                <div class="pregunta-caracteristica">Subi una foto de tu mascota</div>
                 <div class="row g-3">
                     <div class="col-12">
                         <div class="mb-3">
@@ -85,33 +79,31 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row g-3">
-                    <div class="col">
-                        <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">Ingrese el
-                            codigo de la chapita</span><input type="number" required="required"
-                                                              name="codigoChapita"
-                                                              id="codigoChapita"
-                                                              class="form-control"
-                                                              aria-label="Sizing example input"
-                                                              aria-describedby="inputGroup-sizing-sm"
-                                                              min="1"
-                                                              placeholder="Ingrese el codigo de la chapita">
+                    <div class="encontre-mascota">Ingrese el codigo de chapita</div>
+                    <div class="row g-3">
+                        <div class="col">
+                            <div class="input-group input-group-sm mb-3">
+                                <input type="number" required="required"
+                                       name="codigoChapita"
+                                       id="codigoChapita"
+                                       class="form-control"
+                                       min="1"
+                                       placeholder="Ingrese el codigo de la chapita">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row g-3 justify-content-center">
-                    <div class="col">
-                        <div class="d-flex justify-content-center">
-                            <button type="submit" class="btn btn-primary
+                    <div class="row g-3 justify-content-center">
+                        <div class="col">
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-primary
                         submit-button">Enviar
-                            </button>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
     <script src="/js/busqueda.js"></script>
     <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCubYo08FIE6rhkIsXsV551fl2YxJYtqYE

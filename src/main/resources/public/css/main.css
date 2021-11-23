@@ -8,8 +8,21 @@
     margin-bottom: var(--margen-bottom);
 }
 
+.avatar-persona {
+    position: absolute;
+    right: 160px;
+    bottom: 62px;
+}
+
 .action:last-child {
     text-align: center;
+}
+
+.fotoMascota {
+    display: none;
+    max-width: 100%;
+    width: auto;
+    height: auto;
 }
 
 .action {
@@ -122,6 +135,15 @@
     flex-direction: column;
 }
 
+.pregunta-caracteristica {
+    margin: 10px 0;
+    font-weight: 600;
+}
+
+.boton-registrar-mascota {
+    margin-bottom: 20px;
+}
+
 .mensaje-error {
     margin-top: 20px;
     display: flex;
@@ -136,6 +158,26 @@
 }
 
 .form-container-sign-up {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.registracion-mascota {
+    height: calc(100vh - 150px);
+    margin: 0 -110px;
+}
+
+.caracteristicas {
+    margin-top: 0px;
+}
+
+.usuario-nombre {
+    margin: 0 4px;
+}
+
+.form-container-registracion-mascota {
     flex: 1;
     display: flex;
     align-items: center;
@@ -164,6 +206,8 @@
 
 .navbar-nav {
     font-size: 15px;
+    width: 100%;
+    justify-content: center;
 }
 
 .navbar-brand {
@@ -176,6 +220,14 @@
     width: 80px;
     height: 65px;
     margin-right: 5px;
+}
+
+.separator-nav-link {
+    margin-right: 200px;
+}
+
+#navbarNavAltMarkup {
+    justify-content: space-evenly;
 }
 
 .flex-center {
@@ -201,23 +253,18 @@
 #sign-in {
     background-color: #7952b3;
     border-color: #7952b3;
+    display: flex;
+    align-items: center;
+    position: absolute;
 }
 
 .encontre-mascota-container {
-    height: calc(100vh - 150px);
+    flex: 1;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-/* Firefox */
-input[type=number] {
-    -moz-appearance: textfield;
-}
 
 .encontre-mascota {
     margin: 10px 0;

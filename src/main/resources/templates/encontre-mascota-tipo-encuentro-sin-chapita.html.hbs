@@ -1,139 +1,136 @@
 {{# partial "contenido" }}
-    <div class="encontre-mascota-container">
-        <div class="foto-bienvenida">
-            <div class="mensaje-bienvenida">
-                <div>
-                    Encontre una mascota sin chapita
-                </div>
+    <div class="reigstracion-mascota">
+        <div class="encontre-mascota-container">
+            <div><img src="/images/patitas-logo.jpg" alt="patitas-logo" width="30" height="24"
+                      class="d-inline-block align-text-top logo-login"/>
             </div>
-        </div>
-        <form class="form-login" enctype='multipart/form-data'
-              action="/mascotas/encontre-mascota/sin-chapita" method="POST"
-              onsubmit="onFormSubmit()">
-            <div class="encontre-mascota">Datos de la ubicación</div>
-            <div class=" row g-3">
-                <div class="col">
-                    <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">Ubicacion</span>
-                        <input type="text" id="ubicacionRescatista" name="ubicacionRescatista"
-                               required="required"
-                               placeholder="Ingrese su ubicacion">
+            <h1> Encontre una mascota sin chapita</h1>
+            <form class="form-login" enctype='multipart/form-data'
+                  action="/mascotas/encontre-mascota/sin-chapita" method="POST"
+                  onsubmit="onFormSubmit()">
+                <div class="encontre-mascota">Datos de la ubicación</div>
+                <div class=" row g-3">
+                    <div class="col">
+                        <div class="input-group input-group-sm mb-3">
+                            <input type="text" id="ubicacionRescatista" name="ubicacionRescatista"
+                                   class="form-control"
+                                   required="required"
+                                   placeholder="Ingrese su ubicacion">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row g-3">
-                <div class="col">
-                    <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text"
-                              id="inputGroup-sizing-sm">Ubicacion rescate</span><input type="text"
-                                                                                       required="required"
-                                                                                       id="ubicacionRescate"
-                                                                                       name="ubicacionRescate"
-                                                                                       placeholder="Ingrese la ubicacion del rescate">
+                <div class="row g-3">
+                    <div class="col">
+                        <div class="input-group input-group-sm mb-3">
+                            <input type="text"
+                                   required="required"
+                                   class="form-control"
+                                   id="ubicacionRescate"
+                                   name="ubicacionRescate"
+                                   placeholder="Ingrese la ubicacion del rescate">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row g-3">
-                <div class="col">
-                    <div class="input-group input-group-sm mb-3">
-                        <div id="map" style="width:100%;height:400px;"></div>
+                <div class="row g-3">
+                    <div class="col">
+                        <div class="input-group input-group-sm mb-3">
+                            <div id="map" style="width:100%;height:400px;"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row g-3">
-                <div class="col">
-                    <div class="input-group date input-group-sm mb-3" id="datepicker">
-                        <span class="input-group-text"
-                              id="inputGroup-sizing-sm">Fecha Rescate</span>
-                        <input type="text" required name="fechaRescate" class="form-control">
-                        <span class="input-group-append">
+                <div class="row g-3">
+                    <div class="col">
+                        <div class="input-group date input-group-sm mb-3" id="datepicker">
+                            <input type="text" required name="fechaRescate" class="form-control"
+                                   placeholder="Fecha de Rescate">
+                            <span class="input-group-append">
             <span class="input-group-text bg-white d-block">
               <i class="fa fa-calendar"></i>
             </span>
           </span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row g-3">
-                <div class="col">
-                    <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">Descripcion estado mascota</span>
+                <div class="row g-3">
+                    <div class="col">
+                        <div class="form-group">
                         <textarea maxlength="200" name="estadoMascota"
-                                  placeholder="Ingrese el estado de la mascota"
+                                  placeholder="Descripcion del estado de la mascota"
                                   class="form-control" id="descripcion" rows="3"></textarea>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="input-group input-group-sm mb-3">Adjuntar fotos</div>
-            <div class="row g-3">
-                <div class="col-12">
-                    <div class="mb-3">
-                        <input class="form-control form-control-sm" type="file" accept="image/*"
-                               id="foto-mascota" name="fotoMascota">
-                        <div class="row g-3" style="margin-top: 0px;">
-                            <div class="col">
-                                <div>
-                                    <img id="img-mascota" src="#" alt="Mi mascota"
-                                         class="fotoMascota"/>
+                <div class="pregunta-caracteristica">Subi una foto de tu mascota</div>
+                <div class="row g-3">
+                    <div class="col">
+                        <div class="mb-3">
+                            <input class="form-control form-control-sm" type="file" accept="image/*"
+                                   id="foto-mascota" name="fotoMascota">
+                            <div class="row g-3" style="margin-top: 0px;">
+                                <div class="col">
+                                    <div>
+                                        <img id="img-mascota" src="#" alt="Mi mascota"
+                                             class="fotoMascota"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="encontre-mascota">Datos de la mascota</div>
-            <div class="row g-3">
-                <div class="col">
-                    <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">Tipo Animal</span>
-                        <select class="form-select" required name="tipoAnimal"
-                                id="inputGroupSelect02">
-                            <option value="0">Perro</option>
-                            <option value="1">Gato</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="row g-3">
-                <div class="col">
-                    <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">Tamaño</span>
-                        <select class="form-select" required name="tamanioMascota"
-                                id="inputGroupSelect02">
-                            <option value="0">Chico</option>
-                            <option value="1">Mediano</option>
-                            <option value="2">Grande</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="row g-3">
-                <div class="col-12">
-                    <div class="pregunta-caracteristica"> ¿Qué caracteriza a la mascota que
-                        encontraste?
-                    </div>
-                    {{#each caracteristicas}}
-                        <div class="input-group-sm mb-3">
-                            <div class="pregunta-caracteristica"> {{nombreCaracteristica}}</div>
-                            <select class="form-select" required name="{{nombreCaracteristica}}"
-                                    id="{{nombreCaracteristica}}">
-                                {{#each valoresCaracteristicas}}
-                                    <option value="{{this}}">{{this}}</option>
-                                {{/each}}
+                <div class="encontre-mascota">Datos de la mascota</div>
+                <div class=" row g-3">
+                    <div class="col">
+                        <div class="input-group input-group-sm mb-3">
+                            <select class="form-select" required name="tipoAnimal" id="tipoAnimal">
+                                <option selected>Tipo de animal</option>
+                                <option value="0">Perro</option>
+                                <option value="1">Gato</option>
                             </select>
                         </div>
-                    {{/each}}
-
-                </div>
-            </div>
-            <div class="row g-3 justify-content-center">
-                <div class="col">
-                    <div class="d-flex justify-content-center">
-                        <button type="submit" class="btn btn-primary submit-button">Enviar</button>
                     </div>
                 </div>
-            </div>
-        </form>
+                <div class="row g-3">
+                    <div class="col">
+                        <div class="input-group-sm mb-3">
+                            <select class="form-select" required name="tamanioMascota"
+                                    id="tamanio">
+                                <option selected>Tamaño</option>
+                                <option value="0">Chico</option>
+                                <option value="1">Mediano</option>
+                                <option value="2">Grande</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col">
+                            <div class="encontre-mascota"> ¿Qué caracteriza a tu mascota?
+                            </div>
+                            {{#each caracteristicas}}
+                                <div class="input-group-sm mb-3">
+                                    <div class="pregunta-caracteristica"> {{nombreCaracteristica}}</div>
+                                    <select class="form-select" required
+                                            name="{{nombreCaracteristica}}"
+                                            id="{{nombreCaracteristica}}">
+                                        {{#each valoresCaracteristicas}}
+                                            <option value="{{this}}">{{this}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3 justify-content-center">
+                    <div class="col">
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary submit-button">Enviar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
     <script type="text/javascript">
         $(function () {
