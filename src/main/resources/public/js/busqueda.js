@@ -5,11 +5,13 @@ function initAutocomplete() {
         mapTypeId: "roadmap",
     });
     // Create the search box and link it to the UI element.
-    geocoder = new google.maps.Geocoder();
+
     rescatista = document.getElementById("ubicacionRescatista");
     ubicacion(rescatista, map);
     rescate = document.getElementById("ubicacionRescate");
     ubicacion(rescate, map);
+
+
 }
 
 function ubicacion(input, map) {
@@ -70,7 +72,6 @@ function ubicacion(input, map) {
             }
         });
         map.fitBounds(bounds);
-        console.log(bounds);
+        // console.log(bounds);
     });
 }
-

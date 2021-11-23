@@ -105,9 +105,21 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
     LocalDate fechaRescate = LocalDate.parse(request.queryParams("fechaRescate"), formatter);
 
     String ubicacionRescatistaString = request.queryParams("ubicacionRescatista");
+    String latitudRescatistaString = request.queryParams("latitudRescatista");
+    String longitudRescatistaString = request.queryParams("longitudRescatista");
+    String latitudRescateString = request.queryParams("latitudRescate");
+    String longitudRescateString = request.queryParams("longitudRescate");
     String ubicacionRescateString = request.queryParams("ubicacionRescate");
-    Ubicacion ubicacionRescatista = new Ubicacion(1122.1, 122.1, ubicacionRescatistaString);
-    Ubicacion ubicacionRescate = new Ubicacion(1122.1, 122.1, ubicacionRescateString);
+//    Ubicacion ubicacionRescatista = new Ubicacion(Double.parseDouble(latitudRescatistaString),
+//        Double.parseDouble(longitudRescatistaString),
+//        ubicacionRescatistaString);
+//    Ubicacion ubicacionRescate = new Ubicacion(Double.parseDouble(latitudRescateString),
+//        Double.parseDouble(longitudRescateString), ubicacionRescateString);
+    Ubicacion ubicacionRescatista = new Ubicacion(1.1,
+        1.1,
+        ubicacionRescatistaString);
+    Ubicacion ubicacionRescate = new Ubicacion(1.1,
+        1.1, ubicacionRescateString);
     String estadoMascota = request.queryParams("estadoMascota");
 
     Long Id = request.session().attribute("user_id");
@@ -116,9 +128,10 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
 
 
     RepositorioMascotaRegistrada repositorioMascotaRegistrada = new RepositorioMascotaRegistrada();
-    String idChapitaString = request.queryParams("codigo-chapita");
+    String idChapitaString = request.queryParams("codigoChapita");
     Long idChapita = Long.parseLong(idChapitaString);
     MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.getPorId(idChapita);
+    TamanioMascota tamanioMascota = mascotaRegistrada.getTamanio();
     if (mascotaRegistrada == null) {
       redireccionCasoError(request, response, "/mascotas/encontre-mascota/con-chapita", "El " +
           "codigo de chapita no es valido");
@@ -127,7 +140,7 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
     RepositorioInformes repositorioInformes = new RepositorioInformes();
     MascotaEncontrada mascotaEncontrada = new MascotaEncontrada(fotos, ubicacionRescate
         , estadoMascota, fechaRescate,
-        mascotaRegistrada.getTamanio());
+        tamanioMascota);
     ReceptorHogares receptorHogares = new ReceptorHogares();
     InformeConQR informeConQR = new InformeConQR(persona, ubicacionRescatista,
         mascotaEncontrada, receptorHogares, mascotaRegistrada);
@@ -137,7 +150,6 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
     });
     redireccionCasoFeliz(request, response, "/", "Se genero el informe correctamentes");
     return null;
-
   }
 
 
@@ -158,9 +170,22 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
     LocalDate fechaRescate = LocalDate.parse(request.queryParams("fechaRescate"), formatter);
 
     String ubicacionRescatistaString = request.queryParams("ubicacionRescatista");
+    String latitudRescatistaString = request.queryParams("latitudRescatista");
+    String longitudRescatistaString = request.queryParams("longitudRescatista");
+    String latitudRescateString = request.queryParams("latitudRescate");
+    String longitudRescateString = request.queryParams("longitudRescate");
     String ubicacionRescateString = request.queryParams("ubicacionRescate");
-    Ubicacion ubicacionRescatista = new Ubicacion(1122.1, 122.1, ubicacionRescatistaString);
-    Ubicacion ubicacionRescate = new Ubicacion(1122.1, 122.1, ubicacionRescateString);
+
+//    Ubicacion ubicacionRescatista = new Ubicacion(Double.parseDouble(latitudRescatistaString),
+//        Double.parseDouble(longitudRescatistaString),
+//        ubicacionRescatistaString);
+//    Ubicacion ubicacionRescate = new Ubicacion(Double.parseDouble(latitudRescateString),
+//        Double.parseDouble(longitudRescateString), ubicacionRescateString);
+    Ubicacion ubicacionRescatista = new Ubicacion(1.1,
+        1.1,
+        ubicacionRescatistaString);
+    Ubicacion ubicacionRescate = new Ubicacion(1.1,
+        1.1, ubicacionRescateString);
 
     String estadoMascota = request.queryParams("estadoMascota");
 
