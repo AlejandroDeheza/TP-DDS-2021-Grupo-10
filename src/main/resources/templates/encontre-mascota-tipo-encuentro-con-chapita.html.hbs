@@ -20,6 +20,8 @@
                         </div>
                     </div>
                 </div>
+                <input type="text" hidden id="latitudRescatista" name="latitudRescatista">
+                <input type="text" hidden id="longitudRescatista" name="longitudRescatista">
                 <div class="row g-3">
                     <div class="col">
                         <div class="input-group input-group-sm mb-3">
@@ -32,6 +34,8 @@
                         </div>
                     </div>
                 </div>
+                <input type="text" hidden id="latitudRescate" name="latitudRescate">
+                <input type="text" hidden id="longitudRescate" name="longitudRescate">
                 <div class="row g-3">
                     <div class="col">
                         <div class="input-group input-group-sm mb-3">
@@ -118,6 +122,43 @@
             );
         });
 
+        $("#ubicacionRescate").change(async function () {
+                    let ubicacionRescate = $("#ubicacionRescate").val()
+                    let latitud = await obtenerLatitudLongitud(ubicacionRescate).then(function (value) {
+                        return value.latitud
+                    })
+                    let longitud = await obtenerLatitudLongitud(ubicacionRescate).then(function (value) {
+                        return value.longitud
+                    })
+                    $("#latitudRescate").val(latitud)
+                    $("#longitudRescate").val(longitud)
+                }
+        )
+
+        $("#ubicacionRescatista").change(async function () {
+                    let ubicacionRescatista = $("#ubicacionRescatista").val()
+                    let latitud = await obtenerLatitudLongitud(ubicacionRescatista).then(function (value) {
+                        return value.latitud
+                    })
+                    let longitud = await obtenerLatitudLongitud(ubicacionRescatista).then(function (value) {
+                        return value.longitud
+                    })
+                    $("#latitudRescatista").val(latitud)
+                    $("#longitudRescatista").val(longitud)
+                }
+        )
+
+        async function obtenerLatitudLongitud(ubicacion) {
+            const geocoder = new google.maps.Geocoder();
+            const response = await geocoder.geocode({'address': ubicacion});
+
+            let latitud = response.results[0].geometry.location.lat();
+            let longitud = response.results[0].geometry.location.lng();
+
+            return {
+                latitud, longitud
+            }
+        };
         // Muestro un preview de la foto que se suba
         const imageTag = $('#img-mascota');
 
@@ -144,64 +185,64 @@
             sessionStorage.setItem("mascota_registrada", true);
         }
     </script>
-    <script type="text/javascript">
-        $("#encontreForm").submit(
-                async function (event) {
-                    event.preventDefault();
+    <!--    <script type="text/javascript">-->
+    <!--        $("#encontreForm").submit(-->
+    <!--                async function (event) {-->
+    <!--                    event.preventDefault();-->
 
-                    let ubicacionRescatista = document.getElementById('ubicacionRescatista').value;
-                    let ubicacionRescate = document.getElementById('ubicacionRescate').value;
-                    let latLngRescatista;
-                    let latLngRescate;
+    <!--                        let ubicacionRescatista = document.getElementById('ubicacionRescatista').value;-->
+    <!--                        let ubicacionRescate = document.getElementById('ubicacionRescate').value;-->
+    <!--                    let latLngRescatista;-->
+    <!--                    let latLngRescate;-->
 
-                    latLngRescatista = await obtenerLatitudLongitud(ubicacionRescatista);
-                    latLngRescate = await obtenerLatitudLongitud(ubicacionRescate);
+    <!--                    latLngRescatista = await obtenerLatitudLongitud(ubicacionRescatista);-->
+    <!--                    latLngRescate = await obtenerLatitudLongitud(ubicacionRescate);-->
 
 
-                    let form = $("#encontreForm");
-                    let path = form.attr("action");
-                    let fechaRescate = form.find("[name='fechaRescate']").val();
-                    let estadoMascota = form.find("[name='estadoMascota']").val();
-                    let codigoChapita = form.find("[name='codigoChapita']").val();
-                    let fotoMascota = form.find("[name='fotoMascota']").val();
-                    let url = "http://localhost:8080" + path;
-                    let latitudRescatista = latLngRescatista.latitud
-                    let longitudRescatista = latLngRescatista.longitud
+    <!--                    let form = $("#encontreForm");-->
+    <!--                    let path = form.attr("action");-->
+    <!--                    let fechaRescate = form.find("[name='fechaRescate']").val();-->
+    <!--                    let estadoMascota = form.find("[name='estadoMascota']").val();-->
+    <!--                    let codigoChapita = form.find("[name='codigoChapita']").val();-->
+    <!--                    let fotoMascota = form.find("[name='fotoMascota']").val();-->
+    <!--                    let url = "http://localhost:8080" + path;-->
+    <!--                    let latitudRescatista = latLngRescatista.latitud-->
+    <!--                    let longitudRescatista = latLngRescatista.longitud-->
 
-                    let latitudRescate = latLngRescate.latitud
-                    let longitudRescate = latLngRescate.longitud
-                    console.log(latitudRescate, longitudRescate, latitudRescatista, longitudRescatista)
-                    let body = {
-                        ubicacionRescatista,
-                        ubicacionRescate,
-                        fechaRescate,
-                        estadoMascota,
-                        codigoChapita,
-                        fotoMascota,
-                        latitudRescatista,
-                        longitudRescatista,
-                        latitudRescate,
-                        longitudRescate
-                    }
-                    console.log(body)
-                    $.post(url, body);
-                }
-        )
+    <!--                    let latitudRescate = latLngRescate.latitud-->
+    <!--                    let longitudRescate = latLngRescate.longitud-->
+    <!--                    console.log(latitudRescate, longitudRescate, latitudRescatista, longitudRescatista)-->
+    <!--                    let body = {-->
+    <!--                        ubicacionRescatista,-->
+    <!--                        ubicacionRescate,-->
+    <!--                        fechaRescate,-->
+    <!--                        estadoMascota,-->
+    <!--                        codigoChapita,-->
+    <!--                        fotoMascota,-->
+    <!--                        latitudRescatista,-->
+    <!--                        longitudRescatista,-->
+    <!--                        latitudRescate,-->
+    <!--                        longitudRescate-->
+    <!--                    }-->
+    <!--                    console.log(body)-->
+    <!--                    $.post(url, body);-->
+    <!--                }-->
+    <!--        )-->
 
-        const obtenerLatitudLongitud = async (ubicacion) => {
-                    const geocoder = new google.maps.Geocoder();
-                    const response = await geocoder.geocode({'address': ubicacion});
+    <!--            const obtenerLatitudLongitud = async (ubicacion) => {-->
+    <!--                        const geocoder = new google.maps.Geocoder();-->
+    <!--                        const response = await geocoder.geocode({'address': ubicacion});-->
 
-                    latitud = response.results[0].geometry.location.lat();
-                    longitud = response.results[0].geometry.location.lng();
+    <!--                        latitud = response.results[0].geometry.location.lat();-->
+    <!--                        longitud = response.results[0].geometry.location.lng();-->
 
-                    return {
-                        latitud, longitud
-                    }
-                }
+    <!--                        return {-->
+    <!--                            latitud, longitud-->
+    <!--                        }-->
+    <!--                    }-->
 
-        ;
-    </script>
+    <!--            ;-->
+    <!--    </script>-->
 {{/partial}}
 
 {{> layout.html.hbs }}

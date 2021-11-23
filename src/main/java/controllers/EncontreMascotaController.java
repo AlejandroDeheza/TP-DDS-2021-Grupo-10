@@ -100,11 +100,11 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
       return null;
     }
     try {
-      // List<Foto> fotos = obtenerFotos(request, response);
-      // TODO: ver porque no funciona las fotos
-      Foto foto = new Foto("", "");
-      List<Foto> fotos = new ArrayList<>();
-      fotos.add(foto);
+      List<Foto> fotos = obtenerFotos(request, response);
+//      // TODO: ver porque no funciona las fotos
+//      Foto foto = new Foto("", "");
+//      List<Foto> fotos = new ArrayList<>();
+//      fotos.add(foto);
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
       LocalDate fechaRescate = LocalDate.parse(request.queryParams("fechaRescate"), formatter);
 
@@ -185,16 +185,16 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
       String longitudRescateString = request.queryParams("longitudRescate");
       String ubicacionRescateString = request.queryParams("ubicacionRescate");
 
-//      Ubicacion ubicacionRescatista = new Ubicacion(Double.parseDouble(latitudRescatistaString),
-//          Double.parseDouble(longitudRescatistaString),
-//          ubicacionRescatistaString);
-//      Ubicacion ubicacionRescate = new Ubicacion(Double.parseDouble(latitudRescateString),
-//          Double.parseDouble(longitudRescateString), ubicacionRescateString);
-      Ubicacion ubicacionRescatista = new Ubicacion(1.1,
-          1.1,
+      Ubicacion ubicacionRescatista = new Ubicacion(Double.parseDouble(latitudRescatistaString),
+          Double.parseDouble(longitudRescatistaString),
           ubicacionRescatistaString);
-      Ubicacion ubicacionRescate = new Ubicacion(1.1,
-          1.1, ubicacionRescateString);
+      Ubicacion ubicacionRescate = new Ubicacion(Double.parseDouble(latitudRescateString),
+          Double.parseDouble(longitudRescateString), ubicacionRescateString);
+//      Ubicacion ubicacionRescatista = new Ubicacion(1.1,
+//          1.1,
+//          ubicacionRescatistaString);
+//      Ubicacion ubicacionRescate = new Ubicacion(1.1,
+//          1.1, ubicacionRescateString);
 
       String estadoMascota = request.queryParams("estadoMascota");
 

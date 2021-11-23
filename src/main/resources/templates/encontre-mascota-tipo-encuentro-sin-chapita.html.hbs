@@ -19,6 +19,8 @@
                         </div>
                     </div>
                 </div>
+                <input type="text" hidden id="latitudRescatista" name="latitudRescatista">
+                <input type="text" hidden id="longitudRescatista" name="longitudRescatista">
                 <div class="row g-3">
                     <div class="col">
                         <div class="input-group input-group-sm mb-3">
@@ -31,6 +33,8 @@
                         </div>
                     </div>
                 </div>
+                <input type="text" hidden id="latitudRescate" name="latitudRescate">
+                <input type="text" hidden id="longitudRescate" name="longitudRescate">
                 <div class="row g-3">
                     <div class="col">
                         <div class="input-group input-group-sm mb-3">
@@ -139,7 +143,43 @@
                     }
             );
         });
+        $("#ubicacionRescate").change(async function () {
+                    let ubicacionRescate = $("#ubicacionRescate").val()
+                    let latitud = await obtenerLatitudLongitud(ubicacionRescate).then(function (value) {
+                        return value.latitud
+                    })
+                    let longitud = await obtenerLatitudLongitud(ubicacionRescate).then(function (value) {
+                        return value.longitud
+                    })
+                    $("#latitudRescate").val(latitud)
+                    $("#longitudRescate").val(longitud)
+                }
+        )
 
+        $("#ubicacionRescatista").change(async function () {
+                    let ubicacionRescatista = $("#ubicacionRescatista").val()
+                    let latitud = await obtenerLatitudLongitud(ubicacionRescatista).then(function (value) {
+                        return value.latitud
+                    })
+                    let longitud = await obtenerLatitudLongitud(ubicacionRescatista).then(function (value) {
+                        return value.longitud
+                    })
+                    $("#latitudRescatista").val(latitud)
+                    $("#longitudRescatista").val(longitud)
+                }
+        )
+
+        async function obtenerLatitudLongitud(ubicacion) {
+            const geocoder = new google.maps.Geocoder();
+            const response = await geocoder.geocode({'address': ubicacion});
+
+            let latitud = response.results[0].geometry.location.lat();
+            let longitud = response.results[0].geometry.location.lng();
+
+            return {
+                latitud, longitud
+            }
+        };
         // Muestro un preview de la foto que se suba
         const imageTag = $('#img-mascota');
 
