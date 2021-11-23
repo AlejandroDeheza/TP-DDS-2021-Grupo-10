@@ -1,45 +1,143 @@
 {{#partial "contenido" }}
-<div class="login-container">
-    <div class="form-container">
+<div class="reigstracion-mascota">
+    <div class="form-container-registracion-mascota">
         <div> <img src="images/patitas-logo.jpg" alt="patitas-logo" width="30" height="24"
                 class="d-inline-block align-text-top logo-login" />
         </div>
-        <form class="form-login" action="/login" method="POST">
+        <form class="form-login" enctype='multipart/form-data' action="/registracion-mascota" method="POST" onsubmit="onFormSubmit()">
             <div class="row g-3">
+                <div class="col-6">
+                    <div class="input-group-sm mb-3">
+                        <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre">
+                    </div>
+                    <div class="input-group-sm mb-3">
+                        <input type="text" name="apodo" class="form-control" id="apodo" placeholder="Apodo">
+                    </div>
+                    <div class="input-group date input-group-sm mb-3" id="datepicker">
+                        <input type="text" required name="fechaNacimiento" class="form-control"
+                            placeholder="Fecha de nacimiento">
+                        <span class="input-group-append">
+                            <span class="input-group-text bg-white d-block">
+                                <i class="fa fa-calendar"></i>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                {{!-- Segunda columna de inputs --}}
+                <div class="col-6">
+                    <div class="input-group-sm mb-3">
+                        <select class="form-select" required name="sexo" id="sexo">
+                            <option selected>Sexo</option>
+                            <option value="0">Macho</option>
+                            <option value="1">Hembra</option>
+                        </select>
+                    </div>
+                    <div class="input-group-sm mb-3">
+                        <select class="form-select" required name="tipoAnimal" id="tipoAnimal">
+                            <option selected>Tipo de animal</option>
+                            <option value="0">Perro</option>
+                            <option value="1">Gato</option>
+                        </select>
+                    </div>
+                    <div class="input-group-sm mb-3">
+                        <select class="form-select" required name="tamanio" id="tamanio">
+                            <option selected>Tamaño</option>
+                            <option value="0">Chico</option>
+                            <option value="1">Mediano</option>
+                            <option value="2">Grande</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3 caracteristicas">
                 <div class="col">
-                    <div class="form-floating mb-5">
-                        <input type="text" name="username" class="form-control" id="floatingInput"
-                            placeholder="usuario12345">
-                        <label for="floatingInput">Usuario</label>
+                    <div class="form-group">
+                        <textarea maxlength="200" name="descripcionFisica" placeholder="Descripcion de tu mascota"
+                            class="form-control" id="descripcion" rows="3"></textarea>
                     </div>
                 </div>
             </div>
             <div class="row g-3">
-                <div class="col">
-                    <div class="form-floating mb-5">
-                        <input type="password" name="password" class="form-control" id="floatingPassword"
-                            placeholder="Password">
-                        <label for="floatingPassword">Password</label>
+                <div class="col-12">
+                    <div class="pregunta-caracteristica"> ¿Qué caracteriza a tu mascota?</div>
+                    {{#each caracteristicas}}
+                    <div class="input-group-sm mb-3">
+                        <div class="pregunta-caracteristica"> {{nombreCaracteristica}}</div>
+                        <select class="form-select" required name="{{nombreCaracteristica}}"
+                            id="{{nombreCaracteristica}}">
+                            {{#each valoresCaracteristicas}}
+                            <option value="{{this}}">{{this}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    {{/each}}
+
+                </div>
+            </div>
+            <div class="pregunta-caracteristica">Subi una foto de tu mascota</div>
+            <div class="row g-3">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <input class="form-control form-control-sm" type="file" accept="image/*" id="foto-mascota"
+                            name="fotoMascota">
+                        <div class="row g-3" style="margin-top: 0px;">
+                            <div class="col">
+                                <div>
+                                    <img id="img-mascota" src="#" alt="Mi mascota" class="fotoMascota" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="row g-3 justify-content-center">
+            <div class="row g-3 justify-content-center boton-registrar-mascota">
                 <div class="col">
                     <div class="d-flex justify-content-center">
-                        <button type="submit" class="btn btn-primary submit-button">Ingresar</button>
+                        <button type="submit" class="btn btn-primary submit-button">Registrar a mi
+                            mascota</button>
                     </div>
                 </div>
             </div>
         </form>
     </div>
-    <div class="foto-bienvenida-sign-in">
-        <div class="mensaje-bienvenida">
-            <div>
-                Bienvenido de vuelta!
-            </div>
-        </div>
-    </div>
 </div>
+<script type="text/javascript">
+    $(function () {
+        $('#datepicker').datepicker(
+            {
+                format: "dd/mm/yyyy"
+            }
+        );
+    });
+
+    // Muestro un preview de la foto que se suba
+    const imageTag = $('#img-mascota');
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                imageTag.attr('src', e.target.result);
+            }
+
+            //transforma el archivo a b64 
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    // agregando al event listener on-change del input
+    $("#foto-mascota").change(function () {
+        readURL(this);
+        imageTag.css('display', 'block')
+    });
+
+    function onFormSubmit() {
+        console.log('ejecutando esto:');
+        sessionStorage.setItem("mascota_registrada",true);
+    }
+
+</script>
 {{/partial}}
 
 {{> layout.html.hbs }}
