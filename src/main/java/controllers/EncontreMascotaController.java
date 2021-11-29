@@ -67,7 +67,7 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
             null;
     modelo.put("mascotaRegistrada", mascotaRegistrada);
     modelo.put("codigo-chapita", id);
-    return new ModelAndView(modelo, "encontre-mascota-tipo-encuentro-con-chapita.html.hbs");
+    return new ModelAndView(modelo, "encuentro-con-chapita.html.hbs");
   }
 
 
@@ -90,7 +90,7 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
     modelo.put("tipoAnimales", animal);
     modelo.put("tamanioMascota", tamanioMascotas);
 
-    return new ModelAndView(modelo, "encontre-mascota-tipo-encuentro-sin-chapita.html.hbs");
+    return new ModelAndView(modelo, "encuentro-sin-chapita.html.hbs");
   }
 
 
@@ -101,10 +101,6 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
     }
     try {
       List<Foto> fotos = obtenerFotos(request, response);
-//      // TODO: ver porque no funciona las fotos
-//      Foto foto = new Foto("", "");
-//      List<Foto> fotos = new ArrayList<>();
-//      fotos.add(foto);
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
       LocalDate fechaRescate = LocalDate.parse(request.queryParams("fechaRescate"), formatter);
 
@@ -119,11 +115,6 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
           ubicacionRescatistaString);
       Ubicacion ubicacionRescate = new Ubicacion(Double.parseDouble(latitudRescateString),
           Double.parseDouble(longitudRescateString), ubicacionRescateString);
-//      Ubicacion ubicacionRescatista = new Ubicacion(1.1,
-//          1.1,
-//          ubicacionRescatistaString);
-//      Ubicacion ubicacionRescate = new Ubicacion(1.1,
-//          1.1, ubicacionRescateString);
       String estadoMascota = request.queryParams("estadoMascota");
 
       Long Id = request.session().attribute("user_id");
@@ -137,8 +128,7 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
       MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.getPorId(idChapita);
       TamanioMascota tamanioMascota = mascotaRegistrada.getTamanio();
       if (mascotaRegistrada == null) {
-        redireccionCasoError(request, response, "/mascotas/encontre-mascota/con-chapita", "El " +
-            "codigo de chapita no es valido");
+        redireccionCasoError(request, response, "/mascotas/encontre-mascota/con-chapita", "El codigo de chapita no es valido");
         return null;
       }
       RepositorioInformes repositorioInformes = new RepositorioInformes();
@@ -153,6 +143,7 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
         repositorioInformes.agregarInforme(informeConQR);
       });
     } catch (Exception e) {
+      System.out.println(e);
       redireccionCasoError(request, response, "/error", "Fallo la generacion del informe");
     }
     redireccionCasoFeliz(request, response, "/", "Se genero el informe!");
@@ -166,7 +157,6 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
       return null;
     }
     try {
-// TODO: falta obtener la latitud y longitud
       List<Foto> fotos = obtenerFotos(request, response);
 
 
@@ -190,11 +180,6 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
           ubicacionRescatistaString);
       Ubicacion ubicacionRescate = new Ubicacion(Double.parseDouble(latitudRescateString),
           Double.parseDouble(longitudRescateString), ubicacionRescateString);
-//      Ubicacion ubicacionRescatista = new Ubicacion(1.1,
-//          1.1,
-//          ubicacionRescatistaString);
-//      Ubicacion ubicacionRescate = new Ubicacion(1.1,
-//          1.1, ubicacionRescateString);
 
       String estadoMascota = request.queryParams("estadoMascota");
 

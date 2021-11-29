@@ -55,45 +55,37 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
         TipoNotificadorPreferido.CORREO
     );
 
+    RepositorioMascotaRegistrada repositorioMascotaRegistrada = new RepositorioMascotaRegistrada();
+    RepositorioCaracteristicas repositorioCaracteristicas = new RepositorioCaracteristicas();
 
-    Usuario usuario = new Usuario("pepito", "pepitopepito", TipoUsuario.NORMAL, persona);
-    Foto foto = new Foto("coco.jpg", null);
-    List<Foto> fotos = new ArrayList<>();
-    fotos.add(foto);
+    Usuario usuario = new Usuario("pepito", "asd123asd123", TipoUsuario.NORMAL, persona);
+
+    // Mascota Registrada
     MascotaRegistrada mascotaRegistrada = new MascotaRegistrada(usuario, "Perrito", "coco",
-        LocalDate.now(), "Es re bueno y gordo", Sexo.MACHO, Animal.PERRO, null, fotos,
+        LocalDate.now(), "Es re bueno y gordo", Sexo.MACHO, Animal.PERRO, null, Arrays.asList(new Foto("coco.jpg", null)),
         TamanioMascota.CHICO);
 
-    RepositorioMascotaRegistrada repositorioMascotaRegistrada = new RepositorioMascotaRegistrada();
-
-    CaracteristicaConValoresPosibles unaCaracteristicaConDosValoresPosibles =
+    // Caracteristicas
+    CaracteristicaConValoresPosibles c5 =
         new CaracteristicaConValoresPosibles("Comportamiento", Arrays.asList("Inquieto", "Tranquilo"));
 
-    CaracteristicaConValoresPosibles caracteristicaConTresValoresPosibles =
+    CaracteristicaConValoresPosibles c4 =
         new CaracteristicaConValoresPosibles("Animo", Arrays.asList("Feliz", "Triste", "Nose"));
+    CaracteristicaConValoresPosibles c1 = new CaracteristicaConValoresPosibles("Comportamiento", Arrays.asList("Inquieto", "Tranquilo"));
+    CaracteristicaConValoresPosibles c2 = new CaracteristicaConValoresPosibles("Caracter", Arrays.asList("Pacifico", "Violento"));
+    CaracteristicaConValoresPosibles c3 = new CaracteristicaConValoresPosibles("Apetito", Arrays.asList("Poco", "Intermedio", "Mucho"));
 
-    RepositorioCaracteristicas repositorioCaracteristicas = new RepositorioCaracteristicas();
 
 
     withTransaction(() -> {
       persist(usuario);
       repositorioMascotaRegistrada.agregar(mascotaRegistrada);
       System.out.println(repositorioMascotaRegistrada.getPorNombre(mascotaRegistrada.getNombre()).getId());
-      repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(unaCaracteristicaConDosValoresPosibles);
-      repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(caracteristicaConTresValoresPosibles);
-      // TODO: ver cual seria la carga inicial
-    });
-
-    CaracteristicaConValoresPosibles c1 = new CaracteristicaConValoresPosibles("Comportamiento", Arrays.asList("Inquieto", "Tranquilo"));
-    CaracteristicaConValoresPosibles c2 = new CaracteristicaConValoresPosibles("Caracter", Arrays.asList("Pacifico", "Violento"));
-    CaracteristicaConValoresPosibles c3 = new CaracteristicaConValoresPosibles("Apetito", Arrays.asList("Poco", "Intermedio", "Mucho"));
-
-
-    withTransaction(() -> {
-      persist(new Usuario("pepito", "asdasdas", TipoUsuario.NORMAL, persona));
       repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c1);
       repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c2);
       repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c3);
+      repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c4);
+      repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c5);
     });
 
     // Se crea el directorio para subir las fotos :)

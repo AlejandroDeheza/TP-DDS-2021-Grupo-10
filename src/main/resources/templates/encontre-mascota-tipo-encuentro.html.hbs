@@ -1,34 +1,38 @@
 {{# partial "titulo" }}
-    <title>Patitas - Encontre una Mascota</title>
+<title>Patitas - Encontre una Mascota</title>
 {{/partial}}
 
 {{# partial "contenido" }}
-    <div class="reigstracion-mascota">
-        <div class="encontre-mascota-container">
-            <div><img src="/images/patitas-logo.jpg" alt="patitas-logo" width="30" height="24"
-                      class="d-inline-block align-text-top logo-login"/>
-            </div>
-            <h1>Elija una de las opciones</h1>
-            <div class="d-flex justify-content-around actions-container">
+<div class="registracion-mascota">
+    <div class="encontre-mascota-container">
+        <div><img src="/images/patitas-logo.jpg" alt="patitas-logo" width="30" height="24"
+                class="d-inline-block align-text-top logo-login" />
+        </div>
+        <h1>Elija una de las opciones</h1>
+        <div class="d-flex tipos-eleccion-container">
+            <div>
                 <a href="/mascotas/encontre-mascota/con-chapita">
                     <div class="card bg-dark text-white" type="button">
-                        <img src="/images/tiene-chapita.jpg" class="card-img" alt="boton"/>
+                        <img src="/images/tiene-chapita.jpg" class="card-img" alt="boton" />
                         <div class="card-img-overlay action">
-                            <h3 class="card-title">Tiene Chapita</h3>
+                            <h3 class="card-title">Tiene chapita</h3>
                         </div>
                     </div>
                 </a>
+            </div>
+            <div>
                 <a href="/mascotas/encontre-mascota/sin-chapita">
                     <div class="card bg-dark text-white" type="button">
-                        <img src="/images/no-chapita.jpg" class="card-img" alt="boton"/>
+                        <img src="/images/no-chapita.jpg" class="card-img" alt="boton" />
                         <div class="card-img-overlay action">
-                            <h3 class="card-title">No tiene Chapita</h3>
+                            <h3 class="card-title">No tiene chapita</h3>
                         </div>
                     </div>
                 </a>
             </div>
         </div>
     </div>
+</div>
 {{/partial}}
 
 {{> layout.html.hbs }}

@@ -1,0 +1,175 @@
+{{# partial "contenido" }}
+
+<div class="reigstracion-mascota">
+    <div class="encontre-mascota-container">
+        <div><img src="/images/patitas-logo.jpg" alt="patitas-logo" width="30" height="24"
+                class="d-inline-block align-text-top logo-login" />
+        </div>
+        <h1> Encontre una mascota con chapita</h1>
+        <form class="form-login" enctype='multipart/form-data' id="encontreForm"
+            action="/mascotas/encontre-mascota/con-chapita" method="POST" onsubmit="onFormSubmit()">
+            <div class="encontre-mascota">Datos de la ubicación</div>
+            <div class=" row g-3">
+                <div class="col">
+                    <div class="input-group input-group-sm mb-3">
+                        <input type="text" id="ubicacionRescatista" name="ubicacionRescatista" class="form-control"
+                            required="required" placeholder="Ingrese su ubicacion">
+                    </div>
+                </div>
+            </div>
+            <input type="text" hidden id="latitudRescatista" name="latitudRescatista">
+            <input type="text" hidden id="longitudRescatista" name="longitudRescatista">
+            <div class="row g-3">
+                <div class="col">
+                    <div class="input-group input-group-sm mb-3">
+                        <input type="text" required="required" class="form-control" id="ubicacionRescate"
+                            name="ubicacionRescate" placeholder="Ingrese la ubicacion del rescate">
+                    </div>
+                </div>
+            </div>
+            <input type="text" hidden id="latitudRescate" name="latitudRescate">
+            <input type="text" hidden id="longitudRescate" name="longitudRescate">
+            <div class="row g-3">
+                <div class="col">
+                    <div class="input-group input-group-sm mb-3">
+                        <div id="map" style="width:100%;height:400px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col">
+                    <div class="input-group date input-group-sm mb-3" id="datepicker">
+                        <input type="text" required name="fechaRescate" id="fechaRescate" class="form-control"
+                            placeholder="Fecha de Rescate">
+                        <span class="input-group-append">
+                            <span class="input-group-text bg-white d-block">
+                                <i class="fa fa-calendar"></i>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col">
+                    <div class="form-group">
+                        <textarea maxlength="200" name="estadoMascota"
+                            placeholder="Descripcion del estado de la mascota" class="form-control" id="descripcion"
+                            rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="pregunta-caracteristica">Subi una foto de tu mascota</div>
+            <div class="row g-3">
+                <div class="col-12">
+                    <div>
+                        <input class="form-control form-control-sm" type="file" accept="image/*" id="foto-mascota"
+                            name="fotoMascota">
+                        <div class="row g-3" style="margin-top: 0px;">
+                            <div class="col">
+                                <div>
+                                    <img id="img-mascota" src="#" alt="Mi mascota" class="fotoMascota" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="encontre-mascota">Ingrese el codigo de chapita</div>
+            <div class="row g-3">
+                <div class="col">
+                    <div class="input-group input-group-sm mb-3">
+                        <input type="number" required="required" name="codigoChapita" id="codigoChapita"
+                            class="form-control" min="1" placeholder="Ingrese el codigo de la chapita">
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3 justify-content-center boton-registrar-mascota">
+                <div class="col">
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary
+                        submit-button">Enviar
+                        </button>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+<script src="/js/busqueda.js"></script>
+<script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCubYo08FIE6rhkIsXsV551fl2YxJYtqYE&callback=initAutocomplete&libraries=places&v=weekly">
+    </script>
+<script type="text/javascript">
+    $(function () {
+        $('#datepicker').datepicker(
+            {
+                format: "dd/mm/yyyy"
+            }
+        );
+    });
+
+    $("#ubicacionRescate").change(async function () {
+        let ubicacionRescate = $("#ubicacionRescate").val()
+        let latitud = await obtenerLatitudLongitud(ubicacionRescate).then(function (value) {
+            return value.latitud
+        })
+        let longitud = await obtenerLatitudLongitud(ubicacionRescate).then(function (value) {
+            return value.longitud
+        })
+        $("#latitudRescate").val(latitud)
+        $("#longitudRescate").val(longitud)
+    }
+    )
+
+    $("#ubicacionRescatista").change(async function () {
+        let ubicacionRescatista = $("#ubicacionRescatista").val()
+        let latitud = await obtenerLatitudLongitud(ubicacionRescatista).then(function (value) {
+            return value.latitud
+        })
+        let longitud = await obtenerLatitudLongitud(ubicacionRescatista).then(function (value) {
+            return value.longitud
+        })
+        $("#latitudRescatista").val(latitud)
+        $("#longitudRescatista").val(longitud)
+    }
+    )
+
+    async function obtenerLatitudLongitud(ubicacion) {
+        const geocoder = new google.maps.Geocoder();
+        const response = await geocoder.geocode({ 'address': ubicacion });
+
+        let latitud = response.results[0].geometry.location.lat();
+        let longitud = response.results[0].geometry.location.lng();
+
+        return {
+            latitud, longitud
+        }
+    };
+    // Muestro un preview de la foto que se suba
+    const imageTag = $('#img-mascota');
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                imageTag.attr('src', e.target.result);
+            }
+            //transforma el archivo a b64
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    // agregando al event listener on-change del input
+    $("#foto-mascota").change(function () {
+        readURL(this);
+        imageTag.css('display', 'block')
+    });
+
+
+    function onFormSubmit() {
+        console.log('ejecutando esto:');
+        sessionStorage.setItem("mascota_registrada", true);
+    }
+</script>
+{{/partial}}
+
+{{> layout.html.hbs }}
