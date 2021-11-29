@@ -46,9 +46,9 @@ public class MascotasController extends Controller implements WithGlobalEntityMa
     Path tempFile = Files.createTempFile(uploadDir.toPath(), "", ".jpg");
 
     request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
-    try(InputStream fotoInputStream = request.raw().getPart("fotoMascota").getInputStream()) {
+    try (InputStream fotoInputStream = request.raw().getPart("fotoMascota").getInputStream()) {
       Files.copy(fotoInputStream, tempFile, StandardCopyOption.REPLACE_EXISTING);
-      Foto fotoMascota = new Foto(tempFile.toString(),null);
+      Foto fotoMascota = new Foto(tempFile.toString(), null);
       fotosMascota.add(fotoMascota);
     } catch (IOException | ServletException exception) {
       System.out.println(exception);
@@ -60,7 +60,7 @@ public class MascotasController extends Controller implements WithGlobalEntityMa
 
     // Fecha de nacimiento
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
-    LocalDate fechaNacimiento = LocalDate.parse(request.queryParams("fechaNacimiento"),formatter);
+    LocalDate fechaNacimiento = LocalDate.parse(request.queryParams("fechaNacimiento"), formatter);
 
     MascotaRegistrada nueva = new MascotaRegistrada(
         new RepositorioUsuarios().getPorId(request.session().attribute("user_id")),
@@ -99,7 +99,7 @@ public class MascotasController extends Controller implements WithGlobalEntityMa
         .stream()
         .filter(param -> listaNombresCaracteristicas
             .stream()
-            .anyMatch( c -> c.equals(param)))
+            .anyMatch(c -> c.equals(param)))
         .collect(Collectors.toList());
 
     nombreParamsQueMandaron.forEach(
@@ -109,5 +109,9 @@ public class MascotasController extends Controller implements WithGlobalEntityMa
         }
     );
     return caracteristicas;
+  }
+
+  public ModelAndView getRedirectMascotas(Request request, Response response) {
+    return new ModelAndView(getMap(request), "menu-mascotas.html.hbs");
   }
 }

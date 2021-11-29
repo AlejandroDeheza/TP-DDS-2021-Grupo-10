@@ -8,6 +8,12 @@
   margin-bottom: var(--margen-bottom);
 }
 
+.tipos-eleccion-container {
+  justify-content: space-evenly;
+  margin-top: 50px;
+  width: 100%;
+}
+
 .avatar-persona {
   position: absolute;
   right: 160px;
@@ -41,6 +47,7 @@
   position: relative;
   transition: filter 0.6s, box-shadow 0.6s;
 }
+
 .card > img {
   width: 300px;
   height: 200px;
@@ -255,4 +262,16 @@
   display: flex;
   align-items: center;
   position: absolute;
+}
+
+.encontre-mascota-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.encontre-mascota {
+  margin: 10px 0;
+  font-weight: 600;
 }
