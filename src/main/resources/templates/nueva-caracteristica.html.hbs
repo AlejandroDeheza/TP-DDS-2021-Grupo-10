@@ -3,21 +3,35 @@
 {{/partial}}
 
 {{# partial "contenido" }}
+<div class="caracteristicas">
 	<h1>Nueva Caracteristica</h1>
-	
-	<form class="row g-3">
-				<div>
-			<label for="preguntaDador" class="form-label">Nombre Característica</label>
+</div>
+	<form class="row g-3" action="/caracteristicas" method="POST">
+		<div>
+			<label for="nombreCaracteristica" class="form-label">Nombre Característica</label>
 			<input type="text" class="form-control" name="nombreCaracteristica" id="nombreCaracteristica" required>
 		</div>
+    {{#cantidadCaracteristicas}}
 		<div>
-			<label for="preguntaAdoptante" class="form-label">Valores Caracteristica</label>
-			<input type="text" class="form-control" name="ValoresCaracteristica" id="ValoresCaracteristica" required>
+			<label for="ValoresCaracteristica{{this}}" class="form-label"> Valor N. {{this}} </label>
+			<input type="text" class="form-control" name="ValoresCaracteristica{{this}}" id="ValoresCaracteristica{{this}}">
 		</div>
+	{{/cantidadCaracteristicas}}
 		<div>
 			<input class="btn btn-primary" type="submit" value="Agregar pregunta"/>
 		</div>
 	</form>
+
+	<div class="center-space-evenly">
+		<button type="submit" class="btn btn-primary submit-button-error" onclick="volverAtras()">Volver atras</button>
+	</div>
+</form>
+<script>
+function volverAtras() {
+    window.history.back()
+}
+</script>
+
 {{/partial}}
 
 {{> layout.html.hbs}}

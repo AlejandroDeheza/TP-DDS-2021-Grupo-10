@@ -224,6 +224,14 @@
   margin-bottom: var(--margen-bottom);
 }
 
+.titulo-caracteristicas {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1em;
+}
+
 .agregar-pregunta {
   text-align: center;
 }

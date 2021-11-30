@@ -3,9 +3,9 @@
 {{/partial}}
 
 {{# partial "contenido" }}
-{{#if esObligatoria}}
-	<h1>Preguntas Obligatorias de Asociaciones</h1>
-{{else}}
+	{{#if esObligatoria}}
+		<h1>Preguntas Obligatorias de Asociaciones</h1>
+	{{else}}
 	{{#if asociacion}}
 		<h1>Preguntas de la Asociación {{asociacion.nombre}} [ID {{asociacion.id}}]</h1>
 	{{else}}
