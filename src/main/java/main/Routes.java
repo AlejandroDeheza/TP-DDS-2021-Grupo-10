@@ -37,7 +37,6 @@ public class Routes {
 
     Spark.get("/creacion-usuario", usuarioController::mostrarFormularioCreacionUsuario, engine);
     Spark.post("/creacion-usuario", usuarioController::registrarUsuario);
-    Spark.get("/admin", usuarioController::mostrarAdmin, engine);
 
     Spark.get("/caracteristicas", caracteristicasController::mostrarCaracteristicas, engine);
     Spark.post("/caracteristicas", caracteristicasController::crearNuevaCaracteristicas);

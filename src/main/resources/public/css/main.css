@@ -241,6 +241,18 @@
   margin: 0 -110px;
 }
 
+.preguntas-asociaciones {
+  height: calc(100vh - 150px);
+}
+
+.margin-top {
+  margin-top: 20px;
+}
+
+.boton-agregar-preguntas {
+  margin-bottom: 20px;
+}
+
 .caracteristicas {
   margin-top: 0px;
 }
@@ -347,6 +359,11 @@
   justify-content: center;
   align-items: center;
   height: 100%;
+}
+
+.preguntas-dropdown {
+  row-gap: 1em;
+  border: 1px solid lightgray;
 }
 
 .preguntas-container {

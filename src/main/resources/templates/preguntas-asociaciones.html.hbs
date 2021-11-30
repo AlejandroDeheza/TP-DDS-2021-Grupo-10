@@ -3,17 +3,17 @@
 {{/partial}}
 
 {{# partial "contenido" }}
+<div class="container preguntas-asociaciones margin-top">
 	{{#if esObligatoria}}
 		<h1>Preguntas Obligatorias de Asociaciones</h1>
 	{{else}}
-	{{#if asociacion}}
-		<h1>Preguntas de la Asociación {{asociacion.nombre}} [ID {{asociacion.id}}]</h1>
-	{{else}}
-		<h1>Preguntas de Asociaciones</h1>
+		{{#if asociacion}}
+			<h1>Preguntas de la Asociación {{asociacion.nombre}} [ID {{asociacion.id}}]</h1>
+		{{else}}
+			<h1>Preguntas de Asociaciones</h1>
+		{{/if}}
 	{{/if}}
-{{/if}}
-<div class="container">
-	<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+	<div class="d-grid gap-2 d-md-flex justify-content-md-end boton-agregar-preguntas">
 		<div class="agregar-pregunta">
 			{{#if esObligatoria}}
 				<a type="button" class="btn btn-primary btn-sm btn-agregar-preguntas {{#unless mostrarBotonAgregarPreguntas}} visibility-none {{/unless}}" href="/asociaciones/0/preguntas/nueva-pregunta">
@@ -42,7 +42,7 @@
 		<div class="col-8">
 			{{#if preguntas}}
 				{{#preguntas}}
-					<div class="accordion accordion-flush" id="accordionFlushPregunta{{id}}">
+					<div class="accordion accordion-flush preguntas-dropdown" id="accordionFlushPregunta{{id}}">
 						<div class="accordion-item">
 							<h2 class="accordion-header" id="flush-pregunta{{id}}">
 								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsePregunta{{id}}" aria-expanded="false" aria-controls="flush-collapsePregunta{{id}}">
