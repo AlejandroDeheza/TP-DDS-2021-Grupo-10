@@ -69,8 +69,8 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
     ParDePreguntas parDePreguntas2 = new ParDePreguntas("Pregunta del Dador 2", "Pregunta del Adoptante 2", true);
     ParDePreguntas parDePreguntas3 = new ParDePreguntas("Pregunta del Dador 3", "Pregunta del Adoptante 3", false);
 
-    CaracteristicaConValoresPosibles caracteristicaValores1 = new CaracteristicaConValoresPosibles("características Valores 1", Arrays.asList("Inquieto", "Tranquilo"));
-    CaracteristicaConValoresPosibles caracteristicaValores2 = new CaracteristicaConValoresPosibles("características Valores 2", Arrays.asList("Chico", "Grande"));
+    CaracteristicaConValoresPosibles caracteristicaValores1 = new CaracteristicaConValoresPosibles("característica1", Arrays.asList("Inquieto", "Tranquilo"));
+    CaracteristicaConValoresPosibles caracteristicaValores2 = new CaracteristicaConValoresPosibles("característica2", Arrays.asList("Chico", "Grande"));
 
     RepositorioCaracteristicas repositorioCaracteristicas = new RepositorioCaracteristicas();
     repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(caracteristicaValores1);

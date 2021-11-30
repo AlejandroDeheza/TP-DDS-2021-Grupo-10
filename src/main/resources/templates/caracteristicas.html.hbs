@@ -4,21 +4,24 @@
 
 
 {{# partial "contenido" }}
+<h1>Caracteristicas</h1>
 
 	{{#caracteristicas}}
-		<div class="accordion accordion-flush" id="accordionFlushCaracteristica{{nombreCaracteristica}}">
+		<div class="accordion accordion-flush" id="accordionFlushCaracteristica{{id}}">
 			<div class="accordion-item">
-				<h2 class="accordion-header" id="flush-caracteristica{{nombreCaracteristica}}">
-					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseCaracteristica{{nombreCaracteristica}}" aria-expanded="false" aria-controls="flush-collapseCaracteristica{{nombreCaracteristica}}">
-						Caracteristica: {{nombreCaracteristica}}
+				<h2 class="accordion-header" id="flush-caracteristica{{id}}">
+					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseCaracteristica{{id}}" aria-expanded="false" aria-controls="flush-collapseCaracteristica{{id}}">
+						Caracteristica: {{caracteristicaConValoresPosibles.nombreCaracteristica}}
 					</button>
 				</h2>
-				<div id="flush-collapseCaracteristica{{nombreCaracteristica}}" class="accordion-collapse collapse" aria-labelledby="flush-caracteristica{{nombreCaracteristica}}" data-bs-parent="#accordionFlushCaracteristica{{nombreCaracteristica}}">
+				<div id="flush-collapseCaracteristica{{id}}" class="accordion-collapse collapse" aria-labelledby="flush-caracteristica{{id}}" data-bs-parent="#accordionFlushCaracteristica{{id}}">
 					<div class="accordion-body">
 						<ul>
-                            {{#valoresCaracteristicas}}
-                                    <li>{{this}}</li>
-                            {{/valoresCaracteristicas}}
+						{{#caracteristicaConValoresPosibles.valoresCaracteristicas}}
+                            <p>
+                            * {{this}}
+                            </p>
+                        {{/caracteristicaConValoresPosibles.valoresCaracteristicas}}
 						</ul>
 					</div>
 				</div>
@@ -28,7 +31,7 @@
 
 	<div class="agregar-caracteristica">
 		<a class="btn btn-primary" href="/nueva-caracteristica">
-			+ Pregunta
+			+ Caracteristica
 		</a>
 	</div>
 {{/partial}}
