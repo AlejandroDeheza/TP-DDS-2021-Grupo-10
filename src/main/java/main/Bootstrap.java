@@ -77,15 +77,12 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
         TamanioMascota.CHICO);
 
     // Caracteristicas
-    CaracteristicaConValoresPosibles c5 =
-        new CaracteristicaConValoresPosibles("Comportamiento", Arrays.asList("Inquieto", "Tranquilo"));
-
-    CaracteristicaConValoresPosibles c4 =
-        new CaracteristicaConValoresPosibles("Animo", Arrays.asList("Feliz", "Triste", "Nose"));
     CaracteristicaConValoresPosibles c1 = new CaracteristicaConValoresPosibles("Comportamiento", Arrays.asList("Inquieto", "Tranquilo"));
     CaracteristicaConValoresPosibles c2 = new CaracteristicaConValoresPosibles("Caracter", Arrays.asList("Pacifico", "Violento"));
     CaracteristicaConValoresPosibles c3 = new CaracteristicaConValoresPosibles("Apetito", Arrays.asList("Poco", "Intermedio", "Mucho"));
-    
+    CaracteristicaConValoresPosibles c4 = new CaracteristicaConValoresPosibles("Animo", Arrays.asList("Feliz", "Triste", "Nose"));
+    CaracteristicaConValoresPosibles c5 = new CaracteristicaConValoresPosibles("Comportamiento", Arrays.asList("Inquieto", "Tranquilo"));
+
     // Asociaciones
     Ubicacion ubicacion1 = new Ubicacion(2000.0, 2100.0, "Medrano 951");
     Ubicacion ubicacion2 = new Ubicacion(219.0, 22.0, "Mozart 1923");
@@ -100,13 +97,6 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
     ParDePreguntas parDePreguntas3 = new ParDePreguntas("Pregunta del Dador 3", "Pregunta del Adoptante 3", false);
     ParDePreguntas parDePreguntas4 = new ParDePreguntas("Pregunta del Dador 4", "Pregunta del Adoptante 4", true);
 
-    CaracteristicaConValoresPosibles caracteristicaValores1 = new CaracteristicaConValoresPosibles("característica1", Arrays.asList("Inquieto", "Tranquilo"));
-    CaracteristicaConValoresPosibles caracteristicaValores2 = new CaracteristicaConValoresPosibles("característica2", Arrays.asList("Chico", "Grande"));
-
-    RepositorioCaracteristicas repositorioCaracteristicas = new RepositorioCaracteristicas();
-    repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(caracteristicaValores1);
-    repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(caracteristicaValores2);
-
     asociacion2.agregarPregunta(parDePreguntas3);
 
     // Se crea el directorio para subir las fotos :)
@@ -119,7 +109,6 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
       persist(usuario);
 
       repositorioMascotaRegistrada.agregar(mascotaRegistrada);
-      System.out.println(repositorioMascotaRegistrada.getPorNombre(mascotaRegistrada.getNombre()).getId());
       repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c1);
       repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c2);
       repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c3);
