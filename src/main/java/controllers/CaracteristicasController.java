@@ -29,17 +29,11 @@ public class CaracteristicasController extends Controller implements WithGlobalE
     List<BorradorCaracteristicas> borradorCaracteristicas = new ArrayList<>();
     CaracteristicaConValoresPosibles valor1 = listaCaracteristicas.get(1);
 
-    System.out.println("Nombre1: " + listaCaracteristicas.get(0).getNombreCaracteristica());
-    System.out.println("Valores1: " + listaCaracteristicas.get(0).getValoresCaracteristicas());
-
     Integer index = 1;
 
     for(CaracteristicaConValoresPosibles caracteristica : listaCaracteristicas){
       borradorCaracteristicas.add(new BorradorCaracteristicas(index++,caracteristica));
     };
-
-    System.out.println("Borrador: " + borradorCaracteristicas.get(0).getId());
-    System.out.println("Borrador: " + borradorCaracteristicas.get(0).getCaracteristicaConValoresPosibles().getValoresCaracteristicas());
 
     Map<String, Object> modelo = getMap(request);
     modelo.put("caracteristicas", borradorCaracteristicas);
@@ -84,11 +78,10 @@ public class CaracteristicasController extends Controller implements WithGlobalE
         valoresCompletos++;
       }
     }
-    listaCaracteristicas.stream().forEach(caracterist -> {
-      System.out.println("CARACTERISTICAS: " + caracterist);
-    });
 
-    System.out.println("Cantidad Caracteristicas Completos: " + valoresCompletos);
+    if(valoresCompletos < 2){
+      super.redireccionCasoError(request, response, null, "Debe ingresar mas de una caracteristica posible");
+    }
 
     if(valoresCompletos >= 2) {
       withTransaction(() -> {

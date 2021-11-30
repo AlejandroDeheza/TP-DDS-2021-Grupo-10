@@ -13,7 +13,7 @@
 		</div>
     {{#cantidadCaracteristicas}}
 		<div>
-			<label for="ValoresCaracteristica{{this}}" class="form-label">Valores Caracteristica</label>
+			<label for="ValoresCaracteristica{{this}}" class="form-label"> Valor N. {{this}} </label>
 			<input type="text" class="form-control" name="ValoresCaracteristica{{this}}" id="ValoresCaracteristica{{this}}">
 		</div>
 	{{/cantidadCaracteristicas}}
@@ -21,6 +21,17 @@
 			<input class="btn btn-primary" type="submit" value="Agregar pregunta"/>
 		</div>
 	</form>
+
+	<div class="center-space-evenly">
+		<button type="submit" class="btn btn-primary submit-button-error" onclick="volverAtras()">Volver atras</button>
+	</div>
+</form>
+<script>
+function volverAtras() {
+    window.history.back()
+}
+</script>
+
 {{/partial}}
 
 {{> layout.html.hbs}}
