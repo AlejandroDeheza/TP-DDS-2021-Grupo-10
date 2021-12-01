@@ -1,5 +1,6 @@
 package main;
 
+import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import controllers.*;
 import spark.Spark;
 import spark.debug.DebugScreen;
@@ -24,6 +25,9 @@ public class Routes {
     MascotasController mascotasController = new MascotasController();
     ErrorController errorController = new ErrorController();
     EncontreMascotaController encontreMascotaController = new EncontreMascotaController();
+    PreguntasController preguntasController = new PreguntasController();
+    CaracteristicasController caracteristicasController = new CaracteristicasController();
+    AsociacionesController asociacionesController = new AsociacionesController();
 
     Spark.get("/", homeController::getHome, engine);
 
@@ -33,7 +37,16 @@ public class Routes {
 
     Spark.get("/creacion-usuario", usuarioController::mostrarFormularioCreacionUsuario, engine);
     Spark.post("/creacion-usuario", usuarioController::registrarUsuario);
-    Spark.get("/admin", usuarioController::mostrarAdmin, engine);
+
+    Spark.get("/caracteristicas", caracteristicasController::mostrarCaracteristicas, engine);
+    Spark.post("/caracteristicas", caracteristicasController::crearNuevaCaracteristicas);
+    Spark.get("/nueva-caracteristica", caracteristicasController::cantidadCaracteristicas, engine);
+
+    Spark.get("/asociaciones", asociacionesController::mostrarAsociaciones, engine);
+    Spark.get("/asociaciones/:idAsociacion/preguntas", preguntasController::mostrarPreguntasDeLaAsociacion, engine);
+    Spark.get("/asociaciones/:idAsociacion/preguntas/nueva-pregunta", preguntasController::nuevaPregunta, engine);
+    Spark.get("/asociaciones/:idAsociacion/preguntas/nueva-pregunta-2", preguntasController::matchearRespuestasPosibles, engine);
+    Spark.post("/asociaciones/:idAsociacion/preguntas", preguntasController::crearParDePreguntasAsociacion);
 
     Spark.get("/mascotas-en-adopcion", publicacionesController::mostrarMascotasEnAdopcion, engine);
 
@@ -58,6 +71,11 @@ public class Routes {
         encontreMascotaController::enviarMascotaEncontradaSinChapita);
 
     Spark.get("/error", errorController::mostrarPantallaError, engine);
+    
+    Spark.after((request, response) -> {
+      PerThreadEntityManagers.getEntityManager();
+      PerThreadEntityManagers.closeEntityManager();
+    });
 
 
     System.out.println("Servidor iniciado!");

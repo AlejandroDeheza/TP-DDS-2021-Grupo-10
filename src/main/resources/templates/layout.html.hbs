@@ -39,13 +39,17 @@
                 <a class="nav-link" href="/mascotas">Mascotas</a>
                 <a class="nav-link" href="#">Hogares</a>
                 <a class="nav-link" href="#">Contacto</a>
-                <a class="nav-link separator-nav-link" href="#">Admin</a>
                 {{#if sesionIniciada}}
-                {{else}}
-                    <a class="nav-link" href="/creacion-usuario">Crea tu cuenta</a>
-                    <a class="nav-link" href="/login">Ingresá</a>
-                {{/if}}
-                {{#if sesionIniciada}}
+                	{{#if esAdmin}}
+		                <li class="nav-item dropdown">
+		                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="/admin" role="button" aria-expanded="false">Admin</a>
+		                    <ul class="dropdown-menu">
+		                        <li><a class="dropdown-item" href="/caracteristicas">Características</a></li>
+		                        <li><hr class="dropdown-divider"></li>
+		                        <li><a class="dropdown-item" href="/asociaciones">Preguntas asociaciones</a></li>
+		                    </ul>
+		                </li>
+	                {{/if}}
                     <div class="avatar-persona">
                         <div class="btn-group" role="group">
                             <button id="sign-in" type="button"
@@ -69,11 +73,12 @@
                             </ul>
                         </div>
                     </div>
+				{{else}}
+                    <a class="nav-link" href="/creacion-usuario">Crea tu cuenta</a>
+                    <a class="nav-link" href="/login">Ingresá</a>
                 {{/if}}
             </div>
         </div>
-
-    </div>
     </div>
 </nav>
 <main class="main-container">

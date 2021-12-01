@@ -21,14 +21,6 @@ import java.time.format.DateTimeFormatter;
 
 public class UsuarioController extends Controller implements WithGlobalEntityManager, TransactionalOps {
 
-  public ModelAndView mostrarAdmin(Request request, Response response) {
-    if (noEsAdmin(request)) {
-      response.redirect("/");
-      return null;
-    }
-    return new ModelAndView(getMap(request), "admin.html.hbs");
-  }
-
   public ModelAndView mostrarFormularioCreacionUsuario(Request request, Response response) {
     return new ModelAndView(getMap(request), "registracion.html.hbs");
   }
@@ -51,7 +43,7 @@ public class UsuarioController extends Controller implements WithGlobalEntityMan
     }
 
     if (new RepositorioUsuarios().yaExiste(request.queryParams("usuario"))) {
-      redireccionCasoError(request, response,"/creacion-usuario", "Ya existe una cuenta con el nombre de usuario ingresado");
+      redireccionCasoError(request, response, "/creacion-usuario", "Ya existe una cuenta con el nombre de usuario ingresado");
     } else {
       DocumentoIdentidad documentoIdentidad = new DocumentoIdentidad(
           TipoDocumento.values()[Integer.parseInt(request.queryParams("tipoDocumento"))],

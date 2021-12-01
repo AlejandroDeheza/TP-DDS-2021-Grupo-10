@@ -1,0 +1,77 @@
+{{# partial "titulo" }}
+	<title>Patitas - Preguntas Asociaciones</title>
+{{/partial}}
+
+{{# partial "contenido" }}
+<div class="container preguntas-asociaciones margin-top">
+	{{#if esObligatoria}}
+		<h1>Preguntas Obligatorias de Asociaciones</h1>
+	{{else}}
+		{{#if asociacion}}
+			<h1>Preguntas de la Asociación {{asociacion.nombre}} [ID {{asociacion.id}}]</h1>
+		{{else}}
+			<h1>Preguntas de Asociaciones</h1>
+		{{/if}}
+	{{/if}}
+	<div class="d-grid gap-2 d-md-flex justify-content-md-end boton-agregar-preguntas">
+		<div class="agregar-pregunta">
+			{{#if esObligatoria}}
+				<a type="button" class="btn btn-primary btn-sm btn-agregar-preguntas {{#unless mostrarBotonAgregarPreguntas}} visibility-none {{/unless}}" href="/asociaciones/0/preguntas/nueva-pregunta">
+					Agregar Pregunta Obligatoria
+				</a>
+			{{else}}
+				<a type="button" class="btn btn-primary btn-sm btn-agregar-preguntas {{#unless mostrarBotonAgregarPreguntas}} visibility-none {{/unless}}" href="/asociaciones/{{asociacion.id}}/preguntas/nueva-pregunta">
+					Agregar Pregunta No Obligatoria
+				</a>
+			{{/if}}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-4">
+			<div class="list-group">
+				<a class="list-group-item list-group-item-action" type="button" href="/asociaciones/0/preguntas">
+					Panel General de Preguntas Obligatorias
+				</a>
+				{{#asociaciones}}
+					<a class="list-group-item list-group-item-action" type="button" href="/asociaciones/{{id}}/preguntas">
+						Asociación "{{nombre}}" [ID {{id}}]
+					</a>
+				{{/asociaciones}}
+			</div>
+		</div>
+		<div class="col-8">
+			{{#if preguntas}}
+				{{#preguntas}}
+					<div class="accordion accordion-flush preguntas-dropdown" id="accordionFlushPregunta{{id}}">
+						<div class="accordion-item">
+							<h2 class="accordion-header" id="flush-pregunta{{id}}">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsePregunta{{id}}" aria-expanded="false" aria-controls="flush-collapsePregunta{{id}}">
+									Pregunta N{{id}}°
+								</button>
+							</h2>
+							<div id="flush-collapsePregunta{{id}}" class="accordion-collapse collapse" aria-labelledby="flush-pregunta{{id}}" data-bs-parent="#accordionFlushPregunta{{id}}">
+								<div class="accordion-body">
+									<p>
+										Pregunta del dador: {{preguntaDelDador}}
+									</p>
+									<p>
+										Pregunta del adoptante: {{preguntaDelAdoptante}}
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				{{/preguntas}}
+			{{else}}
+				<div class="center">
+					<p>
+						Seleccione una opción
+					</p>
+				</div>
+			{{/if}}
+		</div>
+	</div>
+</div>
+{{/partial}}
+
+{{> layout.html.hbs}}

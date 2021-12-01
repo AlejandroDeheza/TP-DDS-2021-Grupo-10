@@ -33,9 +33,9 @@ public class Punto2 extends NuestraAbstractPersistenceTest {
   @Test
   @DisplayName("Se puede agregar una ParDePreguntas al RepositorioPreguntas")
   public void agregarParDePreguntasAlRepositorioPreguntas() {
-    assertEquals(0, repositorioPreguntasObligatorias.getPreguntas().size());
+    assertEquals(0, repositorioPreguntasObligatorias.getPreguntasObligatorias().size());
     entityManager().persist(parDePreguntas);
-    assertEquals(1, repositorioPreguntasObligatorias.getPreguntas().size());
+    assertEquals(1, repositorioPreguntasObligatorias.getPreguntasObligatorias().size());
   }
 
   private ParDePreguntas getParDePreguntas() {
