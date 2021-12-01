@@ -37,29 +37,11 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
   }
 
   public void run() {
-    DocumentoIdentidad documentoIdentidad = new DocumentoIdentidad(
-        TipoDocumento.DNI,
-        "12345678"
-    );
-
-    DatosDeContacto datosDeContacto = new DatosDeContacto(
-        "12345678",
-        "pepito@gmail.com"
-    );
-
-
+    DocumentoIdentidad documentoIdentidad = new DocumentoIdentidad(TipoDocumento.DNI, "12345678");
+    DatosDeContacto datosDeContacto = new DatosDeContacto("12345678", "pepito@gmail.com");
     Persona persona = new Persona(
         "Pepito",
         "Gonzalez",
-        documentoIdentidad,
-        datosDeContacto,
-        LocalDate.now(),
-        TipoNotificadorPreferido.CORREO
-    );
-
-    Persona persona2 = new Persona(
-        "Pepito",
-        "Fernandez",
         documentoIdentidad,
         datosDeContacto,
         LocalDate.now(),
@@ -88,15 +70,15 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
     Ubicacion ubicacion2 = new Ubicacion(219.0, 22.0, "Mozart 1923");
     Ubicacion ubicacion3 = new Ubicacion(334.0, 529.0, "Pedraza 34");
 
-    Asociacion asociacion1 = new Asociacion("Asociada", ubicacion1);
-    Asociacion asociacion2 = new Asociacion("Desasociada", ubicacion2);
-    Asociacion asociacion3 = new Asociacion("Corte Logia", ubicacion3);
+    Asociacion asociacion1 = new Asociacion("Perritos - Palermo", ubicacion1);
+    Asociacion asociacion2 = new Asociacion("Garritas", ubicacion2);
+    Asociacion asociacion3 = new Asociacion("Una mascota feliz", ubicacion3);
 
-    ParDePreguntas parDePreguntas1 = new ParDePreguntas("Pregunta del Dador 1", "Pregunta del Adoptante 1", true);
-    ParDePreguntas parDePreguntas2 = new ParDePreguntas("Pregunta del Dador 2", "Pregunta del Adoptante 2", true);
-    ParDePreguntas parDePreguntas3 = new ParDePreguntas("Pregunta del Dador 3", "Pregunta del Adoptante 3", false);
-    ParDePreguntas parDePreguntas4 = new ParDePreguntas("Pregunta del Dador 4", "Pregunta del Adoptante 4", true);
+    ParDePreguntas parDePreguntas1 = new ParDePreguntas("¿Tenes balcon?", "¿Necesito Balcon?", true);
+    ParDePreguntas parDePreguntas2 = new ParDePreguntas("¿Contas con redes para mascotas?", "¿Necesito redes para mascotas?", true);
+    ParDePreguntas parDePreguntas3 = new ParDePreguntas("¿Tenes un veterinario de confianza?", "¿Necesito contar con un veterinario de confianza?", false);
 
+    asociacion1.agregarPregunta(parDePreguntas1);
     asociacion2.agregarPregunta(parDePreguntas3);
 
     // Se crea el directorio para subir las fotos :)
@@ -118,13 +100,12 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
       // Asociaciones
       persist(parDePreguntas1);
       persist(parDePreguntas2);
-      persist(parDePreguntas4);
+      persist(parDePreguntas3);
       persist(asociacion1);
       persist(asociacion2);
       persist(asociacion3);
 
-      persist(new Usuario("pepito", "pepitopepito", TipoUsuario.NORMAL, persona));
-      persist(new Usuario("admin", "adminadmin", TipoUsuario.ADMIN, persona2));
+      persist(new Usuario("admin", "asd123asd123", TipoUsuario.ADMIN, persona));
     });
 
   }

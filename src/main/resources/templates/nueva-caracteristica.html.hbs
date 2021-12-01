@@ -1,35 +1,39 @@
 {{# partial "titulo" }}
-	<title>Patitas - Caracteristicas</title>
+<title>Patitas - Caracteristicas</title>
 {{/partial}}
 
 {{# partial "contenido" }}
-<div class="caracteristicas">
-	<h1>Nueva Caracteristica</h1>
-</div>
+<div class="d-flex flex-column align-items-center pt-3">
+	<div class="caracteristicas">
+		<h1>Nueva Caracteristica</h1>
+	</div>
 	<form class="row g-3" action="/caracteristicas" method="POST">
 		<div>
 			<label for="nombreCaracteristica" class="form-label">Nombre Característica</label>
 			<input type="text" class="form-control" name="nombreCaracteristica" id="nombreCaracteristica" required>
 		</div>
-    {{#cantidadCaracteristicas}}
+		{{#cantidadCaracteristicas}}
 		<div>
-			<label for="ValoresCaracteristica{{this}}" class="form-label"> Valor N. {{this}} </label>
-			<input type="text" class="form-control" name="ValoresCaracteristica{{this}}" id="ValoresCaracteristica{{this}}">
+			<label for="ValoresCaracteristica{{this}}" class="form-label"> Opción {{this}} </label>
+			<input type="text" class="form-control" name="ValoresCaracteristica{{this}}"
+				id="ValoresCaracteristica{{this}}">
 		</div>
-	{{/cantidadCaracteristicas}}
-		<div>
-			<input class="btn btn-primary" type="submit" value="Agregar pregunta"/>
+		{{/cantidadCaracteristicas}}
+		<div class="d-flex justify-content-around align-items-center">
+			<div>
+				<input class="btn btn-primary submit-button-error" type="submit" value="Agregar" />
+			</div>
+			<div class="center-space-evenly">
+				<button type="submit" class="btn btn-primary submit-button-error" onclick="volverAtras()">Volver
+					atras</button>
+			</div>
 		</div>
 	</form>
-
-	<div class="center-space-evenly">
-		<button type="submit" class="btn btn-primary submit-button-error" onclick="volverAtras()">Volver atras</button>
-	</div>
-</form>
+</div>
 <script>
-function volverAtras() {
-    window.history.back()
-}
+	function volverAtras() {
+		window.history.back()
+	}
 </script>
 
 {{/partial}}
