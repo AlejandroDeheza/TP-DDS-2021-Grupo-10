@@ -1,10 +1,13 @@
 package controllers;
 
+import modelo.mascota.caracteristica.Caracteristica;
+import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
+import repositorios.RepositorioCaracteristicas;
 import spark.Request;
 import spark.Response;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public abstract class Controller {
 
@@ -38,6 +41,35 @@ public abstract class Controller {
         (request.queryParams("origin") == null ? "" : "?origin=" + request.queryParams("origin")) +
         "?mensajeError=" + mensaje
     );
+  }
+
+  protected List<Caracteristica> obtenerListaCaracteristicas(Request request) {
+    Set<String> queryParams = request.queryParams();
+
+    List<Caracteristica> caracteristicas = new ArrayList<>();
+
+    RepositorioCaracteristicas repositorioCaracteristicas = new RepositorioCaracteristicas();
+    // Obtengo los nombre de caracteristicas para comparar con los query params :)
+    List<String> listaNombresCaracteristicas = repositorioCaracteristicas.getCaracteristicasConValoresPosibles()
+        .stream()
+        .map(CaracteristicaConValoresPosibles::getNombreCaracteristica)
+        .collect(Collectors.toList());
+
+    List<String> nombreParamsQueMandaron = queryParams
+        .stream()
+        .filter(param -> listaNombresCaracteristicas
+            .stream()
+            .anyMatch(c -> c.equals(param)))
+        .collect(Collectors.toList());
+
+    nombreParamsQueMandaron.forEach(
+        param -> {
+          Caracteristica caracteristica = repositorioCaracteristicas
+              .getCaracteristicaSegun(param, request.queryParams(param));
+          caracteristicas.add(caracteristica);
+        }
+    );
+    return caracteristicas;
   }
 }
   
