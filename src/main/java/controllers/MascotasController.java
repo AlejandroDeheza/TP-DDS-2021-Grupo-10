@@ -97,7 +97,6 @@ public class MascotasController extends Controller implements WithGlobalEntityMa
     // OBtener las mascotas del usuario que pidio esto
     Usuario usuario = new RepositorioUsuarios().getPorId(request.session().attribute("user_id"));
     RepositorioMascotaRegistrada repositorioMascotaRegistrada = new RepositorioMascotaRegistrada();
-
     // Meterlas en el modelo
     Map<String, Object> modelo = getMap(request);
     modelo.put("mascotasUsuario", repositorioMascotaRegistrada.obtenerMascotasDeUnDuenio(usuario));
