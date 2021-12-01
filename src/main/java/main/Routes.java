@@ -70,6 +70,10 @@ public class Routes {
     Spark.post("/mascotas/encontre-mascota/sin-chapita",
         encontreMascotaController::enviarMascotaEncontradaSinChapita);
 
+    // FIXME: remove after finish Entrega 6
+
+
+
     Spark.get("/error", errorController::mostrarPantallaError, engine);
     
     Spark.after((request, response) -> {

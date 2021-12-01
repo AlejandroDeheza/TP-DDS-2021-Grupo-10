@@ -1,39 +1,45 @@
 {{# partial "titulo" }}
-    <title>Patitas - Caracteristicas</title>
+<title>Patitas - Caracteristicas</title>
 {{/partial}}
 
 
 {{# partial "contenido" }}
-<h1>Caracteristicas</h1>
+<div class="d-flex flex-column align-items-center pt-3">
+
+	<h1 class="pb-3">Caracteristicas</h1>
 
 	{{#caracteristicas}}
-		<div class="accordion accordion-flush" id="accordionFlushCaracteristica{{id}}">
-			<div class="accordion-item">
-				<h2 class="accordion-header" id="flush-caracteristica{{id}}">
-					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseCaracteristica{{id}}" aria-expanded="false" aria-controls="flush-collapseCaracteristica{{id}}">
-						Caracteristica: {{caracteristicaConValoresPosibles.nombreCaracteristica}}
-					</button>
-				</h2>
-				<div id="flush-collapseCaracteristica{{id}}" class="accordion-collapse collapse" aria-labelledby="flush-caracteristica{{id}}" data-bs-parent="#accordionFlushCaracteristica{{id}}">
-					<div class="accordion-body">
-						<ul>
+	<div class="accordion accordion-flush caracteristica mb-3" id="accordionFlushCaracteristica{{id}}">
+		<div class="accordion-item">
+			<h2 class="accordion-header" id="flush-caracteristica{{id}}">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+					data-bs-target="#flush-collapseCaracteristica{{id}}" aria-expanded="false"
+					aria-controls="flush-collapseCaracteristica{{id}}">
+					{{caracteristicaConValoresPosibles.nombreCaracteristica}}
+				</button>
+			</h2>
+			<div id="flush-collapseCaracteristica{{id}}" class="accordion-collapse collapse"
+				aria-labelledby="flush-caracteristica{{id}}" data-bs-parent="#accordionFlushCaracteristica{{id}}">
+				<div class="accordion-body">
+					<ul>
 						{{#caracteristicaConValoresPosibles.valoresCaracteristicas}}
-                            <p>
-                            * {{this}}
-                            </p>
-                        {{/caracteristicaConValoresPosibles.valoresCaracteristicas}}
-						</ul>
-					</div>
+						<p>
+							* {{this}}
+						</p>
+						{{/caracteristicaConValoresPosibles.valoresCaracteristicas}}
+					</ul>
 				</div>
 			</div>
 		</div>
+	</div>
 	{{/caracteristicas}}
 
-	<div class="agregar-caracteristica">
-		<a class="btn btn-primary" href="/nueva-caracteristica">
-			+ Caracteristica
+	<div class="agregar-caracteristica my-4">
+		<a class="btn btn-primary submit-button-error" href="/nueva-caracteristica">
+			Agregar característica
 		</a>
 	</div>
+</div>
 {{/partial}}
 
 
