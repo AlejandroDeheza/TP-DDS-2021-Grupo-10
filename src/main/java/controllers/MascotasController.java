@@ -90,9 +90,9 @@ public class MascotasController extends Controller implements WithGlobalEntityMa
 
     RepositorioCaracteristicas repositorioCaracteristicas = new RepositorioCaracteristicas();
     // Obtengo los nombre de caracteristicas para comparar con los query params :)
-    List<String> listaNombresCaracteristicas = repositorioCaracteristicas.getCaracteristicas()
+    List<String> listaNombresCaracteristicas = repositorioCaracteristicas.getCaracteristicasConValoresPosibles()
         .stream()
-        .map(caracteristica -> caracteristica.getNombreCaracteristica())
+        .map(CaracteristicaConValoresPosibles::getNombreCaracteristica)
         .collect(Collectors.toList());
 
     List<String> nombreParamsQueMandaron = queryParams
@@ -104,7 +104,8 @@ public class MascotasController extends Controller implements WithGlobalEntityMa
 
     nombreParamsQueMandaron.forEach(
         param -> {
-          Caracteristica caracteristica = new Caracteristica(param, request.queryParams(param));
+          Caracteristica caracteristica = repositorioCaracteristicas
+              .getCaracteristicaSegun(param, request.queryParams(param));
           caracteristicas.add(caracteristica);
         }
     );
