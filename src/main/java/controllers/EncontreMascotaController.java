@@ -200,21 +200,6 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
     return null;
   }
 
-  private List<Foto> obtenerFotos(Request request, Response response) throws IOException, ServletException {
-    List<Foto> fotos = new ArrayList<>();
-    // Cargo la foto de la mascota
-    File uploadDir = new File(Constantes.UPLOAD_DIRECTORY);
-    Path tempFile = Files.createTempFile(uploadDir.toPath(), "", ".jpg");
-
-    request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
-    InputStream fotoInputStream = request.raw().getPart("fotoMascota").getInputStream();
-    Files.copy(fotoInputStream, tempFile, StandardCopyOption.REPLACE_EXISTING);
-    fotos.add(new Foto(tempFile.toAbsolutePath().toString(), LocalDate.now().toString()));
-
-
-    return fotos;
-  }
-
   public ModelAndView getInformacionEscaneo(Request request, Response response) {
     if (!tieneSesionActiva(request)) {
       response.redirect("/login");

@@ -3,14 +3,13 @@
 <div class="d-flex flex-column align-items-center pt-3">
     {{#if mascotasUsuario}}
     {{#each mascotasUsuario}}
-    <div class="card" style="width: 18rem;">
-        <img src="{{fotos.[0].link}}" class="card-img-top" alt="mascota">
-        <div class="card-body">
-            <h5 class="card-title">{{nombre}}</h5>
-            <a href="#" class="btn btn-primary submit-button-error">Ver QR de chapita</a>
+        <div class="input-group-sm mb-3">
+            <img src="{{fotos.[0].link}}" class="card-img-top" alt="mascota">
+            <p>El dueño es: {{duenio.usuario}} y su nombre es {{nombre}} + {{apodo}} </p>
+            <div id="printable">
             <div id="qrcode" value="{{id}}"></div>
+            <button id="qrprint">Imprimir</button>
         </div>
-    </div>
     {{/each}}
     {{else}}
     <div>
@@ -20,27 +19,31 @@
     {{/if}}
 
 
-    {{#if mascotasUsuario}}
-{{#each mascotasUsuario}}
-<div class="input-group-sm mb-3">
-    <p>El dueño es: {{duenio.usuario}} y su nombre es {{nombre}} + {{apodo}} </p>
-    <div id="qrcode" value="{{id}}"></div>
 </div>
-{{/each}}
-{{else}}
-<div class="center">
-    <p> Todavia no tenes mascotas registradas en nuestro sitio, para hacerlo clickea aca!</p>
-</div>
-{{/if}}
-<div>
 
-</div>
+ </div>
+
 <!-- (C) CREATE QR CODE ON PAGE LOAD -->
 <script>
     window.addEventListener("load", function(){
         let id= document.getElementById('qrcode').getAttribute('value');
         let url="https://localhost:8080/mascotas/encontre-mascota/con-chapita/".concat(id)
-        var qrc = new QRCode(document.getElementById("qrcode"), url);
+        let qrc = new QRCode(document.getElementById("qrcode"), url);
+
+
+
+        // (2) PRINT
+        document.getElementById("qrprint").addEventListener("click", function(){
+            var printwin = window.open("");
+            printwin.document.write(document.getElementById("printable").innerHTML);
+            printwin.stop();
+            let qr = printwin.document.querySelector("#qrcode img");
+            qr.addEventListener("load", function(){
+                printwin.print();
+                printwin.close();
+            });
+        });
+
     });
 </script>
 {{/partial}}
