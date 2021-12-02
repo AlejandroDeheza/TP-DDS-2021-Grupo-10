@@ -72,9 +72,12 @@ public class Routes {
     Spark.get("/mascotas/mis-mascotas", mascotasController::getMascotasDeUsuario, engine);
 
     Spark.get("/mascotas/encontre-mascota/con-chapita",
+        encontreMascotaController::getInformacionEscaneo, engine);
+
+    Spark.get("/mascotas/encontre-mascota/con-chapita/:codigoChapita",
         encontreMascotaController::getFormularioConChapita, engine);
 
-    Spark.post("/mascotas/encontre-mascota/con-chapita",
+    Spark.post("/mascotas/encontre-mascota/con-chapita/:codigoChapita",
         encontreMascotaController::enviarMascotaEncontradaConChapita);
 
     Spark.get("/mascotas/encontre-mascota/sin-chapita",
