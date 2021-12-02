@@ -1,10 +1,15 @@
 package main;
 
+import static spark.Spark.staticFiles;
+
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import controllers.*;
 import spark.Spark;
 import spark.debug.DebugScreen;
 import spark.template.handlebars.HandlebarsTemplateEngine;
+import utils.Constantes;
+
+import java.io.File;
 
 public class Routes {
 
@@ -16,6 +21,11 @@ public class Routes {
     Spark.port(8080);
     Spark.staticFileLocation("/public");
     DebugScreen.enableDebugScreen();
+
+    // Se crea el directorio para subir las fotos :)
+    File uploadDir = new File(Constantes.UPLOAD_DIRECTORY);
+    uploadDir.mkdir(); // create the upload directory if it doesn't exist
+    staticFiles.externalLocation(Constantes.UPLOAD_DIRECTORY);
 
     HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
     HomeController homeController = new HomeController();
@@ -59,7 +69,7 @@ public class Routes {
         engine);
 
     // FIXME: remove after finish Entrega 6
-    Spark.get("/mascotas/mis-mascotas", (request, response) -> mascotasController.getMascotasDeUsuario(request,response), engine);
+    Spark.get("/mascotas/mis-mascotas", mascotasController::getMascotasDeUsuario, engine);
 
     Spark.get("/mascotas/encontre-mascota/con-chapita",
         encontreMascotaController::getFormularioConChapita, engine);

@@ -1,17 +1,21 @@
 {{#partial "contenido" }}
-{{#if mascotasUsuario}}
-{{#each mascotasUsuario}}
-<div class="input-group-sm mb-3">
-    <p>El dueño es: {{duenio.usuario}} y su nombre es {{nombre}} + {{apodo}} </p>
-</div>
-{{/each}}
-{{else}}
-<div class="center">
-    <p> Todavia no tenes mascotas registradas en nuestro sitio, para hacerlo clickea aca!</p>
-</div>
-{{/if}}
-<div>
-
+<div class="d-flex flex-column align-items-center pt-3">
+    {{#if mascotasUsuario}}
+    {{#each mascotasUsuario}}
+    <div class="card" style="width: 18rem;">
+        <img src="{{fotos.[0].link}}" class="card-img-top" alt="mascota">
+        <div class="card-body">
+            <h5 class="card-title">{{nombre}}</h5>
+            <a href="#" class="btn btn-primary submit-button-error">Ver QR de chapita</a>
+        </div>
+    </div>
+    {{/each}}
+    {{else}}
+    <div>
+        <p> Todavia no tenes mascotas registradas en nuestro sitio, para registrar una hace <a href="/mascotas/registracion-mascota" class="btn btn-primary">click acá</a>.
+            O anda a Home y selecciona la opción registrar mascota. </p>
+    </div>
+    {{/if}}
 </div>
 {{/partial}}
 

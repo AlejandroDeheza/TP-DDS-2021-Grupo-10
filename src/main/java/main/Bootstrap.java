@@ -17,13 +17,10 @@ import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioMascotaRegistrada;
-import utils.Constantes;
 
-import java.io.File;
 import java.time.LocalDate;
 import java.util.Arrays;
-
-import static spark.Spark.staticFiles;
+import java.util.Collections;
 
 public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, TransactionalOps {
 
@@ -50,7 +47,8 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
 
     // Mascota Registrada
     MascotaRegistrada mascotaRegistrada = new MascotaRegistrada(usuario, "Perrito", "coco",
-        LocalDate.now(), "Es re bueno y gordo", Sexo.MACHO, Animal.PERRO, null, Arrays.asList(new Foto("coco.jpg", null)),
+        LocalDate.now(), "Es re bueno y gordo", Sexo.MACHO, Animal.PERRO, null,
+        Collections.singletonList(new Foto("/3261071319668366719.jpg", null)),
         TamanioMascota.CHICO);
 
     // Caracteristicas
@@ -75,10 +73,6 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
     asociacion1.agregarPregunta(parDePreguntas1);
     asociacion2.agregarPregunta(parDePreguntas3);
 
-    // Se crea el directorio para subir las fotos :)
-    File uploadDir = new File(Constantes.UPLOAD_DIRECTORY);
-    uploadDir.mkdir();
-    staticFiles.externalLocation(Constantes.UPLOAD_DIRECTORY);
 
     withTransaction(() -> {
       // Usuarios

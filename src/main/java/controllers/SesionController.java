@@ -44,10 +44,8 @@ public class SesionController extends Controller implements WithGlobalEntityMana
       request.session().attribute("contador_intentos_sesion_fallidos", "0");
       redireccionCasoFeliz(request, response, "/", null);
       return null;
-    } catch (NoSuchElementException e) { // entra aca si se ingreso mal el usuario
-      setearAtributosAnteError(request, response, e);
-      return null;
-    } catch (AutenticacionInvalidaException e) { // entra aca si se ingreso mal la contraseña
+    } catch (NoSuchElementException | AutenticacionInvalidaException e) {
+      // entra aca si se ingreso mal el usuario o si se ingreso mal la contraseña respectivamente
       setearAtributosAnteError(request, response, e);
       return null;
     } catch (AutenticacionConsecutivaException e) { // entra aca si se ingreso mal la contraseña hace poco
