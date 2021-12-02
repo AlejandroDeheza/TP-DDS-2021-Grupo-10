@@ -45,13 +45,13 @@ public class MascotasController extends Controller implements WithGlobalEntityMa
 
     // Cargo la foto de la mascota
     File uploadDir = new File(Constantes.UPLOAD_DIRECTORY);
-    Path tempFile = Files.createTempFile(uploadDir.toPath(), "", ".jpg");
+    Path tempFile = Files.createTempFile(uploadDir.toPath(), null, ".jpg");
 
     request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
     try (InputStream fotoInputStream = request.raw().getPart("fotoMascota").getInputStream()) {
       Files.copy(fotoInputStream, tempFile, StandardCopyOption.REPLACE_EXISTING);
-      Foto fotoMascota = new Foto(tempFile.toString(), null);
-      fotosMascota.add(fotoMascota);
+      String pathWithForwardSlash = tempFile.toString().replace("\\", "/");
+      fotosMascota.add(new Foto(pathWithForwardSlash, LocalDate.now().toString()));
     } catch (IOException | ServletException exception) {
       System.out.println(exception);
       redireccionCasoError(request, response, "/", "Hubo un error al cargar la foto de tu mascota, intenta con otra foto");

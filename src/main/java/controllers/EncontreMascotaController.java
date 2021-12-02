@@ -220,7 +220,7 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
     request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
     InputStream fotoInputStream = request.raw().getPart("fotoMascota").getInputStream();
     Files.copy(fotoInputStream, tempFile, StandardCopyOption.REPLACE_EXISTING);
-    fotos.add(new Foto(tempFile.toAbsolutePath().toString(), LocalDate.now().toString()));
+    fotos.add(new Foto(tempFile.toString(), LocalDate.now().toString()));
 
 
     return fotos;

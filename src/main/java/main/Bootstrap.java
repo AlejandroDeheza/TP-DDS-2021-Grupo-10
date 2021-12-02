@@ -50,7 +50,7 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
 
     // Mascota Registrada
     MascotaRegistrada mascotaRegistrada = new MascotaRegistrada(usuario, "Perrito", "coco",
-        LocalDate.now(), "Es re bueno y gordo", Sexo.MACHO, Animal.PERRO, null, Arrays.asList(new Foto("coco.jpg", null)),
+        LocalDate.now(), "Es re bueno y gordo", Sexo.MACHO, Animal.PERRO, null, Arrays.asList(new Foto("/images/3261071319668366719.jpg", null)),
         TamanioMascota.CHICO);
 
     // Caracteristicas
@@ -75,10 +75,10 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
     asociacion1.agregarPregunta(parDePreguntas1);
     asociacion2.agregarPregunta(parDePreguntas3);
 
-    // Se crea el directorio para subir las fotos :)
-    File uploadDir = new File(Constantes.UPLOAD_DIRECTORY);
-    uploadDir.mkdir();
-    staticFiles.externalLocation(Constantes.UPLOAD_DIRECTORY);
+//    // Se crea el directorio para subir las fotos :)
+//    File uploadDir = new File(Constantes.UPLOAD_DIRECTORY);
+//    uploadDir.mkdir();
+    staticFiles.externalLocation("src/main/resources/public/images");
 
     withTransaction(() -> {
       // Usuarios
