@@ -15,9 +15,9 @@ public class RepositorioMascotaRegistrada implements WithGlobalEntityManager {
     return entityManager().find(MascotaRegistrada.class, id);
   }
 
-  public MascotaRegistrada getPorNombre(String nombre) {
-    return entityManager().createQuery("from MascotaRegistrada c where c.nombre like :nombre",
-        MascotaRegistrada.class).setParameter("nombre", "%" + nombre + "%").getResultList().get(0);
+  public List<MascotaRegistrada> obtenerMascotasDeUnDuenio(Usuario usuario){
+    return entityManager().createQuery("from MascotaRegistrada m where m.duenio = :usuario",
+        MascotaRegistrada.class).setParameter("usuario", usuario).getResultList();
   }
 
 }

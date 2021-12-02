@@ -70,6 +70,7 @@
   transition: background-color 0.6s;
 }
 
+
 .asociacion.active {
   background-color: #7952b3 !important;
   font-weight: 700px !important;

@@ -1,0 +1,18 @@
+{{#partial "contenido" }}
+{{#if mascotasUsuario}}
+{{#each mascotasUsuario}}
+<div class="input-group-sm mb-3">
+    <p>El dueño es: {{duenio.usuario}} y su nombre es {{nombre}} + {{apodo}} </p>
+</div>
+{{/each}}
+{{else}}
+<div class="center">
+    <p> Todavia no tenes mascotas registradas en nuestro sitio, para hacerlo clickea aca!</p>
+</div>
+{{/if}}
+<div>
+
+</div>
+{{/partial}}
+
+{{> layout.html.hbs}}

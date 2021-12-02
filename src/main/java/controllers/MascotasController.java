@@ -3,9 +3,11 @@ package controllers;
 import modelo.mascota.*;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
+import modelo.usuario.Usuario;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 import repositorios.RepositorioCaracteristicas;
+import repositorios.RepositorioMascotaRegistrada;
 import repositorios.RepositorioMascotas;
 import repositorios.RepositorioUsuarios;
 import spark.ModelAndView;
@@ -113,5 +115,21 @@ public class MascotasController extends Controller implements WithGlobalEntityMa
 
   public ModelAndView getRedirectMascotas(Request request, Response response) {
     return new ModelAndView(getMap(request), "menu-mascotas.html.hbs");
+  }
+
+  public ModelAndView getMascotasDeUsuario(Request request, Response response) {
+    if (!tieneSesionActiva(request)) {
+      response.redirect("/login");
+      return null;
+    }
+    // OBtener las mascotas del usuario que pidio esto
+    Usuario usuario = new RepositorioUsuarios().getPorId(request.session().attribute("user_id"));
+    RepositorioMascotaRegistrada repositorioMascotaRegistrada = new RepositorioMascotaRegistrada();
+
+    // Meterlas en el modelo
+    Map<String, Object> modelo = getMap(request);
+    modelo.put("mascotasUsuario", repositorioMascotaRegistrada.obtenerMascotasDeUnDuenio(usuario));
+    //Mandarlas a la vista
+    return new ModelAndView(modelo, "mis-mascotas.html.hbs");
   }
 }

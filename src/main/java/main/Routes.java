@@ -50,7 +50,7 @@ public class Routes {
 
     Spark.get("/mascotas-en-adopcion", publicacionesController::mostrarMascotasEnAdopcion, engine);
 
-    Spark.get("/registracion-mascota", mascotasController::mostrarRegistracion, engine);
+    Spark.get("/mascotas/registracion-mascota", mascotasController::mostrarRegistracion, engine);
     Spark.post("/registracion-mascota", mascotasController::registrarMascota);
 
     Spark.get("/mascotas", mascotasController::getRedirectMascotas,
@@ -58,6 +58,8 @@ public class Routes {
     Spark.get("/mascotas/encontre-mascota", encontreMascotaController::getTiposEncuentros,
         engine);
 
+    // FIXME: remove after finish Entrega 6
+    Spark.get("/mascotas/mis-mascotas", (request, response) -> mascotasController.getMascotasDeUsuario(request,response), engine);
 
     Spark.get("/mascotas/encontre-mascota/con-chapita",
         encontreMascotaController::getFormularioConChapita, engine);
@@ -69,8 +71,6 @@ public class Routes {
         encontreMascotaController::getFormularioSinChapita, engine);
     Spark.post("/mascotas/encontre-mascota/sin-chapita",
         encontreMascotaController::enviarMascotaEncontradaSinChapita);
-
-    // FIXME: remove after finish Entrega 6
 
 
 

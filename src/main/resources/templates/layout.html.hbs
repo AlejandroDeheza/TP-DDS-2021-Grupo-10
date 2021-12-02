@@ -32,9 +32,15 @@
             <div class="collapse navbar-collapse flex-center" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <a class="nav-link active" aria-current="page" href="/">Home</a>
-                    <a class="nav-link" href="/mascotas">Mascotas</a>
-                    <a class="nav-link" href="#">Hogares</a>
-                    <a class="nav-link" href="#">Contacto</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown"
+                            role="button" aria-expanded="false">Mascotas</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/mascotas/mis-mascotas">Mis mascotas</a></li>
+                            <hr class="dropdown-divider">
+                            <li><a class="dropdown-item" href="/mascotas/registracion-mascota">Registrar mascota</a></li>
+                        </ul>
+                    </li>
                     {{#if sesionIniciada}}
                     {{#if esAdmin}}
                     <li class="nav-item dropdown">
