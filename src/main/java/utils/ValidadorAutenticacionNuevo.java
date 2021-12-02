@@ -18,19 +18,20 @@ public class ValidadorAutenticacionNuevo {
   }
 
   public void autenticarUsuario(Usuario usuario, String contraseniaIngresada) {
-    validarCantidadDeIntentosFallidos();
+    validarCantidadDeIntentosFallidos(usuario, contraseniaIngresada);
     validarContraseniaIngresada(usuario, contraseniaIngresada);
   }
 
-  private void validarCantidadDeIntentosFallidos() {
-    if (falloLaAutenticacionHacePoco()) {
+  private void validarCantidadDeIntentosFallidos(Usuario usuario, String contraseniaIngresada) {
+    if (falloLaAutenticacionHacePoco()
+        || (contadorIntentosDeSesionFallidos > 1 && laContraseniaEsIncorrecta(usuario, contraseniaIngresada))) {
       int tiempoEsperaMaximo = 60;
       if (tiempoQueEstaEsperandoUsuario() > tiempoEsperaMaximo) {
         throw new AutenticacionConsecutivaException(
             "Debe esperar " + tiempoEsperaMaximo + " minutos para intentar iniciar sesion");
       } else {
         throw new AutenticacionConsecutivaException(
-            "Debe esperar " + contadorIntentosDeSesionFallidos + " minutos para intentar iniciar sesion");
+            "Debe esperar " + (contadorIntentosDeSesionFallidos - 1) + " minutos para intentar iniciar sesion");
       }
     }
   }
@@ -43,7 +44,8 @@ public class ValidadorAutenticacionNuevo {
 
   // el tiempo de espera aumenta si la cantidad de sesiones fallidas aumenta
   private boolean falloLaAutenticacionHacePoco() {
-    return ((int) MINUTES.between(LocalTime.now(), this.ultimoIntentoDeSesionFallido)) < contadorIntentosDeSesionFallidos;
+    return ((int) MINUTES.between(LocalTime.now(), this.ultimoIntentoDeSesionFallido))
+        < contadorIntentosDeSesionFallidos - 2;
   }
 
   private Long tiempoQueEstaEsperandoUsuario() {
