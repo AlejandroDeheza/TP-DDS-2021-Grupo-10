@@ -13,16 +13,11 @@ import repositorios.RepositorioUsuarios;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-import utils.Constantes;
 
-import javax.servlet.MultipartConfigElement;
-import javax.servlet.ServletException;
-import java.io.*;
-import java.nio.file.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Map;
 
 public class MascotasController extends Controller implements WithGlobalEntityManager, TransactionalOps {
 
@@ -39,30 +34,13 @@ public class MascotasController extends Controller implements WithGlobalEntityMa
     return new ModelAndView(modelo, "registracion-mascota.html.hbs");
   }
 
-  public Void registrarMascota(Request request, Response response) throws IOException {
-    List<Caracteristica> caracteristicas;
-    List<Foto> fotosMascota = new ArrayList<>();
+  public Void registrarMascota(Request request, Response response) {
 
-    // Cargo la foto de la mascota
-    File uploadDir = new File(Constantes.UPLOAD_DIRECTORY);
-    Path tempFile = Files.createTempFile(uploadDir.toPath(), null, ".jpg");
-    System.out.println("PATH ---->>>>" + uploadDir.toPath());
+    // Obtengo la foto de la mascota
+    List<Foto> fotosMascota = super.obtenerFotosMascota(request, response);
 
-    request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
-    try (InputStream fotoInputStream = request.raw().getPart("fotoMascota").getInputStream()) {
-      Files.copy(fotoInputStream, tempFile, StandardCopyOption.REPLACE_EXISTING);
-      String pathWithForwardSlash = tempFile.toString().replace("\\", "/");
-      System.out.println("PATH 2 -->>>>" + pathWithForwardSlash);
-      String nuevoString = pathWithForwardSlash.replace(Constantes.UPLOAD_DIRECTORY, "");
-      System.out.println("nuevoString ---->>>>" + nuevoString);
-      fotosMascota.add(new Foto(nuevoString, LocalDate.now().toString()));
-    } catch (IOException | ServletException exception) {
-      //System.out.println(exception);
-      redireccionCasoError(request, response, "/", "Hubo un error al cargar la foto de tu mascota, intenta con otra foto");
-    }
-
-    //Obtengo sus caracteristicas
-    caracteristicas = super.obtenerListaCaracteristicas(request);
+    // Obtengo sus caracteristicas
+    List<Caracteristica> caracteristicas = super.obtenerListaCaracteristicas(request);
 
     // Fecha de nacimiento
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");

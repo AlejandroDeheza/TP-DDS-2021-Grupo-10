@@ -4,11 +4,7 @@ import modelo.hogarDeTransito.ReceptorHogares;
 import modelo.informe.InformeConQR;
 import modelo.informe.InformeSinQR;
 import modelo.informe.Ubicacion;
-import modelo.mascota.Animal;
-import modelo.mascota.Foto;
-import modelo.mascota.MascotaEncontrada;
-import modelo.mascota.MascotaRegistrada;
-import modelo.mascota.TamanioMascota;
+import modelo.mascota.*;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 import modelo.persona.Persona;
@@ -22,23 +18,13 @@ import repositorios.RepositorioUsuarios;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-import utils.Constantes;
-import java.io.File;
+
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-import javax.servlet.MultipartConfigElement;
-import javax.servlet.ServletException;
 
 public class EncontreMascotaController extends Controller implements WithGlobalEntityManager,
     TransactionalOps {
@@ -100,7 +86,7 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
       return null;
     }
     try {
-      List<Foto> fotos = obtenerFotos(request, response);
+      List<Foto> fotos = super.obtenerFotosMascota(request, response);
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
       LocalDate fechaRescate = LocalDate.parse(request.queryParams("fechaRescate"), formatter);
 
@@ -151,13 +137,13 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
   }
 
 
-  public Void enviarMascotaEncontradaSinChapita(Request request, Response response) throws IOException {
+  public Void enviarMascotaEncontradaSinChapita(Request request, Response response) {
     if (!tieneSesionActiva(request)) {
       response.redirect("/mascotas/encontre-mascota");
       return null;
     }
     try {
-      List<Foto> fotos = obtenerFotos(request, response);
+      List<Foto> fotos = super.obtenerFotosMascota(request, response);
 
 
       List<Caracteristica> caracteristicas;
@@ -209,29 +195,6 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
 
     redireccionCasoFeliz(request, response, "/", "Se genero el informe!");
     return null;
-  }
-
-  private List<Foto> obtenerFotos(Request request, Response response) throws IOException, ServletException {
-    List<Foto> fotos = new ArrayList<>();
-    // Cargo la foto de la mascota
-    File uploadDir = new File(Constantes.UPLOAD_DIRECTORY);
-    Path tempFile = Files.createTempFile(uploadDir.toPath(), null, ".jpg");
-    System.out.println("PATH ---->>>>" + uploadDir.toPath());
-
-    request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
-    try (InputStream fotoInputStream = request.raw().getPart("fotoMascota").getInputStream()) {
-      Files.copy(fotoInputStream, tempFile, StandardCopyOption.REPLACE_EXISTING);
-      String pathWithForwardSlash = tempFile.toString().replace("\\", "/");
-      System.out.println("PATH 2 -->>>>" + pathWithForwardSlash);
-      String nuevoString = pathWithForwardSlash.replace(Constantes.UPLOAD_DIRECTORY, "");
-      System.out.println("nuevoString ---->>>>" + nuevoString);
-      fotos.add(new Foto(nuevoString, LocalDate.now().toString()));
-    } catch (IOException | ServletException exception) {
-      //System.out.println(exception);
-      redireccionCasoError(request, response, "/", "Hubo un error al cargar la foto de tu mascota, intenta con otra foto");
-    }
-
-    return fotos;
   }
 
 }
