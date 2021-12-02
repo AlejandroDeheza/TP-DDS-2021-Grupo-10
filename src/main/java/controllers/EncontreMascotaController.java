@@ -162,7 +162,7 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
 
       List<Caracteristica> caracteristicas;
       //Obtengo sus caracteristicas
-      caracteristicas = obtenerListaCaracteristicas(request);
+      caracteristicas = super.obtenerListaCaracteristicas(request);
 
 
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -226,31 +226,4 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
     return fotos;
   }
 
-  private List<Caracteristica> obtenerListaCaracteristicas(Request request) {
-    Set<String> queryParams = request.queryParams();
-
-    List<Caracteristica> caracteristicas = new ArrayList<>();
-
-    RepositorioCaracteristicas repositorioCaracteristicas = new RepositorioCaracteristicas();
-    // Obtengo los nombre de caracteristicas para comparar con los query params :)
-    List<String> listaNombresCaracteristicas = repositorioCaracteristicas.getCaracteristicas()
-        .stream()
-        .map(caracteristica -> caracteristica.getNombreCaracteristica())
-        .collect(Collectors.toList());
-
-    List<String> nombreParamsQueMandaron = queryParams
-        .stream()
-        .filter(param -> listaNombresCaracteristicas
-            .stream()
-            .anyMatch(c -> c.equals(param)))
-        .collect(Collectors.toList());
-
-    nombreParamsQueMandaron.forEach(
-        param -> {
-          Caracteristica caracteristica = new Caracteristica(param, request.queryParams(param));
-          caracteristicas.add(caracteristica);
-        }
-    );
-    return caracteristicas;
-  }
 }

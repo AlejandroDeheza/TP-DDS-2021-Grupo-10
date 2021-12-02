@@ -15,6 +15,15 @@ public class RepositorioCaracteristicas implements WithGlobalEntityManager {
         .getResultList();
   }
 
+  public Caracteristica getCaracteristicaSegun(String nombre, String valor) {
+    return entityManager()
+        .createQuery("from Caracteristica c WHERE c.nombreCaracteristica = :nombre " +
+            "AND c.valorCaracteristica = :valor", Caracteristica.class)
+        .setParameter("nombre", nombre)
+        .setParameter("valor", valor)
+        .getSingleResult();
+  }
+
   public void agregarCaracteristicasConValoresPosibles(CaracteristicaConValoresPosibles caracteristica) {
     caracteristica.listarCaracteristicas().forEach(c -> entityManager().persist(c));
   }

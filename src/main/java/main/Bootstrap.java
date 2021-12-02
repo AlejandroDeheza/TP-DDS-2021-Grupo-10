@@ -1,13 +1,8 @@
 package main;
 
-import modelo.mascota.Animal;
-import modelo.mascota.Foto;
-import modelo.mascota.MascotaRegistrada;
-import modelo.mascota.Sexo;
-import modelo.mascota.TamanioMascota;
-import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 import modelo.asociacion.Asociacion;
 import modelo.informe.Ubicacion;
+import modelo.mascota.*;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 import modelo.notificacion.TipoNotificadorPreferido;
 import modelo.persona.DatosDeContacto;
@@ -24,11 +19,11 @@ import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioMascotaRegistrada;
 import utils.Constantes;
 
-import static spark.Spark.*;
-
 import java.io.File;
 import java.time.LocalDate;
 import java.util.Arrays;
+
+import static spark.Spark.staticFiles;
 
 public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, TransactionalOps {
 
@@ -63,7 +58,6 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
     CaracteristicaConValoresPosibles c2 = new CaracteristicaConValoresPosibles("Caracter", Arrays.asList("Pacifico", "Violento"));
     CaracteristicaConValoresPosibles c3 = new CaracteristicaConValoresPosibles("Apetito", Arrays.asList("Poco", "Intermedio", "Mucho"));
     CaracteristicaConValoresPosibles c4 = new CaracteristicaConValoresPosibles("Animo", Arrays.asList("Feliz", "Triste", "Nose"));
-    CaracteristicaConValoresPosibles c5 = new CaracteristicaConValoresPosibles("Comportamiento", Arrays.asList("Inquieto", "Tranquilo"));
 
     // Asociaciones
     Ubicacion ubicacion1 = new Ubicacion(2000.0, 2100.0, "Medrano 951");
@@ -95,7 +89,6 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
       repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c2);
       repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c3);
       repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c4);
-      repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c5);
       
       // Asociaciones
       persist(parDePreguntas1);

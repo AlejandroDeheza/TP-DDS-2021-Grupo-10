@@ -58,7 +58,7 @@ public class MascotasController extends Controller implements WithGlobalEntityMa
     }
 
     //Obtengo sus caracteristicas
-    caracteristicas = obtenerListaCaracteristicas(request);
+    caracteristicas = super.obtenerListaCaracteristicas(request);
 
     // Fecha de nacimiento
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
@@ -83,34 +83,6 @@ public class MascotasController extends Controller implements WithGlobalEntityMa
 
     redireccionCasoFeliz(request, response, "/", "MASCOTA_REGISTRADA");
     return null;
-  }
-
-  private List<Caracteristica> obtenerListaCaracteristicas(Request request) {
-    Set<String> queryParams = request.queryParams();
-
-    List<Caracteristica> caracteristicas = new ArrayList<>();
-
-    RepositorioCaracteristicas repositorioCaracteristicas = new RepositorioCaracteristicas();
-    // Obtengo los nombre de caracteristicas para comparar con los query params :)
-    List<String> listaNombresCaracteristicas = repositorioCaracteristicas.getCaracteristicas()
-        .stream()
-        .map(caracteristica -> caracteristica.getNombreCaracteristica())
-        .collect(Collectors.toList());
-
-    List<String> nombreParamsQueMandaron = queryParams
-        .stream()
-        .filter(param -> listaNombresCaracteristicas
-            .stream()
-            .anyMatch(c -> c.equals(param)))
-        .collect(Collectors.toList());
-
-    nombreParamsQueMandaron.forEach(
-        param -> {
-          Caracteristica caracteristica = new Caracteristica(param, request.queryParams(param));
-          caracteristicas.add(caracteristica);
-        }
-    );
-    return caracteristicas;
   }
 
   public ModelAndView getRedirectMascotas(Request request, Response response) {
