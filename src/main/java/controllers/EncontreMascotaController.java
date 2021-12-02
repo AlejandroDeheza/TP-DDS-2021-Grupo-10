@@ -22,6 +22,7 @@ import spark.Response;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
@@ -46,13 +47,15 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
     }
     Map<String, Object> modelo = getMap(request);
     RepositorioMascotaRegistrada repositorioMascotaRegistrada = new RepositorioMascotaRegistrada();
-    String id = request.queryParams("codigo-chapita");
-    MascotaRegistrada mascotaRegistrada =
-        id != null ?
-            repositorioMascotaRegistrada.getPorId(Long.parseLong(id)) :
-            null;
+    String idChapitaString = request.params(":codigoChapita");
+    Long idChapita = Long.parseLong(idChapitaString);
+    MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.getPorId(idChapita);
+    if (mascotaRegistrada == null) {
+      redireccionCasoError(request, response, "/mascotas/encontre-mascota/con-chapita", "El codigo de chapita no es valido");
+      return null;
+    }
+    modelo.put("codigoChapita", idChapitaString);
     modelo.put("mascotaRegistrada", mascotaRegistrada);
-    modelo.put("codigo-chapita", id);
     return new ModelAndView(modelo, "encuentro-con-chapita.html.hbs");
   }
 
@@ -109,7 +112,7 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
 
 
       RepositorioMascotaRegistrada repositorioMascotaRegistrada = new RepositorioMascotaRegistrada();
-      String idChapitaString = request.queryParams("codigoChapita");
+      String idChapitaString = request.params(":codigoChapita");
       Long idChapita = Long.parseLong(idChapitaString);
       MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.getPorId(idChapita);
       TamanioMascota tamanioMascota = mascotaRegistrada.getTamanio();
@@ -197,4 +200,26 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
     return null;
   }
 
+  private List<Foto> obtenerFotos(Request request, Response response) throws IOException, ServletException {
+    List<Foto> fotos = new ArrayList<>();
+    // Cargo la foto de la mascota
+    File uploadDir = new File(Constantes.UPLOAD_DIRECTORY);
+    Path tempFile = Files.createTempFile(uploadDir.toPath(), "", ".jpg");
+
+    request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
+    InputStream fotoInputStream = request.raw().getPart("fotoMascota").getInputStream();
+    Files.copy(fotoInputStream, tempFile, StandardCopyOption.REPLACE_EXISTING);
+    fotos.add(new Foto(tempFile.toAbsolutePath().toString(), LocalDate.now().toString()));
+
+
+    return fotos;
+  }
+
+  public ModelAndView getInformacionEscaneo(Request request, Response response) {
+    if (!tieneSesionActiva(request)) {
+      response.redirect("/login");
+      return null;
+    }
+    return new ModelAndView(getMap(request), "escaneeQR.html.hbs");
+  }
 }
