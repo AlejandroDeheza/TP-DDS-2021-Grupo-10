@@ -214,14 +214,30 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
   private List<Foto> obtenerFotos(Request request, Response response) throws IOException, ServletException {
     List<Foto> fotos = new ArrayList<>();
     // Cargo la foto de la mascota
+//    File uploadDir = new File(Constantes.UPLOAD_DIRECTORY);
+//    Path tempFile = Files.createTempFile(uploadDir.toPath(), "", ".jpg");
+//
+//    request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
+//    InputStream fotoInputStream = request.raw().getPart("fotoMascota").getInputStream();
+//    Files.copy(fotoInputStream, tempFile, StandardCopyOption.REPLACE_EXISTING);
+//    fotos.add(new Foto(tempFile.toString(), LocalDate.now().toString()));
+    // Cargo la foto de la mascota
     File uploadDir = new File(Constantes.UPLOAD_DIRECTORY);
-    Path tempFile = Files.createTempFile(uploadDir.toPath(), "", ".jpg");
+    Path tempFile = Files.createTempFile(uploadDir.toPath(), null, ".jpg");
+    System.out.println("PATH ---->>>>" + uploadDir.toPath());
 
     request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
-    InputStream fotoInputStream = request.raw().getPart("fotoMascota").getInputStream();
-    Files.copy(fotoInputStream, tempFile, StandardCopyOption.REPLACE_EXISTING);
-    fotos.add(new Foto(tempFile.toString(), LocalDate.now().toString()));
-
+    try (InputStream fotoInputStream = request.raw().getPart("fotoMascota").getInputStream()) {
+      Files.copy(fotoInputStream, tempFile, StandardCopyOption.REPLACE_EXISTING);
+      String pathWithForwardSlash = tempFile.toString().replace("\\", "/");
+      System.out.println("PATH 2 -->>>>" + pathWithForwardSlash);
+      String nuevoString = pathWithForwardSlash.replace("src/main/resources/public/images", "");
+      System.out.println("nuevoString ---->>>>" + nuevoString);
+      fotos.add(new Foto(nuevoString, LocalDate.now().toString()));
+    } catch (IOException | ServletException exception) {
+      //System.out.println(exception);
+      redireccionCasoError(request, response, "/", "Hubo un error al cargar la foto de tu mascota, intenta con otra foto");
+    }
 
     return fotos;
   }

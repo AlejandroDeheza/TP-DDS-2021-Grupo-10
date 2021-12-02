@@ -1,5 +1,7 @@
 package main;
 
+import static spark.Spark.staticFiles;
+
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import controllers.*;
 import spark.Spark;
@@ -16,7 +18,7 @@ public class Routes {
     Spark.port(8080);
     Spark.staticFileLocation("/public");
     DebugScreen.enableDebugScreen();
-
+    staticFiles.externalLocation("/public/images");
     HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
     HomeController homeController = new HomeController();
     SesionController sesionController = new SesionController();
