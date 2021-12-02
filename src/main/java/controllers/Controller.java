@@ -1,11 +1,22 @@
 package controllers;
 
+import modelo.mascota.Foto;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 import repositorios.RepositorioCaracteristicas;
 import spark.Request;
 import spark.Response;
+import utils.Constantes;
 
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletException;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -70,6 +81,26 @@ public abstract class Controller {
         }
     );
     return caracteristicas;
+  }
+
+  protected List<Foto> obtenerFotosMascota(Request request, Response response) {
+    List<Foto> fotosMascota = new ArrayList<>();
+    try {
+      File uploadDir = new File(Constantes.UPLOAD_DIRECTORY);
+      Path tempFile = Files.createTempFile(uploadDir.toPath(), null, ".jpg");
+
+      request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
+      InputStream fotoInputStream = request.raw().getPart("fotoMascota").getInputStream();
+      Files.copy(fotoInputStream, tempFile, StandardCopyOption.REPLACE_EXISTING);
+
+      String pathWithForwardSlash = tempFile.toString().replace("\\", "/");
+      String nombreDeLaFoto = pathWithForwardSlash.replace(Constantes.UPLOAD_DIRECTORY, "");
+      fotosMascota.add(new Foto(nombreDeLaFoto, LocalDate.now().toString()));
+    } catch (IOException | ServletException exception) {
+      redireccionCasoError(request, response, "/",
+          "Hubo un error al cargar la foto de tu mascota, intentalo mas tarde o intenta con otra foto");
+    }
+    return fotosMascota;
   }
 }
   

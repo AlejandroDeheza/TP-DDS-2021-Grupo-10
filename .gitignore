@@ -42,4 +42,4 @@ target/**
 *.sql
 
 #Fotos 
-/src/main/resources/public/images
+/src/main/resources/public/upload
