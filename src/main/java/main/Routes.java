@@ -7,6 +7,8 @@ import controllers.*;
 import spark.Spark;
 import spark.debug.DebugScreen;
 import spark.template.handlebars.HandlebarsTemplateEngine;
+import utils.Constantes;
+
 import java.io.File;
 
 public class Routes {
@@ -19,9 +21,12 @@ public class Routes {
     Spark.port(8080);
     Spark.staticFileLocation("/public");
     DebugScreen.enableDebugScreen();
-    File uploadDir = new File("/public/upload");
+
+    // Se crea el directorio para subir las fotos :)
+    File uploadDir = new File(Constantes.UPLOAD_DIRECTORY);
     uploadDir.mkdir(); // create the upload directory if it doesn't exist
-    staticFiles.externalLocation("/public/upload");
+    staticFiles.externalLocation(Constantes.UPLOAD_DIRECTORY);
+
     HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
     HomeController homeController = new HomeController();
     SesionController sesionController = new SesionController();
@@ -64,7 +69,7 @@ public class Routes {
         engine);
 
     // FIXME: remove after finish Entrega 6
-    Spark.get("/mascotas/mis-mascotas", (request, response) -> mascotasController.getMascotasDeUsuario(request,response), engine);
+    Spark.get("/mascotas/mis-mascotas", mascotasController::getMascotasDeUsuario, engine);
 
     Spark.get("/mascotas/encontre-mascota/con-chapita",
         encontreMascotaController::getFormularioConChapita, engine);
