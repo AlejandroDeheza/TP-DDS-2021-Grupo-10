@@ -78,7 +78,7 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
 //    // Se crea el directorio para subir las fotos :)
 //    File uploadDir = new File(Constantes.UPLOAD_DIRECTORY);
 //    uploadDir.mkdir();
-    staticFiles.externalLocation("src/main/resources/public/images");
+    staticFiles.externalLocation(Constantes.UPLOAD_DIRECTORY);
 
     withTransaction(() -> {
       // Usuarios
