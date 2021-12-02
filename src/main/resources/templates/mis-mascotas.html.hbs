@@ -1,8 +1,11 @@
 {{#partial "contenido" }}
-{{#if mascotasUsuario}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    {{#if mascotasUsuario}}
 {{#each mascotasUsuario}}
 <div class="input-group-sm mb-3">
     <p>El dueño es: {{duenio.usuario}} y su nombre es {{nombre}} + {{apodo}} </p>
+    <div id="qrcode" value="{{id}}"></div>
 </div>
 {{/each}}
 {{else}}
@@ -13,6 +16,15 @@
 <div>
 
 </div>
+<!-- (C) CREATE QR CODE ON PAGE LOAD -->
+<script>
+    window.addEventListener("load", function(){
+        let id= document.getElementById('qrcode').getAttribute('value');
+        let url="https://localhost:8080/mascotas/encontre-mascota/con-chapita/".concat(id)
+        var qrc = new QRCode(document.getElementById("qrcode"), url);
+    });
+</script>
 {{/partial}}
 
 {{> layout.html.hbs}}
+
