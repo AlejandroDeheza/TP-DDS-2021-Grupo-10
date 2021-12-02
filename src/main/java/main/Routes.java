@@ -7,6 +7,7 @@ import controllers.*;
 import spark.Spark;
 import spark.debug.DebugScreen;
 import spark.template.handlebars.HandlebarsTemplateEngine;
+import java.io.File;
 
 public class Routes {
 
@@ -18,7 +19,9 @@ public class Routes {
     Spark.port(8080);
     Spark.staticFileLocation("/public");
     DebugScreen.enableDebugScreen();
-    staticFiles.externalLocation("/public/images");
+    File uploadDir = new File("/public/upload");
+    uploadDir.mkdir(); // create the upload directory if it doesn't exist
+    staticFiles.externalLocation("/public/upload");
     HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
     HomeController homeController = new HomeController();
     SesionController sesionController = new SesionController();

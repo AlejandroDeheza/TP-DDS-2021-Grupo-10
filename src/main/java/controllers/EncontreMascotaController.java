@@ -223,7 +223,7 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
       Files.copy(fotoInputStream, tempFile, StandardCopyOption.REPLACE_EXISTING);
       String pathWithForwardSlash = tempFile.toString().replace("\\", "/");
       System.out.println("PATH 2 -->>>>" + pathWithForwardSlash);
-      String nuevoString = pathWithForwardSlash.replace("src/main/resources/public/images", "");
+      String nuevoString = pathWithForwardSlash.replace(Constantes.UPLOAD_DIRECTORY, "");
       System.out.println("nuevoString ---->>>>" + nuevoString);
       fotos.add(new Foto(nuevoString, LocalDate.now().toString()));
     } catch (IOException | ServletException exception) {

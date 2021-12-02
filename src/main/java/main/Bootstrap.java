@@ -50,7 +50,8 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
 
     // Mascota Registrada
     MascotaRegistrada mascotaRegistrada = new MascotaRegistrada(usuario, "Perrito", "coco",
-        LocalDate.now(), "Es re bueno y gordo", Sexo.MACHO, Animal.PERRO, null, Arrays.asList(new Foto("/images/3261071319668366719.jpg", null)),
+        LocalDate.now(), "Es re bueno y gordo", Sexo.MACHO, Animal.PERRO, null,
+        Arrays.asList(new Foto("/upload/3261071319668366719.jpg", null)),
         TamanioMascota.CHICO);
 
     // Caracteristicas
