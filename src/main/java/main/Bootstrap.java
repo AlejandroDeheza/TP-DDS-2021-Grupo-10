@@ -46,7 +46,12 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
     Usuario usuario = new Usuario("pepito", "asd123asd123", TipoUsuario.NORMAL, persona);
 
     // Mascota Registrada
-    MascotaRegistrada mascotaRegistrada = new MascotaRegistrada(usuario, "Perrito", "coco",
+    MascotaRegistrada mascotaRegistrada = new MascotaRegistrada(usuario, "Malbec", "coco",
+        LocalDate.now(), "Es re bueno y gordo", Sexo.MACHO, Animal.PERRO, null,
+        Collections.singletonList(new Foto("/3261071319668366719.jpg", null)),
+        TamanioMascota.CHICO);
+
+    MascotaRegistrada mascotaRegistrada2 = new MascotaRegistrada(usuario, "Fucker", "asd",
         LocalDate.now(), "Es re bueno y gordo", Sexo.MACHO, Animal.PERRO, null,
         Collections.singletonList(new Foto("/3261071319668366719.jpg", null)),
         TamanioMascota.CHICO);
@@ -79,6 +84,7 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
       persist(usuario);
 
       repositorioMascotaRegistrada.agregar(mascotaRegistrada);
+      repositorioMascotaRegistrada.agregar(mascotaRegistrada2);
       repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c1);
       repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c2);
       repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c3);
