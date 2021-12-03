@@ -33,9 +33,9 @@
 
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
             <property name="hibernate.connection.url"
-                      value="jdbc:mysql://vmxb3xh6brmr7n80:qtfhvdi9hxhmigrd@jtb9ia3h1pgevwb1.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/gnalfq0n9xyyxxun"/>
-            <property name="hibernate.connection.username" value="vmxb3xh6brmr7n80"/>
-            <property name="hibernate.connection.password" value="qtfhvdi9hxhmigrd"/>
+                      value="jdbc:mysql://i1i52hduv5hviq0n:nfepoa9ctcrwwk7n@jtb9ia3h1pgevwb1.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/g1z2srkhyqfuylkr"/>
+            <property name="hibernate.connection.username" value="i1i52hduv5hviq0n"/>
+            <property name="hibernate.connection.password" value="nfepoa9ctcrwwk7n"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
 
 <!--                        <property name="hibernate.connection.driver_class" value="org.hsqldb.jdbcDriver"/>-->
