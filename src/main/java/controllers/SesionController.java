@@ -3,8 +3,6 @@ package controllers;
 import excepciones.AutenticacionConsecutivaException;
 import excepciones.AutenticacionInvalidaException;
 import modelo.usuario.Usuario;
-import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
-import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 import repositorios.RepositorioUsuarios;
 import spark.ModelAndView;
 import spark.Request;
@@ -13,7 +11,9 @@ import utils.ValidadorAutenticacionNuevo;
 import java.time.LocalTime;
 import java.util.NoSuchElementException;
 
-public class SesionController extends Controller implements WithGlobalEntityManager, TransactionalOps {
+public class SesionController extends Controller {
+
+  RepositorioUsuarios repositorioUsuarios = new RepositorioUsuarios();
 
   public ModelAndView mostrarLogin(Request request, Response response) {
     if (tieneSesionActiva(request)) {
@@ -25,7 +25,7 @@ public class SesionController extends Controller implements WithGlobalEntityMana
 
   public Void crearSesion(Request request, Response response) {
     try {
-      Usuario usuario = new RepositorioUsuarios().buscarPorUsuario(request.queryParams("username"));
+      Usuario usuario = repositorioUsuarios.buscarPorUserName(request.queryParams("username"));
 
       if (request.session().attribute("ultimo_intento_sesion_fallido") == null ||
           request.session().attribute("contador_intentos_sesion_fallidos") == null) {

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import entregaTPA4.persistencia.NuestraAbstractPersistenceTest;
+import repositorios.RepositorioUsuarios;
 import utils.CascadeTypeCheck;
 import utils.DummyData;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class MascotaRegistradaTest extends NuestraAbstractPersistenceTest {
   MascotaRegistrada mascotaRegistrada;
   List<Caracteristica> listaCaracteristica;
   CascadeTypeCheck cascadeTypeCheck;
+  RepositorioUsuarios repositorioUsuarios = new RepositorioUsuarios();
 
   @BeforeEach
   public void contextLoad() {
@@ -50,7 +52,7 @@ public class MascotaRegistradaTest extends NuestraAbstractPersistenceTest {
   public void eliminarUnaMascotaRegistradaNoEliminaAlUsuarioDuenioAsociado() {
     Usuario duenio = mascotaRegistrada.getDuenio();
     assertTrue(cascadeTypeCheck.contemplaElCascadeType(duenio, 1, 1, 0, 1));
-    assertEquals(duenio.getId(), entityManager().createQuery("from Usuario", Usuario.class).getResultList().get(0).getId());
+    assertEquals(duenio.getId(), repositorioUsuarios.listarTodos().get(0).getId());
   }
 
   @Test

@@ -46,8 +46,8 @@ public class RecomendadorDeAdopcionesTest {
         DummyData.getAsociacion()
     );
 
-    when(repositorioDarEnAdopcion.getPublicaciones()).thenReturn(Arrays.asList(publicacion1, publicacion2));
-    when(repositorioSuscripcionesParaAdopciones.getSuscripciones()).thenReturn(Arrays.asList(
+    when(repositorioDarEnAdopcion.getPublicacionesActivas()).thenReturn(Arrays.asList(publicacion1, publicacion2));
+    when(repositorioSuscripcionesParaAdopciones.getSuscripcionesActivas()).thenReturn(Arrays.asList(
         DummyData.getSuscripcionParaAdopcion(mockNotificador.getTipo()),
         DummyData.getSuscripcionParaAdopcion(mockNotificador.getTipo())
     ));
@@ -64,7 +64,7 @@ public class RecomendadorDeAdopcionesTest {
 
   @Test
   public void noSeEnvianRecomendacionesSiNoHay() {
-    when(repositorioDarEnAdopcion.getPublicaciones()).thenReturn(Collections.emptyList());
+    when(repositorioDarEnAdopcion.getPublicacionesActivas()).thenReturn(Collections.emptyList());
     recomendadorDeAdopciones.recomendarAdopcionesASuscritos();
     verify(mockNotificador.getNotificador(), times(0)).notificarRecomendacionesDeAdopciones(any());
   }
@@ -74,7 +74,7 @@ public class RecomendadorDeAdopcionesTest {
     MascotaRegistrada mascotaRegistrada = new MascotaRegistrada(null, null, null, null,
         null, null, Animal.GATO, DummyData.getCaracteristicasParaMascota(), null, null);
 
-    when(repositorioDarEnAdopcion.getPublicaciones()).thenReturn(Collections.singletonList(
+    when(repositorioDarEnAdopcion.getPublicacionesActivas()).thenReturn(Collections.singletonList(
         new DarEnAdopcion(
             DummyData.getUsuario(mockNotificador.getTipo()),
             mascotaRegistrada,
@@ -98,7 +98,7 @@ public class RecomendadorDeAdopcionesTest {
     MascotaRegistrada mascotaRegistrada = new MascotaRegistrada(null, null, null, null,
         null, null, Animal.PERRO, listaCaracteristica, null, null);
 
-    when(repositorioDarEnAdopcion.getPublicaciones()).thenReturn(Collections.singletonList(
+    when(repositorioDarEnAdopcion.getPublicacionesActivas()).thenReturn(Collections.singletonList(
         new DarEnAdopcion(
             DummyData.getUsuario(mockNotificador.getTipo()),
             mascotaRegistrada,

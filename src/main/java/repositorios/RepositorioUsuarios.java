@@ -1,28 +1,24 @@
 package repositorios;
 
 import modelo.usuario.Usuario;
-import java.util.List;
+import java.util.stream.Collectors;
 
-public class RepositorioUsuarios extends Repositorio {
+public class RepositorioUsuarios extends Repositorio<Usuario> {
 
-  public Usuario getPorId(Long id){
-    return entityManager().find(Usuario.class, id);
+  public RepositorioUsuarios() {
+    super(Usuario.class);
   }
 
-  public Usuario buscarPorUsuario(String nombreUsuario) {
-    return listar().stream()
+  public Usuario buscarPorUserName(String nombreUsuario) {
+    return listarTodos().stream()
         .filter(u -> u.getUsuario().equals(nombreUsuario))
-        .findFirst().get();
+        .collect(Collectors.toList())
+        .get(0);
   }
 
   public Boolean yaExiste(String nombreUsuario) {
-    return listar().stream()
+    return listarTodos().stream()
         .anyMatch(u -> u.getUsuario().equals(nombreUsuario));
   }
 
-  private List<Usuario> listar() {
-    return entityManager()
-        .createQuery("from Usuario", Usuario.class)
-        .getResultList();
-  }
 }

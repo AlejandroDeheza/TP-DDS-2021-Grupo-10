@@ -3,11 +3,12 @@ package controllers;
 import modelo.mascota.Foto;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 import repositorios.RepositorioCaracteristicas;
 import spark.Request;
 import spark.Response;
 import utils.Constantes;
-
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
 import java.io.File;
@@ -20,7 +21,7 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public abstract class Controller {
+public abstract class Controller implements WithGlobalEntityManager, TransactionalOps {
 
   protected Map<String, Object> getMap(Request request) {
     Map<String, Object> mapa = new HashMap<>();

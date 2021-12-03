@@ -23,7 +23,7 @@ public class RecomendadorDeAdopciones {
   }
 
   public void recomendarAdopcionesASuscritos() {
-    repositorioSuscripcionesParaAdopciones.getSuscripciones().forEach(this::recomendarAdopciones);
+    repositorioSuscripcionesParaAdopciones.getSuscripcionesActivas().forEach(this::recomendarAdopciones);
   }
 
   private void recomendarAdopciones(SuscripcionParaAdopcion suscripcion) {
@@ -36,7 +36,7 @@ public class RecomendadorDeAdopciones {
     List<Caracteristica> caracteristicas = suscripcion.getPreferenciaDelAdoptante().getCaracteristicas();
     Animal animal = suscripcion.getPreferenciaDelAdoptante().getTipoAnimal();
 
-    return repositorioDarEnAdopcion.getPublicaciones().stream()
+    return repositorioDarEnAdopcion.getPublicacionesActivas().stream()
         .filter(publicacion -> publicacion.getMascotaEnAdopcion().getAnimal().equals(animal))
         .filter(publicacion -> publicacion.getMascotaEnAdopcion().cumpleConCaracteristicas(caracteristicas))
         .sorted((p1, p2) -> laPrimeraMatcheaConMas(p1, p2, suscripcion.getComodidadesDelAdoptante()))

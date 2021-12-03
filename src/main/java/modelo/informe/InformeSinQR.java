@@ -1,7 +1,6 @@
 package modelo.informe;
 
 import modelo.hogarDeTransito.Hogar;
-import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import modelo.hogarDeTransito.ReceptorHogares;
 import modelo.mascota.Animal;
 import modelo.mascota.MascotaEncontrada;
@@ -9,14 +8,15 @@ import modelo.mascota.caracteristica.Caracteristica;
 import modelo.persona.Persona;
 import modelo.publicacion.Rescate;
 import repositorios.RepositorioAsociaciones;
+import repositorios.RepositorioRescates;
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "informe_sin_QR")
-public class InformeSinQR extends InformeRescate implements WithGlobalEntityManager {
+public class InformeSinQR extends InformeRescate {
 
-  @Enumerated
+  @Enumerated(EnumType.STRING)
   private Animal tipoAnimal;
 
   @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -58,12 +58,11 @@ public class InformeSinQR extends InformeRescate implements WithGlobalEntityMana
   }
 
   private void generarPublicacion() {
-    RepositorioAsociaciones repositorioAsociaciones = new RepositorioAsociaciones();
-    entityManager().persist(
+    new RepositorioRescates().agregar(
         new Rescate(
             this.getRescatista(),
             this.getMascotaEncontrada(),
-            repositorioAsociaciones.getAsociacionMasCercana(getMascotaEncontrada().getUbicacion())
+            new RepositorioAsociaciones().getAsociacionMasCercana(getMascotaEncontrada().getUbicacion())
         )
     );
   }

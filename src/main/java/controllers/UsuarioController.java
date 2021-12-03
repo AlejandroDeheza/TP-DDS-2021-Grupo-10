@@ -9,8 +9,6 @@ import modelo.persona.TipoDocumento;
 import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
 import modelo.usuario.ValidadorContrasenias;
-import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
-import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 import repositorios.RepositorioUsuarios;
 import spark.ModelAndView;
 import spark.Request;
@@ -19,7 +17,9 @@ import spark.Response;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class UsuarioController extends Controller implements WithGlobalEntityManager, TransactionalOps {
+public class UsuarioController extends Controller {
+
+  RepositorioUsuarios repositorioUsuarios = new RepositorioUsuarios();
 
   public ModelAndView mostrarFormularioCreacionUsuario(Request request, Response response) {
     return new ModelAndView(getMap(request), "registracion.html.hbs");
@@ -42,7 +42,7 @@ public class UsuarioController extends Controller implements WithGlobalEntityMan
       return null;
     }
 
-    if (new RepositorioUsuarios().yaExiste(request.queryParams("usuario"))) {
+    if (repositorioUsuarios.yaExiste(request.queryParams("usuario"))) {
       redireccionCasoError(request, response, "/creacion-usuario", "Ya existe una cuenta con el nombre de usuario ingresado");
     } else {
       DocumentoIdentidad documentoIdentidad = new DocumentoIdentidad(
@@ -72,7 +72,7 @@ public class UsuarioController extends Controller implements WithGlobalEntityMan
       );
 
       withTransaction(() -> {
-        new RepositorioUsuarios().agregar(nuevo);
+        repositorioUsuarios.agregar(nuevo);
       });
 
       request.session().attribute("user_id", nuevo.getId());

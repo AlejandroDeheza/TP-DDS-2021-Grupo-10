@@ -9,8 +9,6 @@ import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 import modelo.persona.Persona;
 import modelo.usuario.Usuario;
-import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
-import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioInformes;
 import repositorios.RepositorioMascotaRegistrada;
@@ -18,17 +16,18 @@ import repositorios.RepositorioUsuarios;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 
-public class EncontreMascotaController extends Controller implements WithGlobalEntityManager,
-    TransactionalOps {
+public class EncontreMascotaController extends Controller {
 
+  RepositorioMascotaRegistrada repositorioMascotaRegistrada = new RepositorioMascotaRegistrada();
+  RepositorioCaracteristicas repositorioCaracteristicas = new RepositorioCaracteristicas();
+  RepositorioUsuarios repositorioUsuarios = new RepositorioUsuarios();
+  RepositorioInformes repositorioInformes = new RepositorioInformes();
 
   public ModelAndView getTiposEncuentros(Request request, Response response) {
     if (!tieneSesionActiva(request)) {
@@ -45,10 +44,9 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
       return null;
     }
     Map<String, Object> modelo = getMap(request);
-    RepositorioMascotaRegistrada repositorioMascotaRegistrada = new RepositorioMascotaRegistrada();
     String idChapitaString = request.params(":codigoChapita");
     Long idChapita = Long.parseLong(idChapitaString);
-    MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.getPorId(idChapita);
+    MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.buscarPorId(idChapita);
     if (mascotaRegistrada == null) {
       redireccionCasoError(request, response, "/mascotas/encontre-mascota/con-chapita", "El codigo de chapita no es valido");
       return null;
@@ -70,8 +68,6 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
     EnumSet<Animal> animal = EnumSet.allOf(Animal.class);
     EnumSet<TamanioMascota> tamanioMascotas = EnumSet.allOf(TamanioMascota.class);
 
-    RepositorioCaracteristicas repositorioCaracteristicas = new RepositorioCaracteristicas();
-
     List<CaracteristicaConValoresPosibles> listaCaracteristicas = repositorioCaracteristicas.getCaracteristicasConValoresPosibles();
     modelo.put("caracteristicas", listaCaracteristicas);
 
@@ -82,7 +78,7 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
   }
 
 
-  public Void enviarMascotaEncontradaConChapita(Request request, Response response) throws IOException {
+  public Void enviarMascotaEncontradaConChapita(Request request, Response response) {
     if (!tieneSesionActiva(request)) {
       response.redirect("/login");
       return null;
@@ -106,20 +102,18 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
       String estadoMascota = request.queryParams("estadoMascota");
 
       Long Id = request.session().attribute("user_id");
-      Usuario usuario = new RepositorioUsuarios().getPorId(Id);
+      Usuario usuario = repositorioUsuarios.buscarPorId(Id);
       Persona persona = usuario.getPersona();
 
 
-      RepositorioMascotaRegistrada repositorioMascotaRegistrada = new RepositorioMascotaRegistrada();
       String idChapitaString = request.params(":codigoChapita");
       Long idChapita = Long.parseLong(idChapitaString);
-      MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.getPorId(idChapita);
+      MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.buscarPorId(idChapita);
       if (mascotaRegistrada == null) {
         redireccionCasoError(request, response, "/mascotas/encontre-mascota/con-chapita", "El codigo de chapita no es valido");
         return null;
       }
       TamanioMascota tamanioMascota = mascotaRegistrada.getTamanio();
-      RepositorioInformes repositorioInformes = new RepositorioInformes();
       MascotaEncontrada mascotaEncontrada = new MascotaEncontrada(fotos, ubicacionRescate
           , estadoMascota, fechaRescate,
           tamanioMascota);
@@ -128,7 +122,7 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
           mascotaEncontrada, receptorHogares, mascotaRegistrada);
 
       withTransaction(() -> {
-        repositorioInformes.agregarInforme(informeConQR);
+        repositorioInformes.agregar(informeConQR);
       });
     } catch (Exception e) {
       System.out.println(e);
@@ -173,13 +167,12 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
 
       Long Id = request.session().attribute("user_id");
 
-      Usuario usuario = new RepositorioUsuarios().getPorId(Id);
+      Usuario usuario = repositorioUsuarios.buscarPorId(Id);
       Persona persona = usuario.getPersona();
 
       TamanioMascota tamanioMascota =
           TamanioMascota.values()[Integer.parseInt(request.queryParams("tamanioMascota"))];
       Animal animal = Animal.values()[Integer.parseInt(request.queryParams("tipoAnimal"))];
-      RepositorioInformes repositorioInformes = new RepositorioInformes();
       MascotaEncontrada mascotaEncontrada = new MascotaEncontrada(fotos, ubicacionRescate
           , estadoMascota, fechaRescate,
           tamanioMascota);
@@ -187,7 +180,7 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
       InformeSinQR informeSinQR = new InformeSinQR(persona,
           ubicacionRescatista, mascotaEncontrada, receptorHogares, animal, caracteristicas);
       withTransaction(() -> {
-        repositorioInformes.agregarInforme(informeSinQR);
+        repositorioInformes.agregar(informeSinQR);
 
       });
     } catch (

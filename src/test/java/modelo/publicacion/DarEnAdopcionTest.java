@@ -10,6 +10,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import entregaTPA4.persistencia.NuestraAbstractPersistenceTest;
+import repositorios.RepositorioAsociaciones;
+import repositorios.RepositorioMascotaRegistrada;
+import repositorios.RepositorioUsuarios;
 import utils.CascadeTypeCheck;
 import utils.DummyData;
 import utils.MockNotificador;
@@ -26,6 +29,9 @@ public class DarEnAdopcionTest extends NuestraAbstractPersistenceTest {
   ParDePreguntas parDePreguntas = DummyData.getParDePreguntas1();
   DarEnAdopcion darEnAdopcion;
   CascadeTypeCheck cascadeTypeCheck;
+  RepositorioMascotaRegistrada repositorioMascotaRegistrada = new RepositorioMascotaRegistrada();
+  RepositorioAsociaciones repositorioAsociaciones = new RepositorioAsociaciones();
+  RepositorioUsuarios repositorioUsuarios = new RepositorioUsuarios();
 
   @BeforeEach
   public void contextLoad() {
@@ -58,7 +64,7 @@ public class DarEnAdopcionTest extends NuestraAbstractPersistenceTest {
   public void eliminarUnDarEnAdopcionNoEliminaAlUsuarioPublicadorAsociado() {
     Usuario usuarioAsociado = darEnAdopcion.getPublicador();
     assertTrue(cascadeTypeCheck.contemplaElCascadeType(usuarioAsociado, 1, 2, 0, 2));
-    assertNotNull(entityManager().find(Usuario.class, usuarioAsociado.getId()));
+    assertNotNull(repositorioUsuarios.buscarPorId(usuarioAsociado.getId()));
   }
 
   @Test
@@ -66,7 +72,7 @@ public class DarEnAdopcionTest extends NuestraAbstractPersistenceTest {
   public void eliminarUnaSuscripcionParaAdopcionNoEliminaSuAsociacionAsociada() {
     Asociacion asociacion = darEnAdopcion.getAsociacion();
     assertTrue(cascadeTypeCheck.contemplaElCascadeType(asociacion, 1, 1, 0, 1));
-    assertEquals(asociacion.getId(), entityManager().createQuery("from Asociacion", Asociacion.class).getResultList().get(0).getId());
+    assertEquals(asociacion.getId(), repositorioAsociaciones.listarTodos().get(0).getId());
   }
   
   @Test
@@ -81,6 +87,6 @@ public class DarEnAdopcionTest extends NuestraAbstractPersistenceTest {
   public void eliminarUnaPublicacionDarEnAdopcionNoSeEliminaLaMascotaRegistradaAsociada() {
     MascotaRegistrada mascotaRegistradaAsociada = darEnAdopcion.getMascotaEnAdopcion();
     assertTrue(cascadeTypeCheck.contemplaElCascadeType(mascotaRegistradaAsociada, 1, 1, 0, 1));
-    assertEquals(mascotaRegistradaAsociada.getId(), entityManager().createQuery("from MascotaRegistrada", MascotaRegistrada.class).getResultList().get(0).getId());
+    assertEquals(mascotaRegistradaAsociada.getId(), repositorioMascotaRegistrada.listarTodos().get(0).getId());
   }
 }

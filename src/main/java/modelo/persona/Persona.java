@@ -23,7 +23,7 @@ public class Persona extends EntidadPersistente {
 
   private LocalDate fechaNacimiento;
 
-  @Embedded
+  @Enumerated(EnumType.STRING)
   private TipoNotificadorPreferido notificadorPreferido;
 
   // para hibernate

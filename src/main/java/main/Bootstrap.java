@@ -15,22 +15,28 @@ import modelo.usuario.Usuario;
 import org.uqbarproject.jpa.java8.extras.EntityManagerOps;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
-import repositorios.RepositorioCaracteristicas;
-import repositorios.RepositorioMascotaRegistrada;
-
+import repositorios.*;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 
 public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, TransactionalOps {
 
+  RepositorioMascotaRegistrada repositorioMascotaRegistrada = new RepositorioMascotaRegistrada();
+  RepositorioCaracteristicas repositorioCaracteristicas = new RepositorioCaracteristicas();
+  RepositorioUsuarios repositorioUsuarios = new RepositorioUsuarios();
+  RepositorioParDePreguntas repositorioParDePreguntas = new RepositorioParDePreguntas();
+  RepositorioAsociaciones repositorioAsociaciones = new RepositorioAsociaciones();
+
   public static void main(String[] args) {
     new Bootstrap().run();
   }
 
   public void run() {
+
     DocumentoIdentidad documentoIdentidad = new DocumentoIdentidad(TipoDocumento.DNI, "12345678");
     DatosDeContacto datosDeContacto = new DatosDeContacto("12345678", "pepito@gmail.com");
+
     Persona persona = new Persona(
         "Pepito",
         "Gonzalez",
@@ -39,9 +45,6 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
         LocalDate.now(),
         TipoNotificadorPreferido.CORREO
     );
-
-    RepositorioMascotaRegistrada repositorioMascotaRegistrada = new RepositorioMascotaRegistrada();
-    RepositorioCaracteristicas repositorioCaracteristicas = new RepositorioCaracteristicas();
 
     Usuario usuario = new Usuario("pepito", "asd123asd123", TipoUsuario.NORMAL, persona);
 
@@ -81,7 +84,7 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
 
     withTransaction(() -> {
       // Usuarios
-      persist(usuario);
+      repositorioUsuarios.agregar(usuario);
 
       repositorioMascotaRegistrada.agregar(mascotaRegistrada);
       repositorioMascotaRegistrada.agregar(mascotaRegistrada2);
@@ -91,14 +94,14 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
       repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c4);
       
       // Asociaciones
-      persist(parDePreguntas1);
-      persist(parDePreguntas2);
-      persist(parDePreguntas3);
-      persist(asociacion1);
-      persist(asociacion2);
-      persist(asociacion3);
+      repositorioParDePreguntas.agregar(parDePreguntas1);
+      repositorioParDePreguntas.agregar(parDePreguntas2);
+      repositorioParDePreguntas.agregar(parDePreguntas3);
+      repositorioAsociaciones.agregar(asociacion1);
+      repositorioAsociaciones.agregar(asociacion2);
+      repositorioAsociaciones.agregar(asociacion3);
 
-      persist(new Usuario("admin", "asd123asd123", TipoUsuario.ADMIN, persona));
+      repositorioUsuarios.agregar(new Usuario("admin", "asd123asd123", TipoUsuario.ADMIN, persona));
     });
 
   }

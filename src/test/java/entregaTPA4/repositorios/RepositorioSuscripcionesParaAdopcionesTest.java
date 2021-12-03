@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RepositorioSuscripcionesParaAdopcionesTest extends NuestraAbstractPersistenceTest {
 
-  RepositorioSuscripcionesParaAdopciones repository = new RepositorioSuscripcionesParaAdopciones();
+  RepositorioSuscripcionesParaAdopciones repo = new RepositorioSuscripcionesParaAdopciones();
   MockNotificador mockNotificador;
 
   @BeforeEach
@@ -26,9 +26,9 @@ public class RepositorioSuscripcionesParaAdopcionesTest extends NuestraAbstractP
   public void agregarSuscripcionTest(){
     SuscripcionParaAdopcion suscripcionParaAdopcion =
         DummyData.getSuscripcionParaAdopcion(mockNotificador.getTipo());
-    int cantidadSuscripcionesPrevia = repository.getSuscripciones().size();
-    entityManager().persist(suscripcionParaAdopcion);
-    assertEquals(cantidadSuscripcionesPrevia +1, repository.getSuscripciones().size());
+    int cantidadSuscripcionesPrevia = repo.getSuscripcionesActivas().size();
+    repo.agregar(suscripcionParaAdopcion);
+    assertEquals(cantidadSuscripcionesPrevia +1, repo.getSuscripcionesActivas().size());
   }
 
   @Test
@@ -36,9 +36,9 @@ public class RepositorioSuscripcionesParaAdopcionesTest extends NuestraAbstractP
   public void darDeBajaSuscripcionTest(){
     SuscripcionParaAdopcion suscripcionParaAdopcion =
         DummyData.getSuscripcionParaAdopcion(mockNotificador.getTipo());
-    entityManager().persist(suscripcionParaAdopcion);
+    repo.agregar(suscripcionParaAdopcion);
     suscripcionParaAdopcion.desactivar();
-    assertEquals(1,  repository.getSuscripcionesDeBaja().size());
+    assertEquals(1,  repo.getSuscripcionesDeBaja().size());
   }
 
 }

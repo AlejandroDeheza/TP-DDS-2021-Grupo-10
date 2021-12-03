@@ -4,11 +4,8 @@ import modelo.mascota.*;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 import modelo.usuario.Usuario;
-import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
-import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioMascotaRegistrada;
-import repositorios.RepositorioMascotas;
 import repositorios.RepositorioUsuarios;
 import spark.ModelAndView;
 import spark.Request;
@@ -19,7 +16,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
-public class MascotasController extends Controller implements WithGlobalEntityManager, TransactionalOps {
+public class MascotasController extends Controller {
+
+  RepositorioCaracteristicas repositorioCaracteristicas = new RepositorioCaracteristicas();
+  RepositorioUsuarios repositorioUsuarios = new RepositorioUsuarios();
+  RepositorioMascotaRegistrada repositorioMascotaRegistrada = new RepositorioMascotaRegistrada();
 
   public ModelAndView mostrarRegistracion(Request request, Response response) {
     if (!tieneSesionActiva(request)) {
@@ -27,7 +28,6 @@ public class MascotasController extends Controller implements WithGlobalEntityMa
       return null;
     }
     Map<String, Object> modelo = getMap(request);
-    RepositorioCaracteristicas repositorioCaracteristicas = new RepositorioCaracteristicas();
     List<CaracteristicaConValoresPosibles> listaCaracteristicas = repositorioCaracteristicas.getCaracteristicasConValoresPosibles();
     modelo.put("caracteristicas", listaCaracteristicas);
 
@@ -47,7 +47,7 @@ public class MascotasController extends Controller implements WithGlobalEntityMa
     LocalDate fechaNacimiento = LocalDate.parse(request.queryParams("fechaNacimiento"), formatter);
 
     MascotaRegistrada nueva = new MascotaRegistrada(
-        new RepositorioUsuarios().getPorId(request.session().attribute("user_id")),
+        repositorioUsuarios.buscarPorId(request.session().attribute("user_id")),
         request.queryParams("nombre"),
         request.queryParams("apodo"),
         fechaNacimiento,
@@ -60,7 +60,7 @@ public class MascotasController extends Controller implements WithGlobalEntityMa
     );
 
     withTransaction(() -> {
-      new RepositorioMascotas().agregar(nueva);
+      repositorioMascotaRegistrada.agregar(nueva);
     });
 
     redireccionCasoFeliz(request, response, "/", "MASCOTA_REGISTRADA");
@@ -77,8 +77,7 @@ public class MascotasController extends Controller implements WithGlobalEntityMa
       return null;
     }
     // OBtener las mascotas del usuario que pidio esto
-    Usuario usuario = new RepositorioUsuarios().getPorId(request.session().attribute("user_id"));
-    RepositorioMascotaRegistrada repositorioMascotaRegistrada = new RepositorioMascotaRegistrada();
+    Usuario usuario = repositorioUsuarios.buscarPorId(request.session().attribute("user_id"));
     // Meterlas en el modelo
     Map<String, Object> modelo = getMap(request);
     modelo.put("mascotasUsuario", repositorioMascotaRegistrada.obtenerMascotasDeUnDuenio(usuario));

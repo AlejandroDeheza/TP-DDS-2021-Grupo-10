@@ -4,10 +4,7 @@ import java.util.List;
 import modelo.mascota.Animal;
 import modelo.mascota.caracteristica.Caracteristica;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Embeddable;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
 @Embeddable
 public class Preferencia {
@@ -15,7 +12,7 @@ public class Preferencia {
   @ManyToMany(cascade = CascadeType.ALL)
   private List<Caracteristica> caracteristicas;
 
-  @Enumerated
+  @Enumerated(EnumType.STRING)
   private Animal tipoAnimal;
 
   // para hibernate

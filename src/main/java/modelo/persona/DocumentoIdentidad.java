@@ -2,12 +2,13 @@ package modelo.persona;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
 @Embeddable
 public class DocumentoIdentidad {
 
-  @Enumerated
+  @Enumerated(EnumType.STRING)
   @Column(name = "tipo_documento")
   private TipoDocumento tipoDocumento;
 

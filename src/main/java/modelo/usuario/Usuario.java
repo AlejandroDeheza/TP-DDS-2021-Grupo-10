@@ -12,7 +12,7 @@ public class Usuario extends EntidadPersistente {
 
   private String contrasenia;
 
-  @Enumerated
+  @Enumerated(EnumType.STRING)
   private TipoUsuario tipo;
 
   @OneToOne(cascade = CascadeType.ALL)

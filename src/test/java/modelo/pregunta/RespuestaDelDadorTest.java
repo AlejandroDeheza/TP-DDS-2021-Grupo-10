@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import entregaTPA4.persistencia.NuestraAbstractPersistenceTest;
+import repositorios.RepositorioParDePreguntas;
 import utils.CascadeTypeCheck;
 import utils.DummyData;
 
@@ -18,6 +19,7 @@ public class RespuestaDelDadorTest extends NuestraAbstractPersistenceTest {
   RespuestaDelDador respuestaDelDador = new RespuestaDelDador("No", parDePreguntas);
   List<RespuestaDelAdoptante> respuestasDelAdoptante = new ArrayList<>();
   CascadeTypeCheck cascadeTypeCheck;
+  RepositorioParDePreguntas repositorioParDePreguntas = new RepositorioParDePreguntas();
 
   @BeforeEach
   public void contextLoad() {
@@ -44,6 +46,6 @@ public class RespuestaDelDadorTest extends NuestraAbstractPersistenceTest {
   public void eliminarUnaRespuestaDelDadorNoEliminaAlParDePreguntasAsociado() {
     ParDePreguntas unParDePreguntas = respuestaDelDador.getParDePreguntas();
     assertTrue(cascadeTypeCheck.contemplaElCascadeType(unParDePreguntas, 1, 1, 0, 1));
-    assertEquals(unParDePreguntas.getId(), entityManager().createQuery("from ParDePreguntas", ParDePreguntas.class).getResultList().get(0).getId());
+    assertEquals(unParDePreguntas.getId(), repositorioParDePreguntas.listarTodos().get(0).getId());
   }
 }

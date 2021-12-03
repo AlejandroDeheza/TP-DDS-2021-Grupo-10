@@ -24,7 +24,7 @@ public class Prueba extends NuestraAbstractPersistenceTest {
         DummyData.getMascotaRegistrada(notificadorCorreo));
 
     assertEquals(repositorioInformes.informesDeUltimosNDias(10).size(), 0);
-    entityManager().persist(informe);
+    repositorioInformes.agregar(informe);
     assertEquals(repositorioInformes.informesDeUltimosNDias(10).size(), 1);
     assertEquals(informe.getId(), repositorioInformes.informesDeUltimosNDias(10).get(0).getId());
   }

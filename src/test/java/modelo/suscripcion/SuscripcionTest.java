@@ -8,6 +8,8 @@ import modelo.asociacion.Asociacion;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.pregunta.RespuestaDelAdoptante;
 import modelo.usuario.Usuario;
+import repositorios.RepositorioAsociaciones;
+import repositorios.RepositorioUsuarios;
 import utils.CascadeTypeCheck;
 import utils.DummyData;
 import utils.MockNotificador;
@@ -25,6 +27,8 @@ public class SuscripcionTest extends NuestraAbstractPersistenceTest {
   MockNotificador mockNotificador;
   SuscripcionParaAdopcion suscripcion;
   CascadeTypeCheck cascadeTypeCheck;
+  RepositorioAsociaciones repositorioAsociaciones = new RepositorioAsociaciones();
+  RepositorioUsuarios repositorioUsuarios = new RepositorioUsuarios();
 
   @BeforeEach
   public void contextLoad() {
@@ -64,7 +68,7 @@ public class SuscripcionTest extends NuestraAbstractPersistenceTest {
   public void eliminarUnaSuscripcionParaAdopcionNoEliminaSuUsuarioSuscriptorAsociado() {
     Usuario usuarioAsociado = suscripcion.getSuscriptor();
     assertTrue(cascadeTypeCheck.contemplaElCascadeType(usuarioAsociado, 1, 1, 0, 1));
-    assertEquals(usuarioAsociado.getId(), entityManager().createQuery("from Usuario", Usuario.class).getResultList().get(0).getId());
+    assertEquals(usuarioAsociado.getId(), repositorioUsuarios.listarTodos().get(0).getId());
   }
 
   @Test
@@ -72,7 +76,7 @@ public class SuscripcionTest extends NuestraAbstractPersistenceTest {
   public void eliminarUnaSuscripcionParaAdopcionNoEliminaSuAsociacionAsociada() {
     Asociacion asociacion = suscripcion.getAsociacion();
     assertTrue(cascadeTypeCheck.contemplaElCascadeType(asociacion, 1, 1, 0, 1));
-    assertEquals(asociacion.getId(), entityManager().createQuery("from Asociacion", Asociacion.class).getResultList().get(0).getId());
+    assertEquals(asociacion.getId(), repositorioAsociaciones.listarTodos().get(0).getId());
   }
 
   @Test

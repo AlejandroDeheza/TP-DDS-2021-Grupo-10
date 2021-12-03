@@ -12,14 +12,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RepositorioDarEnAdopcionTest extends NuestraAbstractPersistenceTest {
 
-  RepositorioDarEnAdopcion repository = new RepositorioDarEnAdopcion();
+  RepositorioDarEnAdopcion repositorioDarEnAdopcion = new RepositorioDarEnAdopcion();
 
   @Test
   @DisplayName("Agregar una publicacion de adopcion, aumenta el numero de publicaciones en uno")
   public void agregarPublicacionDeAdopcionTest(){
     DarEnAdopcion publicacionDeDarEnAdopcion =
         DummyData.getPublicacionDeDarEnAdopcion(TipoNotificadorPreferido.CORREO);
-    entityManager().persist(publicacionDeDarEnAdopcion);
-    assertEquals(1,  repository.getPublicaciones().size());
+    repositorioDarEnAdopcion.agregar(publicacionDeDarEnAdopcion);
+    assertEquals(1,  repositorioDarEnAdopcion.getPublicacionesActivas().size());
   }
 }

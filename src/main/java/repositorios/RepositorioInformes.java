@@ -1,12 +1,29 @@
 package repositorios;
 
+import modelo.informe.InformeConQR;
 import modelo.informe.InformeRescate;
-import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+import modelo.informe.InformeSinQR;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class RepositorioInformes implements WithGlobalEntityManager {
+public class RepositorioInformes extends Repositorio<InformeRescate> {
+
+  public RepositorioInformes() {
+    super(InformeRescate.class);
+  }
+
+  public List<InformeConQR> listarInformesConQR() {
+    return entityManager()
+        .createQuery("from InformeConQR", InformeConQR.class)
+        .getResultList();
+  }
+
+  public List<InformeSinQR> listarInformesSinQR() {
+    return entityManager()
+        .createQuery("from InformeSinQR", InformeSinQR.class)
+        .getResultList();
+  }
 
   public List<InformeRescate> informesDeUltimosNDias(Integer diasPreviosABuscar) {
     LocalDate fechaFiltro = LocalDate.now().minusDays(diasPreviosABuscar);
@@ -16,21 +33,14 @@ public class RepositorioInformes implements WithGlobalEntityManager {
   }
 
   public List<InformeRescate> getInformesPendientes() {
-    return entityManager()
-        .createQuery("from InformeRescate", InformeRescate.class)
-        .getResultList().stream()
+    return listarTodos().stream()
         .filter(i -> !i.getEstaProcesado()).collect(Collectors.toList());
   }
 
   public List<InformeRescate> getInformesProcesados() {
-    return entityManager()
-        .createQuery("from InformeRescate", InformeRescate.class)
-        .getResultList().stream()
+    return listarTodos().stream()
         .filter(InformeRescate::getEstaProcesado).collect(Collectors.toList());
   }
 
-  public void agregarInforme(InformeRescate informeRescate) {
-    entityManager().persist(informeRescate);
-  }
 }
 

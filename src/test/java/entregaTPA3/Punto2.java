@@ -6,14 +6,14 @@ import modelo.asociacion.Asociacion;
 import modelo.pregunta.ParDePreguntas;
 import modelo.pregunta.ParDeRespuestas;
 import entregaTPA4.persistencia.NuestraAbstractPersistenceTest;
-import repositorios.RepositorioPreguntasObligatorias;
+import repositorios.RepositorioParDePreguntas;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import utils.DummyData;
 
 public class Punto2 extends NuestraAbstractPersistenceTest {
-  RepositorioPreguntasObligatorias repositorioPreguntasObligatorias = new RepositorioPreguntasObligatorias();
+  RepositorioParDePreguntas repositorioParDePreguntas = new RepositorioParDePreguntas();
   ParDePreguntas parDePreguntas;
   Asociacion asociacion = new Asociacion("", DummyData.getUbicacion());
 
@@ -33,9 +33,9 @@ public class Punto2 extends NuestraAbstractPersistenceTest {
   @Test
   @DisplayName("Se puede agregar una ParDePreguntas al RepositorioPreguntas")
   public void agregarParDePreguntasAlRepositorioPreguntas() {
-    assertEquals(0, repositorioPreguntasObligatorias.getPreguntasObligatorias().size());
-    entityManager().persist(parDePreguntas);
-    assertEquals(1, repositorioPreguntasObligatorias.getPreguntasObligatorias().size());
+    assertEquals(0, repositorioParDePreguntas.getPreguntasObligatorias().size());
+    repositorioParDePreguntas.agregar(parDePreguntas);
+    assertEquals(1, repositorioParDePreguntas.getPreguntasObligatorias().size());
   }
 
   private ParDePreguntas getParDePreguntas() {
