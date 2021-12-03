@@ -1,15 +1,13 @@
 package main;
 
-import static spark.Spark.staticFiles;
-
-import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import controllers.*;
+import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import spark.Spark;
 import spark.debug.DebugScreen;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import utils.Constantes;
-
 import java.io.File;
+import static spark.Spark.staticFiles;
 
 public class Routes {
 
