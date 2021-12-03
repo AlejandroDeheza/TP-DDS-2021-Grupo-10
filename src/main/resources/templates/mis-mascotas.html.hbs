@@ -30,26 +30,41 @@
         </div>
         {{/if}}
     </div>
+    {{/each}}
+    {{else}}
+    <div>
+        <p> Todavia no tenes mascotas registradas en nuestro sitio, para registrar una hace
+            <a href="/mascotas/registracion-mascota" class="btn btn-primary">click acá</a>.
+            O anda a Home y selecciona la opción registrar mascota.
+        </p>
+    </div>
+    {{/if}}
+</div>
 </div>
 
-<!-- (C) CREATE QR CODE ON PAGE LOAD -->
 <script>
-    window.addEventListener("load", function(){
-        let id= document.getElementById('qrcode').getAttribute('value');
-        let url="https://localhost:8080/mascotas/encontre-mascota/con-chapita/".concat(id)
-        let qrc = new QRCode(document.getElementById("qrcode"), url);
+    window.addEventListener("load", function () {
+        // Esto quita del dom los divs 
+        Array.from(document.getElementsByClassName("printable")).forEach(
+            el => el.style.display = 'none')
 
-        // (2) PRINT
-        document.getElementById("qrprint").addEventListener("click", function(){
-            var printwin = window.open("");
-            printwin.document.write(document.getElementById("printable").innerHTML);
-            printwin.stop();
-            let qr = printwin.document.querySelector("#qrcode img");
-            qr.addEventListener("load", function(){
-                printwin.print();
-                printwin.close();
-            });
-        });
+        // qrs
+        Array.from(document.querySelectorAll(".qrs")).forEach(el => {
+            let idMascota = el.getAttribute('value');
+            let url = `https://localhost:8080/mascotas/encontre-mascota/con-chapita/${idMascota}`
+            let qrc = new QRCode(document.getElementById(`mascota-${idMascota}`), url);
+
+            document.getElementById(`imprimirQr-${idMascota}`).addEventListener("click", function () {
+                let printwin = window.open("");
+                printwin.document.write(document.getElementById(`printable${idMascota}`).innerHTML);
+                printwin.stop();
+                let qr = printwin.document.querySelector(`#mascota-${idMascota} img`);
+                qr.addEventListener("load", function () {
+                    printwin.print();
+                    printwin.close();
+                });
+            })
+        })
     });
 </script>
 {{/partial}}
