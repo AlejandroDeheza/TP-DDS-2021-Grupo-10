@@ -1,25 +1,17 @@
 package controllers;
 
-import modelo.asociacion.Asociacion;
-import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
-import modelo.pregunta.ParDePreguntas;
-import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
-import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
-import repositorios.RepositorioAsociaciones;
 import repositorios.RepositorioCaracteristicas;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class CaracteristicasController extends Controller implements WithGlobalEntityManager, TransactionalOps {
+public class CaracteristicasController extends Controller {
 
   RepositorioCaracteristicas repositorioCaracteristicas = new RepositorioCaracteristicas();
 

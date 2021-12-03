@@ -6,20 +6,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
-import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 import modelo.asociacion.Asociacion;
 import modelo.pregunta.ParDePreguntas;
 import modelo.pregunta.ParDeRespuestas;
 import repositorios.RepositorioAsociaciones;
-import repositorios.RepositorioPreguntasObligatorias;
+import repositorios.RepositorioParDePreguntas;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
-public class PreguntasController extends Controller implements WithGlobalEntityManager, TransactionalOps {
+public class PreguntasController extends Controller {
+
   private RepositorioAsociaciones repositorioAsociaciones = new RepositorioAsociaciones();
-  private RepositorioPreguntasObligatorias repositorioPreguntasObligatorias = new RepositorioPreguntasObligatorias();
+  private RepositorioParDePreguntas repositorioParDePreguntas = new RepositorioParDePreguntas();
   final private String totalRespuestasPosibles = "5";
 
   public ModelAndView mostrarPreguntasDeLaAsociacion(Request request, Response response) {
@@ -29,7 +28,7 @@ public class PreguntasController extends Controller implements WithGlobalEntityM
 
     if(idAsociacion.equals("0")) {
       request.session().attribute("es_obligatoria", true);
-      paresDePreguntas = repositorioPreguntasObligatorias.getPreguntasObligatorias();
+      paresDePreguntas = repositorioParDePreguntas.getPreguntasObligatorias();
     } else {
       request.session().attribute("es_obligatoria", false);
       Asociacion asociacionBuscada = repositorioAsociaciones.buscarPorId(Long.parseLong(idAsociacion));
@@ -37,7 +36,7 @@ public class PreguntasController extends Controller implements WithGlobalEntityM
       modelo.put("asociacion", asociacionBuscada);
     }
 
-    modelo.put("asociaciones", repositorioAsociaciones.getAsociaciones());
+    modelo.put("asociaciones", repositorioAsociaciones.listarTodos());
     modelo.put("preguntas", paresDePreguntas);
     modelo.put("esObligatoria", request.session().attribute("es_obligatoria"));
     modelo.put("mostrarBotonAgregarPreguntas", true);
@@ -112,7 +111,7 @@ public class PreguntasController extends Controller implements WithGlobalEntityM
 
     ParDePreguntas parDePreguntas = borradorParDePreguntas.crearParDePreguntas();
     withTransaction(() -> {
-      entityManager().persist(parDePreguntas);
+      repositorioParDePreguntas.agregar(parDePreguntas);
       if(!borradorParDePreguntas.getEsObligatoria()) {
         Asociacion asociacion = repositorioAsociaciones.buscarPorId(borradorParDePreguntas.getAsociacionId());
         asociacion.agregarPregunta(parDePreguntas);
