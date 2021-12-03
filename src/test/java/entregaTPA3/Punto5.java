@@ -25,10 +25,10 @@ public class Punto5 {
     repositorioDarEnAdopcion = mock(RepositorioDarEnAdopcion.class);
     repositorioSuscripcionesParaAdopciones = mock(RepositorioSuscripcionesParaAdopciones.class);
 
-    when(repositorioDarEnAdopcion.getPublicaciones()).thenReturn(Collections.singletonList(
+    when(repositorioDarEnAdopcion.getPublicacionesActivas()).thenReturn(Collections.singletonList(
         DummyData.getPublicacionDeDarEnAdopcion(mockNotificador.getTipo()))
     );
-    when(repositorioSuscripcionesParaAdopciones.getSuscripciones()).thenReturn(Collections.singletonList(
+    when(repositorioSuscripcionesParaAdopciones.getSuscripcionesActivas()).thenReturn(Collections.singletonList(
         DummyData.getSuscripcionParaAdopcion(mockNotificador.getTipo())
     ));
 
