@@ -25,7 +25,7 @@
 <script>
     window.addEventListener("load", function(){
         let id= document.getElementById('qrcode').getAttribute('value');
-        let url="https://localhost:8080/mascotas/encontre-mascota/con-chapita/".concat(id)
+        let url="https://patitas-dds-10.herokuapp.com/mascotas/encontre-mascota/con-chapita/".concat(id)
         let qrc = new QRCode(document.getElementById("qrcode"), url);
 
         // (2) PRINT
