@@ -17,6 +17,7 @@ import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioMascotaRegistrada;
+import repositorios.RepositorioUsuarios;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -48,7 +49,7 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
     // Mascota Registrada
     MascotaRegistrada mascotaRegistrada = new MascotaRegistrada(usuario, "Perrito", "coco",
         LocalDate.now(), "Es re bueno y gordo", Sexo.MACHO, Animal.PERRO, null,
-        Collections.singletonList(new Foto("/3261071319668366719.jpg", null)),
+        Collections.singletonList(new Foto("/3261071319668366719.jpg", LocalDate.now().toString())),
         TamanioMascota.CHICO);
 
     // Caracteristicas
@@ -73,17 +74,18 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
     asociacion1.agregarPregunta(parDePreguntas1);
     asociacion2.agregarPregunta(parDePreguntas3);
 
-
+    Usuario admin=new Usuario("admin", "asd123asd123", TipoUsuario.ADMIN, persona);
+    RepositorioUsuarios repositorioUsuarios= new RepositorioUsuarios();
     withTransaction(() -> {
       // Usuarios
-      persist(usuario);
-
-      repositorioMascotaRegistrada.agregar(mascotaRegistrada);
+      repositorioUsuarios.agregar(usuario);
+//
+//      repositorioMascotaRegistrada.agregar(mascotaRegistrada);
       repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c1);
       repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c2);
       repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c3);
       repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c4);
-      
+//
       // Asociaciones
       persist(parDePreguntas1);
       persist(parDePreguntas2);
@@ -91,8 +93,7 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
       persist(asociacion1);
       persist(asociacion2);
       persist(asociacion3);
-
-      persist(new Usuario("admin", "asd123asd123", TipoUsuario.ADMIN, persona));
+      repositorioUsuarios.agregar(admin);
     });
 
   }

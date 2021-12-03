@@ -27,9 +27,9 @@ public class Routes {
     DebugScreen.enableDebugScreen();
 
     // Se crea el directorio para subir las fotos :)
-    File uploadDir = new File(Constantes.UPLOAD_DIRECTORY);
+    File uploadDir = new File(new Constantes().getUploadDirectory());
     uploadDir.mkdir(); // create the upload directory if it doesn't exist
-    staticFiles.externalLocation(Constantes.UPLOAD_DIRECTORY);
+    staticFiles.externalLocation(new Constantes().getUploadDirectory());
 
     HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
     HomeController homeController = new HomeController();
