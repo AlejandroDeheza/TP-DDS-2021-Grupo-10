@@ -9,6 +9,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import entregaTPA4.persistencia.NuestraAbstractPersistenceTest;
+import repositorios.RepositorioMascotaEncontrada;
+import repositorios.RepositorioMascotaRegistrada;
+import repositorios.RepositorioPersonas;
 import utils.CascadeTypeCheck;
 import utils.DummyData;
 import utils.MockNotificador;
@@ -26,6 +29,9 @@ public class InformeConQRTest extends NuestraAbstractPersistenceTest {
   MockNotificador mockNotificador;
   InformeConQR informeConQR;
   CascadeTypeCheck cascadeTypeCheck;
+  RepositorioMascotaRegistrada repositorioMascotaRegistrada = new RepositorioMascotaRegistrada();
+  RepositorioPersonas repositorioPersonas = new RepositorioPersonas();
+  RepositorioMascotaEncontrada repositorioMascotaEncontrada = new RepositorioMascotaEncontrada();
 
   @BeforeEach
   public void contextLoad() {
@@ -57,7 +63,7 @@ public class InformeConQRTest extends NuestraAbstractPersistenceTest {
   public void eliminarUnInformeConQRNoEliminaALaMascotaRegistradaAsociada() {
     MascotaRegistrada mascotaRegistradaAsociada = informeConQR.getMascotaRegistrada();
     assertTrue(cascadeTypeCheck.contemplaElCascadeType(mascotaRegistradaAsociada, 1, 1, 0, 1));
-    assertEquals(mascotaRegistradaAsociada.getId(), entityManager().createQuery("from MascotaRegistrada", MascotaRegistrada.class).getResultList().get(0).getId());
+    assertEquals(mascotaRegistradaAsociada.getId(), repositorioMascotaRegistrada.listarTodos().get(0).getId());
   }
 
   @Test
@@ -65,7 +71,7 @@ public class InformeConQRTest extends NuestraAbstractPersistenceTest {
   public void eliminarUnInformeConQRNoEliminaAlRescatistaAsociado() {
     Persona rescatistaAsociado = informeConQR.getRescatista();
     assertTrue(cascadeTypeCheck.contemplaElCascadeType(rescatistaAsociado, 1, 1 /*Rescatista*/ + 1 /*DueñoMascota*/, 0, 1 /*Rescatista*/ + 1 /*DueñoMascota*/));
-    assertNotNull(entityManager().find(Persona.class, rescatistaAsociado.getId()));
+    assertNotNull(repositorioPersonas.buscarPorId(rescatistaAsociado.getId()));
   }
 
   @Test
@@ -73,7 +79,7 @@ public class InformeConQRTest extends NuestraAbstractPersistenceTest {
   public void eliminarUnInformeConQRNoEliminaALaMascotaEncontradaAsociada() {
     MascotaEncontrada mascotaEncontradaAsociada = informeConQR.getMascotaEncontrada();
     assertTrue(cascadeTypeCheck.contemplaElCascadeType(mascotaEncontradaAsociada, 1, 1, 0, 1));
-    assertEquals(mascotaEncontradaAsociada.getId(), entityManager().createQuery("from MascotaEncontrada", MascotaEncontrada.class).getResultList().get(0).getId());
+    assertEquals(mascotaEncontradaAsociada.getId(), repositorioMascotaEncontrada.listarTodos().get(0).getId());
   }
 
   private InformeConQR generarInformeConQR() {
