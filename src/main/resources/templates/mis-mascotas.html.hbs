@@ -1,44 +1,56 @@
 {{#partial "contenido" }}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<div class="d-flex flex-column align-items-center pt-3">
-    <div class="input-group-sm mb-3">
-        {{#if mascotasUsuario}}
-            {{#each mascotasUsuario}}
-                <img src="{{fotos.[0].link}}" class="card-img-top" alt="mascota">
-                <p>El dueño es: {{duenio.usuario}} y su nombre es {{nombre}} + {{apodo}} </p>
-                <div id="printable">
-                    <div id="qrcode" value="{{id}}"></div>
-                    <button id="qrprint">Imprimir</button>
-                </div>
-            {{/each}}
-        {{else}}
-            <div>
-                <p> Todavia no tenes mascotas registradas en nuestro sitio, para registrar una hace
-                <a href="/mascotas/registracion-mascota" class="btn btn-primary">click acá</a>.
-                O anda a Home y selecciona la opción registrar mascota. </p>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<div class="d-flex align-items-center pt-3">
+    {{#if mascotasUsuario}}
+    {{#each mascotasUsuario}}
+    <div class="card mascota-card">
+        <img src="{{fotos.[0].link}}" class="card-img-top" alt="mascota">
+        <div class="d-flex justify-content-center p-3">
+            <div class="d-flex justify-content-center flex-column align-items-center w-100">
+                <h5 class="card-title">{{nombre}}</h5>
+                <button id="imprimirQr-{{id}}" class="btn btn-primary w-50 mb-2 submit-button-error">Imprimir
+                    QR</button>
             </div>
-        {{/if}}
+        </div>
+        <div id="printable{{id}}" class="printable">
+            <div id="mascota-{{id}}" value="{{id}}" class="qrs"></div>
+        </div>
     </div>
+    {{/each}}
+    {{else}}
+    <div>
+        <p> Todavia no tenes mascotas registradas en nuestro sitio, para registrar una hace
+            <a href="/mascotas/registracion-mascota" class="btn btn-primary">click acá</a>.
+            O anda a Home y selecciona la opción registrar mascota.
+        </p>
+    </div>
+    {{/if}}
+</div>
 </div>
 
-<!-- (C) CREATE QR CODE ON PAGE LOAD -->
 <script>
-    window.addEventListener("load", function(){
-        let id= document.getElementById('qrcode').getAttribute('value');
-        let url="https://localhost:8080/mascotas/encontre-mascota/con-chapita/".concat(id)
-        let qrc = new QRCode(document.getElementById("qrcode"), url);
+    window.addEventListener("load", function () {
+        // Esto quita del dom los divs 
+        Array.from(document.getElementsByClassName("printable")).forEach(
+            el => el.style.display = 'none')
 
-        // (2) PRINT
-        document.getElementById("qrprint").addEventListener("click", function(){
-            var printwin = window.open("");
-            printwin.document.write(document.getElementById("printable").innerHTML);
-            printwin.stop();
-            let qr = printwin.document.querySelector("#qrcode img");
-            qr.addEventListener("load", function(){
-                printwin.print();
-                printwin.close();
-            });
-        });
+        // qrs
+        Array.from(document.querySelectorAll(".qrs")).forEach(el => {
+            let idMascota = el.getAttribute('value');
+            let url = `https://localhost:8080/mascotas/encontre-mascota/con-chapita/${idMascota}`
+            let qrc = new QRCode(document.getElementById(`mascota-${idMascota}`), url);
+
+            document.getElementById(`imprimirQr-${idMascota}`).addEventListener("click", function () {
+                let printwin = window.open("");
+                printwin.document.write(document.getElementById(`printable${idMascota}`).innerHTML);
+                printwin.stop();
+                let qr = printwin.document.querySelector(`#mascota-${idMascota} img`);
+                qr.addEventListener("load", function () {
+                    printwin.print();
+                    printwin.close();
+                });
+            })
+        })
     });
 </script>
 {{/partial}}
