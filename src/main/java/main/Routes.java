@@ -1,30 +1,35 @@
 package main;
 
-import controllers.*;
+import static spark.Spark.staticFiles;
+
+import modelo.adopcion.RecomendadorDeAdopciones;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
+import controllers.*;
+import repositorios.RepositorioDarEnAdopcion;
+import repositorios.RepositorioSuscripcionesParaAdopciones;
 import spark.Spark;
 import spark.debug.DebugScreen;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import utils.Constantes;
+
 import java.io.File;
-import static spark.Spark.staticFiles;
 
 public class Routes {
 
   public static void main(String[] args) {
     System.out.println("Corriendo bootstrap...");
     new Bootstrap().run();
+    new PatitasRunner().run();
 
     System.out.println("Iniciando servidor...");
-    Spark.port(8080);
+    Spark.port(getHerokuAssignedPort());
     Spark.staticFileLocation("/public");
     DebugScreen.enableDebugScreen();
 
     // Se crea el directorio para subir las fotos :)
-    File uploadDir = new File(Constantes.UPLOAD_DIRECTORY);
-    if (uploadDir.mkdir()){
-      staticFiles.externalLocation(Constantes.UPLOAD_DIRECTORY);
-    };
+    File uploadDir = new File(new Constantes().getUploadDirectory());
+    uploadDir.mkdir();
+      staticFiles.externalLocation(new Constantes().getUploadDirectory());
 
     HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
     HomeController homeController = new HomeController();
@@ -85,9 +90,8 @@ public class Routes {
         encontreMascotaController::enviarMascotaEncontradaSinChapita);
 
 
-
     Spark.get("/error", errorController::mostrarPantallaError, engine);
-    
+
     Spark.after((request, response) -> {
       PerThreadEntityManagers.getEntityManager();
       PerThreadEntityManagers.closeEntityManager();
@@ -95,6 +99,14 @@ public class Routes {
 
 
     System.out.println("Servidor iniciado!");
+  }
+
+  static int getHerokuAssignedPort() {
+    ProcessBuilder processBuilder = new ProcessBuilder();
+    if (processBuilder.environment().get("PORT") != null) {
+      return Integer.parseInt(processBuilder.environment().get("PORT"));
+    }
+    return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
   }
 
 }

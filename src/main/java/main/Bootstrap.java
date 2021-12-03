@@ -86,8 +86,8 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
       // Usuarios
       repositorioUsuarios.agregar(usuario);
 
-      repositorioMascotaRegistrada.agregar(mascotaRegistrada);
-      repositorioMascotaRegistrada.agregar(mascotaRegistrada2);
+     // repositorioMascotaRegistrada.agregar(mascotaRegistrada);
+     // repositorioMascotaRegistrada.agregar(mascotaRegistrada2);
       repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c1);
       repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c2);
       repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c3);
