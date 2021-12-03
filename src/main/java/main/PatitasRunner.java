@@ -8,8 +8,9 @@ import java.util.TimerTask;
 
 public class PatitasRunner {
 
-  public static void main(String[] args) {
+  public static void main(String[] args) {new PatitasRunner().run();}
     // creating timer task, timer
+    public void run() {
     TimerTask task = new TimerTask() {
       public void run() {
         RepositorioDarEnAdopcion repositorioDarEnAdopcion = new RepositorioDarEnAdopcion();
