@@ -21,7 +21,7 @@ public class MascotaEncontrada extends EntidadPersistente {
 
   private LocalDate fechaEncuentro;
 
-  @Enumerated
+  @Enumerated(EnumType.STRING)
   private TamanioMascota tamanio;
 
   // para hibernate

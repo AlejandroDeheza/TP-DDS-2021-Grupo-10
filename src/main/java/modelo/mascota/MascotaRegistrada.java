@@ -21,10 +21,10 @@ public class MascotaRegistrada extends EntidadPersistente {
 
   private String descripcionFisica;
 
-  @Enumerated
+  @Enumerated(EnumType.STRING)
   private Sexo sexo;
 
-  @Enumerated
+  @Enumerated(EnumType.STRING)
   private Animal animal;
 
   @ManyToMany(cascade = CascadeType.ALL)
@@ -33,7 +33,7 @@ public class MascotaRegistrada extends EntidadPersistente {
   @ElementCollection
   private List<Foto> fotos;
 
-  @Enumerated
+  @Enumerated(EnumType.STRING)
   private TamanioMascota tamanio;
 
   // para hibernate
