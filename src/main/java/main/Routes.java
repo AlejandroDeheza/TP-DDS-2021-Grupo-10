@@ -2,8 +2,11 @@ package main;
 
 import static spark.Spark.staticFiles;
 
+import modelo.adopcion.RecomendadorDeAdopciones;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import controllers.*;
+import repositorios.RepositorioDarEnAdopcion;
+import repositorios.RepositorioSuscripcionesParaAdopciones;
 import spark.Spark;
 import spark.debug.DebugScreen;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -24,9 +27,9 @@ public class Routes {
     DebugScreen.enableDebugScreen();
 
     // Se crea el directorio para subir las fotos :)
-    File uploadDir = new File(Constantes.UPLOAD_DIRECTORY);
+    File uploadDir = new File(new Constantes().getUploadDirectory());
     if (uploadDir.mkdir()){
-      staticFiles.externalLocation(Constantes.UPLOAD_DIRECTORY);
+      staticFiles.externalLocation(new Constantes().getUploadDirectory());
     };
 
     HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
@@ -88,9 +91,8 @@ public class Routes {
         encontreMascotaController::enviarMascotaEncontradaSinChapita);
 
 
-
     Spark.get("/error", errorController::mostrarPantallaError, engine);
-    
+
     Spark.after((request, response) -> {
       PerThreadEntityManagers.getEntityManager();
       PerThreadEntityManagers.closeEntityManager();

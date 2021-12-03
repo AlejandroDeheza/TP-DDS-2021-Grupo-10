@@ -87,7 +87,8 @@ public abstract class Controller implements WithGlobalEntityManager, Transaction
   protected List<Foto> obtenerFotosMascota(Request request, Response response) {
     List<Foto> fotosMascota = new ArrayList<>();
     try {
-      File uploadDir = new File(Constantes.UPLOAD_DIRECTORY);
+      String pathUpload=new Constantes().getUploadDirectory();
+      File uploadDir = new File(pathUpload);
       Path tempFile = Files.createTempFile(uploadDir.toPath(), null, ".jpg");
 
       request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
@@ -95,7 +96,7 @@ public abstract class Controller implements WithGlobalEntityManager, Transaction
       Files.copy(fotoInputStream, tempFile, StandardCopyOption.REPLACE_EXISTING);
 
       String pathWithForwardSlash = tempFile.toString().replace("\\", "/");
-      String nombreDeLaFoto = pathWithForwardSlash.replace(Constantes.UPLOAD_DIRECTORY, "");
+      String nombreDeLaFoto = pathWithForwardSlash.replace(pathUpload, "");
       fotosMascota.add(new Foto(nombreDeLaFoto, LocalDate.now().toString()));
     } catch (IOException | ServletException exception) {
       redireccionCasoError(request, response, "/",
