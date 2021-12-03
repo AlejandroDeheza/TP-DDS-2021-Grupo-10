@@ -1,11 +1,14 @@
 package utils;
 
+import java.io.File;
+
 public class Constantes {
 
-  public static final String UPLOAD_DIRECTORY = "images/upload";
+  public static final String UPLOAD_DIRECTORY = "/upload";
 
   public String getUploadDirectory(){
-//    return getClass().getClassLoader().getResource("").getPath().concat(UPLOAD_DIRECTORY).substring(1);
-    return UPLOAD_DIRECTORY;
+    File f = new File(".");
+    return f.getAbsolutePath().substring(0,f.getAbsolutePath().length()-2).concat(UPLOAD_DIRECTORY);
+   // return UPLOAD_DIRECTORY;
   }
 }

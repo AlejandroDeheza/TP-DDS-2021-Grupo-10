@@ -28,9 +28,8 @@ public class Routes {
 
     // Se crea el directorio para subir las fotos :)
     File uploadDir = new File(new Constantes().getUploadDirectory());
-    if (uploadDir.mkdir()){
+    uploadDir.mkdir();
       staticFiles.externalLocation(new Constantes().getUploadDirectory());
-    };
 
     HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
     HomeController homeController = new HomeController();
