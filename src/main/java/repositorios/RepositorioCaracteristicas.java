@@ -2,17 +2,14 @@ package repositorios;
 
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
-import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class RepositorioCaracteristicas implements WithGlobalEntityManager {
+public class RepositorioCaracteristicas extends Repositorio<Caracteristica> {
 
-  public List<Caracteristica> getCaracteristicas() {
-    return entityManager()
-        .createQuery("from Caracteristica", Caracteristica.class)
-        .getResultList();
+  public RepositorioCaracteristicas() {
+    super(Caracteristica.class);
   }
 
   public Caracteristica getCaracteristicaSegun(String nombre, String valor) {
@@ -25,7 +22,7 @@ public class RepositorioCaracteristicas implements WithGlobalEntityManager {
   }
 
   public void agregarCaracteristicasConValoresPosibles(CaracteristicaConValoresPosibles caracteristica) {
-    caracteristica.listarCaracteristicas().forEach(c -> entityManager().persist(c));
+    caracteristica.listarCaracteristicas().forEach(this::agregar);
   }
 
   public void eliminarCaracteristicasConValoresPosibles(CaracteristicaConValoresPosibles caracteristica) {
@@ -38,10 +35,7 @@ public class RepositorioCaracteristicas implements WithGlobalEntityManager {
   public List<CaracteristicaConValoresPosibles> getCaracteristicasConValoresPosibles() {
     List<CaracteristicaConValoresPosibles> lista = new ArrayList<>();
 
-    entityManager()
-        .createQuery("from Caracteristica", Caracteristica.class)
-        .getResultList()
-        .stream()
+    listarTodos().stream()
         .collect(Collectors.groupingBy(Caracteristica::getNombreCaracteristica))
         .forEach((n, c) -> lista.add(
             new CaracteristicaConValoresPosibles(

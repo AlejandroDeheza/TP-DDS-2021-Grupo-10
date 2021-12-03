@@ -1,23 +1,22 @@
 package repositorios;
 
 import modelo.publicacion.Rescate;
-import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class RepositorioRescates implements WithGlobalEntityManager  {
+public class RepositorioRescates extends Repositorio<Rescate> {
 
-  public List<Rescate> getRescates() {
-    return entityManager()
-        .createQuery("from Rescate", Rescate.class)
-        .getResultList().stream()
+  public RepositorioRescates() {
+    super(Rescate.class);
+  }
+
+  public List<Rescate> getRescatesActivos() {
+    return listarTodos().stream()
         .filter(Rescate::estaActiva).collect(Collectors.toList());
   }
 
-  public List<Rescate> getProcesados() {
-    return entityManager()
-        .createQuery("from Rescate", Rescate.class)
-        .getResultList().stream()
+  public List<Rescate> getRescatesProcesados() {
+    return listarTodos().stream()
         .filter(p -> !p.estaActiva()).collect(Collectors.toList());
   }
 }
