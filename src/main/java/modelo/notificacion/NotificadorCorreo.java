@@ -127,7 +127,7 @@ public class NotificadorCorreo implements Notificador {
   }
 
   private String getMensajeBody(String cuerpoMensaje) {
-    return "<p> Hola, </p> </br></br> <p>" + cuerpoMensaje + "</p> </br></br> <p> Saludos, </br> Hogar de Patitas";
+    return "<p> Hola, </p> </br></br> <p>" + cuerpoMensaje + "</p> </br></br> <p> Saludos,</p> </br></br> <p> Hogar de Patitas </p>";
   }
 
   private void enviarMensaje(MimeMessage mensaje, Transport t) {
