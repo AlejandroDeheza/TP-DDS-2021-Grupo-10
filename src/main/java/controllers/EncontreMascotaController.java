@@ -114,11 +114,11 @@ public class EncontreMascotaController extends Controller implements WithGlobalE
       String idChapitaString = request.params(":codigoChapita");
       Long idChapita = Long.parseLong(idChapitaString);
       MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.getPorId(idChapita);
-      TamanioMascota tamanioMascota = mascotaRegistrada.getTamanio();
       if (mascotaRegistrada == null) {
         redireccionCasoError(request, response, "/mascotas/encontre-mascota/con-chapita", "El codigo de chapita no es valido");
         return null;
       }
+      TamanioMascota tamanioMascota = mascotaRegistrada.getTamanio();
       RepositorioInformes repositorioInformes = new RepositorioInformes();
       MascotaEncontrada mascotaEncontrada = new MascotaEncontrada(fotos, ubicacionRescate
           , estadoMascota, fechaRescate,

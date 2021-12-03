@@ -20,7 +20,7 @@ import spark.Response;
 public class PreguntasController extends Controller implements WithGlobalEntityManager, TransactionalOps {
   private RepositorioAsociaciones repositorioAsociaciones = new RepositorioAsociaciones();
   private RepositorioPreguntasObligatorias repositorioPreguntasObligatorias = new RepositorioPreguntasObligatorias();
-  final private String totalRespuestasPosibles = "5";
+  private static final String totalRespuestasPosibles = "5";
 
   public ModelAndView mostrarPreguntasDeLaAsociacion(Request request, Response response) {
     String idAsociacion = request.params(":idAsociacion");
@@ -126,7 +126,7 @@ public class PreguntasController extends Controller implements WithGlobalEntityM
   }
 
   private List<Integer> obtenerRango() {
-    return IntStream.rangeClosed(1, Integer.parseInt(this.totalRespuestasPosibles)).boxed().collect(Collectors.toList());
+    return IntStream.rangeClosed(1, Integer.parseInt(totalRespuestasPosibles)).boxed().collect(Collectors.toList());
   }
 
 }

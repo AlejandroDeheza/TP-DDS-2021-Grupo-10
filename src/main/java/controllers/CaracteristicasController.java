@@ -27,7 +27,6 @@ public class CaracteristicasController extends Controller implements WithGlobalE
 
     List<CaracteristicaConValoresPosibles> listaCaracteristicas = repositorioCaracteristicas.getCaracteristicasConValoresPosibles();
     List<BorradorCaracteristicas> borradorCaracteristicas = new ArrayList<>();
-    CaracteristicaConValoresPosibles valor1 = listaCaracteristicas.get(1);
 
     Integer index = 1;
 
