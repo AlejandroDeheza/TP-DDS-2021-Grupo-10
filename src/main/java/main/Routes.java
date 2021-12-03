@@ -16,6 +16,7 @@ public class Routes {
   public static void main(String[] args) {
     System.out.println("Corriendo bootstrap...");
     new Bootstrap().run();
+    new PatitasRunner();
 
     System.out.println("Iniciando servidor...");
     Spark.port(getHerokuAssignedPort());
@@ -107,20 +108,4 @@ public class Routes {
     return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
   }
 
-//  public static void main(String args) {
-//    if (args.equals("recomendar")) {
-//      RepositorioDarEnAdopcion repositorioDarEnAdopcion = new RepositorioDarEnAdopcion();
-//      RepositorioSuscripcionesParaAdopciones repositorioSuscripcionesParaAdopciones =
-//          new RepositorioSuscripcionesParaAdopciones();
-//
-//      RecomendadorDeAdopciones recomendadorDeAdopciones = new RecomendadorDeAdopciones(
-//          3,
-//          repositorioDarEnAdopcion,
-//          repositorioSuscripcionesParaAdopciones
-//      );
-//      recomendadorDeAdopciones.recomendarAdopcionesASuscritos();
-//      System.out.println("Recomendando a los Suscriptores");
-//    } else
-//      System.out.println("Comando no valido");
-//  }
 }
