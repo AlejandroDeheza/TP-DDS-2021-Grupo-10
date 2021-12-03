@@ -2,8 +2,11 @@ package main;
 
 import static spark.Spark.staticFiles;
 
+import modelo.adopcion.RecomendadorDeAdopciones;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import controllers.*;
+import repositorios.RepositorioDarEnAdopcion;
+import repositorios.RepositorioSuscripcionesParaAdopciones;
 import spark.Spark;
 import spark.debug.DebugScreen;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -18,7 +21,7 @@ public class Routes {
     new Bootstrap().run();
 
     System.out.println("Iniciando servidor...");
-    Spark.port(8080);
+    Spark.port(getHerokuAssignedPort());
     Spark.staticFileLocation("/public");
     DebugScreen.enableDebugScreen();
 
@@ -86,9 +89,8 @@ public class Routes {
         encontreMascotaController::enviarMascotaEncontradaSinChapita);
 
 
-
     Spark.get("/error", errorController::mostrarPantallaError, engine);
-    
+
     Spark.after((request, response) -> {
       PerThreadEntityManagers.getEntityManager();
       PerThreadEntityManagers.closeEntityManager();
@@ -98,4 +100,28 @@ public class Routes {
     System.out.println("Servidor iniciado!");
   }
 
+  static int getHerokuAssignedPort() {
+    ProcessBuilder processBuilder = new ProcessBuilder();
+    if (processBuilder.environment().get("PORT") != null) {
+      return Integer.parseInt(processBuilder.environment().get("PORT"));
+    }
+    return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
+  }
+
+//  public static void main(String args) {
+//    if (args.equals("recomendar")) {
+//      RepositorioDarEnAdopcion repositorioDarEnAdopcion = new RepositorioDarEnAdopcion();
+//      RepositorioSuscripcionesParaAdopciones repositorioSuscripcionesParaAdopciones =
+//          new RepositorioSuscripcionesParaAdopciones();
+//
+//      RecomendadorDeAdopciones recomendadorDeAdopciones = new RecomendadorDeAdopciones(
+//          3,
+//          repositorioDarEnAdopcion,
+//          repositorioSuscripcionesParaAdopciones
+//      );
+//      recomendadorDeAdopciones.recomendarAdopcionesASuscritos();
+//      System.out.println("Recomendando a los Suscriptores");
+//    } else
+//      System.out.println("Comando no valido");
+//  }
 }
