@@ -17,7 +17,7 @@ public class RepositorioInformesTest extends NuestraAbstractPersistenceTest {
         DummyData.getMascotaEncontrada(DummyData.getFotos()), null, null);
 
     assertEquals(repositorioInformes.informesDeUltimosNDias(10).size(), 0);
-    entityManager().persist(informe);
+    repositorioInformes.agregar(informe);
     assertEquals(repositorioInformes.informesDeUltimosNDias(10).size(), 1);
     assertEquals(informe, repositorioInformes.informesDeUltimosNDias(10).get(0));
   }
