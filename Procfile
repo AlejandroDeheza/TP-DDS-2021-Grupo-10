@@ -1,0 +1,1 @@
+web: java -jar target/patitas-app-jar-with-dependencies.jar
