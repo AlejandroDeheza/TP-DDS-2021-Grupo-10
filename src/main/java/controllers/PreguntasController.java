@@ -19,7 +19,7 @@ public class PreguntasController extends Controller {
 
   private RepositorioAsociaciones repositorioAsociaciones = new RepositorioAsociaciones();
   private RepositorioParDePreguntas repositorioParDePreguntas = new RepositorioParDePreguntas();
-  final private String totalRespuestasPosibles = "5";
+  private final String totalRespuestasPosibles = "5";
 
   public ModelAndView mostrarPreguntasDeLaAsociacion(Request request, Response response) {
     String idAsociacion = request.params(":idAsociacion");
@@ -125,7 +125,7 @@ public class PreguntasController extends Controller {
   }
 
   private List<Integer> obtenerRango() {
-    return IntStream.rangeClosed(1, Integer.parseInt(this.totalRespuestasPosibles)).boxed().collect(Collectors.toList());
+    return IntStream.rangeClosed(1, Integer.parseInt(totalRespuestasPosibles)).boxed().collect(Collectors.toList());
   }
 
 }
