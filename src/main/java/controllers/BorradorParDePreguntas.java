@@ -39,16 +39,12 @@ public class BorradorParDePreguntas {
   }
 
   public ParDePreguntas crearParDePreguntas() {
-    ParDePreguntas parDePreguntas = new ParDePreguntas(this.preguntaDelDador, this.preguntaDelAdoptante, this.esObligatoria);
-    this.respuestasPosiblesDelDador.stream().forEach(respuestaPosibleDador -> {
-      parDePreguntas.agregarRespuestaPosibleDelDador(respuestaPosibleDador);
-    });
-    this.respuestasPosiblesDelAdoptante.stream().forEach(respuestaPosibleAdoptante -> {
-      parDePreguntas.agregarRespuestaPosibleDelAdoptante(respuestaPosibleAdoptante);
-    });
-    this.paresDeRespuestas.stream().forEach(parDeRespuestas -> {
-      parDePreguntas.agregarRespuestasQueMachean(parDeRespuestas);
-    });
+    ParDePreguntas parDePreguntas = new ParDePreguntas(
+        this.preguntaDelDador, this.preguntaDelAdoptante, this.esObligatoria
+    );
+    this.respuestasPosiblesDelDador.forEach(parDePreguntas::agregarRespuestaPosibleDelDador);
+    this.respuestasPosiblesDelAdoptante.forEach(parDePreguntas::agregarRespuestaPosibleDelAdoptante);
+    this.paresDeRespuestas.forEach(parDePreguntas::agregarRespuestasQueMachean);
     return parDePreguntas;
   }
 

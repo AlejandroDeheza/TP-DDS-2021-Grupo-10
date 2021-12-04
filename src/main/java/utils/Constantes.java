@@ -8,7 +8,6 @@ public class Constantes {
 
   public String getUploadDirectory(){
     File f = new File(".");
-    return f.getAbsolutePath().substring(0,f.getAbsolutePath().length()-2).concat(UPLOAD_DIRECTORY);
-   // return UPLOAD_DIRECTORY;
+    return f.getAbsolutePath().substring(0, f.getAbsolutePath().length() - 2).concat(UPLOAD_DIRECTORY);
   }
 }
