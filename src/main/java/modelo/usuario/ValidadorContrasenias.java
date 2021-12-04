@@ -20,8 +20,8 @@ public class ValidadorContrasenias {
 
   private void validarContraseniasComunes(String contrasenia) {
     GestorArchivos gestorArchivos = new GestorArchivos();
-    String file="10k-most-common.txt";
-    InputStream io= this.getClass().getClassLoader().getResourceAsStream(file);
+    String file = "10k-most-common.txt";
+    InputStream io = this.getClass().getClassLoader().getResourceAsStream(file);
     List<String> contraseniasComunes = gestorArchivos.getArchivoEnLista(io);
     if (contraseniasComunes.contains(contrasenia))
       throw new ContraseniaInvalidaException("Es una de las 10.000 contrasenias mas usadas");

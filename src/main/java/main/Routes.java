@@ -25,7 +25,7 @@ public class Routes {
     // Se crea el directorio para subir las fotos :)
     File uploadDir = new File(new Constantes().getUploadDirectory());
     uploadDir.mkdir();
-      staticFiles.externalLocation(new Constantes().getUploadDirectory());
+    staticFiles.externalLocation(new Constantes().getUploadDirectory());
 
     HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
     HomeController homeController = new HomeController();

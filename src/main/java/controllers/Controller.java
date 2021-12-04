@@ -87,7 +87,7 @@ public abstract class Controller implements WithGlobalEntityManager, Transaction
   protected List<Foto> obtenerFotosMascota(Request request, Response response) {
     List<Foto> fotosMascota = new ArrayList<>();
     try {
-      String pathUpload=new Constantes().getUploadDirectory();
+      String pathUpload = new Constantes().getUploadDirectory();
       File uploadDir = new File(pathUpload);
       Path tempFile = Files.createTempFile(uploadDir.toPath(), null, ".jpg");
 

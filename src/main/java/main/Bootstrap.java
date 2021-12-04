@@ -99,7 +99,7 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
 
     withTransaction(() -> {
 
-      repositorioUsuarios.agregar(new Usuario("pepito", "asd123asd123", TipoUsuario.NORMAL, persona));
+      repositorioUsuarios.agregar(pepito);
       repositorioUsuarios.agregar(new Usuario("admin", "asd123asd123", TipoUsuario.ADMIN, persona));
 
       repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c1);
@@ -130,7 +130,7 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
     // Mascota Registrada
     MascotaRegistrada mascotaRegistrada3 = new MascotaRegistrada(pepito, "coco", "coco",
         LocalDate.now(), "Es re bueno y gordo", Sexo.MACHO, Animal.PERRO, listaCaracteristica,
-        Collections.singletonList(new Foto("/1.jpg", null)),
+        Collections.singletonList(new Foto("/images/dog.jpg", null)),
         TamanioMascota.CHICO);
 
     Preferencia preferencia = new Preferencia(listaCaracteristica, Animal.PERRO);
