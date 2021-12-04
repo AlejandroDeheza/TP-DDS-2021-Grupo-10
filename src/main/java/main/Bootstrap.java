@@ -57,25 +57,21 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
         TipoNotificadorPreferido.CORREO
     );
 
-    Usuario usuario = new Usuario("pepito", "asd123asd123", TipoUsuario.NORMAL, persona);
+    Usuario pepito = new Usuario("pepito", "asd123asd123", TipoUsuario.NORMAL, persona);
 
-
-    // Mascota Registrada
-    MascotaRegistrada mascotaRegistrada = new MascotaRegistrada(usuario, "Malbec", "coco",
-        LocalDate.now(), "Es re bueno y gordo", Sexo.MACHO, Animal.PERRO, null,
-        Collections.singletonList(new Foto("/3261071319668366719.jpg", null)),
-        TamanioMascota.CHICO);
-
-    MascotaRegistrada mascotaRegistrada2 = new MascotaRegistrada(usuario, "Fucker", "asd",
-        LocalDate.now(), "Es re bueno y gordo", Sexo.MACHO, Animal.PERRO, null,
-        Collections.singletonList(new Foto("/3261071319668366719.jpg", null)),
-        TamanioMascota.CHICO);
 
     // Caracteristicas
-    CaracteristicaConValoresPosibles c1 = new CaracteristicaConValoresPosibles("Comportamiento", Arrays.asList("Inquieto", "Tranquilo"));
-    CaracteristicaConValoresPosibles c2 = new CaracteristicaConValoresPosibles("Caracter", Arrays.asList("Pacifico", "Violento"));
-    CaracteristicaConValoresPosibles c3 = new CaracteristicaConValoresPosibles("Apetito", Arrays.asList("Poco", "Intermedio", "Mucho"));
-    CaracteristicaConValoresPosibles c4 = new CaracteristicaConValoresPosibles("Animo", Arrays.asList("Feliz", "Triste", "Nose"));
+    CaracteristicaConValoresPosibles c1 = new CaracteristicaConValoresPosibles(
+        "Comportamiento", Arrays.asList("Inquieto", "Tranquilo"));
+
+    CaracteristicaConValoresPosibles c2 = new CaracteristicaConValoresPosibles(
+        "Caracter", Arrays.asList("Pacifico", "Violento"));
+
+    CaracteristicaConValoresPosibles c3 = new CaracteristicaConValoresPosibles(
+        "Apetito", Arrays.asList("Poco", "Intermedio", "Mucho"));
+
+    CaracteristicaConValoresPosibles c4 = new CaracteristicaConValoresPosibles(
+        "Animo", Arrays.asList("Feliz", "Triste", "Nose"));
 
     // Asociaciones
     Ubicacion ubicacion1 = new Ubicacion(2000.0, 2100.0, "Medrano 951");
@@ -86,34 +82,37 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
     Asociacion asociacion2 = new Asociacion("Garritas", ubicacion2);
     Asociacion asociacion3 = new Asociacion("Una mascota feliz", ubicacion3);
 
-    ParDePreguntas parDePreguntas1 = new ParDePreguntas("¿Tenes balcon?", "¿Necesito Balcon?", false);
-    ParDePreguntas parDePreguntas2 = new ParDePreguntas("¿Contas con redes para mascotas?", "¿Necesito redes para mascotas?", true);
-    ParDePreguntas parDePreguntas3 = new ParDePreguntas("¿Tenes un veterinario de confianza?", "¿Necesito contar con un veterinario de confianza?", false);
+    ParDePreguntas parDePreguntas1 = new ParDePreguntas(
+        "¿Tenes balcon?",
+        "¿Necesito Balcon?",
+        false
+    );
+    ParDePreguntas parDePreguntas2 = new ParDePreguntas(
+        "¿Tenes un veterinario de confianza?",
+        "¿Necesito contar con un veterinario de confianza?",
+        false
+    );
 
     asociacion1.agregarPregunta(parDePreguntas1);
-    asociacion2.agregarPregunta(parDePreguntas3);
+    asociacion2.agregarPregunta(parDePreguntas2);
 
 
     withTransaction(() -> {
-      // Usuarios
-      repositorioUsuarios.agregar(usuario);
 
-     // repositorioMascotaRegistrada.agregar(mascotaRegistrada);
-     // repositorioMascotaRegistrada.agregar(mascotaRegistrada2);
+      repositorioUsuarios.agregar(new Usuario("pepito", "asd123asd123", TipoUsuario.NORMAL, persona));
+      repositorioUsuarios.agregar(new Usuario("admin", "asd123asd123", TipoUsuario.ADMIN, persona));
+
       repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c1);
       repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c2);
       repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c3);
       repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c4);
-      
-      // Asociaciones
+
       repositorioParDePreguntas.agregar(parDePreguntas1);
       repositorioParDePreguntas.agregar(parDePreguntas2);
-      repositorioParDePreguntas.agregar(parDePreguntas3);
+
       repositorioAsociaciones.agregar(asociacion1);
       repositorioAsociaciones.agregar(asociacion2);
       repositorioAsociaciones.agregar(asociacion3);
-
-      repositorioUsuarios.agregar(new Usuario("admin", "asd123asd123", TipoUsuario.ADMIN, persona));
 
     });
 
@@ -127,9 +126,11 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
         repositorioCaracteristicas.getCaracteristicaSegun("Caracter", "Pacifico")
     );
 
-    MascotaRegistrada mascotaRegistrada3 = new MascotaRegistrada(usuario, "Fuckerr", "dsa",
+
+    // Mascota Registrada
+    MascotaRegistrada mascotaRegistrada3 = new MascotaRegistrada(pepito, "coco", "coco",
         LocalDate.now(), "Es re bueno y gordo", Sexo.MACHO, Animal.PERRO, listaCaracteristica,
-        Collections.singletonList(new Foto("/3261071319668366719.jpg", null)),
+        Collections.singletonList(new Foto("/1.jpg", null)),
         TamanioMascota.CHICO);
 
     Preferencia preferencia = new Preferencia(listaCaracteristica, Animal.PERRO);
@@ -184,10 +185,10 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
       repositorioMascotaRegistrada.agregar(mascotaRegistrada3);
 
       repositorioSuscripcionesParaAdopciones.agregar(
-          new SuscripcionParaAdopcion(usuario, asociacion1, preferencia, respuestasDelAdoptante)
+          new SuscripcionParaAdopcion(pepito, asociacion1, preferencia, respuestasDelAdoptante)
       );
       repositorioDarEnAdopcion.agregar(
-          new DarEnAdopcion(usuario, mascotaRegistrada3, respuestasDelDador, asociacion1)
+          new DarEnAdopcion(pepito, mascotaRegistrada3, respuestasDelDador, asociacion1)
       );
     });
   }
