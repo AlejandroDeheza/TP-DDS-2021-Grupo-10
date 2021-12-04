@@ -50,7 +50,7 @@ public class SesionController extends Controller {
       setearAtributosAnteError(request, response, e);
       return null;
     } catch (AutenticacionConsecutivaException | UserNameException e) {
-      // entra aca si se ingreso mal la contraseña hace poco o si se ingreso mal el nombre de usuario
+      // entra aca si se ingreso mal la contraseña hace poco o si se ingreso mal el nombre de usuario respectivamente
       redireccionCasoError(request, response, "/login", e.getMessage());
       return null;
     }

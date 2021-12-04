@@ -103,9 +103,9 @@ public class DummyData {
         "La mascota sufre si está mucho tiempo sola?",
         "Va a estar la mascota mucho tiempo sola?",true
     );
-    preguntas.agregarRespuesta(new ParDeRespuestas("Si", "No"));
-    preguntas.agregarRespuesta(new ParDeRespuestas("No", "Si"));
-    preguntas.agregarRespuesta(new ParDeRespuestas("No", "No"));
+    preguntas.agregarRespuestasQueMachean(new ParDeRespuestas("Si", "No"));
+    preguntas.agregarRespuestasQueMachean(new ParDeRespuestas("No", "Si"));
+    preguntas.agregarRespuestasQueMachean(new ParDeRespuestas("No", "No"));
     return preguntas;
   }
 
@@ -115,12 +115,12 @@ public class DummyData {
         "Cuantas veces sacarás a pasear a tu mascota al dia?",
             true
     );
-    preguntas.agregarRespuesta(new ParDeRespuestas("1", "1"));
-    preguntas.agregarRespuesta(new ParDeRespuestas("1", "2"));
-    preguntas.agregarRespuesta(new ParDeRespuestas("2", "2"));
-    preguntas.agregarRespuesta(new ParDeRespuestas("1", "+2"));
-    preguntas.agregarRespuesta(new ParDeRespuestas("2", "+2"));
-    preguntas.agregarRespuesta(new ParDeRespuestas("+2", "+2"));
+    preguntas.agregarRespuestasQueMachean(new ParDeRespuestas("1", "1"));
+    preguntas.agregarRespuestasQueMachean(new ParDeRespuestas("1", "2"));
+    preguntas.agregarRespuestasQueMachean(new ParDeRespuestas("2", "2"));
+    preguntas.agregarRespuestasQueMachean(new ParDeRespuestas("1", "+2"));
+    preguntas.agregarRespuestasQueMachean(new ParDeRespuestas("2", "+2"));
+    preguntas.agregarRespuestasQueMachean(new ParDeRespuestas("+2", "+2"));
     return preguntas;
   }
 

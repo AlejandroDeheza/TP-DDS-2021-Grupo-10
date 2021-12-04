@@ -45,9 +45,9 @@ public class Punto2 extends NuestraAbstractPersistenceTest {
     ParDeRespuestas respuesta1 = new ParDeRespuestas("Si", "No");
     ParDeRespuestas respuesta2 = new ParDeRespuestas("No", "Si");
     ParDeRespuestas respuesta3 = new ParDeRespuestas("No", "No");
-    preguntas.agregarRespuesta(respuesta1);
-    preguntas.agregarRespuesta(respuesta2);
-    preguntas.agregarRespuesta(respuesta3);
+    preguntas.agregarRespuestasQueMachean(respuesta1);
+    preguntas.agregarRespuestasQueMachean(respuesta2);
+    preguntas.agregarRespuestasQueMachean(respuesta3);
 
     return preguntas;
   }
