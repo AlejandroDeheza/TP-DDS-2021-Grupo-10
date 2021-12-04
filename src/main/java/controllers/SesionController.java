@@ -2,6 +2,7 @@ package controllers;
 
 import excepciones.AutenticacionConsecutivaException;
 import excepciones.AutenticacionInvalidaException;
+import excepciones.UserNameException;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioUsuarios;
 import spark.ModelAndView;
@@ -48,7 +49,8 @@ public class SesionController extends Controller {
       // entra aca si se ingreso mal el usuario o si se ingreso mal la contraseña respectivamente
       setearAtributosAnteError(request, response, e);
       return null;
-    } catch (AutenticacionConsecutivaException e) { // entra aca si se ingreso mal la contraseña hace poco
+    } catch (AutenticacionConsecutivaException | UserNameException e) {
+      // entra aca si se ingreso mal la contraseña hace poco o si se ingreso mal el nombre de usuario
       redireccionCasoError(request, response, "/login", e.getMessage());
       return null;
     }
