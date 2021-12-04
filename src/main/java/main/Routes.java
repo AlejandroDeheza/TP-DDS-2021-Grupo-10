@@ -19,7 +19,7 @@ public class Routes {
   public static void main(String[] args) {
     System.out.println("Corriendo bootstrap...");
     // new Bootstrap().run();
-    new PatitasRunner().run(); //TODO: dejo comentado asi no queda corriendo
+    //new PatitasRunner().run(); //TODO: dejo comentado asi no queda corriendo
 
     System.out.println("Iniciando servidor...");
     Spark.port(getHerokuAssignedPort());
