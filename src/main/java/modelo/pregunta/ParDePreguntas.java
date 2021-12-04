@@ -42,15 +42,15 @@ public class ParDePreguntas extends EntidadPersistente {
         && parDePreguntas.getPreguntaDelDador().equals(preguntaDelDador);
   }
 
-  public void agregarRespuesta(ParDeRespuestas parDeRespuestas) {
+  public void agregarRespuestasQueMachean(ParDeRespuestas parDeRespuestas) {
     paresDeRespuestas.add(parDeRespuestas);
   }
 
-  public void agregarRespuestaDador(String respuestaDador) {
+  public void agregarRespuestaPosibleDelDador(String respuestaDador) {
     respuestasPosiblesDelDador.add(respuestaDador);
   }
 
-  public void agregarRespuestaAdoptante(String respuestaAdoptante) {
+  public void agregarRespuestaPosibleDelAdoptante(String respuestaAdoptante) {
     respuestasPosiblesDelAdoptante.add(respuestaAdoptante);
   }
 

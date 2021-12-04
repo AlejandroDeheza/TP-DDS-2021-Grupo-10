@@ -5,10 +5,7 @@ import modelo.mascota.MascotaRegistrada;
 import modelo.publicacion.DarEnAdopcion;
 import modelo.usuario.Usuario;
 import utils.ReceptorProperties;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.List;
@@ -106,9 +103,11 @@ public class NotificadorCorreo implements Notificador {
     props.setProperty("mail.smtp.host", "smtp.gmail.com");
     props.setProperty("mail.smtp.starttls.enable", "true");
     props.setProperty("mail.smtp.port", "587");
-    props.setProperty("mail.smtp.user", "rescatepatitasdds21@gmail.com");
     props.setProperty("mail.smtp.auth", "true");
-    Session session = Session.getDefaultInstance(props);
+
+    Session session = Session.getDefaultInstance(props, null);
+    // new GMailAuthenticator("rescatepatitasdds21@gmail.com", "viernesNoche21")
+
     session.setDebug(false);
     return session;
   }
@@ -116,7 +115,7 @@ public class NotificadorCorreo implements Notificador {
   private MimeMessage crearMensaje(String asunto, String cuerpoMensaje) {
     MimeMessage message = new MimeMessage(session);
     try {
-      message.setFrom(new InternetAddress(email));
+      message.setFrom(new InternetAddress("rescatepatitasdds21@gmail.com"));
       message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
       message.setSubject(asunto);
       message.setText(getMensajeBody(cuerpoMensaje), "UTF-8", "html");
@@ -127,7 +126,7 @@ public class NotificadorCorreo implements Notificador {
   }
 
   private String getMensajeBody(String cuerpoMensaje) {
-    return "<p> Hola, </p> </br></br> <p>" + cuerpoMensaje + "</p> </br></br> <p> Saludos, </br> Hogar de Patitas";
+    return "<p> Hola, </p> </br></br> <p>" + cuerpoMensaje + "</p> </br></br> <p> Saludos,</p> </br></br> <p> Hogar de Patitas </p>";
   }
 
   private void enviarMensaje(MimeMessage mensaje, Transport t) {

@@ -1,25 +1,21 @@
 package main;
 
-import static spark.Spark.staticFiles;
-
-import modelo.adopcion.RecomendadorDeAdopciones;
-import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import controllers.*;
-import repositorios.RepositorioDarEnAdopcion;
-import repositorios.RepositorioSuscripcionesParaAdopciones;
+import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import spark.Spark;
 import spark.debug.DebugScreen;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import utils.Constantes;
-
 import java.io.File;
+
+import static spark.Spark.staticFiles;
 
 public class Routes {
 
   public static void main(String[] args) {
     System.out.println("Corriendo bootstrap...");
     new Bootstrap().run();
-   // new PatitasRunner().run(); //TODO: dejo comentado asi no queda corriendo
+    //new PatitasRunner().run(); //TODO: dejo comentado asi no queda corriendo
 
     System.out.println("Iniciando servidor...");
     Spark.port(getHerokuAssignedPort());
@@ -29,7 +25,7 @@ public class Routes {
     // Se crea el directorio para subir las fotos :)
     File uploadDir = new File(new Constantes().getUploadDirectory());
     uploadDir.mkdir();
-      staticFiles.externalLocation(new Constantes().getUploadDirectory());
+    staticFiles.externalLocation(new Constantes().getUploadDirectory());
 
     HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
     HomeController homeController = new HomeController();
