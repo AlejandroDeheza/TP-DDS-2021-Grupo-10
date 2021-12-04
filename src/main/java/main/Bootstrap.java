@@ -59,9 +59,6 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
 
     Usuario usuario = new Usuario("pepito", "asd123asd123", TipoUsuario.NORMAL, persona);
 
-    List<Caracteristica> listaCaracteristica = new ArrayList<>();
-    listaCaracteristica.add(new Caracteristica("Comportamiento", "Tranquilo"));
-    listaCaracteristica.add(new Caracteristica("Caracter", "Violento"));
 
     // Mascota Registrada
     MascotaRegistrada mascotaRegistrada = new MascotaRegistrada(usuario, "Malbec", "coco",
@@ -71,11 +68,6 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
 
     MascotaRegistrada mascotaRegistrada2 = new MascotaRegistrada(usuario, "Fucker", "asd",
         LocalDate.now(), "Es re bueno y gordo", Sexo.MACHO, Animal.PERRO, null,
-        Collections.singletonList(new Foto("/3261071319668366719.jpg", null)),
-        TamanioMascota.CHICO);
-
-    MascotaRegistrada mascotaRegistrada3 = new MascotaRegistrada(usuario, "Fuckerr", "dsa",
-        LocalDate.now(), "Es re bueno y gordo", Sexo.MACHO, Animal.PERRO, listaCaracteristica,
         Collections.singletonList(new Foto("/3261071319668366719.jpg", null)),
         TamanioMascota.CHICO);
 
@@ -94,46 +86,12 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
     Asociacion asociacion2 = new Asociacion("Garritas", ubicacion2);
     Asociacion asociacion3 = new Asociacion("Una mascota feliz", ubicacion3);
 
-    ParDePreguntas parDePreguntas1 = new ParDePreguntas("¿Tenes balcon?", "¿Necesito Balcon?", true);
+    ParDePreguntas parDePreguntas1 = new ParDePreguntas("¿Tenes balcon?", "¿Necesito Balcon?", false);
     ParDePreguntas parDePreguntas2 = new ParDePreguntas("¿Contas con redes para mascotas?", "¿Necesito redes para mascotas?", true);
     ParDePreguntas parDePreguntas3 = new ParDePreguntas("¿Tenes un veterinario de confianza?", "¿Necesito contar con un veterinario de confianza?", false);
 
     asociacion1.agregarPregunta(parDePreguntas1);
     asociacion2.agregarPregunta(parDePreguntas3);
-
-    Preferencia preferencia = new Preferencia(listaCaracteristica, Animal.PERRO);
-
-    ParDePreguntas preguntas1 = new ParDePreguntas(
-        "La mascota sufre si está mucho tiempo sola?",
-        "Va a estar la mascota mucho tiempo sola?",true
-    );
-    preguntas1.agregarRespuesta(new ParDeRespuestas("Si", "No"));
-    preguntas1.agregarRespuesta(new ParDeRespuestas("No", "Si"));
-    preguntas1.agregarRespuesta(new ParDeRespuestas("No", "No"));
-
-    ParDePreguntas preguntas2 = new ParDePreguntas(
-        "Cuantas veces necesita salir la mascota al dia?",
-        "Cuantas veces sacarás a pasear a tu mascota al dia?",
-        true
-    );
-    preguntas2.agregarRespuesta(new ParDeRespuestas("1", "1"));
-    preguntas2.agregarRespuesta(new ParDeRespuestas("1", "2"));
-    preguntas2.agregarRespuesta(new ParDeRespuestas("2", "2"));
-    preguntas2.agregarRespuesta(new ParDeRespuestas("1", "+2"));
-    preguntas2.agregarRespuesta(new ParDeRespuestas("2", "+2"));
-    preguntas2.agregarRespuesta(new ParDeRespuestas("+2", "+2"));
-
-
-    List<RespuestaDelAdoptante> comodidadesDelAdoptante = Arrays.asList(
-        new RespuestaDelAdoptante("Si", preguntas1),
-        new RespuestaDelAdoptante("2", preguntas2)
-    );
-
-    List<RespuestaDelDador> comodidadesDelDador = Arrays.asList(
-        new RespuestaDelDador("Si", preguntas1),
-        new RespuestaDelDador("2", preguntas2)
-    );
-
 
 
     withTransaction(() -> {
@@ -142,7 +100,6 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
 
      // repositorioMascotaRegistrada.agregar(mascotaRegistrada);
      // repositorioMascotaRegistrada.agregar(mascotaRegistrada2);
-      repositorioMascotaRegistrada.agregar(mascotaRegistrada3);
       repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c1);
       repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c2);
       repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(c3);
@@ -158,11 +115,81 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
 
       repositorioUsuarios.agregar(new Usuario("admin", "asd123asd123", TipoUsuario.ADMIN, persona));
 
-      repositorioSuscripcionesParaAdopciones.agregar(new SuscripcionParaAdopcion(usuario, asociacion1,preferencia,comodidadesDelAdoptante));
-      repositorioDarEnAdopcion.agregar(new DarEnAdopcion(usuario, mascotaRegistrada3,comodidadesDelDador,asociacion1));
-
     });
 
+    // Para probar las notificacion de recomendaciones
+
+    List<Caracteristica> listaCaracteristica = new ArrayList<>();
+    listaCaracteristica.add(
+        repositorioCaracteristicas.getCaracteristicaSegun("Comportamiento", "Tranquilo")
+    );
+    listaCaracteristica.add(
+        repositorioCaracteristicas.getCaracteristicaSegun("Caracter", "Pacifico")
+    );
+
+    MascotaRegistrada mascotaRegistrada3 = new MascotaRegistrada(usuario, "Fuckerr", "dsa",
+        LocalDate.now(), "Es re bueno y gordo", Sexo.MACHO, Animal.PERRO, listaCaracteristica,
+        Collections.singletonList(new Foto("/3261071319668366719.jpg", null)),
+        TamanioMascota.CHICO);
+
+    Preferencia preferencia = new Preferencia(listaCaracteristica, Animal.PERRO);
+
+
+    // Preguntas
+    ParDePreguntas preguntas1 = new ParDePreguntas(
+        "La mascota sufre si está mucho tiempo sola?",
+        "Va a estar la mascota mucho tiempo sola?",
+        true
+    );
+    preguntas1.agregarRespuestaPosibleDelAdoptante("Si");
+    preguntas1.agregarRespuestaPosibleDelAdoptante("No");
+
+    preguntas1.agregarRespuestaPosibleDelDador("Si");
+    preguntas1.agregarRespuestaPosibleDelDador("No");
+
+    preguntas1.agregarRespuestasQueMachean(new ParDeRespuestas("Si", "No"));
+    preguntas1.agregarRespuestasQueMachean(new ParDeRespuestas("No", "Si"));
+    preguntas1.agregarRespuestasQueMachean(new ParDeRespuestas("No", "No"));
+
+
+    ParDePreguntas preguntas2 = new ParDePreguntas(
+        "Cuantas veces necesita salir la mascota al dia?",
+        "Cuantas veces sacarás a pasear a tu mascota al dia?",
+        true
+    );
+    preguntas2.agregarRespuestaPosibleDelAdoptante("1");
+    preguntas2.agregarRespuestaPosibleDelAdoptante("2");
+    preguntas2.agregarRespuestaPosibleDelAdoptante("+2");
+
+    preguntas2.agregarRespuestaPosibleDelDador("1");
+    preguntas2.agregarRespuestaPosibleDelDador("2");
+    preguntas2.agregarRespuestaPosibleDelDador("+2");
+
+    preguntas2.agregarRespuestasQueMachean(new ParDeRespuestas("1", "1"));
+    preguntas2.agregarRespuestasQueMachean(new ParDeRespuestas("2", "2"));
+    preguntas2.agregarRespuestasQueMachean(new ParDeRespuestas("+2", "+2"));
+
+
+    List<RespuestaDelAdoptante> respuestasDelAdoptante = Arrays.asList(
+        new RespuestaDelAdoptante("Si", preguntas1),
+        new RespuestaDelAdoptante("2", preguntas2)
+    );
+
+    List<RespuestaDelDador> respuestasDelDador = Arrays.asList(
+        new RespuestaDelDador("Si", preguntas1),
+        new RespuestaDelDador("2", preguntas2)
+    );
+
+    withTransaction(() -> {
+      repositorioMascotaRegistrada.agregar(mascotaRegistrada3);
+
+      repositorioSuscripcionesParaAdopciones.agregar(
+          new SuscripcionParaAdopcion(usuario, asociacion1, preferencia, respuestasDelAdoptante)
+      );
+      repositorioDarEnAdopcion.agregar(
+          new DarEnAdopcion(usuario, mascotaRegistrada3, respuestasDelDador, asociacion1)
+      );
+    });
   }
 
 }
