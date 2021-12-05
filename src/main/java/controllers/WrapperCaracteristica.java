@@ -3,6 +3,7 @@ package controllers;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 
 public class BorradorCaracteristicas {
+
   private Integer id;
   private CaracteristicaConValoresPosibles caracteristicaConValoresPosibles;
 
