@@ -57,11 +57,11 @@ public class SesionController extends Controller {
   }
 
   public Void cerrarSesion(Request request, Response response) {
-    request.session().attribute("user_id", null);
-    request.session().attribute("is_admin", null);
-    request.session().attribute("user_name", null);
-    request.session().attribute("ultimo_intento_sesion_fallido", null);
-    request.session().attribute("contador_intentos_sesion_fallidos", null);
+    request.session().removeAttribute("user_id");
+    request.session().removeAttribute("is_admin");
+    request.session().removeAttribute("user_name");
+    request.session().removeAttribute("ultimo_intento_sesion_fallido");
+    request.session().removeAttribute("contador_intentos_sesion_fallidos");
     response.redirect("/");
     return null;
   }

@@ -59,21 +59,12 @@ public class EncontreMascotaController extends Controller {
       response.redirect("/login");
       return null;
     }
-
     Map<String, Object> modelo = getMap(request);
-
-    EnumSet<Animal> animal = EnumSet.allOf(Animal.class);
-    EnumSet<TamanioMascota> tamanioMascotas = EnumSet.allOf(TamanioMascota.class);
-
-    List<CaracteristicaConValoresPosibles> listaCaracteristicas = repositorioCaracteristicas.getCaracteristicasConValoresPosibles();
-    modelo.put("caracteristicas", listaCaracteristicas);
-
-    modelo.put("tipoAnimales", animal);
-    modelo.put("tamanioMascota", tamanioMascotas);
-
+    modelo.put("caracteristicas", repositorioCaracteristicas.getCaracteristicasConValoresPosibles());
+    modelo.put("tipoAnimales", EnumSet.allOf(Animal.class));
+    modelo.put("tamanioMascota", EnumSet.allOf(TamanioMascota.class));
     return new ModelAndView(modelo, "encuentro-sin-chapita.html.hbs");
   }
-
 
   public Void enviarMascotaEncontradaConChapita(Request request, Response response) {
     if (!tieneSesionActiva(request)) {
@@ -81,21 +72,17 @@ public class EncontreMascotaController extends Controller {
       return null;
     }
     try {
-      List<Foto> fotos = super.obtenerFotosMascota(request, response);
-      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-      LocalDate fechaRescate = LocalDate.parse(request.queryParams("fechaRescate"), formatter);
 
-      String ubicacionRescatistaString = request.queryParams("ubicacionRescatista");
-      String latitudRescatistaString = request.queryParams("latitudRescatista");
-      String longitudRescatistaString = request.queryParams("longitudRescatista");
-      String latitudRescateString = request.queryParams("latitudRescate");
-      String longitudRescateString = request.queryParams("longitudRescate");
-      String ubicacionRescateString = request.queryParams("ubicacionRescate");
-      Ubicacion ubicacionRescatista = new Ubicacion(Double.parseDouble(latitudRescatistaString),
-          Double.parseDouble(longitudRescatistaString),
-          ubicacionRescatistaString);
-      Ubicacion ubicacionRescate = new Ubicacion(Double.parseDouble(latitudRescateString),
-          Double.parseDouble(longitudRescateString), ubicacionRescateString);
+      Ubicacion ubicacionRescatista = new Ubicacion(
+          Double.parseDouble(request.queryParams("latitudRescatista")),
+          Double.parseDouble(request.queryParams("longitudRescatista")),
+          request.queryParams("ubicacionRescatista")
+      );
+      Ubicacion ubicacionRescate = new Ubicacion(
+          Double.parseDouble(request.queryParams("latitudRescate")),
+          Double.parseDouble(request.queryParams("longitudRescate")),
+          request.queryParams("ubicacionRescate")
+      );
       String estadoMascota = request.queryParams("estadoMascota");
 
       Long Id = request.session().attribute("user_id");
@@ -111,8 +98,14 @@ public class EncontreMascotaController extends Controller {
         return null;
       }
       TamanioMascota tamanioMascota = mascotaRegistrada.getTamanio();
-      MascotaEncontrada mascotaEncontrada = new MascotaEncontrada(fotos, ubicacionRescate
-          , estadoMascota, fechaRescate,
+
+      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+      MascotaEncontrada mascotaEncontrada = new MascotaEncontrada(
+          super.obtenerFotosMascota(request, response),
+          ubicacionRescate,
+          estadoMascota,
+          LocalDate.parse(request.queryParams("fechaRescate"), formatter),
           tamanioMascota);
       ReceptorHogares receptorHogares = new ReceptorHogares();
       InformeConQR informeConQR = new InformeConQR(rescatista, ubicacionRescatista,

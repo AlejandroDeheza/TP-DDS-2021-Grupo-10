@@ -33,23 +33,18 @@ public class MascotasController extends Controller {
 
   public Void registrarMascota(Request request, Response response) {
 
-    List<Foto> fotosMascota = super.obtenerFotosMascota(request, response);
-
-    List<Caracteristica> caracteristicas = super.obtenerListaCaracteristicas(request);
-
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
-    LocalDate fechaNacimiento = LocalDate.parse(request.queryParams("fechaNacimiento"), formatter);
 
     MascotaRegistrada nueva = new MascotaRegistrada(
         repositorioUsuarios.buscarPorId(request.session().attribute("user_id")),
         request.queryParams("nombre"),
         request.queryParams("apodo"),
-        fechaNacimiento,
+        LocalDate.parse(request.queryParams("fechaNacimiento"), formatter),
         request.queryParams("descripcionFisica"),
         Sexo.values()[Integer.parseInt(request.queryParams("sexo"))],
         Animal.values()[Integer.parseInt(request.queryParams("tipoAnimal"))],
-        caracteristicas,
-        fotosMascota,
+        super.obtenerListaCaracteristicas(request),
+        super.obtenerFotosMascota(request, response),
         TamanioMascota.values()[Integer.parseInt(request.queryParams("tamanio"))]
     );
 

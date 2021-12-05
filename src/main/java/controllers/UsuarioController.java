@@ -45,6 +45,7 @@ public class UsuarioController extends Controller {
     if (repositorioUsuarios.yaExiste(request.queryParams("usuario"))) {
       redireccionCasoError(request, response, "/creacion-usuario", "Ya existe una cuenta con el nombre de usuario ingresado");
     } else {
+
       DocumentoIdentidad documentoIdentidad = new DocumentoIdentidad(
           TipoDocumento.values()[Integer.parseInt(request.queryParams("tipoDocumento"))],
           request.queryParams("numeroDocumento")

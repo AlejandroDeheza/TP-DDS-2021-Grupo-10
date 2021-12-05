@@ -59,23 +59,23 @@ public abstract class Controller implements WithGlobalEntityManager, Transaction
   }
 
   protected List<Caracteristica> obtenerListaCaracteristicas(Request request) {
-    Set<String> queryParams = request.queryParams();
-
-    List<Caracteristica> caracteristicas = new ArrayList<>();
 
     RepositorioCaracteristicas repositorioCaracteristicas = new RepositorioCaracteristicas();
+
     // Obtengo los nombre de caracteristicas para comparar con los query params :)
     List<String> listaNombresCaracteristicas = repositorioCaracteristicas.getCaracteristicasConValoresPosibles()
         .stream()
         .map(CaracteristicaConValoresPosibles::getNombreCaracteristica)
         .collect(Collectors.toList());
 
-    List<String> nombreParamsQueMandaron = queryParams
+    List<String> nombreParamsQueMandaron = request.queryParams()
         .stream()
         .filter(param -> listaNombresCaracteristicas
             .stream()
             .anyMatch(c -> c.equals(param)))
         .collect(Collectors.toList());
+
+    List<Caracteristica> caracteristicas = new ArrayList<>();
 
     nombreParamsQueMandaron.forEach(
         param -> {
@@ -84,15 +84,16 @@ public abstract class Controller implements WithGlobalEntityManager, Transaction
           caracteristicas.add(caracteristica);
         }
     );
+
     return caracteristicas;
   }
 
   protected List<Foto> obtenerFotosMascota(Request request, Response response) {
     List<Foto> fotosMascota = new ArrayList<>();
+
     try {
       String pathUpload = new Constantes().getUploadDirectory();
-      File uploadDir = new File(pathUpload);
-      Path tempFile = Files.createTempFile(uploadDir.toPath(), null, ".jpg");
+      Path tempFile = Files.createTempFile(new File(pathUpload).toPath(), null, ".jpg");
 
       request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
       InputStream fotoInputStream = request.raw().getPart("fotoMascota").getInputStream();
@@ -101,6 +102,7 @@ public abstract class Controller implements WithGlobalEntityManager, Transaction
       String pathWithForwardSlash = tempFile.toString().replace("\\", "/");
       String nombreDeLaFoto = pathWithForwardSlash.replace(pathUpload, "");
       fotosMascota.add(new Foto(nombreDeLaFoto, LocalDate.now().toString()));
+
     } catch (IOException | ServletException exception) {
       redireccionCasoError(request, response, "/",
           "Hubo un error al cargar la foto de tu mascota, intentalo mas tarde o intenta con otra foto");
@@ -109,7 +111,8 @@ public abstract class Controller implements WithGlobalEntityManager, Transaction
   }
 
   protected List<Integer> obtenerRango(int limite) {
-    return IntStream.rangeClosed(1, limite).boxed().collect(Collectors.toList());
+    return IntStream.rangeClosed(1, limite).boxed()
+        .collect(Collectors.toList());
   }
 
   protected int porOrdenAlfabetico(String s1, String s2) {
@@ -118,7 +121,8 @@ public abstract class Controller implements WithGlobalEntityManager, Transaction
 
   protected List<Asociacion> getAsociacionesOrdenadas() {
     return new RepositorioAsociaciones().listarTodos().stream()
-        .sorted((a1, a2) -> porOrdenAlfabetico(a1.getNombre(), a2.getNombre())).collect(Collectors.toList());
+        .sorted((a1, a2) -> porOrdenAlfabetico(a1.getNombre(), a2.getNombre()))
+        .collect(Collectors.toList());
   }
 }
   

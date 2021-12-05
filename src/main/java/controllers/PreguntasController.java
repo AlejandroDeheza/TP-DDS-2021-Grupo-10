@@ -47,9 +47,8 @@ public class PreguntasController extends Controller {
   }
 
   public ModelAndView nuevaPregunta(Request request, Response response) {
-    String idAsociacion = request.params(":idAsociacion");
     Map<String, Object> modelo = getMap(request);
-    modelo.put("asociacion", idAsociacion);
+    modelo.put("asociacion", request.params(":idAsociacion"));
     modelo.put("rangoDeRespuestas", super.obtenerRango(totalRespuestasPosibles));
     return new ModelAndView(modelo, "nueva-pregunta.html.hbs");
   }
@@ -98,7 +97,6 @@ public class PreguntasController extends Controller {
 
   public Void crearParDePreguntasAsociacion(Request request, Response response) {
 
-    BorradorParDePreguntas borradorParDePreguntas = request.session().attribute("borrador_par_preguntas");
     List<ParDeRespuestas> paresDeRespuestas = new ArrayList<>();
 
     super.obtenerRango(totalRespuestasPosibles).forEach(i -> {
@@ -109,6 +107,8 @@ public class PreguntasController extends Controller {
           )
       );
     });
+
+    BorradorParDePreguntas borradorParDePreguntas = request.session().attribute("borrador_par_preguntas");
 
     List<ParDeRespuestas> paresDeRespuestasFiltradas =
         paresDeRespuestas.stream().filter(
