@@ -71,17 +71,6 @@ public class EncontreMascotaController extends Controller {
     }
     try {
 
-      Ubicacion ubicacionRescatista = new Ubicacion(
-          Double.parseDouble(request.queryParams("latitudRescatista")),
-          Double.parseDouble(request.queryParams("longitudRescatista")),
-          request.queryParams("ubicacionRescatista")
-      );
-      Ubicacion ubicacionRescate = new Ubicacion(
-          Double.parseDouble(request.queryParams("latitudRescate")),
-          Double.parseDouble(request.queryParams("longitudRescate")),
-          request.queryParams("ubicacionRescate")
-      );
-
       Long idChapita = Long.parseLong(request.params(":codigoChapita"));
       MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.buscarPorId(idChapita);
       if (mascotaRegistrada == null) {
@@ -89,19 +78,12 @@ public class EncontreMascotaController extends Controller {
         return null;
       }
 
-      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-      MascotaEncontrada mascotaEncontrada = new MascotaEncontrada(
-          super.obtenerFotosMascota(request, response),
-          ubicacionRescate,
-          request.queryParams("estadoMascota"),
-          LocalDate.parse(request.queryParams("fechaRescate"), formatter),
-          mascotaRegistrada.getTamanio()
-      );
-
       InformeConQR informeConQR = new InformeConQR(
           repositorioUsuarios.buscarPorId(request.session().attribute("user_id")).getPersona(),
-          ubicacionRescatista, mascotaEncontrada, new ReceptorHogares(), mascotaRegistrada
+          obtenerUbicacionRescatista(request),
+          obtenerMascotaEncontrada(request, response, mascotaRegistrada.getTamanio()),
+          new ReceptorHogares(),
+          mascotaRegistrada
       );
 
       withTransaction(() -> {
@@ -114,41 +96,20 @@ public class EncontreMascotaController extends Controller {
     redireccionCasoFeliz(request, response, "/", "Se genero el informe!");
     return null;
   }
-
-
+  
   public Void enviarMascotaEncontradaSinChapita(Request request, Response response) {
     if (!tieneSesionActiva(request)) {
       response.redirect("/mascotas/encontre-mascota");
       return null;
     }
-
     try {
 
-      Ubicacion ubicacionRescatista = new Ubicacion(
-          Double.parseDouble(request.queryParams("latitudRescatista")),
-          Double.parseDouble(request.queryParams("longitudRescatista")),
-          request.queryParams("ubicacionRescatista")
-      );
-      Ubicacion ubicacionRescate = new Ubicacion(
-          Double.parseDouble(request.queryParams("latitudRescate")),
-          Double.parseDouble(request.queryParams("longitudRescate")),
-          request.queryParams("ubicacionRescate")
-      );
-
-      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-      MascotaEncontrada mascotaEncontrada = new MascotaEncontrada(
-          super.obtenerFotosMascota(request, response),
-          ubicacionRescate,
-          request.queryParams("estadoMascota"),
-          LocalDate.parse(request.queryParams("fechaRescate"), formatter),
-          TamanioMascota.values()[Integer.parseInt(request.queryParams("tamanioMascota"))]
-      );
+      TamanioMascota tamanioMascota = TamanioMascota.values()[Integer.parseInt(request.queryParams("tamanioMascota"))];
 
       InformeSinQR informeSinQR = new InformeSinQR(
           repositorioUsuarios.buscarPorId(request.session().attribute("user_id")).getPersona(),
-          ubicacionRescatista,
-          mascotaEncontrada,
+          obtenerUbicacionRescatista(request),
+          obtenerMascotaEncontrada(request, response, tamanioMascota),
           new ReceptorHogares(),
           Animal.values()[Integer.parseInt(request.queryParams("tipoAnimal"))],
           super.obtenerListaCaracteristicas(request)
@@ -171,6 +132,32 @@ public class EncontreMascotaController extends Controller {
       return null;
     }
     return new ModelAndView(getMap(request), "escaneeQR.html.hbs");
+  }
+
+  private MascotaEncontrada obtenerMascotaEncontrada(Request request, Response response, TamanioMascota tamanio) {
+
+    Ubicacion ubicacionRescate = new Ubicacion(
+        Double.parseDouble(request.queryParams("latitudRescate")),
+        Double.parseDouble(request.queryParams("longitudRescate")),
+        request.queryParams("ubicacionRescate")
+    );
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+    return new MascotaEncontrada(
+        super.obtenerFotosMascota(request, response),
+        ubicacionRescate,
+        request.queryParams("estadoMascota"),
+        LocalDate.parse(request.queryParams("fechaRescate"), formatter),
+        tamanio
+    );
+  }
+
+  private Ubicacion obtenerUbicacionRescatista(Request request) {
+    return new Ubicacion(
+        Double.parseDouble(request.queryParams("latitudRescatista")),
+        Double.parseDouble(request.queryParams("longitudRescatista")),
+        request.queryParams("ubicacionRescatista")
+    );
   }
 
 }
