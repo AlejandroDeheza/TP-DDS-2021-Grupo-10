@@ -46,42 +46,40 @@ public class Routes {
     post("/login", sesionController::crearSesion);
     get("/logout", sesionController::cerrarSesion);
 
-    get("/creacion-usuario", usuarioController::mostrarFormularioCreacionUsuario, engine);
+    get("/usuarios/creacion-usuario", usuarioController::mostrarFormularioCreacionUsuario, engine);
     post("/usuarios", usuarioController::registrarUsuario);
 
     // Caracteristicas
     get("/caracteristicas", caracteristicasController::mostrarCaracteristicas, engine);
+    get("/caracteristicas/nueva-caracteristica", caracteristicasController::mostrarFormularioCreacionCaracteristicas, engine);
     post("/caracteristicas", caracteristicasController::crearNuevaCaracteristicas);
-    get("/nueva-caracteristica", caracteristicasController::mostrarFormularioCreacionCaracteristicas, engine);
 
     // Preguntas de Asociaciones
     get("/asociaciones", asociacionesController::mostrarAsociaciones, engine);
     get("/asociaciones/:idAsociacion/preguntas", preguntasController::mostrarPreguntasDeLaAsociacion, engine);
     get("/asociaciones/:idAsociacion/preguntas/nueva-pregunta",
         preguntasController::mostrarFomularioNuevaPregunta, engine);
-    get("/asociaciones/:idAsociacion/preguntas/nueva-pregunta-2",
+    get("/asociaciones/:idAsociacion/preguntas/nueva-pregunta-paso-2",
         preguntasController::mostrarFormularioNuevaPreguntaContinuacion, engine);
     post("/asociaciones/:idAsociacion/preguntas", preguntasController::crearParDePreguntasAsociacion);
 
     // Mascotas
-    get("/mascotas", mascotasController::mostrarMenuDeMascotas, engine);
-    get("/mascotas-en-adopcion", publicacionesController::mostrarMascotasEnAdopcion, engine);
+    get("/mascotas", mascotasController::mostrarMascotasDelUsuario, engine);
     get("/mascotas/registracion-mascota", mascotasController::mostrarFormularioRegistracionMascotas, engine);
-    post("/registracion-mascota", mascotasController::registrarMascota);
-    // FIXME: remove after finish Entrega 6
-    get("/mascotas/mis-mascotas", mascotasController::mostrarMascotasDelUsuario, engine);
+    post("/mascotas", mascotasController::registrarMascota);
 
-    // Encontre Mascota
-    get("/mascotas/encontre-mascota", encontreMascotaController::mostrarMenuTipoEncuentro, engine);
-    get("/mascotas/encontre-mascota/con-chapita",
+    get("/menu-mascotas", mascotasController::mostrarMenuDeMascotas, engine); // FIXME <-- no se usa
+    get("/mascotas-en-adopcion", publicacionesController::mostrarMascotasEnAdopcion, engine); // FIXME <-- no se usa
+
+    // Informes
+    get("/informes/menu", encontreMascotaController::mostrarMenuTipoEncuentro, engine);
+    get("/informes/con-qr/instrucciones-escaneo",
         encontreMascotaController::mostrarInstruccionesParaEscanearQR, engine);
-    get("/mascotas/encontre-mascota/con-chapita/:codigoChapita",
-        encontreMascotaController::mostrarFormularioConChapita, engine);
-    post("/mascotas/encontre-mascota/con-chapita/:codigoChapita",
-        encontreMascotaController::generarInformeConQR);
-    get("/mascotas/encontre-mascota/sin-chapita",
-        encontreMascotaController::mostrarFormularioSinChapita, engine);
-    post("/mascotas/encontre-mascota/sin-chapita", encontreMascotaController::generarInformeSinQR);
+    
+    get("/informes/con-qr/nuevo/:codigoChapita", encontreMascotaController::mostrarFormularioConChapita, engine);
+    post("/informes/con-qr/:codigoChapita", encontreMascotaController::generarInformeConQR);
+    get("/informes/sin-qr/nuevo", encontreMascotaController::mostrarFormularioSinChapita, engine);
+    post("/informes/sin-qr", encontreMascotaController::generarInformeSinQR);
 
     Spark.after((request, response) -> {
       PerThreadEntityManagers.getEntityManager();
