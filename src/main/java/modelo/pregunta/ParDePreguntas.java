@@ -11,6 +11,8 @@ import java.util.List;
 @Table(name = "par_de_preguntas" )
 public class ParDePreguntas extends EntidadPersistente {
 
+  private String concepto;
+
   private String preguntaDelDador;
 
   private String preguntaDelAdoptante;
@@ -31,9 +33,10 @@ public class ParDePreguntas extends EntidadPersistente {
 
   }
 
-  public ParDePreguntas(String preguntaDelDador, String preguntaDelAdoptante, Boolean esObligatoria,
+  public ParDePreguntas(String concepto, String preguntaDelDador, String preguntaDelAdoptante, Boolean esObligatoria,
                         List<String> respuestasPosiblesDelDador, List<String> respuestasPosiblesDelAdoptante,
                         List<ParDeRespuestas> paresDeRespuestas) {
+    this.concepto = concepto;
     this.preguntaDelDador = preguntaDelDador;
     this.preguntaDelAdoptante = preguntaDelAdoptante;
     this.esObligatoria = esObligatoria;
@@ -45,6 +48,10 @@ public class ParDePreguntas extends EntidadPersistente {
   public Boolean esIgualA(ParDePreguntas parDePreguntas) {
     return parDePreguntas.getPreguntaDelAdoptante().equals(preguntaDelAdoptante)
         && parDePreguntas.getPreguntaDelDador().equals(preguntaDelDador);
+  }
+
+  public String getConcepto() {
+    return concepto;
   }
 
   public String getPreguntaDelDador() {

@@ -83,6 +83,7 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
     Asociacion asociacion3 = new Asociacion("Una mascota feliz", ubicacion3);
 
     ParDePreguntas parDePreguntas1 = new ParDePreguntas(
+        "Balcones",
         "¿Tenes balcon?",
         "¿Necesito Balcon?",
         false,
@@ -91,6 +92,7 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
         null
     );
     ParDePreguntas parDePreguntas2 = new ParDePreguntas(
+        "Veterinarios",
         "¿Tenes un veterinario de confianza?",
         "¿Necesito contar con un veterinario de confianza?",
         false,
@@ -158,6 +160,7 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
     paresDeRespuestas1.add(new ParDeRespuestas("No", "No"));
 
     ParDePreguntas preguntas1 = new ParDePreguntas(
+        "Mascotas solitarias",
         "La mascota sufre si está mucho tiempo sola?",
         "Va a estar la mascota mucho tiempo sola?",
         true,
@@ -184,6 +187,7 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
     paresDeRespuestas2.add(new ParDeRespuestas("+2", "+2"));
 
     ParDePreguntas preguntas2 = new ParDePreguntas(
+        "Salidas de la mascota",
         "Cuantas veces necesita salir la mascota al dia?",
         "Cuantas veces sacarás a pasear a tu mascota al dia?",
         true,

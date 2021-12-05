@@ -106,6 +106,7 @@ public class DummyData {
     paresDeRespuestas.add(new ParDeRespuestas("No", "No"));
 
     return new ParDePreguntas(
+        "Mascotas solitarias",
         "La mascota sufre si está mucho tiempo sola?",
         "Va a estar la mascota mucho tiempo sola?",
         true,
@@ -123,6 +124,7 @@ public class DummyData {
     paresDeRespuestas.add(new ParDeRespuestas("+2", "+2"));
 
     return new ParDePreguntas(
+        "Salidas de la mascota",
         "Cuantas veces necesita salir la mascota al dia?",
         "Cuantas veces sacarás a pasear a tu mascota al dia?",
         true,

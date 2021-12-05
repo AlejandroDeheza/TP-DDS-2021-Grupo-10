@@ -49,6 +49,7 @@ public class Punto2 extends NuestraAbstractPersistenceTest {
     paresDeRespuestas.add(new ParDeRespuestas("No", "No"));
 
     return new ParDePreguntas(
+        "Mascotas solitarias",
         "La mascota sufre si está mucho tiempo sola?",
         "Va a estar la mascota mucho tiempo sola?",
         true,

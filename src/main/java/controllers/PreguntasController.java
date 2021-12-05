@@ -69,6 +69,7 @@ public class PreguntasController extends Controller {
 
     BorradorParDePreguntas borradorParDePreguntas = new BorradorParDePreguntas(
         Long.parseLong(request.params(":idAsociacion")),
+        request.queryParams("concepto"),
         request.queryParams("preguntaDador"),
         request.queryParams("preguntaAdoptante"),
         request.session().attribute("es_obligatoria"),
@@ -112,6 +113,7 @@ public class PreguntasController extends Controller {
         ).collect(Collectors.toList());
 
     ParDePreguntas parDePreguntas = new ParDePreguntas(
+        borradorParDePreguntas.getConcepto(),
         borradorParDePreguntas.getPreguntaDelDador(),
         borradorParDePreguntas.getPreguntaDelAdoptante(),
         borradorParDePreguntas.getEsPreguntaObligatoria(),
