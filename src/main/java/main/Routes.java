@@ -81,6 +81,23 @@ public class Routes {
     get("/informes/sin-qr/nuevo", informesController::mostrarFormularioSinChapita, engine);
     post("/informes/sin-qr", informesController::generarInformeSinQR);
 
+    /*
+    path("/informes", () -> {
+      get("/menu", informesController::mostrarMenuTipoEncuentro, engine);
+
+      path("/con-qr", () -> {
+        get("/instrucciones-escaneo", informesController::mostrarInstruccionesParaEscanearQR, engine);
+        get("/nuevo/:codigoChapita",  informesController::mostrarFormularioConChapita, engine);
+        post("/:codigoChapita",       informesController::generarInformeConQR);
+      });
+      path("/sin-qr", () -> {
+        get("/nuevo",   informesController::mostrarFormularioSinChapita, engine);
+        post("",        informesController::generarInformeSinQR);
+      });
+    });
+
+     */
+
     Spark.after((request, response) -> {
       PerThreadEntityManagers.getEntityManager();
       PerThreadEntityManagers.closeEntityManager();
