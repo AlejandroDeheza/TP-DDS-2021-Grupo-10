@@ -2,12 +2,12 @@ package controllers;
 
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 
-public class BorradorCaracteristicas {
+public class WrapperCaracteristica {
 
-  private Integer id;
-  private CaracteristicaConValoresPosibles caracteristicaConValoresPosibles;
+  private final Integer id;
+  private final CaracteristicaConValoresPosibles caracteristicaConValoresPosibles;
 
-  public BorradorCaracteristicas (Integer id, CaracteristicaConValoresPosibles caracteristicaConValoresPosibles) {
+  public WrapperCaracteristica(Integer id, CaracteristicaConValoresPosibles caracteristicaConValoresPosibles) {
     this.id = id;
     this.caracteristicaConValoresPosibles = caracteristicaConValoresPosibles;
   }

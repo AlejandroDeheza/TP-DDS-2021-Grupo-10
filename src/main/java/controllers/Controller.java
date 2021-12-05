@@ -20,6 +20,7 @@ import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public abstract class Controller implements WithGlobalEntityManager, TransactionalOps {
 
@@ -103,6 +104,10 @@ public abstract class Controller implements WithGlobalEntityManager, Transaction
           "Hubo un error al cargar la foto de tu mascota, intentalo mas tarde o intenta con otra foto");
     }
     return fotosMascota;
+  }
+
+  protected List<Integer> obtenerRango(int limite) {
+    return IntStream.rangeClosed(1, limite).boxed().collect(Collectors.toList());
   }
 }
   

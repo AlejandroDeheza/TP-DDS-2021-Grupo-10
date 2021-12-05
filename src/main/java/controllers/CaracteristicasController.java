@@ -17,24 +17,24 @@ public class CaracteristicasController extends Controller {
 
   public ModelAndView mostrarCaracteristicas(Request request, Response response) {
 
-    List<CaracteristicaConValoresPosibles> listaCaracteristicas = repositorioCaracteristicas.getCaracteristicasConValoresPosibles();
-    List<BorradorCaracteristicas> borradorCaracteristicas = new ArrayList<>();
+    List<CaracteristicaConValoresPosibles> listaCaracteristicas = repositorioCaracteristicas
+        .getCaracteristicasConValoresPosibles();
+    List<WrapperCaracteristica> wrappersDeCaracteristicas = new ArrayList<>();
 
     Integer index = 1;
 
     for(CaracteristicaConValoresPosibles caracteristica : listaCaracteristicas){
-      borradorCaracteristicas.add(new BorradorCaracteristicas(index++,caracteristica));
-    };
+      wrappersDeCaracteristicas.add(new WrapperCaracteristica(index ++, caracteristica));
+    }
 
     Map<String, Object> modelo = getMap(request);
-    modelo.put("caracteristicas", borradorCaracteristicas);
-
+    modelo.put("caracteristicas", wrappersDeCaracteristicas);
     return new ModelAndView(modelo, "caracteristicas.html.hbs");
   }
 
   public ModelAndView cantidadCaracteristicas(Request request, Response response) {
     int totalCaracteristicas = 5;
-    List<Integer> cantidadCaracteristicas = IntStream.rangeClosed(1, totalCaracteristicas).boxed().collect(Collectors.toList());
+    List<Integer> cantidadCaracteristicas = super.obtenerRango(totalCaracteristicas);
 
     Map<String, Object> modelo = getMap(request);
     modelo.put("cantidadCaracteristicas", cantidadCaracteristicas);
@@ -43,8 +43,6 @@ public class CaracteristicasController extends Controller {
 
 
   public Void crearNuevaCaracteristicas(Request request, Response response) {
-
-    System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>CARACTERISTICAS<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" );
 
     String nombreCaracteristica = request.queryParams("nombreCaracteristica");
     String caracteristica1 = request.queryParams("ValoresCaracteristica1");
@@ -60,37 +58,21 @@ public class CaracteristicasController extends Controller {
     listaCaracteristicas.add(caracteristica4);
     listaCaracteristicas.add(caracteristica5);
 
-    List<String> listaCaracteristicasCompletas = new ArrayList<>();
+    List<String> caracteristicasFiltradas = listaCaracteristicas.stream()
+        .filter(c -> !c.isEmpty()).collect(Collectors.toList());
 
-    Integer valoresCompletos = 0;
-
-    for(String caracteristica:listaCaracteristicas){
-      if(!caracteristica.isEmpty()){
-        valoresCompletos++;
-      }
-    }
-
-    if(valoresCompletos < 2){
+    if(caracteristicasFiltradas.size() < 2){
       super.redireccionCasoError(request, response, null, "Debe ingresar mas de una caracteristica posible");
     }
 
-    if(valoresCompletos >= 2) {
-      withTransaction(() -> {
+    CaracteristicaConValoresPosibles caracteristicaConValores = new CaracteristicaConValoresPosibles(
+        nombreCaracteristica,
+        caracteristicasFiltradas
+    );
 
-        listaCaracteristicas.stream().forEach(caracteristica -> {
-          if (!caracteristica.isEmpty()) {
-            listaCaracteristicasCompletas.add(caracteristica);
-          }
-        });
-
-        CaracteristicaConValoresPosibles caracteristicaConValores = new CaracteristicaConValoresPosibles(
-            nombreCaracteristica,
-            listaCaracteristicasCompletas
-        );
-
-        repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(caracteristicaConValores);
-      });
-    }
+    withTransaction(() -> {
+      repositorioCaracteristicas.agregarCaracteristicasConValoresPosibles(caracteristicaConValores);
+    });
 
     response.redirect("/caracteristicas");
     return null;

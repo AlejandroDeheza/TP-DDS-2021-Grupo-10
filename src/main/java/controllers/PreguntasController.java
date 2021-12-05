@@ -19,7 +19,7 @@ public class PreguntasController extends Controller {
 
   private RepositorioAsociaciones repositorioAsociaciones = new RepositorioAsociaciones();
   private RepositorioParDePreguntas repositorioParDePreguntas = new RepositorioParDePreguntas();
-  private final String totalRespuestasPosibles = "5";
+  private final int totalRespuestasPosibles = 5;
 
   public ModelAndView mostrarPreguntasDeLaAsociacion(Request request, Response response) {
     String idAsociacion = request.params(":idAsociacion");
@@ -45,7 +45,7 @@ public class PreguntasController extends Controller {
 
   public ModelAndView nuevaPregunta(Request request, Response response) {
     String idAsociacion = request.params(":idAsociacion");
-    List<Integer> rangoDeRespuestas = this.obtenerRango();
+    List<Integer> rangoDeRespuestas = super.obtenerRango(totalRespuestasPosibles);
     Map<String, Object> modelo = getMap(request);
     modelo.put("asociacion", idAsociacion);
     modelo.put("rangoDeRespuestas", rangoDeRespuestas);
@@ -57,7 +57,7 @@ public class PreguntasController extends Controller {
     
     List<String> listaRespuestasDador = new ArrayList<>();
     List<String> listaRespuestasAdoptante = new ArrayList<>();
-    this.obtenerRango().stream().forEach(i -> {
+    super.obtenerRango(totalRespuestasPosibles).stream().forEach(i -> {
       listaRespuestasDador.add(request.queryParams("respuestaPosibleDador".concat(String.valueOf(i))));
       listaRespuestasAdoptante.add(request.queryParams("respuestaPosibleAdoptante".concat(String.valueOf(i))));
     });
@@ -76,7 +76,7 @@ public class PreguntasController extends Controller {
       request.session().attribute("es_obligatoria")
     );
 
-    this.obtenerRango().stream().forEach(i -> {
+    super.obtenerRango(totalRespuestasPosibles).stream().forEach(i -> {
       borradorParDePreguntas.agregarRespuestaPosibleDador(
           request.queryParams("respuestaPosibleDador".concat(String.valueOf(i)))
       );
@@ -89,7 +89,7 @@ public class PreguntasController extends Controller {
     if(!borradorParDePreguntas.getEsObligatoria()) {
       modelo.put("asociacion", repositorioAsociaciones.buscarPorId(borradorParDePreguntas.getAsociacionId()));
     }
-    modelo.put("cantidadRespuestasPosibles", this.obtenerRango());
+    modelo.put("cantidadRespuestasPosibles", super.obtenerRango(totalRespuestasPosibles));
     modelo.put("respuestasPosiblesDador", borradorParDePreguntas.getRespuestasPosiblesDelDador());
     modelo.put("respuestasPosiblesAdoptante", borradorParDePreguntas.getRespuestasPosiblesDelAdoptante());
     modelo.put("redirectId", borradorParDePreguntas.getAsociacionId());
@@ -100,7 +100,7 @@ public class PreguntasController extends Controller {
 
   public Void crearParDePreguntasAsociacion(Request request, Response response) {
     BorradorParDePreguntas borradorParDePreguntas = request.session().attribute("borrador_par_preguntas");
-    this.obtenerRango().stream().forEach(i -> {
+    super.obtenerRango(totalRespuestasPosibles).stream().forEach(i -> {
       borradorParDePreguntas.agregarParDeRespuestas(
         new ParDeRespuestas(
           request.queryParams("respuestaPosibleDador".concat(String.valueOf(i))),
@@ -122,10 +122,6 @@ public class PreguntasController extends Controller {
     request.session().removeAttribute("borrador_par_preguntas");
     request.session().removeAttribute("es_obligatoria");
     return null;
-  }
-
-  private List<Integer> obtenerRango() {
-    return IntStream.rangeClosed(1, Integer.parseInt(totalRespuestasPosibles)).boxed().collect(Collectors.toList());
   }
 
 }
