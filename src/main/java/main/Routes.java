@@ -34,7 +34,7 @@ public class Routes {
     PublicacionesController publicacionesController = new PublicacionesController();
     MascotasController mascotasController = new MascotasController();
     ErrorController errorController = new ErrorController();
-    EncontreMascotaController encontreMascotaController = new EncontreMascotaController();
+    InformesController informesController = new InformesController();
     PreguntasController preguntasController = new PreguntasController();
     CaracteristicasController caracteristicasController = new CaracteristicasController();
     AsociacionesController asociacionesController = new AsociacionesController();
@@ -42,10 +42,12 @@ public class Routes {
     get("/", homeController::getHome, engine);
     get("/error", errorController::mostrarPantallaError, engine);
 
+    // Sesion
     get("/login", sesionController::mostrarLogin, engine);
     post("/login", sesionController::crearSesion);
     get("/logout", sesionController::cerrarSesion);
 
+    // Usuarios
     get("/usuarios/creacion-usuario", usuarioController::mostrarFormularioCreacionUsuario, engine);
     post("/usuarios", usuarioController::registrarUsuario);
 
@@ -72,14 +74,12 @@ public class Routes {
     get("/mascotas-en-adopcion", publicacionesController::mostrarMascotasEnAdopcion, engine); // FIXME <-- no se usa
 
     // Informes
-    get("/informes/menu", encontreMascotaController::mostrarMenuTipoEncuentro, engine);
-    get("/informes/con-qr/instrucciones-escaneo",
-        encontreMascotaController::mostrarInstruccionesParaEscanearQR, engine);
-    
-    get("/informes/con-qr/nuevo/:codigoChapita", encontreMascotaController::mostrarFormularioConChapita, engine);
-    post("/informes/con-qr/:codigoChapita", encontreMascotaController::generarInformeConQR);
-    get("/informes/sin-qr/nuevo", encontreMascotaController::mostrarFormularioSinChapita, engine);
-    post("/informes/sin-qr", encontreMascotaController::generarInformeSinQR);
+    get("/informes/menu", informesController::mostrarMenuTipoEncuentro, engine);
+    get("/informes/con-qr/instrucciones-escaneo", informesController::mostrarInstruccionesParaEscanearQR, engine);
+    get("/informes/con-qr/nuevo/:codigoChapita", informesController::mostrarFormularioConChapita, engine);
+    post("/informes/con-qr/:codigoChapita", informesController::generarInformeConQR);
+    get("/informes/sin-qr/nuevo", informesController::mostrarFormularioSinChapita, engine);
+    post("/informes/sin-qr", informesController::generarInformeSinQR);
 
     Spark.after((request, response) -> {
       PerThreadEntityManagers.getEntityManager();

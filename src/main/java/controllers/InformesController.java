@@ -20,7 +20,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.EnumSet;
 import java.util.Map;
 
-public class EncontreMascotaController extends Controller {
+public class InformesController extends Controller {
 
   RepositorioMascotaRegistrada repositorioMascotaRegistrada = new RepositorioMascotaRegistrada();
   RepositorioCaracteristicas repositorioCaracteristicas = new RepositorioCaracteristicas();
