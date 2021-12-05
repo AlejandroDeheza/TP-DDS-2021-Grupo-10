@@ -65,25 +65,25 @@ public class Routes {
 
     Spark.get("/mascotas", mascotasController::getRedirectMascotas,
         engine);
-    Spark.get("/mascotas/encontre-mascota", encontreMascotaController::getTiposEncuentros,
+    Spark.get("/mascotas/encontre-mascota", encontreMascotaController::mostrarMenuTipoEncuentro,
         engine);
 
     // FIXME: remove after finish Entrega 6
     Spark.get("/mascotas/mis-mascotas", mascotasController::getMascotasDeUsuario, engine);
 
     Spark.get("/mascotas/encontre-mascota/con-chapita",
-        encontreMascotaController::getInformacionEscaneo, engine);
+        encontreMascotaController::mostrarInstruccionesParaEscanearQR, engine);
 
     Spark.get("/mascotas/encontre-mascota/con-chapita/:codigoChapita",
-        encontreMascotaController::getFormularioConChapita, engine);
+        encontreMascotaController::mostrarFormularioConChapita, engine);
 
     Spark.post("/mascotas/encontre-mascota/con-chapita/:codigoChapita",
-        encontreMascotaController::enviarMascotaEncontradaConChapita);
+        encontreMascotaController::generarInformeConQR);
 
     Spark.get("/mascotas/encontre-mascota/sin-chapita",
-        encontreMascotaController::getFormularioSinChapita, engine);
+        encontreMascotaController::mostrarFormularioSinChapita, engine);
     Spark.post("/mascotas/encontre-mascota/sin-chapita",
-        encontreMascotaController::enviarMascotaEncontradaSinChapita);
+        encontreMascotaController::generarInformeSinQR);
 
 
     Spark.get("/error", errorController::mostrarPantallaError, engine);

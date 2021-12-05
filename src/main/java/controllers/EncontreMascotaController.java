@@ -27,7 +27,7 @@ public class EncontreMascotaController extends Controller {
   RepositorioUsuarios repositorioUsuarios = new RepositorioUsuarios();
   RepositorioInformes repositorioInformes = new RepositorioInformes();
 
-  public ModelAndView getTiposEncuentros(Request request, Response response) {
+  public ModelAndView mostrarMenuTipoEncuentro(Request request, Response response) {
     if (!tieneSesionActiva(request)) {
       response.redirect("/login");
       return null;
@@ -35,7 +35,7 @@ public class EncontreMascotaController extends Controller {
     return new ModelAndView(getMap(request), "encontre-mascota-tipo-encuentro.html.hbs");
   }
 
-  public ModelAndView getFormularioConChapita(Request request, Response response) {
+  public ModelAndView mostrarFormularioConChapita(Request request, Response response) {
     if (!tieneSesionActiva(request)) {
       response.redirect("/login");
       return null;
@@ -52,7 +52,7 @@ public class EncontreMascotaController extends Controller {
     return new ModelAndView(modelo, "encuentro-con-chapita.html.hbs");
   }
 
-  public ModelAndView getFormularioSinChapita(Request request, Response response) {
+  public ModelAndView mostrarFormularioSinChapita(Request request, Response response) {
     if (!tieneSesionActiva(request)) {
       response.redirect("/login");
       return null;
@@ -64,7 +64,7 @@ public class EncontreMascotaController extends Controller {
     return new ModelAndView(modelo, "encuentro-sin-chapita.html.hbs");
   }
 
-  public Void enviarMascotaEncontradaConChapita(Request request, Response response) {
+  public Void generarInformeConQR(Request request, Response response) {
     if (!tieneSesionActiva(request)) {
       response.redirect("/login");
       return null;
@@ -96,8 +96,8 @@ public class EncontreMascotaController extends Controller {
     redireccionCasoFeliz(request, response, "/", "Se genero el informe!");
     return null;
   }
-  
-  public Void enviarMascotaEncontradaSinChapita(Request request, Response response) {
+
+  public Void generarInformeSinQR(Request request, Response response) {
     if (!tieneSesionActiva(request)) {
       response.redirect("/mascotas/encontre-mascota");
       return null;
@@ -126,7 +126,7 @@ public class EncontreMascotaController extends Controller {
     return null;
   }
 
-  public ModelAndView getInformacionEscaneo(Request request, Response response) {
+  public ModelAndView mostrarInstruccionesParaEscanearQR(Request request, Response response) {
     if (!tieneSesionActiva(request)) {
       response.redirect("/login");
       return null;
