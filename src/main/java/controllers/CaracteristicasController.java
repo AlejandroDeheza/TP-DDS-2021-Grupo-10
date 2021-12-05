@@ -6,10 +6,10 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class CaracteristicasController extends Controller {
 
@@ -58,16 +58,15 @@ public class CaracteristicasController extends Controller {
     listaCaracteristicas.add(caracteristica4);
     listaCaracteristicas.add(caracteristica5);
 
-    List<String> caracteristicasFiltradas = listaCaracteristicas.stream()
-        .filter(c -> !c.isEmpty()).collect(Collectors.toList());
+    listaCaracteristicas.removeAll(Collections.singleton(""));
 
-    if(caracteristicasFiltradas.size() < 2){
+    if(listaCaracteristicas.size() < 2){
       super.redireccionCasoError(request, response, null, "Debe ingresar mas de una caracteristica posible");
     }
 
     CaracteristicaConValoresPosibles caracteristicaConValores = new CaracteristicaConValoresPosibles(
         nombreCaracteristica,
-        caracteristicasFiltradas
+        listaCaracteristicas
     );
 
     withTransaction(() -> {
