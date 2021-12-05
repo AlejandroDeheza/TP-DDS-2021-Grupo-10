@@ -20,7 +20,7 @@ public class MascotasController extends Controller {
   RepositorioUsuarios repositorioUsuarios = new RepositorioUsuarios();
   RepositorioMascotaRegistrada repositorioMascotaRegistrada = new RepositorioMascotaRegistrada();
 
-  public ModelAndView mostrarRegistracion(Request request, Response response) {
+  public ModelAndView mostrarFormularioRegistracionMascotas(Request request, Response response) {
     if (!tieneSesionActiva(request)) {
       response.redirect("/login?origin=/registracion-mascota");
       return null;
@@ -56,11 +56,11 @@ public class MascotasController extends Controller {
     return null;
   }
 
-  public ModelAndView getRedirectMascotas(Request request, Response response) {
+  public ModelAndView mostrarMenuDeMascotas(Request request, Response response) {
     return new ModelAndView(getMap(request), "menu-mascotas.html.hbs");
   }
 
-  public ModelAndView getMascotasDeUsuario(Request request, Response response) {
+  public ModelAndView mostrarMascotasDelUsuario(Request request, Response response) {
     if (!tieneSesionActiva(request)) {
       response.redirect("/login");
       return null;

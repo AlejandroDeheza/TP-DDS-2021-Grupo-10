@@ -40,6 +40,7 @@ public class Routes {
     AsociacionesController asociacionesController = new AsociacionesController();
 
     Spark.get("/", homeController::getHome, engine);
+    Spark.get("/error", errorController::mostrarPantallaError, engine);
 
     Spark.get("/login", sesionController::mostrarLogin, engine);
     Spark.post("/login", sesionController::crearSesion);
@@ -48,51 +49,44 @@ public class Routes {
     Spark.get("/creacion-usuario", usuarioController::mostrarFormularioCreacionUsuario, engine);
     Spark.post("/creacion-usuario", usuarioController::registrarUsuario);
 
+    // Caracteristicas
     Spark.get("/caracteristicas", caracteristicasController::mostrarCaracteristicas, engine);
     Spark.post("/caracteristicas", caracteristicasController::crearNuevaCaracteristicas);
-    Spark.get("/nueva-caracteristica", caracteristicasController::cantidadCaracteristicas, engine);
+    Spark.get("/nueva-caracteristica", caracteristicasController::mostrarFormularioCreacionCaracteristicas, engine);
 
+    // Preguntas de Asociaciones
     Spark.get("/asociaciones", asociacionesController::mostrarAsociaciones, engine);
     Spark.get("/asociaciones/:idAsociacion/preguntas", preguntasController::mostrarPreguntasDeLaAsociacion, engine);
-    Spark.get("/asociaciones/:idAsociacion/preguntas/nueva-pregunta", preguntasController::nuevaPregunta, engine);
-    Spark.get("/asociaciones/:idAsociacion/preguntas/nueva-pregunta-2", preguntasController::matchearRespuestasPosibles, engine);
+    Spark.get("/asociaciones/:idAsociacion/preguntas/nueva-pregunta",
+        preguntasController::mostrarFomularioNuevaPregunta, engine);
+    Spark.get("/asociaciones/:idAsociacion/preguntas/nueva-pregunta-2",
+        preguntasController::mostrarFormularioNuevaPreguntaContinuacion, engine);
     Spark.post("/asociaciones/:idAsociacion/preguntas", preguntasController::crearParDePreguntasAsociacion);
 
+    // Mascotas
+    Spark.get("/mascotas", mascotasController::mostrarMenuDeMascotas, engine);
     Spark.get("/mascotas-en-adopcion", publicacionesController::mostrarMascotasEnAdopcion, engine);
-
-    Spark.get("/mascotas/registracion-mascota", mascotasController::mostrarRegistracion, engine);
+    Spark.get("/mascotas/registracion-mascota", mascotasController::mostrarFormularioRegistracionMascotas, engine);
     Spark.post("/registracion-mascota", mascotasController::registrarMascota);
-
-    Spark.get("/mascotas", mascotasController::getRedirectMascotas,
-        engine);
-    Spark.get("/mascotas/encontre-mascota", encontreMascotaController::mostrarMenuTipoEncuentro,
-        engine);
-
     // FIXME: remove after finish Entrega 6
-    Spark.get("/mascotas/mis-mascotas", mascotasController::getMascotasDeUsuario, engine);
+    Spark.get("/mascotas/mis-mascotas", mascotasController::mostrarMascotasDelUsuario, engine);
 
+    // Encontre Mascota
+    Spark.get("/mascotas/encontre-mascota", encontreMascotaController::mostrarMenuTipoEncuentro, engine);
     Spark.get("/mascotas/encontre-mascota/con-chapita",
         encontreMascotaController::mostrarInstruccionesParaEscanearQR, engine);
-
     Spark.get("/mascotas/encontre-mascota/con-chapita/:codigoChapita",
         encontreMascotaController::mostrarFormularioConChapita, engine);
-
     Spark.post("/mascotas/encontre-mascota/con-chapita/:codigoChapita",
         encontreMascotaController::generarInformeConQR);
-
     Spark.get("/mascotas/encontre-mascota/sin-chapita",
         encontreMascotaController::mostrarFormularioSinChapita, engine);
-    Spark.post("/mascotas/encontre-mascota/sin-chapita",
-        encontreMascotaController::generarInformeSinQR);
-
-
-    Spark.get("/error", errorController::mostrarPantallaError, engine);
+    Spark.post("/mascotas/encontre-mascota/sin-chapita", encontreMascotaController::generarInformeSinQR);
 
     Spark.after((request, response) -> {
       PerThreadEntityManagers.getEntityManager();
       PerThreadEntityManagers.closeEntityManager();
     });
-
 
     System.out.println("Servidor iniciado!");
   }

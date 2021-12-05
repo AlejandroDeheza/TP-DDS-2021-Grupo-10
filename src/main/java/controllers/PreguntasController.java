@@ -46,14 +46,14 @@ public class PreguntasController extends Controller {
     return new ModelAndView(modelo, "preguntas-asociaciones.html.hbs");
   }
 
-  public ModelAndView nuevaPregunta(Request request, Response response) {
+  public ModelAndView mostrarFomularioNuevaPregunta(Request request, Response response) {
     Map<String, Object> modelo = getMap(request);
     modelo.put("asociacion", request.params(":idAsociacion"));
     modelo.put("rangoDeRespuestas", super.obtenerRango(totalRespuestasPosibles));
     return new ModelAndView(modelo, "nueva-pregunta.html.hbs");
   }
 
-  public ModelAndView matchearRespuestasPosibles(Request request, Response response) {
+  public ModelAndView mostrarFormularioNuevaPreguntaContinuacion(Request request, Response response) {
     
     List<String> respuestasPosiblesDelDador = new ArrayList<>();
     List<String> respuestasPosiblesDelAdoptante = new ArrayList<>();

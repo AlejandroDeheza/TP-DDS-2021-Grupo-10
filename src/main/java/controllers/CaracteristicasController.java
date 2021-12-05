@@ -28,7 +28,7 @@ public class CaracteristicasController extends Controller {
     return new ModelAndView(modelo, "caracteristicas.html.hbs");
   }
 
-  public ModelAndView cantidadCaracteristicas(Request request, Response response) {
+  public ModelAndView mostrarFormularioCreacionCaracteristicas(Request request, Response response) {
     int totalCaracteristicas = 5;
     Map<String, Object> modelo = getMap(request);
     modelo.put("cantidadCaracteristicas", super.obtenerRango(totalCaracteristicas));
