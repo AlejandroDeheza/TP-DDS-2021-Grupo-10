@@ -1,10 +1,12 @@
 package controllers;
 
+import modelo.asociacion.Asociacion;
 import modelo.mascota.Foto;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
+import repositorios.RepositorioAsociaciones;
 import repositorios.RepositorioCaracteristicas;
 import spark.Request;
 import spark.Response;
@@ -108,6 +110,15 @@ public abstract class Controller implements WithGlobalEntityManager, Transaction
 
   protected List<Integer> obtenerRango(int limite) {
     return IntStream.rangeClosed(1, limite).boxed().collect(Collectors.toList());
+  }
+
+  protected int porOrdenAlfabetico(String s1, String s2) {
+    return s1.compareTo(s2);
+  }
+
+  protected List<Asociacion> getAsociacionesOrdenadas() {
+    return new RepositorioAsociaciones().listarTodos().stream()
+        .sorted((a1, a2) -> porOrdenAlfabetico(a1.getNombre(), a2.getNombre())).collect(Collectors.toList());
   }
 }
   

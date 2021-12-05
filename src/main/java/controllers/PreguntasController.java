@@ -36,13 +36,10 @@ public class PreguntasController extends Controller {
     }
 
     List<ParDePreguntas> paresDePreguntasOrdenadas = paresDePreguntas.stream()
-        .sorted((p1, p2) -> porOrdenAlfabetico(p1.getConcepto(), p2.getConcepto())).collect(Collectors.toList());
+        .sorted((p1, p2) -> super.porOrdenAlfabetico(p1.getConcepto(), p2.getConcepto())).collect(Collectors.toList());
 
-    //FIXME: error en la vista al usar las --> asociacionesOrdenadas
-    List<Asociacion> asociacionesOrdenadas = repositorioAsociaciones.listarTodos().stream()
-        .sorted((a1, a2) -> porOrdenAlfabetico(a1.getNombre(), a2.getNombre())).collect(Collectors.toList());
-
-    modelo.put("asociaciones", repositorioAsociaciones.listarTodos());
+    //FIXME: error en la vista al usar las --> asociacionesOrdenadas. El error parece que esta en el javascript
+    modelo.put("asociaciones", super.getAsociacionesOrdenadas());
     modelo.put("preguntas", paresDePreguntasOrdenadas);
     modelo.put("esObligatoria", request.session().attribute("es_obligatoria"));
     modelo.put("mostrarBotonAgregarPreguntas", true);
@@ -141,10 +138,6 @@ public class PreguntasController extends Controller {
     request.session().removeAttribute("borrador_par_preguntas");
     request.session().removeAttribute("es_obligatoria");
     return null;
-  }
-
-  private int porOrdenAlfabetico(String s1, String s2) {
-    return s1.compareTo(s2);
   }
 
 }
