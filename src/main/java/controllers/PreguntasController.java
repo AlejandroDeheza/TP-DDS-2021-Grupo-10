@@ -31,6 +31,7 @@ public class PreguntasController extends Controller {
     } else {
       request.session().attribute("es_obligatoria", false);
       Asociacion asociacionBuscada = repositorioAsociaciones.buscarPorId(Long.parseLong(idAsociacion));
+      validarAsociacionSolicitada(request, response, asociacionBuscada);
       paresDePreguntas = asociacionBuscada.getPreguntas();
       modelo.put("asociacion", asociacionBuscada);
     }
@@ -80,9 +81,12 @@ public class PreguntasController extends Controller {
         respuestasPosiblesDelAdoptante
     );
 
+    Asociacion asociacionBuscada = repositorioAsociaciones.buscarPorId(borradorParDePreguntas.getAsociacionId());
+    validarAsociacionSolicitada(request, response, asociacionBuscada);
+
     Map<String, Object> modelo = getMap(request);
     if(!borradorParDePreguntas.getEsPreguntaObligatoria()) {
-      modelo.put("asociacion", repositorioAsociaciones.buscarPorId(borradorParDePreguntas.getAsociacionId()));
+      modelo.put("asociacion", asociacionBuscada);
     }
     modelo.put("cantidadRespuestasPosibles", super.obtenerRango(totalRespuestasPosibles));
     modelo.put("respuestasPosiblesDador", borradorParDePreguntas.getRespuestasPosiblesDelDador());
@@ -138,6 +142,12 @@ public class PreguntasController extends Controller {
     request.session().removeAttribute("borrador_par_preguntas");
     request.session().removeAttribute("es_obligatoria");
     return null;
+  }
+
+  private void validarAsociacionSolicitada(Request request, Response response, Asociacion asociacionBuscada) {
+    if (asociacionBuscada == null) {
+      redireccionCasoError(request, response, "/asociaciones", "La asociacion solicitada no es valida");
+    }
   }
 
 }
