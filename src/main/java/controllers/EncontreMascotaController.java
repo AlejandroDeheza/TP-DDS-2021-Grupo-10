@@ -4,11 +4,10 @@ import modelo.hogarDeTransito.ReceptorHogares;
 import modelo.informe.InformeConQR;
 import modelo.informe.InformeSinQR;
 import modelo.informe.Ubicacion;
-import modelo.mascota.*;
-import modelo.mascota.caracteristica.Caracteristica;
-import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
-import modelo.persona.Persona;
-import modelo.usuario.Usuario;
+import modelo.mascota.Animal;
+import modelo.mascota.MascotaEncontrada;
+import modelo.mascota.MascotaRegistrada;
+import modelo.mascota.TamanioMascota;
 import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioInformes;
 import repositorios.RepositorioMascotaRegistrada;
@@ -19,7 +18,6 @@ import spark.Response;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.EnumSet;
-import java.util.List;
 import java.util.Map;
 
 public class EncontreMascotaController extends Controller {
@@ -83,37 +81,33 @@ public class EncontreMascotaController extends Controller {
           Double.parseDouble(request.queryParams("longitudRescate")),
           request.queryParams("ubicacionRescate")
       );
-      String estadoMascota = request.queryParams("estadoMascota");
 
-      Long Id = request.session().attribute("user_id");
-      Usuario usuario = repositorioUsuarios.buscarPorId(Id);
-      Persona rescatista = usuario.getPersona();
-
-
-      String idChapitaString = request.params(":codigoChapita");
-      Long idChapita = Long.parseLong(idChapitaString);
+      Long idChapita = Long.parseLong(request.params(":codigoChapita"));
       MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.buscarPorId(idChapita);
       if (mascotaRegistrada == null) {
         redireccionCasoError(request, response, "/mascotas/encontre-mascota/con-chapita", "El codigo de chapita no es valido");
         return null;
       }
-      TamanioMascota tamanioMascota = mascotaRegistrada.getTamanio();
 
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
       MascotaEncontrada mascotaEncontrada = new MascotaEncontrada(
           super.obtenerFotosMascota(request, response),
           ubicacionRescate,
-          estadoMascota,
+          request.queryParams("estadoMascota"),
           LocalDate.parse(request.queryParams("fechaRescate"), formatter),
-          tamanioMascota);
-      ReceptorHogares receptorHogares = new ReceptorHogares();
-      InformeConQR informeConQR = new InformeConQR(rescatista, ubicacionRescatista,
-          mascotaEncontrada, receptorHogares, mascotaRegistrada);
+          mascotaRegistrada.getTamanio()
+      );
+
+      InformeConQR informeConQR = new InformeConQR(
+          repositorioUsuarios.buscarPorId(request.session().attribute("user_id")).getPersona(),
+          ubicacionRescatista, mascotaEncontrada, new ReceptorHogares(), mascotaRegistrada
+      );
 
       withTransaction(() -> {
         repositorioInformes.agregar(informeConQR);
       });
+
     } catch (Exception e) {
       redireccionCasoError(request, response, "/error", "Fallo la generacion del informe");
     }
@@ -127,56 +121,46 @@ public class EncontreMascotaController extends Controller {
       response.redirect("/mascotas/encontre-mascota");
       return null;
     }
+
     try {
-      List<Foto> fotos = super.obtenerFotosMascota(request, response);
 
-
-      List<Caracteristica> caracteristicas;
-      //Obtengo sus caracteristicas
-      caracteristicas = super.obtenerListaCaracteristicas(request);
-
+      Ubicacion ubicacionRescatista = new Ubicacion(
+          Double.parseDouble(request.queryParams("latitudRescatista")),
+          Double.parseDouble(request.queryParams("longitudRescatista")),
+          request.queryParams("ubicacionRescatista")
+      );
+      Ubicacion ubicacionRescate = new Ubicacion(
+          Double.parseDouble(request.queryParams("latitudRescate")),
+          Double.parseDouble(request.queryParams("longitudRescate")),
+          request.queryParams("ubicacionRescate")
+      );
 
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-      LocalDate fechaRescate = LocalDate.parse(request.queryParams("fechaRescate"), formatter);
 
-      String ubicacionRescatistaString = request.queryParams("ubicacionRescatista");
-      String latitudRescatistaString = request.queryParams("latitudRescatista");
-      String longitudRescatistaString = request.queryParams("longitudRescatista");
-      String latitudRescateString = request.queryParams("latitudRescate");
-      String longitudRescateString = request.queryParams("longitudRescate");
-      String ubicacionRescateString = request.queryParams("ubicacionRescate");
+      MascotaEncontrada mascotaEncontrada = new MascotaEncontrada(
+          super.obtenerFotosMascota(request, response),
+          ubicacionRescate,
+          request.queryParams("estadoMascota"),
+          LocalDate.parse(request.queryParams("fechaRescate"), formatter),
+          TamanioMascota.values()[Integer.parseInt(request.queryParams("tamanioMascota"))]
+      );
 
-      Ubicacion ubicacionRescatista = new Ubicacion(Double.parseDouble(latitudRescatistaString),
-          Double.parseDouble(longitudRescatistaString),
-          ubicacionRescatistaString);
-      Ubicacion ubicacionRescate = new Ubicacion(Double.parseDouble(latitudRescateString),
-          Double.parseDouble(longitudRescateString), ubicacionRescateString);
+      InformeSinQR informeSinQR = new InformeSinQR(
+          repositorioUsuarios.buscarPorId(request.session().attribute("user_id")).getPersona(),
+          ubicacionRescatista,
+          mascotaEncontrada,
+          new ReceptorHogares(),
+          Animal.values()[Integer.parseInt(request.queryParams("tipoAnimal"))],
+          super.obtenerListaCaracteristicas(request)
+      );
 
-      String estadoMascota = request.queryParams("estadoMascota");
-
-      Long Id = request.session().attribute("user_id");
-
-      Usuario usuario = repositorioUsuarios.buscarPorId(Id);
-      Persona rescatista = usuario.getPersona();
-
-      TamanioMascota tamanioMascota =
-          TamanioMascota.values()[Integer.parseInt(request.queryParams("tamanioMascota"))];
-      Animal animal = Animal.values()[Integer.parseInt(request.queryParams("tipoAnimal"))];
-      MascotaEncontrada mascotaEncontrada = new MascotaEncontrada(fotos, ubicacionRescate
-          , estadoMascota, fechaRescate,
-          tamanioMascota);
-      ReceptorHogares receptorHogares = new ReceptorHogares();
-      InformeSinQR informeSinQR = new InformeSinQR(rescatista,
-          ubicacionRescatista, mascotaEncontrada, receptorHogares, animal, caracteristicas);
       withTransaction(() -> {
         repositorioInformes.agregar(informeSinQR);
-
       });
-    } catch (
-        Exception e) {
+
+    } catch (Exception e) {
       redireccionCasoError(request, response, "/error", "Fallo la generacion del informe");
     }
-
     redireccionCasoFeliz(request, response, "/", "Se genero el informe!");
     return null;
   }
