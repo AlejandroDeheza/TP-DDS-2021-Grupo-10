@@ -35,8 +35,15 @@ public class PreguntasController extends Controller {
       modelo.put("asociacion", asociacionBuscada);
     }
 
+    List<ParDePreguntas> paresDePreguntasOrdenadas = paresDePreguntas.stream()
+        .sorted((p1, p2) -> porOrdenAlfabetico(p1.getConcepto(), p2.getConcepto())).collect(Collectors.toList());
+
+    //FIXME: error en la vista al usar las --> asociacionesOrdenadas
+    List<Asociacion> asociacionesOrdenadas = repositorioAsociaciones.listarTodos().stream()
+        .sorted((a1, a2) -> porOrdenAlfabetico(a1.getNombre(), a2.getNombre())).collect(Collectors.toList());
+
     modelo.put("asociaciones", repositorioAsociaciones.listarTodos());
-    modelo.put("preguntas", paresDePreguntas);
+    modelo.put("preguntas", paresDePreguntasOrdenadas);
     modelo.put("esObligatoria", request.session().attribute("es_obligatoria"));
     modelo.put("mostrarBotonAgregarPreguntas", true);
     return new ModelAndView(modelo, "preguntas-asociaciones.html.hbs");
@@ -134,6 +141,10 @@ public class PreguntasController extends Controller {
     request.session().removeAttribute("borrador_par_preguntas");
     request.session().removeAttribute("es_obligatoria");
     return null;
+  }
+
+  private int porOrdenAlfabetico(String s1, String s2) {
+    return s1.compareTo(s2);
   }
 
 }
