@@ -51,20 +51,6 @@ public class Routes {
     get("/usuarios/creacion-usuario", usuarioController::mostrarFormularioCreacionUsuario, engine);
     post("/usuarios", usuarioController::registrarUsuario);
 
-    // Caracteristicas
-    get("/caracteristicas", caracteristicasController::mostrarCaracteristicas, engine);
-    get("/caracteristicas/nueva-caracteristica", caracteristicasController::mostrarFormularioCreacionCaracteristicas, engine);
-    post("/caracteristicas", caracteristicasController::crearNuevaCaracteristicas);
-
-    // Preguntas de Asociaciones
-    get("/asociaciones", asociacionesController::mostrarAsociaciones, engine);
-    get("/asociaciones/:idAsociacion/preguntas", preguntasController::mostrarPreguntasDeLaAsociacion, engine);
-    get("/asociaciones/:idAsociacion/preguntas/nueva-pregunta",
-        preguntasController::mostrarFomularioNuevaPregunta, engine);
-    get("/asociaciones/:idAsociacion/preguntas/nueva-pregunta-paso-2",
-        preguntasController::mostrarFormularioNuevaPreguntaContinuacion, engine);
-    post("/asociaciones/:idAsociacion/preguntas", preguntasController::crearParDePreguntasAsociacion);
-
     // Mascotas
     get("/mascotas", mascotasController::mostrarMascotasDelUsuario, engine);
     get("/mascotas/registracion-mascota", mascotasController::mostrarFormularioRegistracionMascotas, engine);
@@ -74,14 +60,6 @@ public class Routes {
     get("/mascotas-en-adopcion", publicacionesController::mostrarMascotasEnAdopcion, engine); // FIXME <-- no se usa
 
     // Informes
-    get("/informes/menu", informesController::mostrarMenuTipoEncuentro, engine);
-    get("/informes/con-qr/instrucciones-escaneo", informesController::mostrarInstruccionesParaEscanearQR, engine);
-    get("/informes/con-qr/nuevo/:codigoChapita", informesController::mostrarFormularioConChapita, engine);
-    post("/informes/con-qr/:codigoChapita", informesController::generarInformeConQR);
-    get("/informes/sin-qr/nuevo", informesController::mostrarFormularioSinChapita, engine);
-    post("/informes/sin-qr", informesController::generarInformeSinQR);
-
-    /*
     path("/informes", () -> {
       get("/menu", informesController::mostrarMenuTipoEncuentro, engine);
 
@@ -96,7 +74,23 @@ public class Routes {
       });
     });
 
-     */
+    // Caracteristicas
+    get("/caracteristicas", caracteristicasController::mostrarCaracteristicas, engine);
+    get("/caracteristicas/nueva-caracteristica", caracteristicasController::mostrarFormularioCreacionCaracteristicas, engine);
+    post("/caracteristicas", caracteristicasController::crearNuevaCaracteristicas);
+
+    // Preguntas de Asociaciones
+    path("/asociaciones", () -> {
+      get("", asociacionesController::mostrarAsociaciones, engine);
+
+      path("/:idAsociacion/preguntas", () -> {
+        get("",                         preguntasController::mostrarPreguntasDeLaAsociacion, engine);
+        get("/nueva-pregunta",          preguntasController::mostrarFomularioNuevaPregunta, engine);
+        get("/nueva-pregunta-paso-2",   preguntasController::mostrarFormularioNuevaPreguntaContinuacion, engine);
+        post("",                        preguntasController::crearParDePreguntasAsociacion);
+      });
+    });
+    
 
     Spark.after((request, response) -> {
       PerThreadEntityManagers.getEntityManager();
