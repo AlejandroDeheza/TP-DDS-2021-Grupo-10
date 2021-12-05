@@ -84,6 +84,8 @@ public class PreguntasController extends Controller {
     modelo.put("respuestasPosiblesDador", borradorParDePreguntas.getRespuestasPosiblesDelDador());
     modelo.put("respuestasPosiblesAdoptante", borradorParDePreguntas.getRespuestasPosiblesDelAdoptante());
     modelo.put("asociacionId", borradorParDePreguntas.getAsociacionId());
+    modelo.put("preguntaDador", borradorParDePreguntas.getPreguntaDelDador());
+    modelo.put("preguntaAdoptante", borradorParDePreguntas.getPreguntaDelAdoptante());
 
     request.session().attribute("borrador_par_preguntas", borradorParDePreguntas);
     return new ModelAndView(modelo, "nueva-pregunta-2.html.hbs");
