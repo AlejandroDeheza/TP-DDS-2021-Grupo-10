@@ -119,10 +119,7 @@ public class DummyData {
     List<ParDeRespuestas> paresDeRespuestas = new ArrayList<>();
 
     paresDeRespuestas.add(new ParDeRespuestas("1", "1"));
-    paresDeRespuestas.add(new ParDeRespuestas("1", "2"));
     paresDeRespuestas.add(new ParDeRespuestas("2", "2"));
-    paresDeRespuestas.add(new ParDeRespuestas("1", "+2"));
-    paresDeRespuestas.add(new ParDeRespuestas("2", "+2"));
     paresDeRespuestas.add(new ParDeRespuestas("+2", "+2"));
 
     return new ParDePreguntas(
