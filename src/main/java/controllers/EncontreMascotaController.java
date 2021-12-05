@@ -37,7 +37,6 @@ public class EncontreMascotaController extends Controller {
     return new ModelAndView(getMap(request), "encontre-mascota-tipo-encuentro.html.hbs");
   }
 
-
   public ModelAndView getFormularioConChapita(Request request, Response response) {
     if (!tieneSesionActiva(request)) {
       response.redirect("/login");
@@ -45,8 +44,7 @@ public class EncontreMascotaController extends Controller {
     }
     Map<String, Object> modelo = getMap(request);
     String idChapitaString = request.params(":codigoChapita");
-    Long idChapita = Long.parseLong(idChapitaString);
-    MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.buscarPorId(idChapita);
+    MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.buscarPorId(Long.parseLong(idChapitaString));
     if (mascotaRegistrada == null) {
       redireccionCasoError(request, response, "/mascotas/encontre-mascota/con-chapita", "El codigo de chapita no es valido");
       return null;
@@ -55,7 +53,6 @@ public class EncontreMascotaController extends Controller {
     modelo.put("mascotaRegistrada", mascotaRegistrada);
     return new ModelAndView(modelo, "encuentro-con-chapita.html.hbs");
   }
-
 
   public ModelAndView getFormularioSinChapita(Request request, Response response) {
     if (!tieneSesionActiva(request)) {
@@ -103,7 +100,7 @@ public class EncontreMascotaController extends Controller {
 
       Long Id = request.session().attribute("user_id");
       Usuario usuario = repositorioUsuarios.buscarPorId(Id);
-      Persona persona = usuario.getPersona();
+      Persona rescatista = usuario.getPersona();
 
 
       String idChapitaString = request.params(":codigoChapita");
@@ -118,14 +115,13 @@ public class EncontreMascotaController extends Controller {
           , estadoMascota, fechaRescate,
           tamanioMascota);
       ReceptorHogares receptorHogares = new ReceptorHogares();
-      InformeConQR informeConQR = new InformeConQR(persona, ubicacionRescatista,
+      InformeConQR informeConQR = new InformeConQR(rescatista, ubicacionRescatista,
           mascotaEncontrada, receptorHogares, mascotaRegistrada);
 
       withTransaction(() -> {
         repositorioInformes.agregar(informeConQR);
       });
     } catch (Exception e) {
-      System.out.println(e);
       redireccionCasoError(request, response, "/error", "Fallo la generacion del informe");
     }
     redireccionCasoFeliz(request, response, "/", "Se genero el informe!");
@@ -168,7 +164,7 @@ public class EncontreMascotaController extends Controller {
       Long Id = request.session().attribute("user_id");
 
       Usuario usuario = repositorioUsuarios.buscarPorId(Id);
-      Persona persona = usuario.getPersona();
+      Persona rescatista = usuario.getPersona();
 
       TamanioMascota tamanioMascota =
           TamanioMascota.values()[Integer.parseInt(request.queryParams("tamanioMascota"))];
@@ -177,7 +173,7 @@ public class EncontreMascotaController extends Controller {
           , estadoMascota, fechaRescate,
           tamanioMascota);
       ReceptorHogares receptorHogares = new ReceptorHogares();
-      InformeSinQR informeSinQR = new InformeSinQR(persona,
+      InformeSinQR informeSinQR = new InformeSinQR(rescatista,
           ubicacionRescatista, mascotaEncontrada, receptorHogares, animal, caracteristicas);
       withTransaction(() -> {
         repositorioInformes.agregar(informeSinQR);

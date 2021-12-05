@@ -45,6 +45,8 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
 
   public void run() {
 
+    System.out.println("Corriendo bootstrap...");
+
     DocumentoIdentidad documentoIdentidad = new DocumentoIdentidad(TipoDocumento.DNI, "12345678");
     DatosDeContacto datosDeContacto = new DatosDeContacto("12345678", "dds2021g10@gmail.com");
 
