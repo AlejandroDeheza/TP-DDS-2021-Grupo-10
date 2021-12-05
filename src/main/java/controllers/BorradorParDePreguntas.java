@@ -1,19 +1,14 @@
 package controllers;
 
-import java.util.ArrayList;
 import java.util.List;
-import modelo.pregunta.ParDePreguntas;
-import modelo.pregunta.ParDeRespuestas;
 
 public class BorradorParDePreguntas {
-  private String preguntaDelDador;
-  private String preguntaDelAdoptante;
-  private Boolean esPreguntaObligatoria;
-  private Long asociacionId;
-  private List<String> respuestasPosiblesDelDador;
-  private List<String> respuestasPosiblesDelAdoptante;
-
-  private List<ParDeRespuestas> paresDeRespuestas = new ArrayList<>();
+  private final String preguntaDelDador;
+  private final String preguntaDelAdoptante;
+  private final Boolean esPreguntaObligatoria;
+  private final Long asociacionId;
+  private final List<String> respuestasPosiblesDelDador;
+  private final List<String> respuestasPosiblesDelAdoptante;
 
   public BorradorParDePreguntas(Long asociacionId, String preguntaDelDador, String preguntaDelAdoptante,
                                 Boolean esPreguntaObligatoria, List<String> respuestasPosiblesDelDador,
@@ -24,20 +19,6 @@ public class BorradorParDePreguntas {
     this.esPreguntaObligatoria = esPreguntaObligatoria;
     this.respuestasPosiblesDelDador = respuestasPosiblesDelDador;
     this.respuestasPosiblesDelAdoptante = respuestasPosiblesDelAdoptante;
-  }
-
-  public void agregarParesDeRespuestas(List<ParDeRespuestas> paresDeRespuestas) {
-    this.paresDeRespuestas = paresDeRespuestas;
-  }
-
-  public ParDePreguntas crearParDePreguntas() {
-    ParDePreguntas parDePreguntas = new ParDePreguntas(
-        this.preguntaDelDador, this.preguntaDelAdoptante, this.esPreguntaObligatoria
-    );
-    this.respuestasPosiblesDelDador.forEach(parDePreguntas::agregarRespuestaPosibleDelDador);
-    this.respuestasPosiblesDelAdoptante.forEach(parDePreguntas::agregarRespuestaPosibleDelAdoptante);
-    this.paresDeRespuestas.forEach(parDePreguntas::agregarRespuestasQueMachean);
-    return parDePreguntas;
   }
 
   public String getPreguntaDelDador() {
@@ -63,8 +44,5 @@ public class BorradorParDePreguntas {
   public List<String> getRespuestasPosiblesDelAdoptante() {
     return this.respuestasPosiblesDelAdoptante;
   }
-  
-  public List<ParDeRespuestas> getParesDeRespuestasPosibles() {
-    return this.paresDeRespuestas;
-  }
+
 }

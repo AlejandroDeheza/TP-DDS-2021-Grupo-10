@@ -109,11 +109,14 @@ public class PreguntasController extends Controller {
                 && !par.getRespuestaDelAdoptante().equals("Elegir respuesta posible adoptante...")
         ).collect(Collectors.toList());
 
-
-
-    borradorParDePreguntas.agregarParesDeRespuestas(paresDeRespuestasFiltradas);
-
-    ParDePreguntas parDePreguntas = new ParDePreguntas()
+    ParDePreguntas parDePreguntas = new ParDePreguntas(
+        borradorParDePreguntas.getPreguntaDelDador(),
+        borradorParDePreguntas.getPreguntaDelAdoptante(),
+        borradorParDePreguntas.getEsPreguntaObligatoria(),
+        borradorParDePreguntas.getRespuestasPosiblesDelDador(),
+        borradorParDePreguntas.getRespuestasPosiblesDelAdoptante(),
+        paresDeRespuestasFiltradas
+    );
 
     withTransaction(() -> {
       repositorioParDePreguntas.agregar(parDePreguntas);
