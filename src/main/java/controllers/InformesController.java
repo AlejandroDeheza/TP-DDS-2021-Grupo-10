@@ -73,25 +73,25 @@ public class InformesController extends Controller {
     // Siempre que el ENC-TYPE sea 'multipart/form-data' se debe hacer esto primero
     super.setearMultipartConfig(request);
 
-      Long idChapita = Long.parseLong(request.params(":codigoChapita"));
-      MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.buscarPorId(idChapita);
-      if (mascotaRegistrada == null) {
-        redireccionCasoError(request, response, "/informes/menu", "El codigo de chapita no es valido");
-        return null;
-      }
+    Long idChapita = Long.parseLong(request.params(":codigoChapita"));
+    MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.buscarPorId(idChapita);
+    if (mascotaRegistrada == null) {
+      redireccionCasoError(request, response, "/informes/menu", "El codigo de chapita no es valido");
+      return null;
+    }
 
-      InformeConQR informeConQR = new InformeConQR(
-          repositorioUsuarios.buscarPorId(request.session().attribute("user_id")).getPersona(),
-          obtenerUbicacionRescatista(request),
-          obtenerMascotaEncontrada(request, response, mascotaRegistrada.getTamanio()),
-          new ReceptorHogares(),
-          mascotaRegistrada
-      );
+    InformeConQR informeConQR = new InformeConQR(
+        repositorioUsuarios.buscarPorId(request.session().attribute("user_id")).getPersona(),
+        obtenerUbicacionRescatista(request),
+        obtenerMascotaEncontrada(request, response, mascotaRegistrada.getTamanio()),
+        new ReceptorHogares(),
+        mascotaRegistrada
+    );
 
-      withTransaction(() -> {
-        repositorioInformes.agregar(informeConQR);
-      });
-      
+    withTransaction(() -> {
+      repositorioInformes.agregar(informeConQR);
+    });
+
     redireccionCasoFeliz(request, response, "/", "Se genero el informe!");
     return null;
   }
@@ -105,18 +105,19 @@ public class InformesController extends Controller {
     // Siempre que el ENC-TYPE sea 'multipart/form-data' se debe hacer esto primero
     super.setearMultipartConfig(request);
 
-      TamanioMascota tamanioMascota = TamanioMascota.values()[Integer.parseInt(request.queryParams("tamanioMascota"))];
-      InformeSinQR informeSinQR = new InformeSinQR(
-          repositorioUsuarios.buscarPorId(request.session().attribute("user_id")).getPersona(),
-          obtenerUbicacionRescatista(request),
-          obtenerMascotaEncontrada(request, response, tamanioMascota),
-          new ReceptorHogares(),
-          Animal.values()[Integer.parseInt(request.queryParams("tipoAnimal"))],
-          super.obtenerListaCaracteristicas(request)
-      );
-      withTransaction(() -> {
-        repositorioInformes.agregar(informeSinQR);
-      });
+    TamanioMascota tamanioMascota = TamanioMascota.values()[Integer.parseInt(request.queryParams("tamanioMascota"))];
+    InformeSinQR informeSinQR = new InformeSinQR(
+        repositorioUsuarios.buscarPorId(request.session().attribute("user_id")).getPersona(),
+        obtenerUbicacionRescatista(request),
+        obtenerMascotaEncontrada(request, response, tamanioMascota),
+        new ReceptorHogares(),
+        Animal.values()[Integer.parseInt(request.queryParams("tipoAnimal"))],
+        super.obtenerListaCaracteristicas(request)
+    );
+
+    withTransaction(() -> {
+      repositorioInformes.agregar(informeSinQR);
+    });
 
     redireccionCasoFeliz(request, response, "/", "Se genero el informe!");
     return null;
