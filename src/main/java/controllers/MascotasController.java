@@ -33,6 +33,9 @@ public class MascotasController extends Controller {
 
   public Void registrarMascota(Request request, Response response) {
 
+    // Siempre que el ENC-TYPE sea 'multipart/form-data' se debe hacer esto primero
+    super.setearMultipartConfig(request);
+
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
 
     MascotaRegistrada nueva = new MascotaRegistrada(

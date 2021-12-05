@@ -44,7 +44,7 @@ public class InformesController extends Controller {
     String idChapitaString = request.params(":codigoChapita");
     MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.buscarPorId(Long.parseLong(idChapitaString));
     if (mascotaRegistrada == null) {
-      redireccionCasoError(request, response, "/mascotas/encontre-mascota/con-chapita", "El codigo de chapita no es valido");
+      redireccionCasoError(request, response, "/informes/menu", "El codigo de chapita no es valido");
       return null;
     }
     modelo.put("codigoChapita", idChapitaString);
@@ -69,12 +69,15 @@ public class InformesController extends Controller {
       response.redirect("/login");
       return null;
     }
-    try {
+
+    // Siempre que el ENC-TYPE sea 'multipart/form-data' se debe hacer esto primero
+    super.setearMultipartConfig(request);
+    //try {
 
       Long idChapita = Long.parseLong(request.params(":codigoChapita"));
       MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.buscarPorId(idChapita);
       if (mascotaRegistrada == null) {
-        redireccionCasoError(request, response, "/mascotas/encontre-mascota/con-chapita", "El codigo de chapita no es valido");
+        redireccionCasoError(request, response, "/informes/menu", "El codigo de chapita no es valido");
         return null;
       }
 
@@ -90,22 +93,23 @@ public class InformesController extends Controller {
         repositorioInformes.agregar(informeConQR);
       });
 
-    } catch (Exception e) {
-      redireccionCasoError(request, response, "/error", "Fallo la generacion del informe");
-    }
+    //} catch (Exception e) {
+    //  redireccionCasoError(request, response, "/error", "Fallo la generacion del informe");
+    //}
     redireccionCasoFeliz(request, response, "/", "Se genero el informe!");
     return null;
   }
 
   public Void generarInformeSinQR(Request request, Response response) {
     if (!tieneSesionActiva(request)) {
-      response.redirect("/mascotas/encontre-mascota");
+      response.redirect("/login");
       return null;
     }
-    try {
 
+    // Siempre que el ENC-TYPE sea 'multipart/form-data' se debe hacer esto primero
+    super.setearMultipartConfig(request);
+    //try {
       TamanioMascota tamanioMascota = TamanioMascota.values()[Integer.parseInt(request.queryParams("tamanioMascota"))];
-
       InformeSinQR informeSinQR = new InformeSinQR(
           repositorioUsuarios.buscarPorId(request.session().attribute("user_id")).getPersona(),
           obtenerUbicacionRescatista(request),
@@ -114,14 +118,13 @@ public class InformesController extends Controller {
           Animal.values()[Integer.parseInt(request.queryParams("tipoAnimal"))],
           super.obtenerListaCaracteristicas(request)
       );
-
       withTransaction(() -> {
         repositorioInformes.agregar(informeSinQR);
       });
 
-    } catch (Exception e) {
-      redireccionCasoError(request, response, "/error", "Fallo la generacion del informe");
-    }
+    //} catch (Exception e) {
+    //  redireccionCasoError(request, response, "/error", "Fallo la generacion del informe");
+    //}
     redireccionCasoFeliz(request, response, "/", "Se genero el informe!");
     return null;
   }

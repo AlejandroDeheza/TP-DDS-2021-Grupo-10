@@ -95,7 +95,6 @@ public abstract class Controller implements WithGlobalEntityManager, Transaction
       String pathUpload = new Constantes().getUploadDirectory();
       Path tempFile = Files.createTempFile(new File(pathUpload).toPath(), null, ".jpg");
 
-      request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
       InputStream fotoInputStream = request.raw().getPart("fotoMascota").getInputStream();
       Files.copy(fotoInputStream, tempFile, StandardCopyOption.REPLACE_EXISTING);
 
@@ -123,6 +122,10 @@ public abstract class Controller implements WithGlobalEntityManager, Transaction
     return new RepositorioAsociaciones().listarTodos().stream()
         .sorted((a1, a2) -> porOrdenAlfabetico(a1.getNombre(), a2.getNombre()))
         .collect(Collectors.toList());
+  }
+
+  protected void setearMultipartConfig(Request request) {
+    request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
   }
 }
   
