@@ -104,32 +104,25 @@ public class Routes {
       }
     });
 
-    before("/logout", (request, response) -> {
-      if (request.session().attribute("user_id") == null) {
-        response.redirect("/");
-      }
-    });
-
     before((request, response) -> {
       if ((request.requestMethod().equals("POST") || request.requestMethod().equals("PUT")
           || request.requestMethod().equals("DELETE")
-      ) && request.session().attribute("user_id") == null && !request.matchedPath().equals("/login")) {
+      ) && request.session().attribute("user_id") == null && !request.pathInfo().equals("/login")) {
         response.redirect("/login");
       }
     });
 
-    // TODO, BEFORE PARA ADMIN
-
     before((request, response) -> {
-      if ((request.matchedPath().equals("/mascotas")
-          || request.matchedPath().equals("/mascotas/registracion-mascota")
-          || request.matchedPath().equals("/informes/con-qr/nuevo/:codigoChapita")
-          || request.matchedPath().equals("/informes/sin-qr/nuevo")
-          || request.matchedPath().equals("/caracteristicas")
-          || request.matchedPath().equals("/caracteristicas/nueva")
-          || request.matchedPath().equals("/asociaciones")
-          || request.matchedPath().equals("/asociaciones/:idAsociacion/preguntas")
-          || request.matchedPath().equals("/asociaciones/:idAsociacion/preguntas/nueva-pregunta")
+      System.out.println("request.pathInfo() : " + request.pathInfo());
+      if ((request.pathInfo().equals("/mascotas")
+          || request.pathInfo().equals("/mascotas/registracion-mascota")
+          || request.pathInfo().equals("/informes/con-qr/nuevo/:codigoChapita")
+          || request.pathInfo().equals("/informes/sin-qr/nuevo")
+          || request.pathInfo().equals("/caracteristicas")
+          || request.pathInfo().equals("/caracteristicas/nueva")
+          || request.pathInfo().equals("/asociaciones")
+          || request.pathInfo().equals("/asociaciones/:idAsociacion/preguntas")
+          || request.pathInfo().equals("/asociaciones/:idAsociacion/preguntas/nueva-pregunta")
       )
           && request.session().attribute("user_id") == null) {
         response.redirect("/login");
@@ -138,29 +131,29 @@ public class Routes {
 
     // TODO, DESPUES DE INICIAR SESION REDIRIGIR A LA PAGINA DONDE ESTABA
 
-    /*
     before((request, response) -> {
-      if ((request.matchedPath().equals("/caracteristicas")
-          || request.matchedPath().equals("/caracteristicas/nueva")
-          || request.matchedPath().equals("/asociaciones")
-          || request.matchedPath().equals("/asociaciones/:idAsociacion/preguntas")
-          || request.matchedPath().equals("/asociaciones/:idAsociacion/preguntas/nueva-pregunta")
+      Boolean esAdmin = request.session().attribute("is_admin");
+      if ((request.pathInfo().equals("/caracteristicas")
+          || request.pathInfo().equals("/caracteristicas/nueva")
+          || request.pathInfo().equals("/asociaciones")
+          || request.pathInfo().equals("/asociaciones/:idAsociacion/preguntas")
+          || request.pathInfo().equals("/asociaciones/:idAsociacion/preguntas/nueva-pregunta")
       )
-          && !request.session().attribute("is_admin")) { // TODO, PARECE QUE NO SE PUEDE VALIDAR ACA SI ES ADMIN
-
-        halt(403, "no tiene los permisos");
+          && !esAdmin) {
+        halt(403);
       }
     });
-     */
-
+    
     before((request, response) -> {
-      if ((request.matchedPath().equals("/login")
-          || request.matchedPath().equals("/usuarios/creacion-usuario")
-          || request.matchedPath().equals("/usuarios"))
+      if ((request.pathInfo().equals("/login")
+          || request.pathInfo().equals("/usuarios/creacion-usuario")
+          || request.pathInfo().equals("/usuarios"))
           && request.session().attribute("user_id") != null) {
         response.redirect("/");
       }
     });
+
+
 
     after((request, response) -> {
       PerThreadEntityManagers.getEntityManager();

@@ -41,7 +41,8 @@ public abstract class Controller implements WithGlobalEntityManager, Transaction
   }
 
   protected Boolean noEsAdmin(Request request) {
-    return request.session().attribute("is_admin") == null;
+    Boolean esAdmin = request.session().attribute("is_admin");
+    return !esAdmin;
   }
 
   protected void redireccionCasoFeliz(Request request, Response response, String porDefecto, String mensaje) {
