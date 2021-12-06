@@ -23,7 +23,6 @@ public class MascotasController extends Controller {
   public ModelAndView mostrarFormularioRegistracionMascotas(Request request, Response response) {
     Map<String, Object> modelo = getMap(request);
     modelo.put("caracteristicas", repositorioCaracteristicas.getCaracteristicasConValoresPosibles());
-
     return new ModelAndView(modelo, "registracion-mascota.html.hbs");
   }
 
@@ -57,10 +56,9 @@ public class MascotasController extends Controller {
   }
 
   public ModelAndView mostrarMascotasDelUsuario(Request request, Response response) {
+    Map<String, Object> modelo = getMap(request);
     // OBtener las mascotas del usuario que pidio esto
     Usuario usuario = repositorioUsuarios.buscarPorId(request.session().attribute("user_id"));
-
-    Map<String, Object> modelo = getMap(request);
     modelo.put("mascotasUsuario", repositorioMascotaRegistrada.obtenerMascotasDeUnDuenio(usuario));
     return new ModelAndView(modelo, "mis-mascotas.html.hbs");
   }

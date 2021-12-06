@@ -96,7 +96,7 @@ public class Routes {
 
     before((request, response) -> {
       if (request.requestMethod().equals("POST")) {
-        //Lo separo porque request.contentType() puede ser null
+        //Lo separo porque request.contentType() puede ser null si no es POST
         if (request.contentType().startsWith("multipart/form-data")) {
           // Siempre que el ENC-TYPE sea 'multipart/form-data' se debe hacer esto primero
           request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
@@ -113,7 +113,6 @@ public class Routes {
     });
 
     before((request, response) -> {
-      System.out.println("request.pathInfo() : " + request.pathInfo());
       if ((request.pathInfo().equals("/mascotas")
           || request.pathInfo().equals("/mascotas/registracion-mascota")
           || request.pathInfo().equals("/informes/con-qr/nuevo/:codigoChapita")
@@ -125,7 +124,7 @@ public class Routes {
           || request.pathInfo().equals("/asociaciones/:idAsociacion/preguntas/nueva-pregunta")
       )
           && request.session().attribute("user_id") == null) {
-        response.redirect("/login");
+        response.redirect("/login?origin=" + request.pathInfo());
       }
     });
 
@@ -143,7 +142,7 @@ public class Routes {
         halt(403);
       }
     });
-    
+
     before((request, response) -> {
       if ((request.pathInfo().equals("/login")
           || request.pathInfo().equals("/usuarios/creacion-usuario")

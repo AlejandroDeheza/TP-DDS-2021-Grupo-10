@@ -55,6 +55,7 @@ public class PreguntasController extends Controller {
   }
 
   public ModelAndView mostrarFormularioNuevaPreguntaContinuacion(Request request, Response response) {
+    // Si el "concepto" es null es porque no viene de la pantalla que deveria, o sea la pantalla del form anterior
     if (request.queryParams("concepto") == null) {
       response.redirect("/asociaciones");
       return null;

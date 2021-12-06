@@ -10,6 +10,7 @@ import spark.Request;
 import spark.Response;
 import utils.ValidadorAutenticacionNuevo;
 import java.time.LocalTime;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 public class SesionController extends Controller {
@@ -17,7 +18,11 @@ public class SesionController extends Controller {
   RepositorioUsuarios repositorioUsuarios = new RepositorioUsuarios();
 
   public ModelAndView mostrarLogin(Request request, Response response) {
-    return new ModelAndView(getMap(request), "login.html.hbs");
+    Map<String, Object> modelo = getMap(request);
+    if (request.queryParams("origin") != null) {
+      modelo.put("origin", "?origin=" + request.queryParams("origin"));
+    }
+    return new ModelAndView(modelo, "login.html.hbs");
   }
 
   public Void crearSesion(Request request, Response response) {
