@@ -49,9 +49,11 @@ public class PreguntasController extends Controller {
 
   public ModelAndView mostrarFomularioNuevaPregunta(Request request, Response response) {
     Map<String, Object> modelo = getMap(request);
-    Asociacion asociacionBuscada = repoAsociaciones.buscarPorId(Long.parseLong(request.params(":idAsociacion")));
-    validarAsociacionSolicitada(request, response, asociacionBuscada);
-    modelo.put("asociacion", request.params(":idAsociacion"));
+    if (!request.params(":idAsociacion").equals("0")) {
+      Asociacion asociacionBuscada = repoAsociaciones.buscarPorId(Long.parseLong(request.params(":idAsociacion")));
+      validarAsociacionSolicitada(request, response, asociacionBuscada);
+    }
+    modelo.put("idAsociacion", request.params(":idAsociacion"));
     modelo.put("rangoDeRespuestas", super.obtenerRango(totalRespuestasPosibles));
     return new ModelAndView(modelo, "nueva-pregunta.html.hbs");
   }
