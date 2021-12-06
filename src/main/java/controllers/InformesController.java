@@ -65,10 +65,6 @@ public class InformesController extends Controller {
   }
 
   public Void generarInformeConQR(Request request, Response response) {
-    if (!tieneSesionActiva(request)) {
-      response.redirect("/login");
-      return null;
-    }
 
     Long idChapita = Long.parseLong(request.params(":codigoChapita"));
     MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.buscarPorId(idChapita);
@@ -94,10 +90,6 @@ public class InformesController extends Controller {
   }
 
   public Void generarInformeSinQR(Request request, Response response) {
-    if (!tieneSesionActiva(request)) {
-      response.redirect("/login");
-      return null;
-    }
 
     TamanioMascota tamanioMascota = TamanioMascota.values()[Integer.parseInt(request.queryParams("tamanioMascota"))];
     InformeSinQR informeSinQR = new InformeSinQR(

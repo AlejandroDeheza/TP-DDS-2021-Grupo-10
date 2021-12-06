@@ -111,10 +111,6 @@ public class PreguntasController extends Controller {
   }
 
   public Void crearParDePreguntasAsociacion(Request request, Response response) {
-    if (!tieneSesionActiva(request)) {
-      response.redirect("/login");
-      return null;
-    }
     List<ParDeRespuestas> paresDeRespuestas = new ArrayList<>();
 
     super.obtenerRango(totalRespuestasPosibles).forEach(i -> {

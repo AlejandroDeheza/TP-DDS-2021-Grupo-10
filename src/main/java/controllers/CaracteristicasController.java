@@ -44,10 +44,6 @@ public class CaracteristicasController extends Controller {
   }
 
   public Void crearNuevaCaracteristicas(Request request, Response response) {
-    if (!tieneSesionActiva(request)) {
-      response.redirect("/login");
-      return null;
-    }
 
     List<String> listaCaracteristicas = new ArrayList<>();
     listaCaracteristicas.add( request.queryParams("ValoresCaracteristica1") );

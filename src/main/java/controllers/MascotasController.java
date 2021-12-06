@@ -32,10 +32,6 @@ public class MascotasController extends Controller {
   }
 
   public Void registrarMascota(Request request, Response response) {
-    if (!tieneSesionActiva(request)) {
-      response.redirect("/login");
-      return null;
-    }
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
 

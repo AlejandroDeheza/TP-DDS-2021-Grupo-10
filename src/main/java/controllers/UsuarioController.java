@@ -22,18 +22,11 @@ public class UsuarioController extends Controller {
   RepositorioUsuarios repositorioUsuarios = new RepositorioUsuarios();
 
   public ModelAndView mostrarFormularioCreacionUsuario(Request request, Response response) {
-    if (tieneSesionActiva(request)) {
-      response.redirect("/");
-      return null;
-    }
     return new ModelAndView(getMap(request), "registracion.html.hbs");
   }
 
   public Void registrarUsuario(Request request, Response response) {
-    if (tieneSesionActiva(request)) {
-      response.redirect("/");
-      return null;
-    }
+
     String contrasenia = request.queryParams("contrasenia");
     String validacionContrasenia = request.queryParams("validacionContrasenia");
 

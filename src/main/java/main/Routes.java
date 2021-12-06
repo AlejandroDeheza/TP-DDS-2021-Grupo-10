@@ -111,7 +111,18 @@ public class Routes {
     });
 
     before("/logout", (request, response) -> {
-      if (request.session().attribute("user_id") != null) {
+      if (request.matchedPath().equals("/logout")
+          || request.matchedPath().equals("/logout"))
+        if (request.session().attribute("user_id") != null) {
+          response.redirect("/");
+        }
+    });
+
+    before((request, response) -> {
+      if ((request.matchedPath().equals("/login")
+          || request.matchedPath().equals("/usuarios/creacion-usuario")
+          || request.matchedPath().equals("/usuarios"))
+          && request.session().attribute("user_id") != null) {
         response.redirect("/");
       }
     });
@@ -119,7 +130,7 @@ public class Routes {
     before((request, response) -> {
       if ((request.requestMethod().equals("POST") || request.requestMethod().equals("PUT")
           || request.requestMethod().equals("DELETE")
-          ) && request.session().attribute("user_id") == null) {
+          ) && request.session().attribute("user_id") == null && !request.matchedPath().equals("/login")) {
         response.redirect("/login");
       }
     });
