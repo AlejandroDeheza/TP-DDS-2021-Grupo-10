@@ -32,6 +32,10 @@ public class MascotasController extends Controller {
   }
 
   public Void registrarMascota(Request request, Response response) {
+    if (!tieneSesionActiva(request)) {
+      response.redirect("/login");
+      return null;
+    }
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
 
@@ -57,6 +61,10 @@ public class MascotasController extends Controller {
   }
 
   public ModelAndView mostrarMenuDeMascotas(Request request, Response response) {
+    if (!tieneSesionActiva(request)) {
+      response.redirect("/login");
+      return null;
+    }
     return new ModelAndView(getMap(request), "menu-mascotas.html.hbs");
   }
 

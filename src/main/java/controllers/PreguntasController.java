@@ -21,6 +21,10 @@ public class PreguntasController extends Controller {
   private final int totalRespuestasPosibles = 5;
 
   public ModelAndView mostrarPreguntasDeLaAsociacion(Request request, Response response) {
+    if (!tieneSesionActiva(request)) {
+      response.redirect("/login");
+      return null;
+    }
     String idAsociacion = request.params(":idAsociacion");
     List<ParDePreguntas> paresDePreguntas;
     Map<String, Object> modelo = getMap(request);
@@ -48,6 +52,10 @@ public class PreguntasController extends Controller {
   }
 
   public ModelAndView mostrarFomularioNuevaPregunta(Request request, Response response) {
+    if (!tieneSesionActiva(request)) {
+      response.redirect("/login");
+      return null;
+    }
     Map<String, Object> modelo = getMap(request);
     modelo.put("asociacion", request.params(":idAsociacion"));
     modelo.put("rangoDeRespuestas", super.obtenerRango(totalRespuestasPosibles));
@@ -55,7 +63,10 @@ public class PreguntasController extends Controller {
   }
 
   public ModelAndView mostrarFormularioNuevaPreguntaContinuacion(Request request, Response response) {
-    
+    if (!tieneSesionActiva(request)) {
+      response.redirect("/login");
+      return null;
+    }
     List<String> respuestasPosiblesDelDador = new ArrayList<>();
     List<String> respuestasPosiblesDelAdoptante = new ArrayList<>();
 
@@ -100,7 +111,10 @@ public class PreguntasController extends Controller {
   }
 
   public Void crearParDePreguntasAsociacion(Request request, Response response) {
-
+    if (!tieneSesionActiva(request)) {
+      response.redirect("/login");
+      return null;
+    }
     List<ParDeRespuestas> paresDeRespuestas = new ArrayList<>();
 
     super.obtenerRango(totalRespuestasPosibles).forEach(i -> {

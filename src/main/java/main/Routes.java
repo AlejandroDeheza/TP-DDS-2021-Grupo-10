@@ -94,21 +94,33 @@ public class Routes {
 
 
 
-    // Siempre que el ENC-TYPE sea 'multipart/form-data' se debe hacer esto primero
     before((request, response) -> {
       if (request.requestMethod().equals("POST")) {
         //Lo separo porque request.contentType() puede ser null
         if (request.contentType().startsWith("multipart/form-data")) {
+          // Siempre que el ENC-TYPE sea 'multipart/form-data' se debe hacer esto primero
           request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
         }
       }
     });
 
     before("/protected/*", (request, response) -> {
-      request.matchedPath();
-      request.contentType();
-      if (request.requestMethod().equals("POST")) {
-        halt(401, "You are not welcome here");
+      if (request.session().attribute("user_id") == null) {
+        response.redirect("/login");
+      }
+    });
+
+    before("/logout", (request, response) -> {
+      if (request.session().attribute("user_id") != null) {
+        response.redirect("/");
+      }
+    });
+
+    before((request, response) -> {
+      if ((request.requestMethod().equals("POST") || request.requestMethod().equals("PUT")
+          || request.requestMethod().equals("DELETE")
+          ) && request.session().attribute("user_id") == null) {
+        response.redirect("/login");
       }
     });
 

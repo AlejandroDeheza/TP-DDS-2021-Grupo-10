@@ -25,6 +25,10 @@ public class SesionController extends Controller {
   }
 
   public Void crearSesion(Request request, Response response) {
+    if (tieneSesionActiva(request)) {
+      response.redirect("/");
+      return null;
+    }
     try {
       Usuario usuario = repositorioUsuarios.buscarPorUserName(request.queryParams("username"));
 
@@ -57,6 +61,10 @@ public class SesionController extends Controller {
   }
 
   public Void cerrarSesion(Request request, Response response) {
+    if (!tieneSesionActiva(request)) {
+      response.redirect("/login");
+      return null;
+    }
     request.session().removeAttribute("user_id");
     request.session().removeAttribute("is_admin");
     request.session().removeAttribute("user_name");

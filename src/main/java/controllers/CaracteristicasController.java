@@ -12,6 +12,10 @@ public class CaracteristicasController extends Controller {
   RepositorioCaracteristicas repositorioCaracteristicas = new RepositorioCaracteristicas();
 
   public ModelAndView mostrarCaracteristicas(Request request, Response response) {
+    if (!tieneSesionActiva(request)) {
+      response.redirect("/login");
+      return null;
+    }
 
     List<CaracteristicaConValoresPosibles> listaCaracteristicas = repositorioCaracteristicas
         .getCaracteristicasConValoresPosibles();
@@ -29,6 +33,10 @@ public class CaracteristicasController extends Controller {
   }
 
   public ModelAndView mostrarFormularioCreacionCaracteristicas(Request request, Response response) {
+    if (!tieneSesionActiva(request)) {
+      response.redirect("/login");
+      return null;
+    }
     int totalCaracteristicas = 5;
     Map<String, Object> modelo = getMap(request);
     modelo.put("cantidadCaracteristicas", super.obtenerRango(totalCaracteristicas));
@@ -36,6 +44,10 @@ public class CaracteristicasController extends Controller {
   }
 
   public Void crearNuevaCaracteristicas(Request request, Response response) {
+    if (!tieneSesionActiva(request)) {
+      response.redirect("/login");
+      return null;
+    }
 
     List<String> listaCaracteristicas = new ArrayList<>();
     listaCaracteristicas.add( request.queryParams("ValoresCaracteristica1") );
