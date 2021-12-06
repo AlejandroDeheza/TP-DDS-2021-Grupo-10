@@ -46,7 +46,7 @@
             // qrs
             Array.from(document.querySelectorAll(".qrs")).forEach(el => {
                 let idMascota = el.getAttribute('value');
-                let url = `https://patitas-dds-10.herokuapp.com/informes/con-qr/nuevo/${idMascota}`
+                let url = `https://patitas-dds-10.herokuapp.com//mascotas/${idMascota}/encontrada`
                 let qrc = new QRCode(document.getElementById(`mascota-${idMascota}`), url);
 
                 document.getElementById(`imprimirQr-${idMascota}`).addEventListener("click", function () {

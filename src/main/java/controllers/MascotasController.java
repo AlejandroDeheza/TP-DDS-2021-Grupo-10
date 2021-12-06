@@ -62,4 +62,10 @@ public class MascotasController extends Controller {
     modelo.put("mascotasUsuario", repositorioMascotaRegistrada.obtenerMascotasDeUnDuenio(usuario));
     return new ModelAndView(modelo, "mis-mascotas.html.hbs");
   }
+
+  public Void redirigirAInformeConQR(Request request, Response response) {
+    request.session().attribute("idMascota", Long.parseLong(request.params(":idMascota")));
+    response.redirect("/informes/con-qr/nuevo");
+    return null;
+  }
 }

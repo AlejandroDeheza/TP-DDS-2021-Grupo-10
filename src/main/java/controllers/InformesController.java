@@ -32,14 +32,17 @@ public class InformesController extends Controller {
   }
 
   public ModelAndView mostrarFormularioConChapita(Request request, Response response) {
-    String idChapitaString = request.params(":codigoChapita");
-    MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.buscarPorId(Long.parseLong(idChapitaString));
+    String idMascota = request.session().attribute("idMascota");
+    if (idMascota == null) {
+      response.redirect("/informes/con-qr/instrucciones-escaneo");
+      return null;
+    }
+    MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.buscarPorId(Long.parseLong(idMascota));
     if (mascotaRegistrada == null) {
       redireccionCasoError(request, response, "El codigo de chapita no es valido");
       return null;
     }
     Map<String, Object> modelo = getMap(request);
-    modelo.put("codigoChapita", idChapitaString);
     modelo.put("mascotaRegistrada", mascotaRegistrada);
     return new ModelAndView(modelo, "encuentro-con-chapita.html.hbs");
   }
@@ -54,8 +57,8 @@ public class InformesController extends Controller {
 
   public Void generarInformeConQR(Request request, Response response) {
 
-    Long idChapita = Long.parseLong(request.params(":codigoChapita"));
-    MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.buscarPorId(idChapita);
+    Long idMascota = request.session().attribute("idMascota");
+    MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.buscarPorId(idMascota);
 
     InformeConQR informeConQR = new InformeConQR(
         repositorioUsuarios.buscarPorId(request.session().attribute("user_id")).getPersona(),
@@ -69,6 +72,7 @@ public class InformesController extends Controller {
       repositorioInformes.agregar(informeConQR);
     });
 
+    request.session().removeAttribute("idMascota");
     redireccionCasoFeliz(request, response, "El informe se genero con exito!");
     return null;
   }

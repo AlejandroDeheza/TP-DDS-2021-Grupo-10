@@ -64,13 +64,15 @@ public class Routes {
     get("/mascotas-en-adopcion", publicacionesController::mostrarMascotasEnAdopcion, engine); // FIXME <-- no se usa
 
     // Informes
+    get("/mascotas/:idMascota/encontrada", mascotasController::redirigirAInformeConQR);
+
     path("/informes", () -> {
       get("/menu", informesController::mostrarMenuTipoEncuentro, engine);
 
       path("/con-qr", () -> {
         get("/instrucciones-escaneo", informesController::mostrarInstruccionesParaEscanearQR, engine);
-        get("/nuevo/:codigoChapita",  informesController::mostrarFormularioConChapita, engine);
-        post("/:codigoChapita",       informesController::generarInformeConQR);
+        get("/nuevo",                 informesController::mostrarFormularioConChapita, engine);
+        post("",                      informesController::generarInformeConQR);
       });
       path("/sin-qr", () -> {
         get("/nuevo",   informesController::mostrarFormularioSinChapita, engine);
@@ -178,9 +180,10 @@ public class Routes {
   }
 
   private static List<String> rutasDondeNecesitaEstarLogueado() {
-    return Arrays.asList("/mascotas", "/mascotas/registracion-mascota", "/informes/con-qr/nuevo/:codigoChapita",
-        "/informes/sin-qr/nuevo", "/caracteristicas", "/caracteristicas/nueva", "/asociaciones",
-        "/asociaciones/:idAsociacion/preguntas", "/asociaciones/:idAsociacion/preguntas/nueva-pregunta");
+    List<String> lista = Arrays.asList("/mascotas", "/mascotas/registracion-mascota", "/mascotas/:idMascota/encontrada",
+        "/informes/sin-qr/nuevo");
+    lista.addAll(rutasDondeNecesitaSerAdmin());
+    return lista;
   }
 
   static int getHerokuAssignedPort() {
