@@ -44,16 +44,11 @@ public abstract class Controller implements WithGlobalEntityManager, Transaction
     return request.session().attribute("user_id") != null;
   }
 
-  protected Boolean noEsAdmin(Request request) {
-    Boolean esAdmin = request.session().attribute("is_admin");
-    return !esAdmin;
-  }
-
   protected void redireccionCasoFeliz(Request request, Response response, String mensaje) {
     response.redirect(
         request.queryParams("origin") == null ? "/" : request.queryParams("origin")
     );
-    // TODO: hacer una pantalla para poder mostrar un mensaje de exito, como el que ya esta hecho de errores
+    // TODO: hacer una pantalla para poder mostrar un mensaje de exito, como la pantalla de errores
   }
 
   protected void redireccionCasoError(Request request, Response response, String mensaje) {

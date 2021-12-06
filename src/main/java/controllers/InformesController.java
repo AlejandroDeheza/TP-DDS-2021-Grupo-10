@@ -32,13 +32,13 @@ public class InformesController extends Controller {
   }
 
   public ModelAndView mostrarFormularioConChapita(Request request, Response response) {
-    Map<String, Object> modelo = getMap(request);
     String idChapitaString = request.params(":codigoChapita");
     MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.buscarPorId(Long.parseLong(idChapitaString));
     if (mascotaRegistrada == null) {
       redireccionCasoError(request, response, "El codigo de chapita no es valido");
       return null;
     }
+    Map<String, Object> modelo = getMap(request);
     modelo.put("codigoChapita", idChapitaString);
     modelo.put("mascotaRegistrada", mascotaRegistrada);
     return new ModelAndView(modelo, "encuentro-con-chapita.html.hbs");

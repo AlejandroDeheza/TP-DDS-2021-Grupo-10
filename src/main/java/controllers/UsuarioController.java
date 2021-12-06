@@ -40,7 +40,7 @@ public class UsuarioController extends Controller {
     }
 
     if(!contrasenia.equals(validacionContrasenia)) {
-      redireccionCasoError(request, response, "Las contrasenias no matchean entre si");
+      redireccionCasoError(request, response, "Las contrasenias no coinciden entre si");
       return null;
     }
 

@@ -26,10 +26,8 @@ public class PreguntasController extends Controller {
     Map<String, Object> modelo = getMap(request);
 
     if(idAsociacion.equals("0")) {
-      request.session().attribute("es_obligatoria", true);
       paresDePreguntas = repositorioParDePreguntas.getPreguntasObligatorias();
     } else {
-      request.session().attribute("es_obligatoria", false);
       Asociacion asociacionBuscada = repoAsociaciones.buscarPorId(Long.parseLong(idAsociacion));
       validarAsociacionSolicitada(request, response, asociacionBuscada);
       paresDePreguntas = asociacionBuscada.getPreguntas();
@@ -42,17 +40,17 @@ public class PreguntasController extends Controller {
     //FIXME: error en la vista al usar las --> asociacionesOrdenadas. El error parece que esta en el javascript
     modelo.put("asociaciones", super.getAsociacionesOrdenadas());
     modelo.put("preguntas", paresDePreguntasOrdenadas);
-    modelo.put("esObligatoria", request.session().attribute("es_obligatoria"));
+    modelo.put("esObligatoria", idAsociacion.equals("0"));
     modelo.put("mostrarBotonAgregarPreguntas", true);
     return new ModelAndView(modelo, "preguntas-asociaciones.html.hbs");
   }
 
   public ModelAndView mostrarFomularioNuevaPregunta(Request request, Response response) {
-    Map<String, Object> modelo = getMap(request);
     if (!request.params(":idAsociacion").equals("0")) {
       Asociacion asociacionBuscada = repoAsociaciones.buscarPorId(Long.parseLong(request.params(":idAsociacion")));
       validarAsociacionSolicitada(request, response, asociacionBuscada);
     }
+    Map<String, Object> modelo = getMap(request);
     modelo.put("idAsociacion", request.params(":idAsociacion"));
     modelo.put("rangoDeRespuestas", super.obtenerRango(totalRespuestasPosibles));
     return new ModelAndView(modelo, "nueva-pregunta.html.hbs");
@@ -65,9 +63,9 @@ public class PreguntasController extends Controller {
       return null;
     }
     Map<String, Object> modelo = getMap(request);
-    Boolean esObligatoria = request.session().attribute("es_obligatoria");
-    if(!esObligatoria) {
-      Asociacion asociacionBuscada = repoAsociaciones.buscarPorId(Long.parseLong(request.params(":idAsociacion")));
+    String idAsociacion = request.params(":idAsociacion");
+    if(!idAsociacion.equals("0")) {
+      Asociacion asociacionBuscada = repoAsociaciones.buscarPorId(Long.parseLong(idAsociacion));
       validarAsociacionSolicitada(request, response, asociacionBuscada);
       modelo.put("asociacion", asociacionBuscada);
     }
@@ -92,7 +90,7 @@ public class PreguntasController extends Controller {
         request.queryParams("concepto"),
         request.queryParams("preguntaDador"),
         request.queryParams("preguntaAdoptante"),
-        esObligatoria,
+        idAsociacion.equals("0"),
         respuestasPosiblesDelDador,
         respuestasPosiblesDelAdoptante
     );
@@ -147,7 +145,6 @@ public class PreguntasController extends Controller {
     });
 
     request.session().removeAttribute("borrador_par_preguntas");
-    request.session().removeAttribute("es_obligatoria");
     response.redirect("/asociaciones/".concat(request.params(":idAsociacion")).concat("/preguntas"));
     return null;
   }

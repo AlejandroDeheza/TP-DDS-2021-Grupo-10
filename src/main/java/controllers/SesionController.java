@@ -42,10 +42,12 @@ public class SesionController extends Controller {
       super.iniciarSesion(request, usuario);
       redireccionCasoFeliz(request, response, null);
       return null;
+
     } catch (NoSuchElementException | AutenticacionInvalidaException e) {
       // entra aca si se ingreso mal el usuario o si se ingreso mal la contraseña respectivamente
       setearAtributosAnteError(request, response, e);
       return null;
+
     } catch (AutenticacionConsecutivaException | UserNameException e) {
       // entra aca si se ingreso mal la contraseña hace poco o si se ingreso mal el nombre de usuario respectivamente
       redireccionCasoError(request, response, e.getMessage());
@@ -66,10 +68,7 @@ public class SesionController extends Controller {
   private void setearAtributosAnteError(Request request, Response response, Exception e) {
     request.session().attribute("ultimo_intento_sesion_fallido", LocalTime.now());
     int contador = request.session().attribute("contador_intentos_sesion_fallidos");
-    request.session().attribute(
-        "contador_intentos_sesion_fallidos",
-        contador + 1
-    );
+    request.session().attribute("contador_intentos_sesion_fallidos", contador + 1);
     redireccionCasoError(request, response, e.getMessage());
   }
 
