@@ -6,6 +6,7 @@ import spark.Spark;
 import spark.debug.DebugScreen;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import utils.Constantes;
+import javax.servlet.MultipartConfigElement;
 import java.io.File;
 
 import static spark.Spark.*;
@@ -90,9 +91,28 @@ public class Routes {
         post("",                        preguntasController::crearParDePreguntasAsociacion);
       });
     });
-    
 
-    Spark.after((request, response) -> {
+
+
+    // Siempre que el ENC-TYPE sea 'multipart/form-data' se debe hacer esto primero
+    before((request, response) -> {
+      if (request.requestMethod().equals("POST")) {
+        //Lo separo porque request.contentType() puede ser null
+        if (request.contentType().startsWith("multipart/form-data")) {
+          request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
+        }
+      }
+    });
+
+    before("/protected/*", (request, response) -> {
+      request.matchedPath();
+      request.contentType();
+      if (request.requestMethod().equals("POST")) {
+        halt(401, "You are not welcome here");
+      }
+    });
+
+    after((request, response) -> {
       PerThreadEntityManagers.getEntityManager();
       PerThreadEntityManagers.closeEntityManager();
     });

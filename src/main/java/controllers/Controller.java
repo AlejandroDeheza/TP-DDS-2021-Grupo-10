@@ -124,8 +124,5 @@ public abstract class Controller implements WithGlobalEntityManager, Transaction
         .collect(Collectors.toList());
   }
 
-  protected void setearMultipartConfig(Request request) {
-    request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
-  }
 }
   

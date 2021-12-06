@@ -70,9 +70,6 @@ public class InformesController extends Controller {
       return null;
     }
 
-    // Siempre que el ENC-TYPE sea 'multipart/form-data' se debe hacer esto primero
-    super.setearMultipartConfig(request);
-
     Long idChapita = Long.parseLong(request.params(":codigoChapita"));
     MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.buscarPorId(idChapita);
     if (mascotaRegistrada == null) {
@@ -101,9 +98,6 @@ public class InformesController extends Controller {
       response.redirect("/login");
       return null;
     }
-
-    // Siempre que el ENC-TYPE sea 'multipart/form-data' se debe hacer esto primero
-    super.setearMultipartConfig(request);
 
     TamanioMascota tamanioMascota = TamanioMascota.values()[Integer.parseInt(request.queryParams("tamanioMascota"))];
     InformeSinQR informeSinQR = new InformeSinQR(
