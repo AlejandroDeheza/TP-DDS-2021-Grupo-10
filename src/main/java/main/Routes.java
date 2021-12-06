@@ -9,6 +9,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 import utils.Constantes;
 import javax.servlet.MultipartConfigElement;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -180,8 +181,9 @@ public class Routes {
   }
 
   private static List<String> rutasDondeNecesitaEstarLogueado() {
-    List<String> lista = Arrays.asList("/mascotas", "/mascotas/registracion-mascota", "/mascotas/:idMascota/encontrada",
-        "/informes/sin-qr/nuevo");
+    List<String> lista = new ArrayList<>();
+    lista.addAll(Arrays.asList("/mascotas", "/mascotas/registracion-mascota", "/mascotas/:idMascota/encontrada",
+        "/informes/sin-qr/nuevo"));
     lista.addAll(rutasDondeNecesitaSerAdmin());
     return lista;
   }

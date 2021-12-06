@@ -32,12 +32,12 @@ public class InformesController extends Controller {
   }
 
   public ModelAndView mostrarFormularioConChapita(Request request, Response response) {
-    String idMascota = request.session().attribute("idMascota");
+    Long idMascota = request.session().attribute("idMascota");
     if (idMascota == null) {
       response.redirect("/informes/con-qr/instrucciones-escaneo");
       return null;
     }
-    MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.buscarPorId(Long.parseLong(idMascota));
+    MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.buscarPorId(idMascota);
     if (mascotaRegistrada == null) {
       redireccionCasoError(request, response, "El codigo de chapita no es valido");
       return null;
