@@ -57,9 +57,9 @@ public abstract class Controller implements WithGlobalEntityManager, Transaction
   }
 
   protected void redireccionCasoError(Request request, Response response, String porDefecto, String mensaje) {
+    request.session().attribute("mensajeError", mensaje);
     response.redirect("/error" +
-        (request.queryParams("origin") == null ? "" : "?origin=" + request.queryParams("origin")) +
-        "?mensajeError=" + mensaje
+        (request.queryParams("origin") == null ? "" : "?origin=" + request.queryParams("origin"))
     );
   }
 

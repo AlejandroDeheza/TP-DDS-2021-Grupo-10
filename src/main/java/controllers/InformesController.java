@@ -56,10 +56,6 @@ public class InformesController extends Controller {
 
     Long idChapita = Long.parseLong(request.params(":codigoChapita"));
     MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.buscarPorId(idChapita);
-    if (mascotaRegistrada == null) {
-      redireccionCasoError(request, response, "/informes/menu", "El codigo de chapita no es valido");
-      return null;
-    }
 
     InformeConQR informeConQR = new InformeConQR(
         repositorioUsuarios.buscarPorId(request.session().attribute("user_id")).getPersona(),

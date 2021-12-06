@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class PreguntasController extends Controller {
 
-  private RepositorioAsociaciones repositorioAsociaciones = new RepositorioAsociaciones();
+  private RepositorioAsociaciones repoAsociaciones = new RepositorioAsociaciones();
   private RepositorioParDePreguntas repositorioParDePreguntas = new RepositorioParDePreguntas();
   private final int totalRespuestasPosibles = 5;
 
@@ -30,7 +30,7 @@ public class PreguntasController extends Controller {
       paresDePreguntas = repositorioParDePreguntas.getPreguntasObligatorias();
     } else {
       request.session().attribute("es_obligatoria", false);
-      Asociacion asociacionBuscada = repositorioAsociaciones.buscarPorId(Long.parseLong(idAsociacion));
+      Asociacion asociacionBuscada = repoAsociaciones.buscarPorId(Long.parseLong(idAsociacion));
       validarAsociacionSolicitada(request, response, asociacionBuscada);
       paresDePreguntas = asociacionBuscada.getPreguntas();
       modelo.put("asociacion", asociacionBuscada);
@@ -49,6 +49,8 @@ public class PreguntasController extends Controller {
 
   public ModelAndView mostrarFomularioNuevaPregunta(Request request, Response response) {
     Map<String, Object> modelo = getMap(request);
+    Asociacion asociacionBuscada = repoAsociaciones.buscarPorId(Long.parseLong(request.params(":idAsociacion")));
+    validarAsociacionSolicitada(request, response, asociacionBuscada);
     modelo.put("asociacion", request.params(":idAsociacion"));
     modelo.put("rangoDeRespuestas", super.obtenerRango(totalRespuestasPosibles));
     return new ModelAndView(modelo, "nueva-pregunta.html.hbs");
@@ -60,6 +62,14 @@ public class PreguntasController extends Controller {
       response.redirect("/asociaciones");
       return null;
     }
+    Map<String, Object> modelo = getMap(request);
+    Boolean esObligatoria = request.session().attribute("es_obligatoria");
+    if(!esObligatoria) {
+      Asociacion asociacionBuscada = repoAsociaciones.buscarPorId(Long.parseLong(request.params(":idAsociacion")));
+      validarAsociacionSolicitada(request, response, asociacionBuscada);
+      modelo.put("asociacion", asociacionBuscada);
+    }
+
     List<String> respuestasPosiblesDelDador = new ArrayList<>();
     List<String> respuestasPosiblesDelAdoptante = new ArrayList<>();
 
@@ -80,17 +90,11 @@ public class PreguntasController extends Controller {
         request.queryParams("concepto"),
         request.queryParams("preguntaDador"),
         request.queryParams("preguntaAdoptante"),
-        request.session().attribute("es_obligatoria"),
+        esObligatoria,
         respuestasPosiblesDelDador,
         respuestasPosiblesDelAdoptante
     );
 
-    Map<String, Object> modelo = getMap(request);
-    if(!borradorParDePreguntas.getEsPreguntaObligatoria()) {
-      Asociacion asociacionBuscada = repositorioAsociaciones.buscarPorId(borradorParDePreguntas.getAsociacionId());
-      validarAsociacionSolicitada(request, response, asociacionBuscada);
-      modelo.put("asociacion", asociacionBuscada);
-    }
     modelo.put("cantidadRespuestasPosibles", super.obtenerRango(totalRespuestasPosibles));
     modelo.put("respuestasPosiblesDador", borradorParDePreguntas.getRespuestasPosiblesDelDador());
     modelo.put("respuestasPosiblesAdoptante", borradorParDePreguntas.getRespuestasPosiblesDelAdoptante());
@@ -135,7 +139,7 @@ public class PreguntasController extends Controller {
     withTransaction(() -> {
       repositorioParDePreguntas.agregar(parDePreguntas);
       if(!borradorParDePreguntas.getEsPreguntaObligatoria()) {
-        Asociacion asociacion = repositorioAsociaciones.buscarPorId(borradorParDePreguntas.getAsociacionId());
+        Asociacion asociacion = repoAsociaciones.buscarPorId(borradorParDePreguntas.getAsociacionId());
         asociacion.agregarPregunta(parDePreguntas);
       }
     });
