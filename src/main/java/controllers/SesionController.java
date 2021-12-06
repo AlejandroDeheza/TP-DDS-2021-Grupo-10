@@ -40,10 +40,8 @@ public class SesionController extends Controller {
           request.session().attribute("contador_intentos_sesion_fallidos")
       ).autenticarUsuario(usuario, request.queryParams("password"));
 
-      request.session().attribute("user_id", usuario.getId());
-      request.session().attribute("is_admin", usuario.esAdmin());
-      request.session().attribute("user_name", usuario.getUsuario());
       request.session().attribute("contador_intentos_sesion_fallidos", 0);
+      super.iniciarSesion(request, usuario);
       redireccionCasoFeliz(request, response, "/", null);
       return null;
     } catch (NoSuchElementException | AutenticacionInvalidaException e) {

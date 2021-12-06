@@ -76,7 +76,7 @@ public class UsuarioController extends Controller {
         repositorioUsuarios.agregar(nuevo);
       });
 
-      request.session().attribute("user_id", nuevo.getId());
+      super.iniciarSesion(request, nuevo);
       redireccionCasoFeliz(request, response, "/", "La cuenta se ha registrado con exito!");
     }
     return null;

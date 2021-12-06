@@ -4,6 +4,7 @@ import modelo.asociacion.Asociacion;
 import modelo.mascota.Foto;
 import modelo.mascota.caracteristica.Caracteristica;
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
+import modelo.usuario.Usuario;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 import repositorios.RepositorioAsociaciones;
@@ -123,6 +124,12 @@ public abstract class Controller implements WithGlobalEntityManager, Transaction
     return new RepositorioAsociaciones().listarTodos().stream()
         .sorted((a1, a2) -> porOrdenAlfabetico(a1.getNombre(), a2.getNombre()))
         .collect(Collectors.toList());
+  }
+
+  protected void iniciarSesion(Request request, Usuario usuario){
+    request.session().attribute("user_id", usuario.getId());
+    request.session().attribute("is_admin", usuario.esAdmin());
+    request.session().attribute("user_name", usuario.getUsuario());
   }
 
 }
