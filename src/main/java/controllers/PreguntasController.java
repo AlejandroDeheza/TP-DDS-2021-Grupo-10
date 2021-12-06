@@ -63,9 +63,10 @@ public class PreguntasController extends Controller {
   }
 
   public ModelAndView mostrarFormularioNuevaPreguntaContinuacion(Request request, Response response) {
-    if (!tieneSesionActiva(request)) {
+    if (request.queryParams("concepto") == null) {
       response.redirect("/login");
       return null;
+      // TODO: DEBE VALIDAR SI LA REQUEST ANTERIOR FUE LA CORRECTA
     }
     List<String> respuestasPosiblesDelDador = new ArrayList<>();
     List<String> respuestasPosiblesDelAdoptante = new ArrayList<>();
@@ -92,11 +93,10 @@ public class PreguntasController extends Controller {
         respuestasPosiblesDelAdoptante
     );
 
-    Asociacion asociacionBuscada = repositorioAsociaciones.buscarPorId(borradorParDePreguntas.getAsociacionId());
-    validarAsociacionSolicitada(request, response, asociacionBuscada);
-
     Map<String, Object> modelo = getMap(request);
     if(!borradorParDePreguntas.getEsPreguntaObligatoria()) {
+      Asociacion asociacionBuscada = repositorioAsociaciones.buscarPorId(borradorParDePreguntas.getAsociacionId());
+      validarAsociacionSolicitada(request, response, asociacionBuscada);
       modelo.put("asociacion", asociacionBuscada);
     }
     modelo.put("cantidadRespuestasPosibles", super.obtenerRango(totalRespuestasPosibles));

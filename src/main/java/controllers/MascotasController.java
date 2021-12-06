@@ -57,10 +57,6 @@ public class MascotasController extends Controller {
   }
 
   public ModelAndView mostrarMenuDeMascotas(Request request, Response response) {
-    if (!tieneSesionActiva(request)) {
-      response.redirect("/login");
-      return null;
-    }
     return new ModelAndView(getMap(request), "menu-mascotas.html.hbs");
   }
 

@@ -77,7 +77,7 @@ public class Routes {
 
     // Caracteristicas
     get("/caracteristicas", caracteristicasController::mostrarCaracteristicas, engine);
-    get("/caracteristicas/nueva-caracteristica", caracteristicasController::mostrarFormularioCreacionCaracteristicas, engine);
+    get("/caracteristicas/nueva", caracteristicasController::mostrarFormularioCreacionCaracteristicas, engine);
     post("/caracteristicas", caracteristicasController::crearNuevaCaracteristicas);
 
     // Preguntas de Asociaciones
@@ -110,12 +110,28 @@ public class Routes {
       }
     });
 
-    before("/logout", (request, response) -> {
-      if (request.matchedPath().equals("/logout")
-          || request.matchedPath().equals("/logout"))
-        if (request.session().attribute("user_id") != null) {
-          response.redirect("/");
-        }
+    before((request, response) -> {
+      if ((request.requestMethod().equals("POST") || request.requestMethod().equals("PUT")
+          || request.requestMethod().equals("DELETE")
+      ) && request.session().attribute("user_id") == null && !request.matchedPath().equals("/login")) {
+        response.redirect("/login");
+      }
+    });
+
+    // TODO, BEFORE PARA ADMIN
+
+    before((request, response) -> {
+      if ((request.matchedPath().equals("/mascotas")
+          || request.matchedPath().equals("/mascotas/registracion-mascota")
+          || request.matchedPath().equals("/informes/con-qr/nuevo/:codigoChapita")
+          || request.matchedPath().equals("/informes/sin-qr/nuevo")
+          || request.matchedPath().equals("/caracteristicas")
+          || request.matchedPath().equals("/caracteristicas/nueva")
+          || request.matchedPath().equals("/")
+      )
+          && request.session().attribute("user_id") == null) {
+        response.redirect("/login");
+      }
     });
 
     before((request, response) -> {
@@ -124,14 +140,6 @@ public class Routes {
           || request.matchedPath().equals("/usuarios"))
           && request.session().attribute("user_id") != null) {
         response.redirect("/");
-      }
-    });
-
-    before((request, response) -> {
-      if ((request.requestMethod().equals("POST") || request.requestMethod().equals("PUT")
-          || request.requestMethod().equals("DELETE")
-          ) && request.session().attribute("user_id") == null && !request.matchedPath().equals("/login")) {
-        response.redirect("/login");
       }
     });
 

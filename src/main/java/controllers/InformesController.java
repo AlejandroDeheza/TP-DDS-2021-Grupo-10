@@ -28,10 +28,6 @@ public class InformesController extends Controller {
   RepositorioInformes repositorioInformes = new RepositorioInformes();
 
   public ModelAndView mostrarMenuTipoEncuentro(Request request, Response response) {
-    if (!tieneSesionActiva(request)) {
-      response.redirect("/login");
-      return null;
-    }
     return new ModelAndView(getMap(request), "encontre-mascota-tipo-encuentro.html.hbs");
   }
 
@@ -110,10 +106,6 @@ public class InformesController extends Controller {
   }
 
   public ModelAndView mostrarInstruccionesParaEscanearQR(Request request, Response response) {
-    if (!tieneSesionActiva(request)) {
-      response.redirect("/login");
-      return null;
-    }
     return new ModelAndView(getMap(request), "escaneeQR.html.hbs");
   }
 
