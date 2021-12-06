@@ -73,7 +73,7 @@ public class InformesController extends Controller {
       repositorioInformes.agregar(informeConQR);
     });
 
-    redireccionCasoFeliz(request, response, "/", "Se genero el informe!");
+    redireccionCasoFeliz(request, response, "El informe se genero con exito!");
     return null;
   }
 
@@ -93,7 +93,7 @@ public class InformesController extends Controller {
       repositorioInformes.agregar(informeSinQR);
     });
 
-    redireccionCasoFeliz(request, response, "/", "Se genero el informe!");
+    redireccionCasoFeliz(request, response, "El informe se genero con exito!");
     return null;
   }
 

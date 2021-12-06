@@ -1,7 +1,9 @@
 package controllers;
 
-import modelo.mascota.*;
-import modelo.mascota.caracteristica.Caracteristica;
+import modelo.mascota.Animal;
+import modelo.mascota.MascotaRegistrada;
+import modelo.mascota.Sexo;
+import modelo.mascota.TamanioMascota;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioMascotaRegistrada;
@@ -11,7 +13,6 @@ import spark.Request;
 import spark.Response;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Map;
 
 public class MascotasController extends Controller {
@@ -47,7 +48,7 @@ public class MascotasController extends Controller {
       repositorioMascotaRegistrada.agregar(nueva);
     });
 
-    redireccionCasoFeliz(request, response, "/", "MASCOTA_REGISTRADA");
+    response.redirect("/mascotas");
     return null;
   }
 

@@ -49,11 +49,11 @@ public abstract class Controller implements WithGlobalEntityManager, Transaction
     return !esAdmin;
   }
 
-  protected void redireccionCasoFeliz(Request request, Response response, String porDefecto, String mensaje) {
+  protected void redireccionCasoFeliz(Request request, Response response, String mensaje) {
     response.redirect(
-        request.queryParams("origin") == null ? porDefecto : request.queryParams("origin")
+        request.queryParams("origin") == null ? "/" : request.queryParams("origin")
     );
-    // TODO redirigir agregando un mensaje de exito si hace falta
+    // TODO: hacer una pantalla para poder mostrar un mensaje de exito, como el que ya esta hecho de errores
   }
 
   protected void redireccionCasoError(Request request, Response response, String porDefecto, String mensaje) {

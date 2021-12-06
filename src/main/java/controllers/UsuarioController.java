@@ -79,7 +79,7 @@ public class UsuarioController extends Controller {
       });
 
       super.iniciarSesion(request, nuevo);
-      redireccionCasoFeliz(request, response, "/", "La cuenta se ha registrado con exito!");
+      redireccionCasoFeliz(request, response, "La cuenta se ha registrado con exito!");
     }
     return null;
   }

@@ -40,7 +40,7 @@ public class SesionController extends Controller {
 
       request.session().attribute("contador_intentos_sesion_fallidos", 0);
       super.iniciarSesion(request, usuario);
-      redireccionCasoFeliz(request, response, "/", null);
+      redireccionCasoFeliz(request, response, null);
       return null;
     } catch (NoSuchElementException | AutenticacionInvalidaException e) {
       // entra aca si se ingreso mal el usuario o si se ingreso mal la contraseña respectivamente
