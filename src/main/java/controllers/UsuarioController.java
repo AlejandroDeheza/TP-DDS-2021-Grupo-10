@@ -40,47 +40,49 @@ public class UsuarioController extends Controller {
     }
 
     if(!contrasenia.equals(validacionContrasenia)) {
-      redireccionCasoError(request, response, "/creacion-usuario", "Las contrasenias no matchean entre si");
+      redireccionCasoError(request, response, "/creacion-usuario",
+          "Las contrasenias no matchean entre si");
       return null;
     }
 
     if (repositorioUsuarios.yaExiste(request.queryParams("usuario"))) {
-      redireccionCasoError(request, response, "/creacion-usuario", "Ya existe una cuenta con el nombre de usuario ingresado");
-    } else {
-
-      DocumentoIdentidad documentoIdentidad = new DocumentoIdentidad(
-          TipoDocumento.values()[Integer.parseInt(request.queryParams("tipoDocumento"))],
-          request.queryParams("numeroDocumento")
-      );
-
-      DatosDeContacto datosDeContacto = new DatosDeContacto(
-          request.queryParams("telefono"),
-          request.queryParams("email")
-      );
-
-      Persona persona = new Persona(
-          request.queryParams("nombre"),
-          request.queryParams("apellido"),
-          documentoIdentidad,
-          datosDeContacto,
-          LocalDate.parse(request.queryParams("fechaNacimiento"), DateTimeFormatter.ofPattern("MM/dd/yyyy")),
-          TipoNotificadorPreferido.values()[Integer.parseInt(request.queryParams("tipoNotificadorPreferido"))]
-      );
-
-      Usuario nuevo = new Usuario(
-          request.queryParams("usuario"),
-          request.queryParams("contrasenia"),
-          TipoUsuario.NORMAL,
-          persona
-      );
-
-      withTransaction(() -> {
-        repositorioUsuarios.agregar(nuevo);
-      });
-
-      super.iniciarSesion(request, nuevo);
-      redireccionCasoFeliz(request, response, "La cuenta se ha registrado con exito!");
+      redireccionCasoError(request, response, "/creacion-usuario",
+          "Ya existe una cuenta con el nombre de usuario ingresado");
+      return null;
     }
+
+    DocumentoIdentidad documentoIdentidad = new DocumentoIdentidad(
+        TipoDocumento.values()[Integer.parseInt(request.queryParams("tipoDocumento"))],
+        request.queryParams("numeroDocumento")
+    );
+
+    DatosDeContacto datosDeContacto = new DatosDeContacto(
+        request.queryParams("telefono"),
+        request.queryParams("email")
+    );
+
+    Persona persona = new Persona(
+        request.queryParams("nombre"),
+        request.queryParams("apellido"),
+        documentoIdentidad,
+        datosDeContacto,
+        LocalDate.parse(request.queryParams("fechaNacimiento"), DateTimeFormatter.ofPattern("MM/dd/yyyy")),
+        TipoNotificadorPreferido.values()[Integer.parseInt(request.queryParams("tipoNotificadorPreferido"))]
+    );
+
+    Usuario nuevo = new Usuario(
+        request.queryParams("usuario"),
+        request.queryParams("contrasenia"),
+        TipoUsuario.NORMAL,
+        persona
+    );
+
+    withTransaction(() -> {
+      repositorioUsuarios.agregar(nuevo);
+    });
+
+    super.iniciarSesion(request, nuevo);
+    redireccionCasoFeliz(request, response, "La cuenta se ha registrado con exito!");
     return null;
   }
 }
