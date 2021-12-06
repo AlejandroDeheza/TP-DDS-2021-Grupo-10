@@ -82,7 +82,7 @@ public class PreguntasController extends Controller {
     respuestasPosiblesDelAdoptante.removeAll(Collections.singleton(""));
 
     if(respuestasPosiblesDelDador.size() <= 1 || respuestasPosiblesDelAdoptante.size() <= 1) {
-      super.redireccionCasoError(request, response, null, "Debe ingresar mas de una respuesta posible");
+      super.redireccionCasoError(request, response, "Debe ingresar mas de una respuesta posible");
     }
 
     BorradorParDePreguntas borradorParDePreguntas = new BorradorParDePreguntas(
@@ -152,7 +152,7 @@ public class PreguntasController extends Controller {
 
   private void validarAsociacionSolicitada(Request request, Response response, Asociacion asociacionBuscada) {
     if (asociacionBuscada == null) {
-      redireccionCasoError(request, response, "/asociaciones", "La asociacion solicitada no es valida");
+      redireccionCasoError(request, response, "La asociacion solicitada no es valida");
     }
   }
 

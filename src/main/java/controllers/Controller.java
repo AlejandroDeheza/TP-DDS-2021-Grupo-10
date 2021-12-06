@@ -56,11 +56,9 @@ public abstract class Controller implements WithGlobalEntityManager, Transaction
     // TODO: hacer una pantalla para poder mostrar un mensaje de exito, como el que ya esta hecho de errores
   }
 
-  protected void redireccionCasoError(Request request, Response response, String porDefecto, String mensaje) {
+  protected void redireccionCasoError(Request request, Response response, String mensaje) {
     request.session().attribute("mensajeError", mensaje);
-    response.redirect("/error" +
-        (request.queryParams("origin") == null ? "" : "?origin=" + request.queryParams("origin"))
-    );
+    response.redirect("/error");
   }
 
   protected List<Caracteristica> obtenerListaCaracteristicas(Request request) {
@@ -108,7 +106,7 @@ public abstract class Controller implements WithGlobalEntityManager, Transaction
       fotosMascota.add(new Foto(nombreDeLaFoto, LocalDate.now().toString()));
 
     } catch (IOException | ServletException exception) {
-      redireccionCasoError(request, response, "/",
+      redireccionCasoError(request, response,
           "Hubo un error al cargar la foto de tu mascota, intentalo mas tarde o intenta con otra foto");
     }
     return fotosMascota;

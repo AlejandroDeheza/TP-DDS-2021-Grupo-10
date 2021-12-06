@@ -47,7 +47,7 @@ public class CaracteristicasController extends Controller {
     listaCaracteristicas.removeAll(Collections.singleton(""));
 
     if (listaCaracteristicas.size() < 2) {
-      super.redireccionCasoError(request, response, null, "Debe ingresar mas de una caracteristica posible");
+      super.redireccionCasoError(request, response, "Debe ingresar mas de una caracteristica posible");
     }
 
     CaracteristicaConValoresPosibles caracteristicaConValores = new CaracteristicaConValoresPosibles(

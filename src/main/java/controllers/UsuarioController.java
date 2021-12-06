@@ -35,19 +35,17 @@ public class UsuarioController extends Controller {
     try {
       new ValidadorContrasenias().correrValidaciones(request.queryParams("contrasenia"));
     } catch (ContraseniaInvalidaException e) {
-      redireccionCasoError(request, response, "/error", e.getMessage());
+      redireccionCasoError(request, response, e.getMessage());
       return null;
     }
 
     if(!contrasenia.equals(validacionContrasenia)) {
-      redireccionCasoError(request, response, "/creacion-usuario",
-          "Las contrasenias no matchean entre si");
+      redireccionCasoError(request, response, "Las contrasenias no matchean entre si");
       return null;
     }
 
     if (repositorioUsuarios.yaExiste(request.queryParams("usuario"))) {
-      redireccionCasoError(request, response, "/creacion-usuario",
-          "Ya existe una cuenta con el nombre de usuario ingresado");
+      redireccionCasoError(request, response, "Ya existe una cuenta con el nombre de usuario ingresado");
       return null;
     }
 

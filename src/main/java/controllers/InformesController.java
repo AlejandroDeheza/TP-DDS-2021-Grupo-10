@@ -36,7 +36,7 @@ public class InformesController extends Controller {
     String idChapitaString = request.params(":codigoChapita");
     MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.buscarPorId(Long.parseLong(idChapitaString));
     if (mascotaRegistrada == null) {
-      redireccionCasoError(request, response, "/informes/menu", "El codigo de chapita no es valido");
+      redireccionCasoError(request, response, "El codigo de chapita no es valido");
       return null;
     }
     modelo.put("codigoChapita", idChapitaString);

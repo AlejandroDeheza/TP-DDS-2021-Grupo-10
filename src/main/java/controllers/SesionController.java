@@ -48,7 +48,7 @@ public class SesionController extends Controller {
       return null;
     } catch (AutenticacionConsecutivaException | UserNameException e) {
       // entra aca si se ingreso mal la contraseña hace poco o si se ingreso mal el nombre de usuario respectivamente
-      redireccionCasoError(request, response, "/login", e.getMessage());
+      redireccionCasoError(request, response, e.getMessage());
       return null;
     }
   }
@@ -70,7 +70,7 @@ public class SesionController extends Controller {
         "contador_intentos_sesion_fallidos",
         contador + 1
     );
-    redireccionCasoError(request, response, "/login", e.getMessage());
+    redireccionCasoError(request, response, e.getMessage());
   }
 
 }
