@@ -128,8 +128,6 @@ public class Routes {
       }
     });
 
-    // TODO, DESPUES DE INICIAR SESION REDIRIGIR A LA PAGINA DONDE ESTABA
-
     before((request, response) -> {
       Boolean esAdmin = request.session().attribute("is_admin");
       if ((request.pathInfo().equals("/caracteristicas")
