@@ -44,6 +44,20 @@ public abstract class Controller implements WithGlobalEntityManager, Transaction
     return request.session().attribute("user_id") != null;
   }
 
+  protected String getRutaConOrigin(Request request, String ruta) {
+    if (request.queryParams("origin") != null) {
+      return ruta + "?origin=" + request.queryParams("origin");
+    } else {
+      return ruta;
+    }
+  }
+
+  protected void iniciarSesion(Request request, Usuario usuario){
+    request.session().attribute("user_id", usuario.getId());
+    request.session().attribute("is_admin", usuario.esAdmin());
+    request.session().attribute("user_name", usuario.getUsuario());
+  }
+
   protected void redireccionCasoFeliz(Request request, Response response, String mensaje) {
     response.redirect(
         request.queryParams("origin") == null ? "/" : request.queryParams("origin")
@@ -54,6 +68,21 @@ public abstract class Controller implements WithGlobalEntityManager, Transaction
   protected void redireccionCasoError(Request request, Response response, String mensaje) {
     request.session().attribute("mensajeError", mensaje);
     response.redirect("/error");
+  }
+
+  protected List<Integer> obtenerRango(int limite) {
+    return IntStream.rangeClosed(1, limite).boxed()
+        .collect(Collectors.toList());
+  }
+
+  protected List<Asociacion> getAsociacionesOrdenadas() {
+    return new RepositorioAsociaciones().listarTodos().stream()
+        .sorted((a1, a2) -> porOrdenAlfabetico(a1.getNombre(), a2.getNombre()))
+        .collect(Collectors.toList());
+  }
+
+  protected int porOrdenAlfabetico(String s1, String s2) {
+    return s1.compareTo(s2);
   }
 
   protected List<Caracteristica> obtenerListaCaracteristicas(Request request) {
@@ -107,33 +136,5 @@ public abstract class Controller implements WithGlobalEntityManager, Transaction
     return fotosMascota;
   }
 
-  protected List<Integer> obtenerRango(int limite) {
-    return IntStream.rangeClosed(1, limite).boxed()
-        .collect(Collectors.toList());
-  }
-
-  protected int porOrdenAlfabetico(String s1, String s2) {
-    return s1.compareTo(s2);
-  }
-
-  protected List<Asociacion> getAsociacionesOrdenadas() {
-    return new RepositorioAsociaciones().listarTodos().stream()
-        .sorted((a1, a2) -> porOrdenAlfabetico(a1.getNombre(), a2.getNombre()))
-        .collect(Collectors.toList());
-  }
-
-  protected void iniciarSesion(Request request, Usuario usuario){
-    request.session().attribute("user_id", usuario.getId());
-    request.session().attribute("is_admin", usuario.esAdmin());
-    request.session().attribute("user_name", usuario.getUsuario());
-  }
-
-  protected String getRutaConOrigin(Request request, String ruta) {
-    if (request.queryParams("origin") != null) {
-      return ruta + "?origin=" + request.queryParams("origin");
-    } else {
-      return ruta;
-    }
-  }
 }
   

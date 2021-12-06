@@ -2,12 +2,15 @@ package main;
 
 import controllers.*;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
+import spark.Request;
 import spark.Spark;
 import spark.debug.DebugScreen;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import utils.Constantes;
 import javax.servlet.MultipartConfigElement;
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 import static spark.Spark.*;
 
@@ -93,7 +96,6 @@ public class Routes {
     });
 
 
-
     before((request, response) -> {
       if (request.requestMethod().equals("POST")) {
         //Lo separo porque request.contentType() puede ser null si no es POST
@@ -102,57 +104,27 @@ public class Routes {
           request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
         }
       }
-    });
 
-    before((request, response) -> {
-      if ((request.requestMethod().equals("POST") || request.requestMethod().equals("PUT")
-          || request.requestMethod().equals("DELETE")
-      ) && request.session().attribute("user_id") == null
-          && !request.pathInfo().equals("/login")
-          && !request.pathInfo().equals("/usuarios")) {
-        response.redirect("/login");
+      if (tieneSesionActiva(request)) {
+
+        if (estaHaciendoAlgoQueNoTieneSentido(request)) {
+          response.redirect("/");
+        }
+        if (noTieneLosPermisos(request)) {
+          halt(403);
+        }
+
+      } else {
+
+        if (quiereHacerAlgoConEfectoQueNoSeaLoguearseORegistrarse(request)) {
+          response.redirect("/login");
+        }
+        if (tieneQueEstarLogueado(request)) {
+          response.redirect("/login?origin=" + request.pathInfo());
+        }
+
       }
     });
-
-    before((request, response) -> {
-      if ((request.pathInfo().equals("/mascotas")
-          || request.pathInfo().equals("/mascotas/registracion-mascota")
-          || request.pathInfo().equals("/informes/con-qr/nuevo/:codigoChapita")
-          || request.pathInfo().equals("/informes/sin-qr/nuevo")
-          || request.pathInfo().equals("/caracteristicas")
-          || request.pathInfo().equals("/caracteristicas/nueva")
-          || request.pathInfo().equals("/asociaciones")
-          || request.pathInfo().equals("/asociaciones/:idAsociacion/preguntas")
-          || request.pathInfo().equals("/asociaciones/:idAsociacion/preguntas/nueva-pregunta")
-      )
-          && request.session().attribute("user_id") == null) {
-        response.redirect("/login?origin=" + request.pathInfo());
-      }
-    });
-
-    before((request, response) -> {
-      Boolean esAdmin = request.session().attribute("is_admin");
-      if ((request.pathInfo().equals("/caracteristicas")
-          || request.pathInfo().equals("/caracteristicas/nueva")
-          || request.pathInfo().equals("/asociaciones")
-          || request.pathInfo().equals("/asociaciones/:idAsociacion/preguntas")
-          || request.pathInfo().equals("/asociaciones/:idAsociacion/preguntas/nueva-pregunta")
-      )
-          && !esAdmin) {
-        halt(403);
-      }
-    });
-
-    before((request, response) -> {
-      if ((request.pathInfo().equals("/login")
-          || request.pathInfo().equals("/usuarios/creacion-usuario")
-          || request.pathInfo().equals("/usuarios"))
-          && request.session().attribute("user_id") != null) {
-        response.redirect("/");
-      }
-    });
-
-
 
     after((request, response) -> {
       PerThreadEntityManagers.getEntityManager();
@@ -160,6 +132,55 @@ public class Routes {
     });
 
     System.out.println("Servidor iniciado!");
+  }
+
+
+  private static Boolean tieneSesionActiva(Request request) {
+    return request.session().attribute("user_id") != null;
+  }
+
+  private static Boolean esAdmin(Request request) {
+    return request.session().attribute("is_admin");
+  }
+
+  private static boolean estaHaciendoAlgoQueNoTieneSentido(Request request) {
+    return grupo1().contains(request.pathInfo());
+  }
+
+  private static boolean noTieneLosPermisos(Request request) {
+    return rutasDondeNecesitaSerAdmin().contains(request.pathInfo()) && !esAdmin(request);
+  }
+
+  private static boolean quiereHacerAlgoConEfectoQueNoSeaLoguearseORegistrarse(Request request) {
+    return metodosConEfecto().contains(request.requestMethod())
+        && !rutasLoginYRegistracion().contains(request.pathInfo());
+  }
+
+  private static boolean tieneQueEstarLogueado(Request request) {
+    return rutasDondeNecesitaEstarLogueado().contains(request.pathInfo());
+  }
+
+  private static List<String> metodosConEfecto() {
+    return Arrays.asList("POST", "PUT", "DELETE");
+  }
+
+  private static List<String> grupo1() {
+    return Arrays.asList("/login", "/usuarios/creacion-usuario", "/usuarios");
+  }
+
+  private static List<String> rutasDondeNecesitaSerAdmin() {
+    return Arrays.asList("/caracteristicas", "/caracteristicas/nueva", "/asociaciones",
+        "/asociaciones/:idAsociacion/preguntas", "/asociaciones/:idAsociacion/preguntas/nueva-pregunta");
+  }
+
+  private static List<String> rutasLoginYRegistracion() {
+    return Arrays.asList("/login", "/usuarios");
+  }
+
+  private static List<String> rutasDondeNecesitaEstarLogueado() {
+    return Arrays.asList("/mascotas", "/mascotas/registracion-mascota", "/informes/con-qr/nuevo/:codigoChapita",
+        "/informes/sin-qr/nuevo", "/caracteristicas", "/caracteristicas/nueva", "/asociaciones",
+        "/asociaciones/:idAsociacion/preguntas", "/asociaciones/:idAsociacion/preguntas/nueva-pregunta");
   }
 
   static int getHerokuAssignedPort() {
