@@ -104,9 +104,9 @@ public class Routes {
       }
     });
 
-    before("/protected/*", (request, response) -> {
+    before("/logout", (request, response) -> {
       if (request.session().attribute("user_id") == null) {
-        response.redirect("/login");
+        response.redirect("/");
       }
     });
 
@@ -127,12 +127,31 @@ public class Routes {
           || request.matchedPath().equals("/informes/sin-qr/nuevo")
           || request.matchedPath().equals("/caracteristicas")
           || request.matchedPath().equals("/caracteristicas/nueva")
-          || request.matchedPath().equals("/")
+          || request.matchedPath().equals("/asociaciones")
+          || request.matchedPath().equals("/asociaciones/:idAsociacion/preguntas")
+          || request.matchedPath().equals("/asociaciones/:idAsociacion/preguntas/nueva-pregunta")
       )
           && request.session().attribute("user_id") == null) {
         response.redirect("/login");
       }
     });
+
+    // TODO, DESPUES DE INICIAR SESION REDIRIGIR A LA PAGINA DONDE ESTABA
+
+    /*
+    before((request, response) -> {
+      if ((request.matchedPath().equals("/caracteristicas")
+          || request.matchedPath().equals("/caracteristicas/nueva")
+          || request.matchedPath().equals("/asociaciones")
+          || request.matchedPath().equals("/asociaciones/:idAsociacion/preguntas")
+          || request.matchedPath().equals("/asociaciones/:idAsociacion/preguntas/nueva-pregunta")
+      )
+          && !request.session().attribute("is_admin")) { // TODO, PARECE QUE NO SE PUEDE VALIDAR ACA SI ES ADMIN
+
+        halt(403, "no tiene los permisos");
+      }
+    });
+     */
 
     before((request, response) -> {
       if ((request.matchedPath().equals("/login")

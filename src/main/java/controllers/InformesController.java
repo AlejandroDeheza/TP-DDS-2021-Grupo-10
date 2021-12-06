@@ -32,10 +32,6 @@ public class InformesController extends Controller {
   }
 
   public ModelAndView mostrarFormularioConChapita(Request request, Response response) {
-    if (!tieneSesionActiva(request)) {
-      response.redirect("/login");
-      return null;
-    }
     Map<String, Object> modelo = getMap(request);
     String idChapitaString = request.params(":codigoChapita");
     MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.buscarPorId(Long.parseLong(idChapitaString));
@@ -49,10 +45,6 @@ public class InformesController extends Controller {
   }
 
   public ModelAndView mostrarFormularioSinChapita(Request request, Response response) {
-    if (!tieneSesionActiva(request)) {
-      response.redirect("/login");
-      return null;
-    }
     Map<String, Object> modelo = getMap(request);
     modelo.put("caracteristicas", repositorioCaracteristicas.getCaracteristicasConValoresPosibles());
     modelo.put("tipoAnimales", EnumSet.allOf(Animal.class));

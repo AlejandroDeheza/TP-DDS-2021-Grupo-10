@@ -36,7 +36,7 @@ public abstract class Controller implements WithGlobalEntityManager, Transaction
     return mapa;
   }
 
-  protected Boolean tieneSesionActiva(Request request) {
+  private Boolean tieneSesionActiva(Request request) {
     return request.session().attribute("user_id") != null;
   }
 

@@ -21,10 +21,6 @@ public class MascotasController extends Controller {
   RepositorioMascotaRegistrada repositorioMascotaRegistrada = new RepositorioMascotaRegistrada();
 
   public ModelAndView mostrarFormularioRegistracionMascotas(Request request, Response response) {
-    if (!tieneSesionActiva(request)) {
-      response.redirect("/login?origin=/registracion-mascota");
-      return null;
-    }
     Map<String, Object> modelo = getMap(request);
     modelo.put("caracteristicas", repositorioCaracteristicas.getCaracteristicasConValoresPosibles());
 
@@ -61,10 +57,6 @@ public class MascotasController extends Controller {
   }
 
   public ModelAndView mostrarMascotasDelUsuario(Request request, Response response) {
-    if (!tieneSesionActiva(request)) {
-      response.redirect("/login");
-      return null;
-    }
     // OBtener las mascotas del usuario que pidio esto
     Usuario usuario = repositorioUsuarios.buscarPorId(request.session().attribute("user_id"));
 

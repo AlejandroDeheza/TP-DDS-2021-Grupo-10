@@ -8,10 +8,6 @@ import java.util.Map;
 public class AsociacionesController extends Controller {
 
   public ModelAndView mostrarAsociaciones(Request request, Response response) {
-    if (!tieneSesionActiva(request)) {
-      response.redirect("/login");
-      return null;
-    }
     Map<String, Object> modelo = getMap(request);
     modelo.put("asociaciones", super.getAsociacionesOrdenadas());
     modelo.put("mostrarBotonAgregarPreguntas", false);

@@ -21,10 +21,6 @@ public class PreguntasController extends Controller {
   private final int totalRespuestasPosibles = 5;
 
   public ModelAndView mostrarPreguntasDeLaAsociacion(Request request, Response response) {
-    if (!tieneSesionActiva(request)) {
-      response.redirect("/login");
-      return null;
-    }
     String idAsociacion = request.params(":idAsociacion");
     List<ParDePreguntas> paresDePreguntas;
     Map<String, Object> modelo = getMap(request);
@@ -52,10 +48,6 @@ public class PreguntasController extends Controller {
   }
 
   public ModelAndView mostrarFomularioNuevaPregunta(Request request, Response response) {
-    if (!tieneSesionActiva(request)) {
-      response.redirect("/login");
-      return null;
-    }
     Map<String, Object> modelo = getMap(request);
     modelo.put("asociacion", request.params(":idAsociacion"));
     modelo.put("rangoDeRespuestas", super.obtenerRango(totalRespuestasPosibles));
@@ -64,9 +56,8 @@ public class PreguntasController extends Controller {
 
   public ModelAndView mostrarFormularioNuevaPreguntaContinuacion(Request request, Response response) {
     if (request.queryParams("concepto") == null) {
-      response.redirect("/login");
+      response.redirect("/asociaciones");
       return null;
-      // TODO: DEBE VALIDAR SI LA REQUEST ANTERIOR FUE LA CORRECTA
     }
     List<String> respuestasPosiblesDelDador = new ArrayList<>();
     List<String> respuestasPosiblesDelAdoptante = new ArrayList<>();
@@ -148,9 +139,9 @@ public class PreguntasController extends Controller {
       }
     });
 
-    response.redirect("/asociaciones/".concat((String.valueOf(borradorParDePreguntas.getAsociacionId())).concat("/preguntas")));
     request.session().removeAttribute("borrador_par_preguntas");
     request.session().removeAttribute("es_obligatoria");
+    response.redirect("/asociaciones/".concat(request.params(":idAsociacion")).concat("/preguntas"));
     return null;
   }
 
