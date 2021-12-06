@@ -19,9 +19,7 @@ public class SesionController extends Controller {
 
   public ModelAndView mostrarLogin(Request request, Response response) {
     Map<String, Object> modelo = getMap(request);
-    if (request.queryParams("origin") != null) {
-      modelo.put("origin", "?origin=" + request.queryParams("origin"));
-    }
+    modelo.put("rutaLogin", super.getRutaConOrigin(request, "/login"));
     return new ModelAndView(modelo, "login.html.hbs");
   }
 

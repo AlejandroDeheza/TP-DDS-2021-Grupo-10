@@ -12,7 +12,6 @@ import repositorios.RepositorioCaracteristicas;
 import spark.Request;
 import spark.Response;
 import utils.Constantes;
-import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +20,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -30,10 +32,11 @@ public abstract class Controller implements WithGlobalEntityManager, Transaction
   protected Map<String, Object> getMap(Request request) {
     Map<String, Object> mapa = new HashMap<>();
     mapa.put("sesionIniciada", tieneSesionActiva(request));
-    mapa.put("esAdmin", request.session().attribute("is_admin"));
     if (tieneSesionActiva(request)) {
       mapa.put("nombreUsuario", request.session().attribute("user_name"));
+      mapa.put("esAdmin", request.session().attribute("is_admin"));
     }
+    mapa.put("rutaCreacionUsuario", getRutaConOrigin(request, "/usuarios/creacion-usuario"));
     return mapa;
   }
 
@@ -132,5 +135,12 @@ public abstract class Controller implements WithGlobalEntityManager, Transaction
     request.session().attribute("user_name", usuario.getUsuario());
   }
 
+  protected String getRutaConOrigin(Request request, String ruta) {
+    if (request.queryParams("origin") != null) {
+      return ruta + "?origin=" + request.queryParams("origin");
+    } else {
+      return ruta;
+    }
+  }
 }
   

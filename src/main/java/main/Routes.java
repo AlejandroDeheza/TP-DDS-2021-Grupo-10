@@ -107,7 +107,9 @@ public class Routes {
     before((request, response) -> {
       if ((request.requestMethod().equals("POST") || request.requestMethod().equals("PUT")
           || request.requestMethod().equals("DELETE")
-      ) && request.session().attribute("user_id") == null && !request.pathInfo().equals("/login")) {
+      ) && request.session().attribute("user_id") == null
+          && !request.pathInfo().equals("/login")
+          && !request.pathInfo().equals("/usuarios")) {
         response.redirect("/login");
       }
     });

@@ -13,16 +13,18 @@ import repositorios.RepositorioUsuarios;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
 
 public class UsuarioController extends Controller {
 
   RepositorioUsuarios repositorioUsuarios = new RepositorioUsuarios();
 
   public ModelAndView mostrarFormularioCreacionUsuario(Request request, Response response) {
-    return new ModelAndView(getMap(request), "registracion.html.hbs");
+    Map<String, Object> modelo = getMap(request);
+    modelo.put("rutaUsuarios", super.getRutaConOrigin(request, "/usuarios"));
+    return new ModelAndView(modelo, "registracion.html.hbs");
   }
 
   public Void registrarUsuario(Request request, Response response) {
@@ -37,7 +39,7 @@ public class UsuarioController extends Controller {
       return null;
     }
 
-    if(!contrasenia.equals(validacionContrasenia)){
+    if(!contrasenia.equals(validacionContrasenia)) {
       redireccionCasoError(request, response, "/creacion-usuario", "Las contrasenias no matchean entre si");
       return null;
     }
