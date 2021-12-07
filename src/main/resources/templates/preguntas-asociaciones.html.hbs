@@ -63,9 +63,19 @@
 							<div class="accordion-body">
 								<p>
 									Pregunta del dador: {{preguntaDelDador}}
+									<ul>
+									    {{#respuestasPosiblesDelDador}}
+									    <li>{{this}}</li>
+									    {{/respuestasPosiblesDelDador}}
+									</ul>
 								</p>
 								<p>
 									Pregunta del adoptante: {{preguntaDelAdoptante}}
+									<ul>
+                                        {{#respuestasPosiblesDelAdoptante}}
+                                    	<li>{{this}}</li>
+                                    	{{/respuestasPosiblesDelAdoptante}}
+                                    </ul>
 								</p>
 							</div>
 						</div>

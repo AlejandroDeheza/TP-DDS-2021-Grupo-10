@@ -84,13 +84,23 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
     Asociacion asociacion2 = new Asociacion("Garritas", ubicacion2);
     Asociacion asociacion3 = new Asociacion("Una mascota feliz", ubicacion3);
 
+
+    List<String> respuestasPosiblesDelDador1 = new ArrayList<>();
+    List<String> respuestasPosiblesDelAdoptante1 = new ArrayList<>();
+
+    respuestasPosiblesDelDador1.add("Si");
+    respuestasPosiblesDelDador1.add("No");
+
+    respuestasPosiblesDelAdoptante1.add("Si");
+    respuestasPosiblesDelAdoptante1.add("No");
+
     ParDePreguntas parDePreguntas1 = new ParDePreguntas(
         "Balcones",
         "¿Tenes balcon?",
         "¿Necesito Balcon?",
         false,
-        null,
-        null,
+        respuestasPosiblesDelDador1,
+        respuestasPosiblesDelAdoptante1,
         null
     );
     ParDePreguntas parDePreguntas2 = new ParDePreguntas(
@@ -98,8 +108,8 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
         "¿Tenes un veterinario de confianza?",
         "¿Necesito contar con un veterinario de confianza?",
         false,
-        null,
-        null,
+        respuestasPosiblesDelDador1,
+        respuestasPosiblesDelAdoptante1,
         null
     );
 
@@ -147,15 +157,7 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
 
 
     // Preguntas
-    List<String> respuestasPosiblesDelDador1 = new ArrayList<>();
-    List<String> respuestasPosiblesDelAdoptante1 = new ArrayList<>();
     List<ParDeRespuestas> paresDeRespuestas1 = new ArrayList<>();
-
-    respuestasPosiblesDelDador1.add("Si");
-    respuestasPosiblesDelDador1.add("No");
-
-    respuestasPosiblesDelAdoptante1.add("Si");
-    respuestasPosiblesDelAdoptante1.add("No");
 
     paresDeRespuestas1.add(new ParDeRespuestas("Si", "No"));
     paresDeRespuestas1.add(new ParDeRespuestas("No", "Si"));
