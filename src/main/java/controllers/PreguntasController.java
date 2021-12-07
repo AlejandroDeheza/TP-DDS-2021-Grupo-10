@@ -37,7 +37,6 @@ public class PreguntasController extends Controller {
     List<ParDePreguntas> paresDePreguntasOrdenadas = paresDePreguntas.stream()
         .sorted((p1, p2) -> super.porOrdenAlfabetico(p1.getConcepto(), p2.getConcepto())).collect(Collectors.toList());
 
-    //FIXME: error en la vista al usar las --> asociacionesOrdenadas. El error parece que esta en el javascript
     modelo.put("asociaciones", super.getAsociacionesOrdenadas());
     modelo.put("preguntas", paresDePreguntasOrdenadas);
     modelo.put("esObligatoria", idAsociacion.equals("0"));

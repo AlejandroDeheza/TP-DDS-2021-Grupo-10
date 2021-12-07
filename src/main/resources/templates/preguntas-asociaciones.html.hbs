@@ -34,11 +34,11 @@
 		<div class="row w-100">
 			<div class="col-4">
 				<div class="list-group">
-					<a class="list-group-item mb-3 asociacion" type="button" href="/asociaciones/0/preguntas">
+					<a id="asociacion0" class="list-group-item mb-3 asociacion" type="button" href="/asociaciones/0/preguntas">
 						Preguntas Obligatorias Generales
 					</a>
 					{{#asociaciones}}
-					<a class="list-group-item mb-3 asociacion" type="button"
+					<a id="asociacion{{id}}" class="list-group-item mb-3 asociacion" type="button"
 						href="/asociaciones/{{id}}/preguntas">
 						Ver Asociación "{{nombre}}"
 					</a>
@@ -94,9 +94,8 @@
 	</div>
 </div>
 <script>
-<!-- FIXME: error en la vista al usar asociaciones Ordenadas -->
 let id = Number.parseInt(window.location.href.split("/")[4])
-const botonActivo = document.querySelectorAll(".asociacion")[id];
+const botonActivo = document.querySelector("#asociacion" + id);
 botonActivo.classList.add('active');
 </script> 
 {{/partial}}
