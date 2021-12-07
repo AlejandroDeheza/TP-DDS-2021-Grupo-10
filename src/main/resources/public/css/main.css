@@ -39,15 +39,16 @@
 
 .mascota-card {
   width: 350px;
-  height: 400px;
   box-shadow: 10px 10px rgba(0, 0, 0, 0.1);
   margin: 30px 20px;
 }
 
+/*
 .mascota-card > img {
   width: 350px;
   height: 70%;
 }
+*/
 
 .index-card {
   overflow: hidden;
@@ -208,7 +209,8 @@
 }
 
 .image-error-container {
-  height: 500px;
+  width: 600px;
+  margin: 50px 0;
 }
 
 .error-button-container {
@@ -247,7 +249,7 @@
 }
 
 .mensaje-error {
-  margin-top: 20px;
+  margin-top: 70px;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -421,4 +423,23 @@
 
 .titulos-dobles {
   font-size: 50px;
+}
+
+.imagen-error-centrada {
+  width: 600px;
+  margin: 0 auto;
+}
+
+.texto-centrado-escanear-qr {
+  text-align: center;
+  padding: 150px 0;
+}
+
+.parrafo-no-tenes-mascotas {
+  padding: 150px 0;
+}
+
+.centrando-cosas {
+  width: 75%;
+  margin: 0 auto;
 }
