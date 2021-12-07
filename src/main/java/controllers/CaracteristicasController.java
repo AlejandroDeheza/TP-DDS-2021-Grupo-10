@@ -1,11 +1,13 @@
 package controllers;
 
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
+import modelo.pregunta.ParDePreguntas;
 import repositorios.RepositorioCaracteristicas;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class CaracteristicasController extends Controller {
 
@@ -13,13 +15,14 @@ public class CaracteristicasController extends Controller {
 
   public ModelAndView mostrarCaracteristicas(Request request, Response response) {
 
-    List<CaracteristicaConValoresPosibles> listaCaracteristicas = repositorioCaracteristicas
-        .getCaracteristicasConValoresPosibles();
-    List<WrapperCaracteristica> wrappersDeCaracteristicas = new ArrayList<>();
+    List<CaracteristicaConValoresPosibles> listaCaracteristicasOrdenadas = repositorioCaracteristicas
+        .getCaracteristicasConValoresPosibles().stream()
+        .sorted((c1, c2) -> super.porOrdenAlfabetico(c1.getNombreCaracteristica(), c2.getNombreCaracteristica()))
+        .collect(Collectors.toList());
 
     Integer index = 1;
-
-    for(CaracteristicaConValoresPosibles caracteristica : listaCaracteristicas){
+    List<WrapperCaracteristica> wrappersDeCaracteristicas = new ArrayList<>();
+    for(CaracteristicaConValoresPosibles caracteristica : listaCaracteristicasOrdenadas){
       wrappersDeCaracteristicas.add(new WrapperCaracteristica(index ++, caracteristica));
     }
 
