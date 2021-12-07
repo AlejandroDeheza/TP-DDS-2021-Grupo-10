@@ -3,7 +3,7 @@
 {{/partial}}
 
 {{# partial "contenido" }}
-<div class="d-flex flex-column align-items-center pt-3">
+<div class="d-flex flex-column align-items-center pt-3 centrando-cosas">
 	<div class="caracteristicas">
 		<h1>Nueva Caracteristica</h1>
 	</div>
@@ -20,13 +20,13 @@
 		</div>
 		{{/cantidadCaracteristicas}}
 		<div class="d-flex justify-content-around align-items-center">
-			<div>
-				<input class="btn btn-primary submit-button-error" type="submit" value="Agregar" />
-			</div>
 			<div class="center-space-evenly">
 				<button type="submit" class="btn btn-primary submit-button-error" onclick="volverAtras()">Volver
 					atras</button>
 			</div>
+			<div>
+            	<input class="btn btn-primary submit-button-error" type="submit" value="Agregar" />
+            </div>
 		</div>
 	</form>
 </div>

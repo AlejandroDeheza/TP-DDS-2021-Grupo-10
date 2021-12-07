@@ -5,10 +5,10 @@
 {{# partial "contenido" }}
 <div class="d-flex flex-column align-items-center pt-3">
 	{{#if esObligatoria}}
-	<h1>Preguntas Obligatorias de Asociaciones</h1>
+	<h1>Preguntas Obligatorias para todas las Asociaciones</h1>
 	{{else}}
 	{{#if asociacion}}
-	<h1>Preguntas de la Asociación {{asociacion.nombre}}</h1>
+	<h1>Preguntas de la Asociación: "{{asociacion.nombre}}"</h1>
 	{{else}}
 	<h1>Preguntas de Asociaciones</h1>
 	{{/if}}
@@ -20,13 +20,13 @@
 				<a type="button"
 					class="btn btn-primary btn-sm btn-agregar-preguntas {{#unless mostrarBotonAgregarPreguntas}} visibility-none {{/unless}}"
 					href="/asociaciones/0/preguntas/nueva-pregunta">
-					Agregar Pregunta Obligatoria
+					Agregar un Par de Preguntas Obligatorias
 				</a>
 				{{else}}
 				<a type="button"
 					class="btn btn-primary btn-sm btn-agregar-preguntas {{#unless mostrarBotonAgregarPreguntas}} visibility-none {{/unless}}"
 					href="/asociaciones/{{asociacion.id}}/preguntas/nueva-pregunta">
-					Agregar Pregunta para la asociacion "{{asociacion.nombre}}"
+					Agregar un Par de Preguntas
 				</a>
 				{{/if}}
 			</div>
@@ -73,9 +73,9 @@
 				{{/preguntas}}
 				{{else}}
 				<div class="center">
-					<p>
+					<h1>
 						Seleccione una opción
-					</p>
+					</h1>
 				</div>
 				{{/if}}
 			</div>

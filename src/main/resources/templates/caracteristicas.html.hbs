@@ -4,7 +4,7 @@
 
 
 {{# partial "contenido" }}
-<div class="d-flex flex-column align-items-center pt-3">
+<div class="d-flex flex-column align-items-center pt-3 centrando-cosas">
 
 	<h1 class="pb-3">Caracteristicas</h1>
 
@@ -15,7 +15,7 @@
 				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
 					data-bs-target="#flush-collapseCaracteristica{{id}}" aria-expanded="false"
 					aria-controls="flush-collapseCaracteristica{{id}}">
-					{{caracteristicaConValoresPosibles.nombreCaracteristica}}
+					<h4>{{caracteristicaConValoresPosibles.nombreCaracteristica}}</h4>
 				</button>
 			</h2>
 			<div id="flush-collapseCaracteristica{{id}}" class="accordion-collapse collapse"
@@ -24,7 +24,7 @@
 					<ul>
 						{{#caracteristicaConValoresPosibles.valoresCaracteristicas}}
 						<p>
-							* {{this}}
+					        <h5>* {{this}}</h5>
 						</p>
 						{{/caracteristicaConValoresPosibles.valoresCaracteristicas}}
 					</ul>
