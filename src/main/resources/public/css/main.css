@@ -273,10 +273,6 @@
   margin: 0 -110px;
 }
 
-.margin-top {
-  margin-top: 20px;
-}
-
 .caracteristicas {
   margin-top: 0px;
 }
@@ -442,4 +438,18 @@
 .centrando-cosas {
   width: 75%;
   margin: 0 auto;
+}
+
+.texto-centrado-nueva-pregunta {
+  text-align: center;
+}
+
+.centrando-form-preguntas {
+  width: 75%;
+  margin: 20 auto;
+}
+
+.texto-centrado-nueva-pregunta-dos {
+  text-align: center;
+  padding: 30 0;
 }
