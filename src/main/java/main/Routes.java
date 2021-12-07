@@ -110,7 +110,7 @@ public class Routes {
 
       if (tieneSesionActiva(request)) {
 
-        if (estaHaciendoAlgoQueNoTieneSentido(request)) {
+        if (intentaLoguearseORegistrarse(request)) {
           response.redirect("/");
         }
         if (noTieneLosPermisos(request)) {
@@ -119,13 +119,40 @@ public class Routes {
 
       } else {
 
-        if (quiereHacerAlgoConEfectoQueNoSeaLoguearseORegistrarse(request)) {
+        if (intentaAlgoConEfectoQueNoSeaLoguearseORegistrarse(request)) {
           response.redirect("/login");
         }
         if (tieneQueEstarLogueado(request)) {
           response.redirect("/login?origin=" + request.pathInfo());
         }
 
+      }
+    });
+
+    // Hay que hacer esto de abajo porque lo de arriba no funciona para rutas con PATH PARAMS
+    before("/asociaciones/*/preguntas/*", (request, response) -> {
+      if (tieneSesionActiva(request)) {
+        if (!esAdmin(request)) {
+          halt(403);
+        }
+      } else {
+        response.redirect("/login?origin=" + request.pathInfo());
+      }
+    });
+
+    before("/asociaciones/*/preguntas", (request, response) -> {
+      if (tieneSesionActiva(request)) {
+        if (!esAdmin(request)) {
+          halt(403);
+        }
+      } else {
+        response.redirect("/login?origin=" + request.pathInfo());
+      }
+    });
+
+    before("/mascotas/*/encontrada", (request, response) -> {
+      if (!tieneSesionActiva(request)) {
+        response.redirect("/login?origin=" + request.pathInfo());
       }
     });
 
@@ -146,15 +173,15 @@ public class Routes {
     return request.session().attribute("is_admin");
   }
 
-  private static boolean estaHaciendoAlgoQueNoTieneSentido(Request request) {
-    return grupo1().contains(request.pathInfo());
+  private static boolean intentaLoguearseORegistrarse(Request request) {
+    return rutasFormsLoginYRegistracion().contains(request.pathInfo());
   }
 
   private static boolean noTieneLosPermisos(Request request) {
     return rutasDondeNecesitaSerAdmin().contains(request.pathInfo()) && !esAdmin(request);
   }
 
-  private static boolean quiereHacerAlgoConEfectoQueNoSeaLoguearseORegistrarse(Request request) {
+  private static boolean intentaAlgoConEfectoQueNoSeaLoguearseORegistrarse(Request request) {
     return metodosConEfecto().contains(request.requestMethod())
         && !rutasLoginYRegistracion().contains(request.pathInfo());
   }
@@ -167,7 +194,7 @@ public class Routes {
     return Arrays.asList("POST", "PUT", "DELETE");
   }
 
-  private static List<String> grupo1() {
+  private static List<String> rutasFormsLoginYRegistracion() {
     return Arrays.asList("/login", "/usuarios/creacion-usuario", "/usuarios");
   }
 
