@@ -45,6 +45,8 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
 
   public void run() {
 
+    System.out.println("Corriendo bootstrap...");
+
     DocumentoIdentidad documentoIdentidad = new DocumentoIdentidad(TipoDocumento.DNI, "12345678");
     DatosDeContacto datosDeContacto = new DatosDeContacto("12345678", "dds2021g10@gmail.com");
 
@@ -82,15 +84,33 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
     Asociacion asociacion2 = new Asociacion("Garritas", ubicacion2);
     Asociacion asociacion3 = new Asociacion("Una mascota feliz", ubicacion3);
 
+
+    List<String> respuestasPosiblesDelDador1 = new ArrayList<>();
+    List<String> respuestasPosiblesDelAdoptante1 = new ArrayList<>();
+
+    respuestasPosiblesDelDador1.add("Si");
+    respuestasPosiblesDelDador1.add("No");
+
+    respuestasPosiblesDelAdoptante1.add("Si");
+    respuestasPosiblesDelAdoptante1.add("No");
+
     ParDePreguntas parDePreguntas1 = new ParDePreguntas(
+        "Balcones",
         "¿Tenes balcon?",
         "¿Necesito Balcon?",
-        false
+        false,
+        respuestasPosiblesDelDador1,
+        respuestasPosiblesDelAdoptante1,
+        null
     );
     ParDePreguntas parDePreguntas2 = new ParDePreguntas(
+        "Veterinarios",
         "¿Tenes un veterinario de confianza?",
         "¿Necesito contar con un veterinario de confianza?",
-        false
+        false,
+        respuestasPosiblesDelDador1,
+        respuestasPosiblesDelAdoptante1,
+        null
     );
 
     asociacion1.agregarPregunta(parDePreguntas1);
@@ -137,38 +157,48 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
 
 
     // Preguntas
+    List<ParDeRespuestas> paresDeRespuestas1 = new ArrayList<>();
+
+    paresDeRespuestas1.add(new ParDeRespuestas("Si", "No"));
+    paresDeRespuestas1.add(new ParDeRespuestas("No", "Si"));
+    paresDeRespuestas1.add(new ParDeRespuestas("No", "No"));
+
     ParDePreguntas preguntas1 = new ParDePreguntas(
+        "Mascotas solitarias",
         "La mascota sufre si está mucho tiempo sola?",
         "Va a estar la mascota mucho tiempo sola?",
-        true
+        true,
+        respuestasPosiblesDelDador1,
+        respuestasPosiblesDelAdoptante1,
+        paresDeRespuestas1
     );
-    preguntas1.agregarRespuestaPosibleDelAdoptante("Si");
-    preguntas1.agregarRespuestaPosibleDelAdoptante("No");
 
-    preguntas1.agregarRespuestaPosibleDelDador("Si");
-    preguntas1.agregarRespuestaPosibleDelDador("No");
 
-    preguntas1.agregarRespuestasQueMachean(new ParDeRespuestas("Si", "No"));
-    preguntas1.agregarRespuestasQueMachean(new ParDeRespuestas("No", "Si"));
-    preguntas1.agregarRespuestasQueMachean(new ParDeRespuestas("No", "No"));
+    List<String> respuestasPosiblesDelDador2 = new ArrayList<>();
+    List<String> respuestasPosiblesDelAdoptante2 = new ArrayList<>();
+    List<ParDeRespuestas> paresDeRespuestas2 = new ArrayList<>();
 
+    respuestasPosiblesDelDador2.add("1");
+    respuestasPosiblesDelDador2.add("2");
+    respuestasPosiblesDelDador2.add("+2");
+
+    respuestasPosiblesDelAdoptante2.add("1");
+    respuestasPosiblesDelAdoptante2.add("2");
+    respuestasPosiblesDelAdoptante2.add("+2");
+
+    paresDeRespuestas2.add(new ParDeRespuestas("1", "1"));
+    paresDeRespuestas2.add(new ParDeRespuestas("2", "2"));
+    paresDeRespuestas2.add(new ParDeRespuestas("+2", "+2"));
 
     ParDePreguntas preguntas2 = new ParDePreguntas(
+        "Salidas de la mascota",
         "Cuantas veces necesita salir la mascota al dia?",
         "Cuantas veces sacarás a pasear a tu mascota al dia?",
-        true
+        true,
+        respuestasPosiblesDelDador2,
+        respuestasPosiblesDelAdoptante2,
+        paresDeRespuestas2
     );
-    preguntas2.agregarRespuestaPosibleDelAdoptante("1");
-    preguntas2.agregarRespuestaPosibleDelAdoptante("2");
-    preguntas2.agregarRespuestaPosibleDelAdoptante("+2");
-
-    preguntas2.agregarRespuestaPosibleDelDador("1");
-    preguntas2.agregarRespuestaPosibleDelDador("2");
-    preguntas2.agregarRespuestaPosibleDelDador("+2");
-
-    preguntas2.agregarRespuestasQueMachean(new ParDeRespuestas("1", "1"));
-    preguntas2.agregarRespuestasQueMachean(new ParDeRespuestas("2", "2"));
-    preguntas2.agregarRespuestasQueMachean(new ParDeRespuestas("+2", "+2"));
 
 
     List<RespuestaDelAdoptante> respuestasDelAdoptante = Arrays.asList(

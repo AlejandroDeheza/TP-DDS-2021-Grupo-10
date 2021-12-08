@@ -12,6 +12,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import utils.DummyData;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Punto2 extends NuestraAbstractPersistenceTest {
   RepositorioParDePreguntas repositorioParDePreguntas = new RepositorioParDePreguntas();
   ParDePreguntas parDePreguntas;
@@ -39,17 +42,21 @@ public class Punto2 extends NuestraAbstractPersistenceTest {
   }
 
   private ParDePreguntas getParDePreguntas() {
-    ParDePreguntas preguntas = new ParDePreguntas(
-        "La mascota sufre si está mucho tiempo sola?",
-        "Va a estar la mascota mucho tiempo sola?",true);
-    ParDeRespuestas respuesta1 = new ParDeRespuestas("Si", "No");
-    ParDeRespuestas respuesta2 = new ParDeRespuestas("No", "Si");
-    ParDeRespuestas respuesta3 = new ParDeRespuestas("No", "No");
-    preguntas.agregarRespuestasQueMachean(respuesta1);
-    preguntas.agregarRespuestasQueMachean(respuesta2);
-    preguntas.agregarRespuestasQueMachean(respuesta3);
+    List<ParDeRespuestas> paresDeRespuestas = new ArrayList<>();
 
-    return preguntas;
+    paresDeRespuestas.add(new ParDeRespuestas("Si", "No"));
+    paresDeRespuestas.add(new ParDeRespuestas("No", "Si"));
+    paresDeRespuestas.add(new ParDeRespuestas("No", "No"));
+
+    return new ParDePreguntas(
+        "Mascotas solitarias",
+        "La mascota sufre si está mucho tiempo sola?",
+        "Va a estar la mascota mucho tiempo sola?",
+        true,
+        null,
+        null,
+        paresDeRespuestas
+    );
   }
 
 }

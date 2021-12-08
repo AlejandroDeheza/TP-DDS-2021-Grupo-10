@@ -1,51 +1,34 @@
 package controllers;
 
-import java.util.ArrayList;
 import java.util.List;
-import modelo.pregunta.ParDePreguntas;
-import modelo.pregunta.ParDeRespuestas;
 
 public class BorradorParDePreguntas {
-  private String preguntaDelDador;
-  private String preguntaDelAdoptante;
-  private Boolean esObligatoria;
-  private Long asociacionId;
-  private List<ParDeRespuestas> paresDeRespuestas = new ArrayList<>();
-  private List<String> respuestasPosiblesDelDador = new ArrayList<>();
-  private List<String> respuestasPosiblesDelAdoptante = new ArrayList<>();
+  private final Long asociacionId;
+  private final String concepto;
+  private final String preguntaDelDador;
+  private final String preguntaDelAdoptante;
+  private final Boolean esPreguntaObligatoria;
+  private final List<String> respuestasPosiblesDelDador;
+  private final List<String> respuestasPosiblesDelAdoptante;
 
-  public BorradorParDePreguntas setPreguntas(String preguntaDelDador, String preguntaDelAdoptante, Boolean esObligatoria) {
+  public BorradorParDePreguntas(Long asociacionId, String concepto, String preguntaDelDador,
+                                String preguntaDelAdoptante, Boolean esPreguntaObligatoria,
+                                List<String> respuestasPosiblesDelDador, List<String> respuestasPosiblesDelAdoptante) {
+    this.asociacionId = asociacionId;
+    this.concepto = concepto;
     this.preguntaDelDador = preguntaDelDador;
     this.preguntaDelAdoptante = preguntaDelAdoptante;
-    this.esObligatoria = esObligatoria;
-    return this;
-  }
-  
-  public BorradorParDePreguntas setAsociacionId(Long asociacionId) {
-    this.asociacionId = asociacionId;
-    return this;
+    this.esPreguntaObligatoria = esPreguntaObligatoria;
+    this.respuestasPosiblesDelDador = respuestasPosiblesDelDador;
+    this.respuestasPosiblesDelAdoptante = respuestasPosiblesDelAdoptante;
   }
 
-  public void agregarParDeRespuestas(ParDeRespuestas parDeRespuestas) {
-    this.paresDeRespuestas.add(parDeRespuestas);
+  public Long getAsociacionId() {
+    return this.asociacionId;
   }
 
-  public void agregarRespuestaPosibleDador(String respuestaPosibleDador) {
-    this.respuestasPosiblesDelDador.add(respuestaPosibleDador);
-  }
-
-  public void agregarRespuestaPosibleAdoptante(String respuestaPosibleAdoptante) {
-    this.respuestasPosiblesDelAdoptante.add(respuestaPosibleAdoptante);
-  }
-
-  public ParDePreguntas crearParDePreguntas() {
-    ParDePreguntas parDePreguntas = new ParDePreguntas(
-        this.preguntaDelDador, this.preguntaDelAdoptante, this.esObligatoria
-    );
-    this.respuestasPosiblesDelDador.forEach(parDePreguntas::agregarRespuestaPosibleDelDador);
-    this.respuestasPosiblesDelAdoptante.forEach(parDePreguntas::agregarRespuestaPosibleDelAdoptante);
-    this.paresDeRespuestas.forEach(parDePreguntas::agregarRespuestasQueMachean);
-    return parDePreguntas;
+  public String getConcepto() {
+    return this.concepto;
   }
 
   public String getPreguntaDelDador() {
@@ -56,12 +39,8 @@ public class BorradorParDePreguntas {
     return this.preguntaDelAdoptante;
   }
 
-  public Boolean getEsObligatoria() {
-    return this.esObligatoria;
-  }
-
-  public Long getAsociacionId() {
-    return this.asociacionId;
+  public Boolean getEsPreguntaObligatoria() {
+    return this.esPreguntaObligatoria;
   }
 
   public List<String> getRespuestasPosiblesDelDador() {
@@ -71,8 +50,5 @@ public class BorradorParDePreguntas {
   public List<String> getRespuestasPosiblesDelAdoptante() {
     return this.respuestasPosiblesDelAdoptante;
   }
-  
-  public List<ParDeRespuestas> getParesDeRespuestasPosibles() {
-    return this.paresDeRespuestas;
-  }
+
 }

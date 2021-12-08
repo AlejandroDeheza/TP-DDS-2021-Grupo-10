@@ -99,29 +99,39 @@ public class DummyData {
   }
 
   public static ParDePreguntas getParDePreguntas1() {
-    ParDePreguntas preguntas = new ParDePreguntas(
+    List<ParDeRespuestas> paresDeRespuestas = new ArrayList<>();
+
+    paresDeRespuestas.add(new ParDeRespuestas("Si", "No"));
+    paresDeRespuestas.add(new ParDeRespuestas("No", "Si"));
+    paresDeRespuestas.add(new ParDeRespuestas("No", "No"));
+
+    return new ParDePreguntas(
+        "Mascotas solitarias",
         "La mascota sufre si está mucho tiempo sola?",
-        "Va a estar la mascota mucho tiempo sola?",true
+        "Va a estar la mascota mucho tiempo sola?",
+        true,
+        null,
+        null,
+        paresDeRespuestas
     );
-    preguntas.agregarRespuestasQueMachean(new ParDeRespuestas("Si", "No"));
-    preguntas.agregarRespuestasQueMachean(new ParDeRespuestas("No", "Si"));
-    preguntas.agregarRespuestasQueMachean(new ParDeRespuestas("No", "No"));
-    return preguntas;
   }
 
   public static ParDePreguntas getParDePreguntas2() {
-    ParDePreguntas preguntas = new ParDePreguntas(
+    List<ParDeRespuestas> paresDeRespuestas = new ArrayList<>();
+
+    paresDeRespuestas.add(new ParDeRespuestas("1", "1"));
+    paresDeRespuestas.add(new ParDeRespuestas("2", "2"));
+    paresDeRespuestas.add(new ParDeRespuestas("+2", "+2"));
+
+    return new ParDePreguntas(
+        "Salidas de la mascota",
         "Cuantas veces necesita salir la mascota al dia?",
         "Cuantas veces sacarás a pasear a tu mascota al dia?",
-            true
+        true,
+        null,
+        null,
+        paresDeRespuestas
     );
-    preguntas.agregarRespuestasQueMachean(new ParDeRespuestas("1", "1"));
-    preguntas.agregarRespuestasQueMachean(new ParDeRespuestas("1", "2"));
-    preguntas.agregarRespuestasQueMachean(new ParDeRespuestas("2", "2"));
-    preguntas.agregarRespuestasQueMachean(new ParDeRespuestas("1", "+2"));
-    preguntas.agregarRespuestasQueMachean(new ParDeRespuestas("2", "+2"));
-    preguntas.agregarRespuestasQueMachean(new ParDeRespuestas("+2", "+2"));
-    return preguntas;
   }
 
   public static DarEnAdopcion getPublicacionDeDarEnAdopcion(TipoNotificadorPreferido notificador) {

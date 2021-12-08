@@ -33,30 +33,30 @@
 
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
             <property name="hibernate.connection.url"
-                      value="jdbc:mysql://i1i52hduv5hviq0n:nfepoa9ctcrwwk7n@jtb9ia3h1pgevwb1.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/g1z2srkhyqfuylkr"/>
+                value="jdbc:mysql://i1i52hduv5hviq0n:nfepoa9ctcrwwk7n@jtb9ia3h1pgevwb1.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/g1z2srkhyqfuylkr"/>
             <property name="hibernate.connection.username" value="i1i52hduv5hviq0n"/>
             <property name="hibernate.connection.password" value="nfepoa9ctcrwwk7n"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
 
-            <!--    <property name="hibernate.connection.driver_class" value="org.hsqldb.jdbcDriver"/>-->
-            <!--    <property name="hibernate.connection.url" value="jdbc:hsqldb:mem:app-db"/>-->
-            <!--    <property name="hibernate.connection.username" value="sa"/>-->
-            <!--    <property name="hibernate.connection.password" value=""/>-->
-            <!--    <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>-->
+            <!-- <property name="hibernate.connection.driver_class" value="org.hsqldb.jdbcDriver"/>
+            <property name="hibernate.connection.url" value="jdbc:hsqldb:mem:app-db"/>
+            <property name="hibernate.connection.username" value="sa"/>
+            <property name="hibernate.connection.password" value=""/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/> -->
 
-            <!--    <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>-->
-            <!--    <property name="hibernate.connection.url"-->
-            <!--        value="jdbc:mysql://localhost:3306/patitas?createDatabaseIfNotExist=true"/>-->
-            <!--    <property name="hibernate.connection.username" value="root"/>-->
-            <!--    <property name="hibernate.connection.password" value="mysql"/>-->
-            <!--    <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>-->
+            <!-- <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+            <property name="hibernate.connection.url"
+                value="jdbc:mysql://localhost:3306/patitas?createDatabaseIfNotExist=true"/>
+            <property name="hibernate.connection.username" value="root"/>
+            <property name="hibernate.connection.password" value="mysql"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/> -->
 
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="use_sql_comments" value="true"/>
             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
 
-            <!--    <property name="hibernate.hbm2ddl.auto" value="update"/>-->
+            <!-- <property name="hibernate.hbm2ddl.auto" value="update"/> -->
 
         </properties>
 

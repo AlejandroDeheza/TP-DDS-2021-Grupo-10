@@ -5,12 +5,12 @@
             <div><img src="/images/patitas-logo.jpg" alt="patitas-logo" width="30" height="24"
                       class="d-inline-block align-text-top logo-login"/>
             </div>
-            <h1> Encontre una mascota con chapita - {{mascotaRegistrada.nombre}}</h1>
+            <h1> Encontre a: {{mascotaRegistrada.nombre}}</h1>
             <div class="card mascota-card">
                 <img src="{{mascotaRegistrada.fotos.[0].link}}" class="card-img-top" alt="mascota">
             </div>
             <form class="form-login" enctype='multipart/form-data' id="encontreForm"
-                  action="/mascotas/encontre-mascota/con-chapita/{{codigoChapita}}" method="POST"
+                  action="/informes/con-qr" method="POST"
                   onsubmit="onFormSubmit()">
                 <div class="encontre-mascota">Datos de la ubicación</div>
                 <div class=" row g-3">
@@ -67,7 +67,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="pregunta-caracteristica">Subi una foto de tu mascota</div>
+                <div class="pregunta-caracteristica">Sacale una foto a la mascota que encontraste y subila!</div>
                 <div class="row g-3">
                     <div class="col-12">
                         <div>

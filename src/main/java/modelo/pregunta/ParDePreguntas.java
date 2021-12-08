@@ -11,6 +11,8 @@ import java.util.List;
 @Table(name = "par_de_preguntas" )
 public class ParDePreguntas extends EntidadPersistente {
 
+  private String concepto;
+
   private String preguntaDelDador;
 
   private String preguntaDelAdoptante;
@@ -18,23 +20,29 @@ public class ParDePreguntas extends EntidadPersistente {
   private Boolean esObligatoria;
 
   @ElementCollection
-  private List<ParDeRespuestas> paresDeRespuestas = new ArrayList<>();
-
-  @ElementCollection
   private List<String> respuestasPosiblesDelDador = new ArrayList<>();
 
   @ElementCollection
   private List<String> respuestasPosiblesDelAdoptante = new ArrayList<>();
+
+  @ElementCollection
+  private List<ParDeRespuestas> paresDeRespuestas = new ArrayList<>();
 
   // para hibernate
   private ParDePreguntas() {
 
   }
 
-  public ParDePreguntas(String preguntaDelDador, String preguntaDelAdoptante, Boolean esObligatoria) {
+  public ParDePreguntas(String concepto, String preguntaDelDador, String preguntaDelAdoptante, Boolean esObligatoria,
+                        List<String> respuestasPosiblesDelDador, List<String> respuestasPosiblesDelAdoptante,
+                        List<ParDeRespuestas> paresDeRespuestas) {
+    this.concepto = concepto;
     this.preguntaDelDador = preguntaDelDador;
     this.preguntaDelAdoptante = preguntaDelAdoptante;
     this.esObligatoria = esObligatoria;
+    this.respuestasPosiblesDelDador = respuestasPosiblesDelDador;
+    this.respuestasPosiblesDelAdoptante = respuestasPosiblesDelAdoptante;
+    this.paresDeRespuestas = paresDeRespuestas;
   }
 
   public Boolean esIgualA(ParDePreguntas parDePreguntas) {
@@ -42,16 +50,8 @@ public class ParDePreguntas extends EntidadPersistente {
         && parDePreguntas.getPreguntaDelDador().equals(preguntaDelDador);
   }
 
-  public void agregarRespuestasQueMachean(ParDeRespuestas parDeRespuestas) {
-    paresDeRespuestas.add(parDeRespuestas);
-  }
-
-  public void agregarRespuestaPosibleDelDador(String respuestaDador) {
-    respuestasPosiblesDelDador.add(respuestaDador);
-  }
-
-  public void agregarRespuestaPosibleDelAdoptante(String respuestaAdoptante) {
-    respuestasPosiblesDelAdoptante.add(respuestaAdoptante);
+  public String getConcepto() {
+    return concepto;
   }
 
   public String getPreguntaDelDador() {
