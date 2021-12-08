@@ -20,7 +20,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.EnumSet;
 import java.util.Map;
 
-public class EncontreMascotaController extends Controller {
+public class InformesController extends Controller {
 
   RepositorioMascotaRegistrada repositorioMascotaRegistrada = new RepositorioMascotaRegistrada();
   RepositorioCaracteristicas repositorioCaracteristicas = new RepositorioCaracteristicas();
@@ -28,35 +28,26 @@ public class EncontreMascotaController extends Controller {
   RepositorioInformes repositorioInformes = new RepositorioInformes();
 
   public ModelAndView mostrarMenuTipoEncuentro(Request request, Response response) {
-    if (!tieneSesionActiva(request)) {
-      response.redirect("/login");
-      return null;
-    }
     return new ModelAndView(getMap(request), "encontre-mascota-tipo-encuentro.html.hbs");
   }
 
   public ModelAndView mostrarFormularioConChapita(Request request, Response response) {
-    if (!tieneSesionActiva(request)) {
-      response.redirect("/login");
+    Long idMascota = request.session().attribute("idMascota");
+    if (idMascota == null) {
+      response.redirect("/informes/con-qr/instrucciones-escaneo");
+      return null;
+    }
+    MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.buscarPorId(idMascota);
+    if (mascotaRegistrada == null) {
+      redireccionCasoError(request, response, "El codigo de chapita no es valido");
       return null;
     }
     Map<String, Object> modelo = getMap(request);
-    String idChapitaString = request.params(":codigoChapita");
-    MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.buscarPorId(Long.parseLong(idChapitaString));
-    if (mascotaRegistrada == null) {
-      redireccionCasoError(request, response, "/mascotas/encontre-mascota/con-chapita", "El codigo de chapita no es valido");
-      return null;
-    }
-    modelo.put("codigoChapita", idChapitaString);
     modelo.put("mascotaRegistrada", mascotaRegistrada);
     return new ModelAndView(modelo, "encuentro-con-chapita.html.hbs");
   }
 
   public ModelAndView mostrarFormularioSinChapita(Request request, Response response) {
-    if (!tieneSesionActiva(request)) {
-      response.redirect("/login");
-      return null;
-    }
     Map<String, Object> modelo = getMap(request);
     modelo.put("caracteristicas", repositorioCaracteristicas.getCaracteristicasConValoresPosibles());
     modelo.put("tipoAnimales", EnumSet.allOf(Animal.class));
@@ -65,72 +56,48 @@ public class EncontreMascotaController extends Controller {
   }
 
   public Void generarInformeConQR(Request request, Response response) {
-    if (!tieneSesionActiva(request)) {
-      response.redirect("/login");
-      return null;
-    }
-    try {
 
-      Long idChapita = Long.parseLong(request.params(":codigoChapita"));
-      MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.buscarPorId(idChapita);
-      if (mascotaRegistrada == null) {
-        redireccionCasoError(request, response, "/mascotas/encontre-mascota/con-chapita", "El codigo de chapita no es valido");
-        return null;
-      }
+    Long idMascota = request.session().attribute("idMascota");
+    MascotaRegistrada mascotaRegistrada = repositorioMascotaRegistrada.buscarPorId(idMascota);
 
-      InformeConQR informeConQR = new InformeConQR(
-          repositorioUsuarios.buscarPorId(request.session().attribute("user_id")).getPersona(),
-          obtenerUbicacionRescatista(request),
-          obtenerMascotaEncontrada(request, response, mascotaRegistrada.getTamanio()),
-          new ReceptorHogares(),
-          mascotaRegistrada
-      );
+    InformeConQR informeConQR = new InformeConQR(
+        repositorioUsuarios.buscarPorId(request.session().attribute("user_id")).getPersona(),
+        obtenerUbicacionRescatista(request),
+        obtenerMascotaEncontrada(request, response, mascotaRegistrada.getTamanio()),
+        new ReceptorHogares(),
+        mascotaRegistrada
+    );
 
-      withTransaction(() -> {
-        repositorioInformes.agregar(informeConQR);
-      });
+    withTransaction(() -> {
+      repositorioInformes.agregar(informeConQR);
+    });
 
-    } catch (Exception e) {
-      redireccionCasoError(request, response, "/error", "Fallo la generacion del informe");
-    }
-    redireccionCasoFeliz(request, response, "/", "Se genero el informe!");
+    request.session().removeAttribute("idMascota");
+    redireccionCasoFeliz(request, response, "El informe se genero con exito!");
     return null;
   }
 
   public Void generarInformeSinQR(Request request, Response response) {
-    if (!tieneSesionActiva(request)) {
-      response.redirect("/mascotas/encontre-mascota");
-      return null;
-    }
-    try {
 
-      TamanioMascota tamanioMascota = TamanioMascota.values()[Integer.parseInt(request.queryParams("tamanioMascota"))];
+    TamanioMascota tamanioMascota = TamanioMascota.values()[Integer.parseInt(request.queryParams("tamanioMascota"))];
+    InformeSinQR informeSinQR = new InformeSinQR(
+        repositorioUsuarios.buscarPorId(request.session().attribute("user_id")).getPersona(),
+        obtenerUbicacionRescatista(request),
+        obtenerMascotaEncontrada(request, response, tamanioMascota),
+        new ReceptorHogares(),
+        Animal.values()[Integer.parseInt(request.queryParams("tipoAnimal"))],
+        super.obtenerListaCaracteristicas(request)
+    );
 
-      InformeSinQR informeSinQR = new InformeSinQR(
-          repositorioUsuarios.buscarPorId(request.session().attribute("user_id")).getPersona(),
-          obtenerUbicacionRescatista(request),
-          obtenerMascotaEncontrada(request, response, tamanioMascota),
-          new ReceptorHogares(),
-          Animal.values()[Integer.parseInt(request.queryParams("tipoAnimal"))],
-          super.obtenerListaCaracteristicas(request)
-      );
+    withTransaction(() -> {
+      repositorioInformes.agregar(informeSinQR);
+    });
 
-      withTransaction(() -> {
-        repositorioInformes.agregar(informeSinQR);
-      });
-
-    } catch (Exception e) {
-      redireccionCasoError(request, response, "/error", "Fallo la generacion del informe");
-    }
-    redireccionCasoFeliz(request, response, "/", "Se genero el informe!");
+    redireccionCasoFeliz(request, response, "El informe se genero con exito!");
     return null;
   }
 
   public ModelAndView mostrarInstruccionesParaEscanearQR(Request request, Response response) {
-    if (!tieneSesionActiva(request)) {
-      response.redirect("/login");
-      return null;
-    }
     return new ModelAndView(getMap(request), "escaneeQR.html.hbs");
   }
 

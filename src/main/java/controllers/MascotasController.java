@@ -1,7 +1,9 @@
 package controllers;
 
-import modelo.mascota.*;
-import modelo.mascota.caracteristica.Caracteristica;
+import modelo.mascota.Animal;
+import modelo.mascota.MascotaRegistrada;
+import modelo.mascota.Sexo;
+import modelo.mascota.TamanioMascota;
 import modelo.usuario.Usuario;
 import repositorios.RepositorioCaracteristicas;
 import repositorios.RepositorioMascotaRegistrada;
@@ -11,7 +13,6 @@ import spark.Request;
 import spark.Response;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Map;
 
 public class MascotasController extends Controller {
@@ -21,13 +22,8 @@ public class MascotasController extends Controller {
   RepositorioMascotaRegistrada repositorioMascotaRegistrada = new RepositorioMascotaRegistrada();
 
   public ModelAndView mostrarFormularioRegistracionMascotas(Request request, Response response) {
-    if (!tieneSesionActiva(request)) {
-      response.redirect("/login?origin=/registracion-mascota");
-      return null;
-    }
     Map<String, Object> modelo = getMap(request);
     modelo.put("caracteristicas", repositorioCaracteristicas.getCaracteristicasConValoresPosibles());
-
     return new ModelAndView(modelo, "registracion-mascota.html.hbs");
   }
 
@@ -52,7 +48,7 @@ public class MascotasController extends Controller {
       repositorioMascotaRegistrada.agregar(nueva);
     });
 
-    redireccionCasoFeliz(request, response, "/", "MASCOTA_REGISTRADA");
+    response.redirect("/mascotas");
     return null;
   }
 
@@ -61,15 +57,15 @@ public class MascotasController extends Controller {
   }
 
   public ModelAndView mostrarMascotasDelUsuario(Request request, Response response) {
-    if (!tieneSesionActiva(request)) {
-      response.redirect("/login");
-      return null;
-    }
-    // OBtener las mascotas del usuario que pidio esto
-    Usuario usuario = repositorioUsuarios.buscarPorId(request.session().attribute("user_id"));
-
     Map<String, Object> modelo = getMap(request);
+    Usuario usuario = repositorioUsuarios.buscarPorId(request.session().attribute("user_id"));
     modelo.put("mascotasUsuario", repositorioMascotaRegistrada.obtenerMascotasDeUnDuenio(usuario));
     return new ModelAndView(modelo, "mis-mascotas.html.hbs");
+  }
+
+  public Void redirigirAInformeConQR(Request request, Response response) {
+    request.session().attribute("idMascota", Long.parseLong(request.params(":idMascota")));
+    response.redirect("/informes/con-qr/nuevo");
+    return null;
   }
 }

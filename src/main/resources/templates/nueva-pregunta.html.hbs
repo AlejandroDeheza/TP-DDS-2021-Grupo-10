@@ -3,9 +3,11 @@
 {{/partial}}
 
 {{# partial "contenido" }}
-<div class="margin-top">
-	<h1>Nueva Pregunta</h1>
-	<form class="row g-3" action="/asociaciones/{{asociacion}}/preguntas/nueva-pregunta-2">
+<div class="centrando-form-preguntas">
+    <div class="texto-centrado-nueva-pregunta">
+	    <h1>Nuevo Par de Preguntas</h1>
+	</div>
+	<form class="row g-3" action="/asociaciones/{{idAsociacion}}/preguntas/nueva-pregunta-paso-2">
 		<div>
 			<label for="concepto" class="form-label">Idea principal de las preguntas a realizar</label>
 			<input type="text" class="form-control" name="concepto" id="concepto" required>

@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class PreguntasController extends Controller {
 
-  private RepositorioAsociaciones repositorioAsociaciones = new RepositorioAsociaciones();
+  private RepositorioAsociaciones repoAsociaciones = new RepositorioAsociaciones();
   private RepositorioParDePreguntas repositorioParDePreguntas = new RepositorioParDePreguntas();
   private final int totalRespuestasPosibles = 5;
 
@@ -26,11 +26,9 @@ public class PreguntasController extends Controller {
     Map<String, Object> modelo = getMap(request);
 
     if(idAsociacion.equals("0")) {
-      request.session().attribute("es_obligatoria", true);
       paresDePreguntas = repositorioParDePreguntas.getPreguntasObligatorias();
     } else {
-      request.session().attribute("es_obligatoria", false);
-      Asociacion asociacionBuscada = repositorioAsociaciones.buscarPorId(Long.parseLong(idAsociacion));
+      Asociacion asociacionBuscada = repoAsociaciones.buscarPorId(Long.parseLong(idAsociacion));
       validarAsociacionSolicitada(request, response, asociacionBuscada);
       paresDePreguntas = asociacionBuscada.getPreguntas();
       modelo.put("asociacion", asociacionBuscada);
@@ -39,23 +37,38 @@ public class PreguntasController extends Controller {
     List<ParDePreguntas> paresDePreguntasOrdenadas = paresDePreguntas.stream()
         .sorted((p1, p2) -> super.porOrdenAlfabetico(p1.getConcepto(), p2.getConcepto())).collect(Collectors.toList());
 
-    //FIXME: error en la vista al usar las --> asociacionesOrdenadas. El error parece que esta en el javascript
     modelo.put("asociaciones", super.getAsociacionesOrdenadas());
     modelo.put("preguntas", paresDePreguntasOrdenadas);
-    modelo.put("esObligatoria", request.session().attribute("es_obligatoria"));
+    modelo.put("esObligatoria", idAsociacion.equals("0"));
     modelo.put("mostrarBotonAgregarPreguntas", true);
     return new ModelAndView(modelo, "preguntas-asociaciones.html.hbs");
   }
 
   public ModelAndView mostrarFomularioNuevaPregunta(Request request, Response response) {
+    if (!request.params(":idAsociacion").equals("0")) {
+      Asociacion asociacionBuscada = repoAsociaciones.buscarPorId(Long.parseLong(request.params(":idAsociacion")));
+      validarAsociacionSolicitada(request, response, asociacionBuscada);
+    }
     Map<String, Object> modelo = getMap(request);
-    modelo.put("asociacion", request.params(":idAsociacion"));
+    modelo.put("idAsociacion", request.params(":idAsociacion"));
     modelo.put("rangoDeRespuestas", super.obtenerRango(totalRespuestasPosibles));
     return new ModelAndView(modelo, "nueva-pregunta.html.hbs");
   }
 
   public ModelAndView mostrarFormularioNuevaPreguntaContinuacion(Request request, Response response) {
-    
+    // Si el "concepto" es null es porque no viene de la pantalla que deveria, o sea la pantalla del form anterior
+    if (request.queryParams("concepto") == null) {
+      response.redirect("/asociaciones");
+      return null;
+    }
+    Map<String, Object> modelo = getMap(request);
+    String idAsociacion = request.params(":idAsociacion");
+    if(!idAsociacion.equals("0")) {
+      Asociacion asociacionBuscada = repoAsociaciones.buscarPorId(Long.parseLong(idAsociacion));
+      validarAsociacionSolicitada(request, response, asociacionBuscada);
+      modelo.put("asociacion", asociacionBuscada);
+    }
+
     List<String> respuestasPosiblesDelDador = new ArrayList<>();
     List<String> respuestasPosiblesDelAdoptante = new ArrayList<>();
 
@@ -68,7 +81,7 @@ public class PreguntasController extends Controller {
     respuestasPosiblesDelAdoptante.removeAll(Collections.singleton(""));
 
     if(respuestasPosiblesDelDador.size() <= 1 || respuestasPosiblesDelAdoptante.size() <= 1) {
-      super.redireccionCasoError(request, response, null, "Debe ingresar mas de una respuesta posible");
+      super.redireccionCasoError(request, response, "Debe ingresar mas de una respuesta posible");
     }
 
     BorradorParDePreguntas borradorParDePreguntas = new BorradorParDePreguntas(
@@ -76,18 +89,11 @@ public class PreguntasController extends Controller {
         request.queryParams("concepto"),
         request.queryParams("preguntaDador"),
         request.queryParams("preguntaAdoptante"),
-        request.session().attribute("es_obligatoria"),
+        idAsociacion.equals("0"),
         respuestasPosiblesDelDador,
         respuestasPosiblesDelAdoptante
     );
 
-    Asociacion asociacionBuscada = repositorioAsociaciones.buscarPorId(borradorParDePreguntas.getAsociacionId());
-    validarAsociacionSolicitada(request, response, asociacionBuscada);
-
-    Map<String, Object> modelo = getMap(request);
-    if(!borradorParDePreguntas.getEsPreguntaObligatoria()) {
-      modelo.put("asociacion", asociacionBuscada);
-    }
     modelo.put("cantidadRespuestasPosibles", super.obtenerRango(totalRespuestasPosibles));
     modelo.put("respuestasPosiblesDador", borradorParDePreguntas.getRespuestasPosiblesDelDador());
     modelo.put("respuestasPosiblesAdoptante", borradorParDePreguntas.getRespuestasPosiblesDelAdoptante());
@@ -100,7 +106,6 @@ public class PreguntasController extends Controller {
   }
 
   public Void crearParDePreguntasAsociacion(Request request, Response response) {
-
     List<ParDeRespuestas> paresDeRespuestas = new ArrayList<>();
 
     super.obtenerRango(totalRespuestasPosibles).forEach(i -> {
@@ -133,20 +138,19 @@ public class PreguntasController extends Controller {
     withTransaction(() -> {
       repositorioParDePreguntas.agregar(parDePreguntas);
       if(!borradorParDePreguntas.getEsPreguntaObligatoria()) {
-        Asociacion asociacion = repositorioAsociaciones.buscarPorId(borradorParDePreguntas.getAsociacionId());
+        Asociacion asociacion = repoAsociaciones.buscarPorId(borradorParDePreguntas.getAsociacionId());
         asociacion.agregarPregunta(parDePreguntas);
       }
     });
 
-    response.redirect("/asociaciones/".concat((String.valueOf(borradorParDePreguntas.getAsociacionId())).concat("/preguntas")));
     request.session().removeAttribute("borrador_par_preguntas");
-    request.session().removeAttribute("es_obligatoria");
+    response.redirect("/asociaciones/".concat(request.params(":idAsociacion")).concat("/preguntas"));
     return null;
   }
 
   private void validarAsociacionSolicitada(Request request, Response response, Asociacion asociacionBuscada) {
     if (asociacionBuscada == null) {
-      redireccionCasoError(request, response, "/asociaciones", "La asociacion solicitada no es valida");
+      redireccionCasoError(request, response, "La asociacion solicitada no es valida");
     }
   }
 
