@@ -1,18 +1,22 @@
 {{# partial "contenido" }}
 
 <div class="container error-container">
-    <div class="row">
-        <img src="images/perrito-error.jpg" class="image-error-container" />
+    <div>
         <div class="col">
             <div class="mensaje-error">
-                <h2>Tu acción puso triste a un perrito :( </h2>
+                <h1>Tu acción puso triste a un perrito :( </h1>
                 <div>
-                    <h3>{{mensajeError}}</h3>
+                    <h2>{{mensajeError}}</h2>
                 </div>
             </div>
+        </div>
+        <div class="imagen-error-centrada">
+            <img src="images/perrito-error.jpg" class="image-error-container" />
+        </div>
+        <div class="col">
             <div class="error-button-container">
-                <button type="submit" class="btn btn-primary submit-button-error" onclick="volverAtras()">Volver
-                    atras</button>
+                <button type="submit" class="btn btn-primary submit-button-error" onclick="volverAtras()">
+                    Volver atras</button>
             </div>
         </div>
     </div>

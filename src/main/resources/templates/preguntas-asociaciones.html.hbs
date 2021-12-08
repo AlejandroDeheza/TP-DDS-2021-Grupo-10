@@ -5,10 +5,10 @@
 {{# partial "contenido" }}
 <div class="d-flex flex-column align-items-center pt-3">
 	{{#if esObligatoria}}
-	<h1>Preguntas Obligatorias de Asociaciones</h1>
+	<h1>Preguntas Obligatorias para todas las Asociaciones</h1>
 	{{else}}
 	{{#if asociacion}}
-	<h1>Preguntas de la Asociación {{asociacion.nombre}}</h1>
+	<h1>Preguntas de la Asociación: "{{asociacion.nombre}}"</h1>
 	{{else}}
 	<h1>Preguntas de Asociaciones</h1>
 	{{/if}}
@@ -20,13 +20,13 @@
 				<a type="button"
 					class="btn btn-primary btn-sm btn-agregar-preguntas {{#unless mostrarBotonAgregarPreguntas}} visibility-none {{/unless}}"
 					href="/asociaciones/0/preguntas/nueva-pregunta">
-					Agregar Pregunta Obligatoria
+					Agregar un Par de Preguntas Obligatorias
 				</a>
 				{{else}}
 				<a type="button"
 					class="btn btn-primary btn-sm btn-agregar-preguntas {{#unless mostrarBotonAgregarPreguntas}} visibility-none {{/unless}}"
 					href="/asociaciones/{{asociacion.id}}/preguntas/nueva-pregunta">
-					Agregar Pregunta para la asociacion "{{asociacion.nombre}}"
+					Agregar un Par de Preguntas
 				</a>
 				{{/if}}
 			</div>
@@ -34,11 +34,11 @@
 		<div class="row w-100">
 			<div class="col-4">
 				<div class="list-group">
-					<a class="list-group-item mb-3 asociacion" type="button" href="/asociaciones/0/preguntas">
+					<a id="asociacion0" class="list-group-item mb-3 asociacion" type="button" href="/asociaciones/0/preguntas">
 						Preguntas Obligatorias Generales
 					</a>
 					{{#asociaciones}}
-					<a class="list-group-item mb-3 asociacion" type="button"
+					<a id="asociacion{{id}}" class="list-group-item mb-3 asociacion" type="button"
 						href="/asociaciones/{{id}}/preguntas">
 						Ver Asociación "{{nombre}}"
 					</a>
@@ -54,7 +54,8 @@
 							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
 								data-bs-target="#flush-collapsePregunta{{id}}" aria-expanded="false"
 								aria-controls="flush-collapsePregunta{{id}}">
-								Concepto del par de preguntas: <b>{{concepto}}</b>
+								Concepto del par de preguntas: &nbsp <b>{{concepto}}</b>
+								<!-- &nbsp es para hacer un espacio-->
 							</button>
 						</h2>
 						<div id="flush-collapsePregunta{{id}}" class="accordion-collapse collapse"
@@ -62,9 +63,19 @@
 							<div class="accordion-body">
 								<p>
 									Pregunta del dador: {{preguntaDelDador}}
+									<ul>
+									    {{#respuestasPosiblesDelDador}}
+									    <li>{{this}}</li>
+									    {{/respuestasPosiblesDelDador}}
+									</ul>
 								</p>
 								<p>
 									Pregunta del adoptante: {{preguntaDelAdoptante}}
+									<ul>
+                                        {{#respuestasPosiblesDelAdoptante}}
+                                    	<li>{{this}}</li>
+                                    	{{/respuestasPosiblesDelAdoptante}}
+                                    </ul>
 								</p>
 							</div>
 						</div>
@@ -73,9 +84,9 @@
 				{{/preguntas}}
 				{{else}}
 				<div class="center">
-					<p>
+					<h1>
 						Seleccione una opción
-					</p>
+					</h1>
 				</div>
 				{{/if}}
 			</div>
@@ -83,9 +94,8 @@
 	</div>
 </div>
 <script>
-<!-- FIXME: error en la vista al usar asociaciones Ordenadas -->
 let id = Number.parseInt(window.location.href.split("/")[4])
-const botonActivo = document.querySelectorAll(".asociacion")[id];
+const botonActivo = document.querySelector("#asociacion" + id);
 botonActivo.classList.add('active');
 </script> 
 {{/partial}}
