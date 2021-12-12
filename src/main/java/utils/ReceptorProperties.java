@@ -42,12 +42,12 @@ public class ReceptorProperties {
   public String getRuta(String nombre){
     if (nombre == null) {
       // TODO: si esto no funciona, se puede probar lo que esta en clase "GestorArchivos" en metodo "abrirArchivo()"
-      URL url = getClass().getClassLoader().getResource( new Constantes().getPropertiesFileName() );
+      URL url = getClass().getClassLoader().getResource( Constantes.getPropertiesFileName() );
       if (url == null) throw new RepositorioPropertiesException("No existe el file");
       return url.getPath();
 
     } else {
-      return new Constantes().getDirectoryPath(nombre);
+      return Constantes.getDirectoryPath(nombre);
     }
   }
 

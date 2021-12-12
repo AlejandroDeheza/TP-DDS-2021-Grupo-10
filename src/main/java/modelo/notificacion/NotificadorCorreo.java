@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class NotificadorCorreo implements Notificador {
 
-  private Session session = configurarConexionCorreo();
+  private final Session session = configurarConexionCorreo();
 
   private String email;
 

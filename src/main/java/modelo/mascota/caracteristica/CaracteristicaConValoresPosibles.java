@@ -5,8 +5,8 @@ import java.util.stream.Collectors;
 
 public class CaracteristicaConValoresPosibles {
 
-  private String nombreCaracteristica;
-  private List<String> valoresCaracteristicas;
+  private final String nombreCaracteristica;
+  private final List<String> valoresCaracteristicas;
 
   public CaracteristicaConValoresPosibles(String nombreCaracteristica, List<String> valoresCaracteristicas) {
     this.nombreCaracteristica = nombreCaracteristica;

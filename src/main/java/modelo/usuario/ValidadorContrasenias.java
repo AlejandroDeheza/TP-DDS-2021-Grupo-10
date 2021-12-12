@@ -19,7 +19,7 @@ public class ValidadorContrasenias {
 
   private void validarContraseniasComunes(String contrasenia) {
     List<String> contraseniasComunes = new GestorArchivos().getArchivoEnLista(
-        new Constantes().getMostCommonPasswordsFileName()
+        Constantes.getMostCommonPasswordsFileName()
     );
     if (contraseniasComunes.contains(contrasenia))
       throw new ContraseniaInvalidaException("Es una de las 10.000 contrasenias mas usadas");
