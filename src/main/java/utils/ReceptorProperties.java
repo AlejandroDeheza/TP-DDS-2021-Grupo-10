@@ -42,6 +42,7 @@ public class ReceptorProperties {
 
   public String getRuta(String nombre){
     if (nombre == null) {
+      // TODO: si esto no funciona, se puede probar lo que esta en clase "GestorArchivos" metodo abrirArchivo()
       URL url = getClass().getClassLoader().getResource("app.properties");
       if (url == null) throw new RepositorioPropertiesException("No existe el file");
       return url.getPath();

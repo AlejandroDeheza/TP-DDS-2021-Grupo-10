@@ -11,9 +11,9 @@ public class GestorArchivos {
   private BufferedReader archivo;
   private List<String> archivoEnLista;
 
-  public List<String> getArchivoEnLista(InputStream io) {
+  public List<String> getArchivoEnLista(String file) {
     try {
-      abrirArchivo(io);
+      abrirArchivo(file);
       enlistarArchivo();
 
     } catch (FileNotFoundException e) {
@@ -29,7 +29,8 @@ public class GestorArchivos {
     return archivoEnLista;
   }
 
-  private void abrirArchivo(InputStream io) throws FileNotFoundException {
+  private void abrirArchivo(String file) throws FileNotFoundException {
+    InputStream io = this.getClass().getClassLoader().getResourceAsStream(file);
     archivo = new BufferedReader(new InputStreamReader(io, StandardCharsets.UTF_8));
   }
 
