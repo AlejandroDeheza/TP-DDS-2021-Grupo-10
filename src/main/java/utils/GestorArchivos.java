@@ -8,48 +8,35 @@ import java.util.List;
 
 public class GestorArchivos {
 
-  private BufferedReader archivo;
-  private List<String> archivoEnLista;
-
   public List<String> getArchivoEnLista(String file) {
-    try {
-      abrirArchivo(file);
-      enlistarArchivo();
+    List<String> archivoEnLista;
+        
+    try ( BufferedReader archivo = abrirArchivo(file) ) {
+      archivoEnLista = enlistarArchivo(archivo);
 
     } catch (FileNotFoundException e) {
       throw new ArchivoException("Algo salio mal en abrirArchivo() en clase GestorArchivos", e);
 
     } catch (IOException e) {
       throw new ArchivoException("Algo salio mal en leerArchivo() en clase GestorArchivos", e);
-
-    } finally {
-      cerrarArchivo();
     }
 
     return archivoEnLista;
   }
 
-  private void abrirArchivo(String file) throws FileNotFoundException {
+  private BufferedReader abrirArchivo(String file) throws FileNotFoundException {
     InputStream io = this.getClass().getClassLoader().getResourceAsStream(file);
-    archivo = new BufferedReader(new InputStreamReader(io, StandardCharsets.UTF_8));
+    return new BufferedReader(new InputStreamReader(io, StandardCharsets.UTF_8));
   }
 
-  private void enlistarArchivo() throws IOException {
-    archivoEnLista = new ArrayList<>();
+  private List<String> enlistarArchivo(BufferedReader archivo) throws IOException {
+    List<String> archivoEnLista = new ArrayList<>();
     String unaLinea = archivo.readLine();
     while (unaLinea != null) {
       archivoEnLista.add(unaLinea);
       unaLinea = archivo.readLine();
     }
+    return archivoEnLista;
   }
 
-  private void cerrarArchivo() {
-    try {
-      if (archivo != null)
-        archivo.close();
-
-    } catch (Exception e) {
-      throw new ArchivoException("Algo salio mal en cerrarArchivo() en clase GestorArchivos", e);
-    }
-  }
 }
