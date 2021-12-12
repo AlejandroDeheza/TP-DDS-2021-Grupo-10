@@ -34,7 +34,7 @@ public class PersonaTest {
     assertThrows(DatosDeContactoIncompletosException.class, DummyData::getPersonaSinDatosDeContactoNiNombreNiApellido);
   }
 
-  @Test // si llegaramos a usar Twilio, no deberiamos testear esto
+  @Test // TODO: si llegaramos a usar Twilio, no deberiamos testear esto
   public void UnaPersonaDebeTenerUnCorreoAsociadoEnSuDatoDeContactoTest() {
     assertThrows(DatosDeContactoIncompletosException.class, DummyData::getPersonaSinCorreo);
   }

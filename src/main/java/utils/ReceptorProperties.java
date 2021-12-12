@@ -1,7 +1,6 @@
 package utils;
 
 import excepciones.RepositorioPropertiesException;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,12 +35,12 @@ public class ReceptorProperties {
       properties.load(stream);
 
     } catch (IOException e) {
-      throw new RepositorioPropertiesException(e);
+      throw new RepositorioPropertiesException(e.toString());
     } finally {
       try {
         if (stream != null) stream.close();
       } catch (IOException e) {
-        throw new RepositorioPropertiesException(e);
+        throw new RepositorioPropertiesException(e.toString());
       }
     }
   }
