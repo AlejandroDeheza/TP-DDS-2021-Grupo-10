@@ -129,7 +129,7 @@ public class Routes {
       }
     });
 
-    // Hay que hacer esto de abajo porque lo de arriba no funciona para rutas con PATH PARAMS
+    // FIXME: Hay que hacer esto de abajo porque lo de arriba no funciona para rutas con PATH PARAMS
     before("/asociaciones/*/preguntas/*", (request, response) -> {
       if (tieneSesionActiva(request)) {
         if (!esAdmin(request)) {

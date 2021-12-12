@@ -1,12 +1,14 @@
 package controllers;
 
 import modelo.mascota.caracteristica.CaracteristicaConValoresPosibles;
-import modelo.pregunta.ParDePreguntas;
 import repositorios.RepositorioCaracteristicas;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class CaracteristicasController extends Controller {
