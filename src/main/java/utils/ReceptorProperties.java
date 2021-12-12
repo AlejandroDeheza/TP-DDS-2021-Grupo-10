@@ -21,21 +21,11 @@ public class ReceptorProperties {
   }
 
   private void cargarPath(String ruta) {
-    InputStream stream = null;
-    try {
-      stream = new FileInputStream(ruta);
+    try ( InputStream stream = new FileInputStream(ruta) ) {
       properties.load(stream);
 
     } catch (IOException e) {
       throw new RepositorioPropertiesException(e.toString());
-
-    } finally {
-      try {
-        if (stream != null) stream.close();
-
-      } catch (IOException e) {
-        throw new RepositorioPropertiesException(e.toString());
-      }
     }
   }
 
