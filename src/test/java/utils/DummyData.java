@@ -21,7 +21,6 @@ import modelo.suscripcion.Preferencia;
 import modelo.suscripcion.SuscripcionParaAdopcion;
 import modelo.usuario.TipoUsuario;
 import modelo.usuario.Usuario;
-
 import java.time.LocalDate;
 import java.util.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -29,6 +28,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class DummyData {
+
+  public static String getRutaProperties() {
+    return "\\src\\test\\resources\\app.properties";
+  }
 
   public static DatosDeContacto getDatosDeContacto() {
     return new DatosDeContacto("01147474747", "dds2021g10@gmail.com");

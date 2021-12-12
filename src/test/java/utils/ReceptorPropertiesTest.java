@@ -7,11 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ReceptorPropertiesTest {
-  String pathTest = "\\src\\test\\resources\\app.properties";
 
   @Test
   public void cargarPropertiesValido() {
-    assertDoesNotThrow(() -> new ReceptorProperties(pathTest));
+    assertDoesNotThrow(() -> new ReceptorProperties(DummyData.getRutaProperties()));
   }
 
   @Test
