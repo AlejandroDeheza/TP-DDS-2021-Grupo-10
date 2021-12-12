@@ -60,7 +60,7 @@ public class MascotasController extends Controller {
     Map<String, Object> modelo = getMap(request);
     Usuario usuario = repositorioUsuarios.buscarPorId(request.session().attribute("user_id"));
     modelo.put("mascotasUsuario", repositorioMascotaRegistrada.obtenerMascotasDeUnDuenio(usuario));
-    return new ModelAndView(modelo, "mis-mascotas.html.hbs");
+    return new ModelAndView(modelo, "mascotas-de-un-usuario.html.hbs");
   }
 
   public Void redirigirAInformeConQR(Request request, Response response) {

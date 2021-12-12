@@ -98,7 +98,7 @@ public class InformesController extends Controller {
   }
 
   public ModelAndView mostrarInstruccionesParaEscanearQR(Request request, Response response) {
-    return new ModelAndView(getMap(request), "escaneeQR.html.hbs");
+    return new ModelAndView(getMap(request), "instrucciones-escanear-qr.html.hbs");
   }
 
   private MascotaEncontrada obtenerMascotaEncontrada(Request request, Response response, TamanioMascota tamanio) {
