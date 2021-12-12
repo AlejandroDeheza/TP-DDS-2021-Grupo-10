@@ -18,7 +18,7 @@ public class TransientTest extends NuestraAbstractPersistenceTest {
         DummyData.getPersona(TipoNotificadorPreferido.CORREO),
         DummyData.getUbicacion(),
         DummyData.getMascotaEncontrada(DummyData.getFotos()),
-        new ReceptorHogares(),
+        new ReceptorHogares(DummyData.getJsonHogaresApi()),
         DummyData.getMascotaRegistrada(TipoNotificadorPreferido.CORREO)
     );
     RepositorioInformes repositorioInformes = new RepositorioInformes();
