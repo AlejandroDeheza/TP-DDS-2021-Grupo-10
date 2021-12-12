@@ -7,8 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ReceptorPropertiesTest {
-  String pathTest = "app.properties";
-
+  String pathTest = "\\src\\test\\resources\\app.properties";
 
   @Test
   public void cargarPropertiesValido() {
@@ -17,6 +16,6 @@ public class ReceptorPropertiesTest {
 
   @Test
   public void noSePuedeCargarPropertiesInvalido() {
-    assertThrows(RepositorioPropertiesException.class, () -> new ReceptorProperties("llaal"));
+    assertThrows(RepositorioPropertiesException.class, () -> new ReceptorProperties("\\llaal"));
   }
 }

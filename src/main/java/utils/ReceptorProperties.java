@@ -1,6 +1,7 @@
 package utils;
 
 import excepciones.RepositorioPropertiesException;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,39 +10,45 @@ import java.util.Properties;
 
 public class ReceptorProperties {
 
-  private Properties properties = new Properties();
-  // private String path = "app.properties";
-  String fileName = "app.properties";
-  //  String path=getClass().getResource(fileName).toString();
-  //InputStream io = this.getClass().getClassLoader().getResourceAsStream(fileName);
+  private final Properties properties = new Properties();
 
   public ReceptorProperties() {
-    cargarPath();
+    cargarPath( getRuta(null) );
   }
 
+  // para tests
   public ReceptorProperties(String fileName) {
-    this.fileName = fileName;
-
-    cargarPath();
+    cargarPath( getRuta(fileName) );
   }
 
-  private void cargarPath() {
+  private void cargarPath(String ruta) {
     InputStream stream = null;
     try {
-      URL url = getClass().getClassLoader().getResource(fileName);
-      if (url == null)
-        throw new RepositorioPropertiesException("No existe el file");
-      stream = new FileInputStream(url.getPath());
+      stream = new FileInputStream(ruta);
       properties.load(stream);
 
     } catch (IOException e) {
       throw new RepositorioPropertiesException(e.toString());
+
     } finally {
       try {
         if (stream != null) stream.close();
+
       } catch (IOException e) {
         throw new RepositorioPropertiesException(e.toString());
       }
+    }
+  }
+
+  public String getRuta(String nombre){
+    if (nombre == null) {
+      URL url = getClass().getClassLoader().getResource("app.properties");
+      if (url == null) throw new RepositorioPropertiesException("No existe el file");
+      return url.getPath();
+
+    } else {
+      File f = new File(".");
+      return f.getAbsolutePath().substring(0, f.getAbsolutePath().length() - 2).concat(nombre);
     }
   }
 
