@@ -119,7 +119,7 @@ public abstract class Controller implements WithGlobalEntityManager, Transaction
     List<Foto> fotosMascota = new ArrayList<>();
 
     try {
-      String pathUpload = new Constantes().getUploadDirectory();
+      String pathUpload = new Constantes().getUploadDirectoryPath();
       Path tempFile = Files.createTempFile(new File(pathUpload).toPath(), null, ".jpg");
 
       InputStream fotoInputStream = request.raw().getPart("fotoMascota").getInputStream();

@@ -33,6 +33,10 @@ public class DummyData {
     return "\\src\\test\\resources\\app.properties";
   }
 
+  public static String getEmailReceptor() {
+    return "dds2021g10@gmail.com";
+  }
+
   public static DatosDeContacto getDatosDeContacto() {
     return new DatosDeContacto("01147474747", "dds2021g10@gmail.com");
   }

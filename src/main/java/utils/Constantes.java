@@ -4,10 +4,24 @@ import java.io.File;
 
 public class Constantes {
 
-  public static final String UPLOAD_DIRECTORY = "/upload";
+  private final String UPLOAD_DIRECTORY = "/upload";
+  private final String propertiesFileName = "app.properties";
+  private final String mostCommonPasswordsFileName = "10k-most-common.txt";
 
-  public String getUploadDirectory(){
+  public String getUploadDirectoryPath(){
+    return getDirectoryPath(UPLOAD_DIRECTORY);
+  }
+
+  public String getDirectoryPath(String name) {
     File f = new File(".");
-    return f.getAbsolutePath().substring(0, f.getAbsolutePath().length() - 2).concat(UPLOAD_DIRECTORY);
+    return f.getAbsolutePath().substring(0, f.getAbsolutePath().length() - 2).concat(name);
+  }
+
+  public String getPropertiesFileName(){
+    return this.propertiesFileName;
+  }
+
+  public String getMostCommonPasswordsFileName(){
+    return this.mostCommonPasswordsFileName;
   }
 }

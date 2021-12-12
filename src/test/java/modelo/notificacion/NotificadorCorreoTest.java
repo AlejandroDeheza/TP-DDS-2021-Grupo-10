@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import utils.DummyData;
 import javax.mail.MessagingException;
 import javax.mail.Transport;
 
@@ -19,7 +20,9 @@ public class NotificadorCorreoTest {
   @DisplayName("notificar")
   public void notificarTest() throws MessagingException {
     Transport transportMockeado = mock(Transport.class);
-    NotificadorCorreo notificadorCorreo = new NotificadorCorreo("dds2021g10@gmail.com", sesion -> transportMockeado);
+    NotificadorCorreo notificadorCorreo = new NotificadorCorreo(
+        DummyData.getEmailReceptor(), sesion -> transportMockeado
+    );
     notificadorCorreo.notificarLinkDeBajaSuscripcionAdopciones("");
 
     verify(transportMockeado, times(1)).connect(any(), any());

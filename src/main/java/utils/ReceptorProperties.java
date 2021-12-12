@@ -1,7 +1,6 @@
 package utils;
 
 import excepciones.RepositorioPropertiesException;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,14 +41,13 @@ public class ReceptorProperties {
 
   public String getRuta(String nombre){
     if (nombre == null) {
-      // TODO: si esto no funciona, se puede probar lo que esta en clase "GestorArchivos" metodo abrirArchivo()
-      URL url = getClass().getClassLoader().getResource("app.properties");
+      // TODO: si esto no funciona, se puede probar lo que esta en clase "GestorArchivos" en metodo "abrirArchivo()"
+      URL url = getClass().getClassLoader().getResource( new Constantes().getPropertiesFileName() );
       if (url == null) throw new RepositorioPropertiesException("No existe el file");
       return url.getPath();
 
     } else {
-      File f = new File(".");
-      return f.getAbsolutePath().substring(0, f.getAbsolutePath().length() - 2).concat(nombre);
+      return new Constantes().getDirectoryPath(nombre);
     }
   }
 

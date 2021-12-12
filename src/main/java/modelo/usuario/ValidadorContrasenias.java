@@ -1,6 +1,7 @@
 package modelo.usuario;
 
 import excepciones.ContraseniaInvalidaException;
+import utils.Constantes;
 import utils.GestorArchivos;
 import java.util.List;
 
@@ -17,7 +18,9 @@ public class ValidadorContrasenias {
   }
 
   private void validarContraseniasComunes(String contrasenia) {
-    List<String> contraseniasComunes = new GestorArchivos().getArchivoEnLista("10k-most-common.txt");
+    List<String> contraseniasComunes = new GestorArchivos().getArchivoEnLista(
+        new Constantes().getMostCommonPasswordsFileName()
+    );
     if (contraseniasComunes.contains(contrasenia))
       throw new ContraseniaInvalidaException("Es una de las 10.000 contrasenias mas usadas");
   }
