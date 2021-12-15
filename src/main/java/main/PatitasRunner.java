@@ -35,6 +35,6 @@ public class PatitasRunner {
     Timer timer = new Timer();
 
     // scheduling the task at interval
-    timer.schedule(task,30000, 60000);
+    timer.schedule(task,30000, 60000 * 10);
   }
 }
