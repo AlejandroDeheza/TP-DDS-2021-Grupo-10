@@ -30,9 +30,9 @@
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>
 
-            <property name="hibernate.connection.driver_class" value="com.postgres.jdbc.Driver"/>
+            <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
             <property name="hibernate.connection.url"
-                      value="jdbc:postgres://kulsruuxowbfrb:7d654a68beb34e06d84cef7751fae3cb0fb1cc6f8f75384293722068d47093b3@ec2-3-225-213-67.compute-1.amazonaws.com:5432/d2aipnb0eguapk"/>
+                      value="jdbc:postgresql://kulsruuxowbfrb:7d654a68beb34e06d84cef7751fae3cb0fb1cc6f8f75384293722068d47093b3@ec2-3-225-213-67.compute-1.amazonaws.com:5432/d2aipnb0eguapk"/>
             <property name="hibernate.connection.username" value="kulsruuxowbfrb"/>
             <property name="hibernate.connection.password" value="7d654a68beb34e06d84cef7751fae3cb0fb1cc6f8f75384293722068d47093b3"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL82Dialect"/>
