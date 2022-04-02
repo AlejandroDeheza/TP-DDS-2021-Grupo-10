@@ -18,7 +18,7 @@ public class PreguntasController extends Controller {
 
   private RepositorioAsociaciones repoAsociaciones = new RepositorioAsociaciones();
   private RepositorioParDePreguntas repositorioParDePreguntas = new RepositorioParDePreguntas();
-  private final int totalRespuestasPosibles = 5;
+  private static final int totalRespuestasPosibles = 5;
 
   public ModelAndView mostrarPreguntasDeLaAsociacion(Request request, Response response) {
     String idAsociacion = request.params(":idAsociacion");

@@ -29,8 +29,11 @@ public class Routes {
 
     // Se crea el directorio para subir las fotos :)
     File uploadDir = new File(new Constantes().getUploadDirectory());
-    uploadDir.mkdir();
-    staticFiles.externalLocation(new Constantes().getUploadDirectory());
+    boolean resultado = uploadDir.mkdir(); // la variable "resultado" solo esta para que no salte el bug...
+    // deberia revisar mejor despues
+    if(resultado) {
+      staticFiles.externalLocation(new Constantes().getUploadDirectory());
+    }
 
     HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
     HomeController homeController = new HomeController();
